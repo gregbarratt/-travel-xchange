@@ -5,6 +5,12 @@ export const publicRoutes = [
   { label: "Contact", href: "/contact" },
 ];
 
+export const landingAnchors = [
+  { label: "Platform", href: "#platform" },
+  { label: "Members", href: "#members" },
+  { label: "Revenue", href: "#revenue" },
+];
+
 export const futureAppRoutes = [
   { label: "News", href: "/news" },
   { label: "Xchange Feed", href: "/feed" },

@@ -4,6 +4,22 @@ Travel Xchange is a professional community platform for the travel industry.
 It will be built phase by phase so each part can be tested, saved, and pushed
 to GitHub before the next phase begins.
 
+## Current status
+
+Phase 1 adds the first public brand, layout, and landing page. Authentication,
+profiles, feeds, database tables, and paid features are still intentionally
+reserved for later phases.
+
+Built by Phase 1:
+
+- Public homepage at `/`
+- Public header and footer
+- Hero section
+- Platform feature cards
+- Audience section
+- Monetisation preview section
+- Placeholder pages for `/about`, `/pricing`, and `/contact`
+
 ## Phase 0 status
 
 Phase 0 creates the project foundation only. It does not include real product
