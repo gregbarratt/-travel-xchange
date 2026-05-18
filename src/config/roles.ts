@@ -30,3 +30,10 @@ export const companyTypeOptions = [
 export function getRoleLabel(role: TravelXchangeRole) {
   return roleOptions.find((option) => option.value === role)?.label ?? role;
 }
+
+export function getCompanyTypeLabel(companyType: string) {
+  return (
+    companyTypeOptions.find((option) => option.value === companyType)?.label ??
+    companyType.replaceAll("_", " ")
+  );
+}

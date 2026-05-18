@@ -34,6 +34,7 @@ const navIcons = {
 };
 
 type AppSidebarProps = {
+  activeLabel?: string;
   profile: Profile | null;
 };
 
@@ -44,7 +45,10 @@ function canSeeAdmin(profile: Profile | null) {
   );
 }
 
-export function AppSidebar({ profile }: AppSidebarProps) {
+export function AppSidebar({
+  activeLabel = "Xchange Feed",
+  profile,
+}: AppSidebarProps) {
   const visibleItems = appNavigation.filter(
     (item) => !item.adminOnly || canSeeAdmin(profile),
   );
@@ -70,7 +74,13 @@ export function AppSidebar({ profile }: AppSidebarProps) {
           {visibleItems.map((item) => {
             const Icon = navIcons[item.label as keyof typeof navIcons] ?? Home;
             const isLive = item.phase === "Live";
-            const isActive = item.label === "Xchange Feed";
+            const isActive = item.label === activeLabel;
+            const href =
+              item.label === "Profile" && profile?.id
+                ? `/profile/${profile.id}`
+                : item.label === "Suppliers" && profile?.company_id
+                  ? `/suppliers/${profile.company_id}`
+                  : item.href;
 
             return (
               <Link
@@ -82,7 +92,7 @@ export function AppSidebar({ profile }: AppSidebarProps) {
                     : "text-slate-600 hover:bg-slate-100 hover:text-slate-950",
                   !isLive ? "opacity-75" : "",
                 ].join(" ")}
-                href={item.href}
+                href={href}
                 key={item.label}
               >
                 <span className="flex items-center gap-3">

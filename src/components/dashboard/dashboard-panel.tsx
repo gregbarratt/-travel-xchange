@@ -1,11 +1,12 @@
 "use client";
 
 import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Bell, Search } from "lucide-react";
 
 import { LogoutButton } from "@/components/auth/logout-button";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { AppSidebar } from "@/components/dashboard/app-sidebar";
 import { FeedComposer } from "@/components/dashboard/feed-composer";
 import { FeedPostCard } from "@/components/dashboard/feed-post-card";
@@ -421,6 +422,17 @@ export function DashboardPanel() {
                 Search arrives in Phase 15
               </div>
               <div className="flex items-center gap-2">
+                {profile?.id ? (
+                  <Link
+                    className={cn(
+                      buttonVariants({ variant: "outline", size: "lg" }),
+                      "hidden sm:inline-flex",
+                    )}
+                    href={`/profile/${profile.id}`}
+                  >
+                    Profile
+                  </Link>
+                ) : null}
                 <Button
                   className="size-9 bg-transparent p-0 text-slate-600 hover:bg-slate-100"
                   type="button"
@@ -472,6 +484,28 @@ export function DashboardPanel() {
                     </p>
                   </div>
                 </div>
+                {profile?.id ? (
+                  <div className="mt-4 flex flex-wrap gap-2 border-t border-slate-100 pt-4">
+                    <Link
+                      className={cn(
+                        buttonVariants({ size: "lg" }),
+                        "bg-[#0f766e] text-white hover:bg-[#115e59]",
+                      )}
+                      href={`/profile/${profile.id}`}
+                    >
+                      View profile
+                    </Link>
+                    <Link
+                      className={cn(
+                        buttonVariants({ variant: "outline", size: "lg" }),
+                        "bg-white",
+                      )}
+                      href="/profile/edit"
+                    >
+                      Edit profile
+                    </Link>
+                  </div>
+                ) : null}
               </div>
 
               <FeedComposer

@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent } from "react";
+import Link from "next/link";
 import { Heart, MessageCircle, ShieldCheck, SendHorizontal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -52,9 +53,18 @@ export function FeedPostCard({
           </div>
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
-              <h2 className="text-sm font-semibold text-slate-950">
-                {authorName}
-              </h2>
+              {post.author?.id ? (
+                <Link
+                  className="text-sm font-semibold text-slate-950 hover:text-[#0f766e]"
+                  href={`/profile/${post.author.id}`}
+                >
+                  {authorName}
+                </Link>
+              ) : (
+                <h2 className="text-sm font-semibold text-slate-950">
+                  {authorName}
+                </h2>
+              )}
               {post.author?.verification_tier !== "unverified" ? (
                 <span className="inline-flex items-center gap-1 rounded bg-[#ecfeff] px-2 py-0.5 text-xs font-semibold text-[#0e7490]">
                   <ShieldCheck className="size-3" aria-hidden="true" />

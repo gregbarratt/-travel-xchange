@@ -97,6 +97,35 @@ export type Follow = {
   following_id: string;
 };
 
+export type ProfileExperience = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  profile_id: string;
+  title: string;
+  company_name: string | null;
+  start_date: string | null;
+  end_date: string | null;
+  is_current: boolean;
+  description: string | null;
+  display_order: number;
+};
+
+export type ProfileSpecialism = {
+  id: string;
+  created_at: string;
+  profile_id: string;
+  name: string;
+  category: string;
+};
+
+export type CompanyFollower = {
+  id: string;
+  created_at: string;
+  company_id: string;
+  user_id: string;
+};
+
 export type FeedProfile = Pick<
   Profile,
   "id" | "full_name" | "headline" | "role" | "verification_tier"
@@ -176,6 +205,33 @@ export type Database = {
           following_id: string;
         };
         Update: Partial<Follow>;
+        Relationships: [];
+      };
+      profile_experience: {
+        Row: ProfileExperience;
+        Insert: Partial<ProfileExperience> & {
+          profile_id: string;
+          title: string;
+        };
+        Update: Partial<ProfileExperience>;
+        Relationships: [];
+      };
+      profile_specialisms: {
+        Row: ProfileSpecialism;
+        Insert: Partial<ProfileSpecialism> & {
+          profile_id: string;
+          name: string;
+        };
+        Update: Partial<ProfileSpecialism>;
+        Relationships: [];
+      };
+      company_followers: {
+        Row: CompanyFollower;
+        Insert: Partial<CompanyFollower> & {
+          company_id: string;
+          user_id: string;
+        };
+        Update: Partial<CompanyFollower>;
         Relationships: [];
       };
     };

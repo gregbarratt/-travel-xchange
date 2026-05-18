@@ -34,11 +34,11 @@ export const appNavigation = [
   { label: "Jobs", href: "#jobs", phase: "Phase 6" },
   { label: "Events", href: "#events", phase: "Phase 8" },
   { label: "Training", href: "#training", phase: "Phase 9" },
-  { label: "Suppliers", href: "#suppliers", phase: "Phase 4" },
+  { label: "Suppliers", href: "#suppliers", phase: "Live" },
   { label: "Support", href: "#support", phase: "Phase 10" },
   { label: "Messages", href: "#messages", phase: "Phase 11" },
   { label: "Notifications", href: "#notifications", phase: "Phase 11" },
-  { label: "Profile", href: "#profile", phase: "Phase 4" },
+  { label: "Profile", href: "/profile/edit", phase: "Live" },
   { label: "Admin", href: "#admin", phase: "Phase 14", adminOnly: true },
 ];
 

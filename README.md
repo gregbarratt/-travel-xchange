@@ -6,9 +6,26 @@ to GitHub before the next phase begins.
 
 ## Current status
 
-Phase 3 adds the first logged-in Xchange Feed experience. Groups, jobs, news,
+Phase 4 adds member, company, and supplier profile pages. Groups, jobs, news,
 events, training, support, messaging, payments, and full admin features are
 still intentionally reserved for later phases.
+
+Built by Phase 4:
+
+- Member profile page at `/profile/[id]`
+- Edit profile page at `/profile/edit`
+- Company profile page at `/companies/[id]`
+- Supplier profile page at `/suppliers/[id]`
+- Profile experience section
+- Profile specialisms section
+- Verification badge placeholder
+- Profile connect/follow action
+- Company follow action
+- Phase 4 Supabase SQL schema in `supabase/phase-4-profiles.sql`
+- Database types for `profile_experience`, `profile_specialisms`, and
+  `company_followers`
+
+Built by Phase 3:
 
 Built by Phase 3:
 
@@ -42,11 +59,13 @@ Built by Phase 2:
 1. Create a Supabase project.
 2. In Supabase, open the SQL editor.
 3. Run the SQL from `supabase/schema.sql` for a fresh project.
-4. If Phase 2 is already installed, run `supabase/phase-3-feed.sql` to add only
-   the feed tables.
-5. Copy `.env.example` to `.env.local`.
-6. Add your Supabase project URL and anon key to `.env.local`.
-7. Restart the local app.
+4. If Phase 2 is already installed, run `supabase/phase-3-feed.sql` to add the
+   feed tables.
+5. If Phase 3 is already installed, run `supabase/phase-4-profiles.sql` to add
+   the profile and company page tables.
+6. Copy `.env.example` to `.env.local`.
+7. Add your Supabase project URL and anon key to `.env.local`.
+8. Restart the local app.
 
 Do not put the service role key in browser code. Keep real keys out of Git.
 
