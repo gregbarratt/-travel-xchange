@@ -180,6 +180,79 @@ export type GroupWithStats = Group & {
   post_count: number;
 };
 
+export type JobCategory =
+  | "travel_sales"
+  | "cruise"
+  | "tour_operator"
+  | "business_development"
+  | "marketing"
+  | "operations"
+  | "customer_service"
+  | "travel_technology"
+  | "training"
+  | "recruitment";
+
+export type JobEmploymentType =
+  | "full_time"
+  | "part_time"
+  | "contract"
+  | "temporary"
+  | "homeworking"
+  | "freelance";
+
+export type JobPackageType =
+  | "basic"
+  | "featured"
+  | "sponsored_employer"
+  | "recruiter_subscription";
+
+export type Job = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  created_by: string;
+  company_id: string | null;
+  title: string;
+  slug: string;
+  category: JobCategory;
+  employment_type: JobEmploymentType;
+  location: string;
+  is_remote: boolean;
+  salary_min: number | null;
+  salary_max: number | null;
+  salary_currency: string;
+  description: string;
+  requirements: string | null;
+  application_url: string | null;
+  contact_email: string | null;
+  package_type: JobPackageType;
+  is_featured: boolean;
+  visibility: "public" | "members";
+  status: "draft" | "published" | "closed" | "hidden" | "deleted";
+};
+
+export type JobApplication = {
+  id: string;
+  created_at: string;
+  job_id: string;
+  user_id: string;
+  cover_note: string | null;
+  status: "interested" | "applied" | "shortlisted" | "rejected" | "withdrawn";
+};
+
+export type JobBookmark = {
+  id: string;
+  created_at: string;
+  job_id: string;
+  user_id: string;
+};
+
+export type JobWithCompany = Job & {
+  company: Pick<Company, "id" | "name" | "company_type"> | null;
+  is_bookmarked_by_current_user: boolean;
+  has_registered_interest: boolean;
+};
+
 export type FeedProfile = Pick<
   Profile,
   "id" | "full_name" | "headline" | "role" | "verification_tier"
@@ -315,6 +388,35 @@ export type Database = {
           content: string;
         };
         Update: Partial<GroupPost>;
+        Relationships: [];
+      };
+      jobs: {
+        Row: Job;
+        Insert: Partial<Job> & {
+          created_by: string;
+          title: string;
+          slug: string;
+          description: string;
+        };
+        Update: Partial<Job>;
+        Relationships: [];
+      };
+      job_applications: {
+        Row: JobApplication;
+        Insert: Partial<JobApplication> & {
+          job_id: string;
+          user_id: string;
+        };
+        Update: Partial<JobApplication>;
+        Relationships: [];
+      };
+      job_bookmarks: {
+        Row: JobBookmark;
+        Insert: Partial<JobBookmark> & {
+          job_id: string;
+          user_id: string;
+        };
+        Update: Partial<JobBookmark>;
         Relationships: [];
       };
     };

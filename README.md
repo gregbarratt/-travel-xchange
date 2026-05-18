@@ -6,9 +6,25 @@ to GitHub before the next phase begins.
 
 ## Current status
 
-Phase 5 adds community groups and group discussions. Jobs, news, events,
-training, support, messaging, payments, and full admin features are still
-intentionally reserved for later phases.
+Phase 6 adds the jobs board. News, events, training, support, messaging,
+payments, and full admin features are still intentionally reserved for later
+phases.
+
+Built by Phase 6:
+
+- Jobs listing page at `/jobs`
+- Job detail page at `/jobs/[id]`
+- Post a job page at `/jobs/post`
+- Job categories
+- Location and remote filters
+- Featured job placeholder
+- Recruiter/company attribution
+- Bookmark job
+- Register interest/application placeholder
+- Monetisation placeholders for basic, featured, sponsored employer, and
+  recruiter subscription packages
+- Phase 6 Supabase SQL schema in `supabase/phase-6-jobs.sql`
+- Database types for `jobs`, `job_applications`, and `job_bookmarks`
 
 Built by Phase 5:
 
@@ -25,8 +41,6 @@ Built by Phase 5:
 
 Built by Phase 4:
 
-Built by Phase 4:
-
 - Member profile page at `/profile/[id]`
 - Edit profile page at `/profile/edit`
 - Company profile page at `/companies/[id]`
@@ -39,8 +53,6 @@ Built by Phase 4:
 - Phase 4 Supabase SQL schema in `supabase/phase-4-profiles.sql`
 - Database types for `profile_experience`, `profile_specialisms`, and
   `company_followers`
-
-Built by Phase 3:
 
 Built by Phase 3:
 
@@ -80,9 +92,11 @@ Built by Phase 2:
    the profile and company page tables.
 6. If Phase 4 is already installed, run `supabase/phase-5-groups.sql` to add
    the groups and discussions tables.
-7. Copy `.env.example` to `.env.local`.
-8. Add your Supabase project URL and anon key to `.env.local`.
-9. Restart the local app.
+7. If Phase 5 is already installed, run `supabase/phase-6-jobs.sql` to add the
+   jobs board tables.
+8. Copy `.env.example` to `.env.local`.
+9. Add your Supabase project URL and anon key to `.env.local`.
+10. Restart the local app.
 
 Do not put the service role key in browser code. Keep real keys out of Git.
 

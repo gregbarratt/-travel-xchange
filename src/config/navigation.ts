@@ -31,7 +31,7 @@ export const appNavigation = [
   { label: "Xchange Feed", href: "/dashboard", phase: "Live" },
   { label: "News", href: "#news", phase: "Phase 7" },
   { label: "Groups", href: "/groups", phase: "Live" },
-  { label: "Jobs", href: "#jobs", phase: "Phase 6" },
+  { label: "Jobs", href: "/jobs", phase: "Live" },
   { label: "Events", href: "#events", phase: "Phase 8" },
   { label: "Training", href: "#training", phase: "Phase 9" },
   { label: "Suppliers", href: "#suppliers", phase: "Live" },
