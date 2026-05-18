@@ -6,9 +6,22 @@ to GitHub before the next phase begins.
 
 ## Current status
 
-Phase 6 adds the jobs board. News, events, training, support, messaging,
-payments, and full admin features are still intentionally reserved for later
-phases.
+Phase 7 adds the news and supplier updates area. Events, training, support,
+messaging, payments, and full admin features are still intentionally reserved
+for later phases.
+
+Built by Phase 7:
+
+- News homepage at `/news`
+- Article detail page at `/news/[slug]`
+- Create article page at `/news/create`
+- Supplier updates page at `/supplier-updates`
+- Article categories and type filters
+- Tags and trending tag placeholder
+- Featured article placement
+- CMS-style publishing form for MVP testing
+- Phase 7 Supabase SQL schema in `supabase/phase-7-news.sql`
+- Database types for `articles`, `article_categories`, and `article_tags`
 
 Built by Phase 6:
 
@@ -94,9 +107,11 @@ Built by Phase 2:
    the groups and discussions tables.
 7. If Phase 5 is already installed, run `supabase/phase-6-jobs.sql` to add the
    jobs board tables.
-8. Copy `.env.example` to `.env.local`.
-9. Add your Supabase project URL and anon key to `.env.local`.
-10. Restart the local app.
+8. If Phase 6 is already installed, run `supabase/phase-7-news.sql` to add the
+   news and supplier update tables.
+9. Copy `.env.example` to `.env.local`.
+10. Add your Supabase project URL and anon key to `.env.local`.
+11. Restart the local app.
 
 Do not put the service role key in browser code. Keep real keys out of Git.
 

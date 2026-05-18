@@ -29,7 +29,7 @@ export const futureAppRoutes = [
 export const appNavigation = [
   { label: "Home", href: "/dashboard", phase: "Live" },
   { label: "Xchange Feed", href: "/dashboard", phase: "Live" },
-  { label: "News", href: "#news", phase: "Phase 7" },
+  { label: "News", href: "/news", phase: "Live" },
   { label: "Groups", href: "/groups", phase: "Live" },
   { label: "Jobs", href: "/jobs", phase: "Live" },
   { label: "Events", href: "#events", phase: "Phase 8" },

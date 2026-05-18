@@ -253,6 +253,57 @@ export type JobWithCompany = Job & {
   has_registered_interest: boolean;
 };
 
+export type ArticleType =
+  | "news"
+  | "supplier_update"
+  | "press_release"
+  | "featured";
+
+export type ArticleStatus = "draft" | "published" | "hidden" | "archived";
+
+export type ArticleCategory = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  name: string;
+  slug: string;
+  description: string | null;
+  status: "active" | "hidden";
+};
+
+export type Article = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  published_at: string | null;
+  created_by: string;
+  company_id: string | null;
+  category_id: string | null;
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  content: string;
+  article_type: ArticleType;
+  image_url: string | null;
+  is_featured: boolean;
+  visibility: "public" | "members";
+  status: ArticleStatus;
+};
+
+export type ArticleTag = {
+  id: string;
+  created_at: string;
+  article_id: string;
+  name: string;
+};
+
+export type ArticleWithMeta = Article & {
+  author: Pick<Profile, "id" | "full_name" | "headline" | "role"> | null;
+  category: Pick<ArticleCategory, "id" | "name" | "slug"> | null;
+  company: Pick<Company, "id" | "name" | "company_type"> | null;
+  tags: string[];
+};
+
 export type FeedProfile = Pick<
   Profile,
   "id" | "full_name" | "headline" | "role" | "verification_tier"
@@ -417,6 +468,35 @@ export type Database = {
           user_id: string;
         };
         Update: Partial<JobBookmark>;
+        Relationships: [];
+      };
+      article_categories: {
+        Row: ArticleCategory;
+        Insert: Partial<ArticleCategory> & {
+          name: string;
+          slug: string;
+        };
+        Update: Partial<ArticleCategory>;
+        Relationships: [];
+      };
+      articles: {
+        Row: Article;
+        Insert: Partial<Article> & {
+          created_by: string;
+          title: string;
+          slug: string;
+          content: string;
+        };
+        Update: Partial<Article>;
+        Relationships: [];
+      };
+      article_tags: {
+        Row: ArticleTag;
+        Insert: Partial<ArticleTag> & {
+          article_id: string;
+          name: string;
+        };
+        Update: Partial<ArticleTag>;
         Relationships: [];
       };
     };
