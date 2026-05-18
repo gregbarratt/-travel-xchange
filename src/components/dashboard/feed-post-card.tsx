@@ -45,62 +45,62 @@ export function FeedPostCard({
   const authorName = post.author?.full_name ?? "Travel Xchange member";
 
   return (
-    <article className="rounded-md border border-slate-200 bg-white shadow-sm">
-      <div className="p-4">
+    <article className="tx-card overflow-hidden">
+      <div className="p-5">
         <div className="flex items-start gap-3">
-          <div className="flex size-11 shrink-0 items-center justify-center rounded-md bg-[#e0f2f1] text-sm font-semibold text-[#0f766e]">
+          <div className="tx-navy-avatar flex size-12 shrink-0 items-center justify-center rounded-lg text-sm font-bold text-white">
             {authorName.slice(0, 2).toUpperCase()}
           </div>
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
               {post.author?.id ? (
                 <Link
-                  className="text-sm font-semibold text-slate-950 hover:text-[#0f766e]"
+                  className="text-base font-extrabold text-[#061b4f] hover:text-[#f52968]"
                   href={`/profile/${post.author.id}`}
                 >
                   {authorName}
                 </Link>
               ) : (
-                <h2 className="text-sm font-semibold text-slate-950">
+                <h2 className="text-base font-extrabold text-[#061b4f]">
                   {authorName}
                 </h2>
               )}
               {post.author?.verification_tier !== "unverified" ? (
-                <span className="inline-flex items-center gap-1 rounded bg-[#ecfeff] px-2 py-0.5 text-xs font-semibold text-[#0e7490]">
+                <span className="inline-flex items-center gap-1 rounded bg-[#eef5ff] px-2 py-0.5 text-xs font-bold text-[#063b86]">
                   <ShieldCheck className="size-3" aria-hidden="true" />
                   Verified
                 </span>
               ) : null}
             </div>
-            <p className="mt-1 text-xs leading-5 text-slate-500">
+            <p className="mt-1 text-xs leading-5 text-[#4d6b9e]">
               {post.author?.headline
                 ? post.author.headline
                 : post.author?.role
                   ? getRoleLabel(post.author.role)
                   : "Travel industry member"}{" "}
-              · {formatDate(post.created_at)}
+              - {formatDate(post.created_at)}
             </p>
           </div>
-          <span className="rounded bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-600">
+          <span className="rounded bg-[#eef5ff] px-3 py-1 text-xs font-bold text-[#063b86]">
             {getTopicLabel(post.topic)}
           </span>
         </div>
 
-        <p className="mt-4 whitespace-pre-wrap text-sm leading-6 text-slate-800">
+        <p className="mt-4 whitespace-pre-wrap text-sm leading-6 text-[#203b70]">
           {post.content}
         </p>
       </div>
 
-      <div className="flex items-center justify-between border-y border-slate-100 px-4 py-2 text-xs text-slate-500">
+      <div className="flex items-center justify-between border-y border-[#d9e4f5] px-5 py-2 text-xs font-medium text-[#4d6b9e]">
         <span>{post.like_count} likes</span>
         <span>{post.comment_count} comments</span>
       </div>
 
-      <div className="grid grid-cols-2 gap-2 px-4 py-2">
+      <div className="grid grid-cols-2 gap-2 px-5 py-2">
         <Button
           className={cn(
-            "h-9 bg-transparent text-slate-600 hover:bg-slate-100",
-            post.is_liked_by_current_user && "text-[#0f766e]",
+            "h-10 bg-transparent text-[#061b4f] hover:bg-[#eef5ff]",
+            post.is_liked_by_current_user && "text-[#f52968]",
           )}
           disabled={isBusy}
           onClick={onLikeToggle}
@@ -117,7 +117,7 @@ export function FeedPostCard({
           {post.is_liked_by_current_user ? "Liked" : "Like"}
         </Button>
         <Button
-          className="h-9 bg-transparent text-slate-600 hover:bg-slate-100"
+          className="h-10 bg-transparent text-[#061b4f] hover:bg-[#eef5ff]"
           type="button"
           variant="ghost"
         >
@@ -126,18 +126,18 @@ export function FeedPostCard({
         </Button>
       </div>
 
-      <div className="space-y-3 border-t border-slate-100 bg-slate-50/70 p-4">
+      <div className="space-y-3 border-t border-[#d9e4f5] bg-[#f6f9ff]/80 p-5">
         {comments.length > 0 ? (
           <div className="space-y-2">
             {comments.slice(-3).map((comment) => (
               <div
-                className="rounded-md bg-white px-3 py-2 text-sm shadow-sm"
+                className="rounded-lg border border-[#d9e4f5] bg-white px-3 py-2 text-sm shadow-sm"
                 key={comment.id}
               >
-                <p className="font-semibold text-slate-950">
+                <p className="font-bold text-[#061b4f]">
                   {comment.author?.full_name ?? "Member"}
                 </p>
-                <p className="mt-1 leading-5 text-slate-700">
+                <p className="mt-1 leading-5 text-[#203b70]">
                   {comment.content}
                 </p>
               </div>
@@ -150,7 +150,7 @@ export function FeedPostCard({
             Add a comment
           </label>
           <input
-            className="h-10 min-w-0 flex-1 rounded-md border border-slate-300 bg-white px-3 text-sm outline-none focus:border-[#0f766e] focus:ring-3 focus:ring-[#0f766e]/15"
+            className="h-10 min-w-0 flex-1 rounded-lg border border-[#b8cae8] bg-white px-3 text-sm text-[#061b4f] outline-none placeholder:text-[#7288b8] focus:border-[#063b86] focus:ring-3 focus:ring-[#063b86]/15"
             id={`comment-${post.id}`}
             maxLength={1000}
             onChange={(event) => onCommentChange(event.target.value)}
@@ -158,7 +158,7 @@ export function FeedPostCard({
             value={commentDraft}
           />
           <Button
-            className="size-10 bg-[#0f766e] p-0 text-white hover:bg-[#115e59]"
+            className="tx-action size-10 p-0"
             disabled={isBusy || !commentDraft.trim()}
             type="submit"
             title="Post comment"

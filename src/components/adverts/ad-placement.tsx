@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Megaphone, MousePointerClick, Sparkles } from "lucide-react";
+import { Megaphone, MousePointerClick, Plane, Sparkles } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { getAdPlacementLabel } from "@/config/adverts";
@@ -169,7 +169,7 @@ export function AdPlacementSlot({
     return (
       <div
         className={cn(
-          "rounded-md border border-slate-200 bg-white p-4 text-sm text-slate-500 shadow-sm",
+          "tx-card-soft p-4 text-sm text-[#4d6b9e]",
           className,
         )}
       >
@@ -186,17 +186,17 @@ export function AdPlacementSlot({
     return (
       <section
         className={cn(
-          "rounded-md border border-dashed border-slate-300 bg-white p-4 shadow-sm",
+          "tx-card-soft p-5",
           className,
         )}
       >
         <div className="flex items-center gap-2">
-          <Megaphone className="size-4 text-[#0f766e]" aria-hidden="true" />
-          <h2 className="text-sm font-semibold text-slate-950">
+          <Megaphone className="size-4 text-[#063b86]" aria-hidden="true" />
+          <h2 className="text-base font-extrabold text-[#061b4f]">
             {getAdPlacementLabel(placementKey)}
           </h2>
         </div>
-        <p className="mt-3 text-sm leading-6 text-slate-600">
+        <p className="mt-3 text-sm leading-6 text-[#4d6b9e]">
           Sponsor inventory is ready. Create an active placement in the advert
           manager to fill this slot.
         </p>
@@ -216,23 +216,27 @@ export function AdPlacementSlot({
   const content = (
     <article
       className={cn(
-        "rounded-md border border-slate-200 bg-white shadow-sm transition hover:shadow-md",
+        "tx-card tx-ad-surface transition hover:shadow-[0_20px_48px_rgba(7,36,91,0.14)]",
         isFeed ? "p-5" : "p-4",
         isBanner ? "p-5" : "",
-        variant === "spotlight" ? "border-[#0f766e]/30" : "",
+        variant === "spotlight" ? "border-[#063b86]/30" : "",
         className,
       )}
     >
+      <Plane
+        className="absolute right-4 top-4 size-8 rotate-[-18deg] text-[#063b86]/85"
+        aria-hidden="true"
+      />
       <div
         className={cn(
-          "flex gap-4",
+          "relative z-10 flex gap-4",
           isBanner ? "flex-col md:flex-row md:items-center" : "flex-col",
         )}
       >
         {image ? (
           <div
             className={cn(
-              "overflow-hidden rounded-md bg-slate-100",
+              "overflow-hidden rounded-lg bg-[#eef5ff]",
               isBanner ? "md:w-56" : "",
             )}
           >
@@ -247,29 +251,29 @@ export function AdPlacementSlot({
 
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1 rounded-md bg-[#e0f2f1] px-2 py-1 text-xs font-semibold text-[#0f766e]">
+            <span className="inline-flex items-center gap-1 rounded-lg bg-[#ffe7ed] px-2 py-1 text-xs font-extrabold text-[#f52968]">
               <Sparkles className="size-3" aria-hidden="true" />
               {ad.creative.sponsor_label}
             </span>
-            <span className="text-xs font-medium text-slate-500">
+            <span className="text-xs font-bold text-[#4d6b9e]">
               {ad.placement_label}
             </span>
           </div>
 
           <h2
             className={cn(
-              "mt-3 font-semibold tracking-normal text-slate-950",
+              "mt-3 font-extrabold tracking-normal text-[#061b4f]",
               isBanner ? "text-xl" : "text-lg",
             )}
           >
             {ad.creative.title}
           </h2>
-          <p className="mt-2 text-sm leading-6 text-slate-600">
+          <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">
             {ad.creative.body}
           </p>
 
           <div className="mt-4">
-            <span className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg bg-[#0f766e] px-3 text-sm font-medium text-white transition group-hover:bg-[#115e59]">
+            <span className="tx-action inline-flex h-10 items-center justify-center gap-1.5 rounded-lg px-4 text-sm font-bold transition">
               <MousePointerClick className="size-4" aria-hidden="true" />
               {ad.creative.cta_label}
             </span>

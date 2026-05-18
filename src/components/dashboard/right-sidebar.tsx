@@ -43,15 +43,15 @@ export function RightSidebar({
         variant="spotlight"
       />
 
-      <section className="rounded-md border border-slate-200 bg-white p-4 shadow-sm">
+      <section className="tx-card-soft p-5">
         <div className="flex items-center gap-2">
-          <TrendingUp className="size-4 text-[#0f766e]" aria-hidden="true" />
-          <h2 className="text-sm font-semibold text-slate-950">Trending</h2>
+          <TrendingUp className="size-4 text-[#063b86]" aria-hidden="true" />
+          <h2 className="text-base font-extrabold text-[#061b4f]">Trending</h2>
         </div>
         <div className="mt-3 space-y-2">
           {trendingTopics.map((topic) => (
             <p
-              className="rounded-md bg-slate-50 px-3 py-2 text-sm font-medium text-slate-700"
+              className="rounded-lg bg-[#f2f6fd] px-3 py-2 text-sm font-bold text-[#061b4f]"
               key={topic}
             >
               #{topic}
@@ -60,24 +60,24 @@ export function RightSidebar({
         </div>
       </section>
 
-      <section className="rounded-md border border-slate-200 bg-white p-4 shadow-sm">
+      <section className="tx-card-soft p-5">
         <div className="flex items-center gap-2">
-          <BriefcaseBusiness className="size-4 text-[#0f766e]" aria-hidden="true" />
-          <h2 className="text-sm font-semibold text-slate-950">Jobs preview</h2>
+          <BriefcaseBusiness className="size-4 text-[#063b86]" aria-hidden="true" />
+          <h2 className="text-base font-extrabold text-[#061b4f]">Jobs preview</h2>
         </div>
         <div className="mt-3 space-y-2">
           {jobHighlights.map((job) => (
-            <p className="text-sm text-slate-700" key={job}>
+            <p className="text-sm font-medium text-[#203b70]" key={job}>
               {job}
             </p>
           ))}
         </div>
       </section>
 
-      <section className="rounded-md border border-slate-200 bg-white p-4 shadow-sm">
+      <section className="tx-card-soft p-5">
         <div className="flex items-center gap-2">
-          <UserPlus className="size-4 text-[#0f766e]" aria-hidden="true" />
-          <h2 className="text-sm font-semibold text-slate-950">
+          <UserPlus className="size-4 text-[#063b86]" aria-hidden="true" />
+          <h2 className="text-base font-extrabold text-[#061b4f]">
             People to follow
           </h2>
         </div>
@@ -89,15 +89,15 @@ export function RightSidebar({
                 key={profile.id}
               >
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-semibold text-slate-950">
+                  <p className="truncate text-sm font-bold text-[#061b4f]">
                     {profile.full_name ?? "Travel member"}
                   </p>
-                  <p className="truncate text-xs text-slate-500">
+                  <p className="truncate text-xs text-[#4d6b9e]">
                     {getRoleLabel(profile.role)}
                   </p>
                 </div>
                 <Button
-                  className="h-8 bg-[#082f49] px-3 text-white hover:bg-[#0c4a6e]"
+                  className="h-8 bg-[#062050] px-3 text-white hover:bg-[#093a83]"
                   disabled={isFollowing}
                   onClick={() => onFollow(profile.id)}
                   type="button"
@@ -107,7 +107,7 @@ export function RightSidebar({
               </div>
             ))
           ) : (
-            <p className="text-sm leading-6 text-slate-600">
+            <p className="text-sm leading-6 text-[#4d6b9e]">
               More member suggestions will appear as the community grows.
             </p>
           )}

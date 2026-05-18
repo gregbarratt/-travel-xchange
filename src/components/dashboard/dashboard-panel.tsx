@@ -3,7 +3,7 @@
 import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Bell, Search } from "lucide-react";
+import { Bell, CheckCircle2, Search, UserRound } from "lucide-react";
 
 import { LogoutButton } from "@/components/auth/logout-button";
 import { AdPlacementSlot } from "@/components/adverts/ad-placement";
@@ -403,23 +403,23 @@ export function DashboardPanel() {
   const memberName = profile?.full_name ?? "Travel Xchange member";
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-slate-950">
+    <div className="tx-dashboard-bg min-h-screen text-[#061b4f]">
       <div className="grid min-h-screen lg:grid-cols-[250px_minmax(0,1fr)]">
         <AppSidebar profile={profile} />
 
         <div className="min-w-0">
-          <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur">
-            <div className="flex items-center justify-between gap-4 px-4 py-3 sm:px-6">
+          <header className="tx-topline sticky top-0 z-20 backdrop-blur">
+            <div className="flex items-center justify-between gap-4 px-5 py-5 sm:px-8">
               <div className="min-w-0">
-                <p className="text-xs font-semibold uppercase text-[#0f766e]">
+                <p className="text-xs font-extrabold uppercase tracking-wide text-[#063b86]">
                   Xchange Feed
                 </p>
-                <h1 className="truncate text-xl font-semibold tracking-normal text-slate-950">
+                <h1 className="truncate text-2xl font-extrabold tracking-normal text-[#061b4f]">
                   Welcome, {memberName}
                 </h1>
               </div>
-              <div className="hidden min-w-64 items-center gap-2 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-500 md:flex">
-                <Search className="size-4" aria-hidden="true" />
+              <div className="hidden min-w-72 items-center gap-3 rounded-lg border border-[#b8cae8] bg-white/85 px-4 py-3 text-sm text-[#4d6b9e] shadow-[0_10px_24px_rgba(7,36,91,0.1)] md:flex">
+                <Search className="size-4 text-[#063b86]" aria-hidden="true" />
                 Search arrives in Phase 15
               </div>
               <div className="flex items-center gap-2">
@@ -427,15 +427,16 @@ export function DashboardPanel() {
                   <Link
                     className={cn(
                       buttonVariants({ variant: "outline", size: "lg" }),
-                      "hidden sm:inline-flex",
+                      "hidden border-[#b8cae8] bg-white/90 px-4 text-[#061b4f] shadow-[0_10px_22px_rgba(7,36,91,0.08)] hover:bg-white sm:inline-flex",
                     )}
                     href={`/profile/${profile.id}`}
                   >
+                    <UserRound className="size-4" aria-hidden="true" />
                     Profile
                   </Link>
                 ) : null}
                 <Link
-                  className="inline-flex size-9 items-center justify-center rounded-md text-slate-600 hover:bg-slate-100 hover:text-slate-950"
+                  className="inline-flex size-10 items-center justify-center rounded-lg text-[#061b4f] hover:bg-white/80"
                   href="/notifications"
                   title="Notifications"
                 >
@@ -447,49 +448,55 @@ export function DashboardPanel() {
             </div>
           </header>
 
-          <main className="mx-auto grid w-full max-w-7xl gap-5 px-4 py-5 sm:px-6 xl:grid-cols-[minmax(0,1fr)_320px]">
+          <main className="mx-auto grid w-full max-w-[1520px] gap-6 px-5 py-6 sm:px-8 xl:grid-cols-[minmax(0,1fr)_340px]">
             <section className="min-w-0 space-y-4">
               {!configured ? (
-                <div className="rounded-md border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
+                <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
                   Preview mode: Supabase is not connected yet. Add `.env.local`,
                   run the Phase 2 and Phase 3 SQL in Supabase, then restart the
                   app to test real feed data.
                 </div>
               ) : null}
 
-              <div className="rounded-md border border-slate-200 bg-white p-4 shadow-sm">
+              <div className="tx-card p-5">
                 <div className="grid gap-3 md:grid-cols-3">
                   <div>
-                    <p className="text-xs font-semibold uppercase text-slate-500">
+                    <p className="text-xs font-extrabold uppercase text-[#6f86b5]">
                       Email
                     </p>
-                    <p className="mt-1 break-words text-sm font-medium text-slate-900">
+                    <p className="mt-1 break-words text-base font-bold text-[#061b4f]">
                       {email ?? "Not signed in"}
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs font-semibold uppercase text-slate-500">
+                    <p className="text-xs font-extrabold uppercase text-[#6f86b5]">
                       Role
                     </p>
-                    <p className="mt-1 text-sm font-medium text-slate-900">
+                    <p className="mt-1 text-base font-bold text-[#061b4f]">
                       {profile?.role ? getRoleLabel(profile.role) : "Not selected"}
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs font-semibold uppercase text-slate-500">
+                    <p className="text-xs font-extrabold uppercase text-[#6f86b5]">
                       Onboarding
                     </p>
-                    <p className="mt-1 text-sm font-medium text-slate-900">
+                    <p className="mt-1 inline-flex items-center gap-2 text-base font-bold text-[#061b4f]">
                       {profile?.onboarding_completed ? "Complete" : "Not complete"}
+                      {profile?.onboarding_completed ? (
+                        <CheckCircle2
+                          className="size-4 text-[#063b86]"
+                          aria-hidden="true"
+                        />
+                      ) : null}
                     </p>
                   </div>
                 </div>
                 {profile?.id ? (
-                  <div className="mt-4 flex flex-wrap gap-2 border-t border-slate-100 pt-4">
+                  <div className="mt-5 flex flex-wrap gap-3 border-t border-[#d9e4f5] pt-5">
                     <Link
                       className={cn(
                         buttonVariants({ size: "lg" }),
-                        "bg-[#0f766e] text-white hover:bg-[#115e59]",
+                        "tx-action px-5",
                       )}
                       href={`/profile/${profile.id}`}
                     >
@@ -498,7 +505,7 @@ export function DashboardPanel() {
                     <Link
                       className={cn(
                         buttonVariants({ variant: "outline", size: "lg" }),
-                        "bg-white",
+                        "border-[#b8cae8] bg-white px-5 text-[#061b4f] hover:bg-[#f4f8ff]",
                       )}
                       href="/profile/edit"
                     >
@@ -525,10 +532,10 @@ export function DashboardPanel() {
                 {feedTopics.map((topic) => (
                   <button
                     className={cn(
-                      "min-w-max rounded-md border px-3 py-2 text-sm font-medium transition",
+                      "min-w-max rounded-lg border px-4 py-2 text-sm font-bold transition",
                       activeTopic === topic.value
-                        ? "border-[#0f766e] bg-[#e0f2f1] text-[#0f766e]"
-                        : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50",
+                        ? "border-[#ff3d61] bg-white text-[#f52968] shadow-[0_10px_22px_rgba(245,41,104,0.12)]"
+                        : "border-[#c8d8ef] bg-white/86 text-[#061b4f] hover:border-[#ff7a2f] hover:text-[#f52968]",
                     )}
                     key={topic.value}
                     onClick={() => setActiveTopic(topic.value as TopicFilter)}
@@ -540,23 +547,23 @@ export function DashboardPanel() {
               </div>
 
               {feedError ? (
-                <div className="rounded-md border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
+                <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
                   {feedError}
                 </div>
               ) : null}
 
               {isLoading || isFeedLoading ? (
-                <div className="rounded-md border border-slate-200 bg-white p-6 text-sm text-slate-600 shadow-sm">
+                <div className="tx-card p-6 text-sm text-[#4d6b9e]">
                   Loading the Xchange Feed...
                 </div>
               ) : null}
 
               {!isFeedLoading && posts.length === 0 && !feedError ? (
-                <div className="rounded-md border border-slate-200 bg-white p-8 text-center shadow-sm">
-                  <h2 className="text-lg font-semibold text-slate-950">
+                <div className="tx-card p-8 text-center">
+                  <h2 className="text-lg font-bold text-[#061b4f]">
                     Start the first conversation
                   </h2>
-                  <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-slate-600">
+                  <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-[#4d6b9e]">
                     Post a supplier update, ask a trade question, or share a
                     useful note for other travel professionals.
                   </p>

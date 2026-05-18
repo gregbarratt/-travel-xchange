@@ -32,7 +32,7 @@ export function LogoutButton() {
 
   return (
     <Button
-      className="bg-[#082f49] hover:bg-[#0c4a6e]"
+      className="bg-[#062050] px-4 text-white shadow-[0_10px_22px_rgba(7,36,91,0.16)] hover:bg-[#093a83]"
       disabled={isSigningOut}
       onClick={handleLogout}
       type="button"

@@ -54,23 +54,26 @@ export function AppSidebar({
   );
 
   return (
-    <aside className="lg:sticky lg:top-0 lg:h-screen lg:border-r lg:border-slate-200 lg:bg-white">
-      <div className="flex h-full flex-col gap-5 p-4">
+    <aside className="tx-sidebar-bg lg:sticky lg:top-0 lg:h-screen">
+      <div className="relative z-10 flex h-full flex-col gap-5 p-5">
         <Link className="flex items-center gap-3" href="/dashboard">
-          <span className="flex size-10 items-center justify-center rounded-md bg-[#082f49] text-white">
-            TX
-          </span>
+          <span className="tx-brand-x" aria-hidden="true" />
           <span>
-            <span className="block text-sm font-semibold text-slate-950">
-              Travel Xchange
+            <span className="block text-2xl font-extrabold leading-none tracking-normal text-white">
+              Travel
             </span>
-            <span className="block text-xs text-slate-500">
+            <span className="block text-sm font-semibold uppercase tracking-[0.24em] text-white/90">
+              Xchange
+            </span>
+            <span className="mt-5 block text-xs text-white/68">
               Member platform
             </span>
           </span>
         </Link>
 
-        <nav className="flex gap-2 overflow-x-auto pb-1 lg:flex-col lg:overflow-visible lg:pb-0">
+        <div className="h-px bg-white/12" />
+
+        <nav className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:flex lg:flex-col">
           {visibleItems.map((item) => {
             const Icon = navIcons[item.label as keyof typeof navIcons] ?? Home;
             const isLive = item.phase === "Live";
@@ -86,11 +89,11 @@ export function AppSidebar({
               <Link
                 aria-current={isActive ? "page" : undefined}
                 className={[
-                  "flex min-w-max items-center justify-between gap-3 rounded-md px-3 py-2 text-sm font-medium transition",
+                  "flex min-w-max items-center justify-between gap-3 rounded-lg border px-3 py-2.5 text-sm font-semibold transition",
                   isActive
-                    ? "bg-[#e0f2f1] text-[#0f766e]"
-                    : "text-slate-600 hover:bg-slate-100 hover:text-slate-950",
-                  !isLive ? "opacity-75" : "",
+                    ? "border-[#ff6f38]/80 bg-[linear-gradient(110deg,rgba(245,41,104,0.78),rgba(255,122,47,0.82))] text-white shadow-[0_12px_28px_rgba(245,41,104,0.24)]"
+                    : "border-transparent text-white/88 hover:border-white/12 hover:bg-white/10 hover:text-white",
+                  !isLive ? "opacity-80" : "",
                 ].join(" ")}
                 href={href}
                 key={item.label}
@@ -100,7 +103,7 @@ export function AppSidebar({
                   {item.label}
                 </span>
                 {!isLive ? (
-                  <span className="hidden rounded bg-slate-100 px-2 py-0.5 text-[11px] font-semibold text-slate-500 lg:inline">
+                  <span className="hidden rounded bg-white/10 px-2 py-0.5 text-[11px] font-semibold text-white/58 lg:inline">
                     {item.phase}
                   </span>
                 ) : null}
@@ -108,6 +111,8 @@ export function AppSidebar({
             );
           })}
         </nav>
+
+        <div className="tx-sidebar-identity mt-auto hidden lg:block" aria-hidden="true" />
       </div>
     </aside>
   );
