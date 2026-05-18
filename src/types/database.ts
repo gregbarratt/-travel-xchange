@@ -508,6 +508,77 @@ export type AnswerWithMeta = Answer & {
   is_voted_by_current_user: boolean;
 };
 
+export type Conversation = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  created_by: string;
+  title: string | null;
+  conversation_type: "direct" | "group";
+  status: "active" | "archived" | "hidden";
+};
+
+export type ConversationMember = {
+  id: string;
+  created_at: string;
+  conversation_id: string;
+  user_id: string;
+  role: "owner" | "member";
+  last_read_at: string | null;
+  is_muted: boolean;
+  status: "active" | "left" | "removed";
+};
+
+export type DirectMessage = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  conversation_id: string;
+  sender_id: string;
+  content: string;
+  status: "sent" | "hidden" | "deleted";
+};
+
+export type AppNotification = {
+  id: string;
+  created_at: string;
+  user_id: string;
+  actor_id: string | null;
+  type:
+    | "message"
+    | "reply"
+    | "best_answer"
+    | "group_post"
+    | "job_application"
+    | "event_registration"
+    | "system";
+  title: string;
+  body: string | null;
+  href: string | null;
+  is_read: boolean;
+  status: "active" | "dismissed";
+};
+
+export type ConversationMemberWithProfile = ConversationMember & {
+  profile: Pick<Profile, "id" | "full_name" | "headline" | "role"> | null;
+};
+
+export type ConversationWithMeta = Conversation & {
+  display_title: string;
+  last_message: DirectMessage | null;
+  members: ConversationMemberWithProfile[];
+  other_members: ConversationMemberWithProfile[];
+  unread_count: number;
+};
+
+export type DirectMessageWithAuthor = DirectMessage & {
+  author: Pick<Profile, "id" | "full_name" | "headline" | "role"> | null;
+};
+
+export type NotificationWithActor = AppNotification & {
+  actor: Pick<Profile, "id" | "full_name" | "headline" | "role"> | null;
+};
+
 export type FeedProfile = Pick<
   Profile,
   "id" | "full_name" | "headline" | "role" | "verification_tier"
@@ -793,6 +864,44 @@ export type Database = {
           vote_type: "upvote" | "helpful";
         };
         Update: Partial<QuestionVote>;
+        Relationships: [];
+      };
+      conversations: {
+        Row: Conversation;
+        Insert: Partial<Conversation> & {
+          created_by: string;
+        };
+        Update: Partial<Conversation>;
+        Relationships: [];
+      };
+      conversation_members: {
+        Row: ConversationMember;
+        Insert: Partial<ConversationMember> & {
+          conversation_id: string;
+          user_id: string;
+        };
+        Update: Partial<ConversationMember>;
+        Relationships: [];
+      };
+      messages: {
+        Row: DirectMessage;
+        Insert: Partial<DirectMessage> & {
+          conversation_id: string;
+          sender_id: string;
+          content: string;
+        };
+        Update: Partial<DirectMessage>;
+        Relationships: [];
+      };
+      notifications: {
+        Row: AppNotification;
+        Insert: Partial<AppNotification> & {
+          user_id: string;
+          actor_id: string;
+          type: AppNotification["type"];
+          title: string;
+        };
+        Update: Partial<AppNotification>;
         Relationships: [];
       };
     };

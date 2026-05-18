@@ -6,8 +6,22 @@ to GitHub before the next phase begins.
 
 ## Current status
 
-Phase 10 adds the support and Q&A hub. Messaging, payments, and full admin
+Phase 11 adds basic member messaging and notifications. Payments and full admin
 features are still intentionally reserved for later phases.
+
+Built by Phase 11:
+
+- Messages page at `/messages`
+- New conversation form
+- Conversation list
+- Message thread view
+- Send message form
+- Notifications page at `/notifications`
+- Mark notification as read
+- Mark all notifications as read
+- Phase 11 Supabase SQL schema in `supabase/phase-11-messaging.sql`
+- Database types for `conversations`, `conversation_members`, `messages`, and
+  `notifications`
 
 Built by Phase 10:
 
@@ -155,9 +169,11 @@ Built by Phase 2:
     the training academy tables and starter courses.
 11. If Phase 9 is already installed, run `supabase/phase-10-support.sql` to add
     the support and Q&A tables.
-12. Copy `.env.example` to `.env.local`.
-13. Add your Supabase project URL and anon key to `.env.local`.
-14. Restart the local app.
+12. If Phase 10 is already installed, run `supabase/phase-11-messaging.sql` to
+    add the messages and notifications tables.
+13. Copy `.env.example` to `.env.local`.
+14. Add your Supabase project URL and anon key to `.env.local`.
+15. Restart the local app.
 
 Do not put the service role key in browser code. Keep real keys out of Git.
 

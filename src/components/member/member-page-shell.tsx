@@ -6,7 +6,6 @@ import { Bell } from "lucide-react";
 
 import { LogoutButton } from "@/components/auth/logout-button";
 import { AppSidebar } from "@/components/dashboard/app-sidebar";
-import { Button } from "@/components/ui/button";
 import type { Profile } from "@/types/database";
 
 type MemberPageShellProps = {
@@ -50,15 +49,14 @@ export function MemberPageShell({
                 >
                   Feed
                 </Link>
-                <Button
-                  className="size-9 bg-transparent p-0 text-slate-600 hover:bg-slate-100"
-                  title="Notifications placeholder"
-                  type="button"
-                  variant="ghost"
+                <Link
+                  className="inline-flex size-9 items-center justify-center rounded-md text-slate-600 hover:bg-slate-100 hover:text-slate-950"
+                  href="/notifications"
+                  title="Notifications"
                 >
                   <Bell className="size-4" aria-hidden="true" />
-                  <span className="sr-only">Notifications placeholder</span>
-                </Button>
+                  <span className="sr-only">Notifications</span>
+                </Link>
                 <LogoutButton />
               </div>
             </div>
