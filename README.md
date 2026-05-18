@@ -6,8 +6,23 @@ to GitHub before the next phase begins.
 
 ## Current status
 
-Phase 8 adds the events directory. Training, support, messaging, payments, and
-full admin features are still intentionally reserved for later phases.
+Phase 9 adds the training academy. Support, messaging, payments, and full admin
+features are still intentionally reserved for later phases.
+
+Built by Phase 9:
+
+- Training library page at `/training`
+- Course detail page at `/training/[courseId]`
+- Lesson page at `/training/[courseId]/lesson/[lessonId]`
+- Starter course library seeded through Supabase SQL
+- Course categories and level filters
+- Course enrolment placeholder
+- Lesson progress tracking
+- Supplier training module placeholder
+- Certificate placeholder
+- Phase 9 Supabase SQL schema in `supabase/phase-9-training.sql`
+- Database types for `courses`, `lessons`, `course_enrolments`, and
+  `lesson_progress`
 
 Built by Phase 8:
 
@@ -123,9 +138,11 @@ Built by Phase 2:
    news and supplier update tables.
 9. If Phase 7 is already installed, run `supabase/phase-8-events.sql` to add
    the events and registrations tables.
-10. Copy `.env.example` to `.env.local`.
-11. Add your Supabase project URL and anon key to `.env.local`.
-12. Restart the local app.
+10. If Phase 8 is already installed, run `supabase/phase-9-training.sql` to add
+    the training academy tables and starter courses.
+11. Copy `.env.example` to `.env.local`.
+12. Add your Supabase project URL and anon key to `.env.local`.
+13. Restart the local app.
 
 Do not put the service role key in browser code. Keep real keys out of Git.
 

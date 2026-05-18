@@ -363,6 +363,87 @@ export type EventWithMeta = Event & {
   is_registered_by_current_user: boolean;
 };
 
+export type CourseCategory =
+  | "destination"
+  | "cruise"
+  | "sales_marketing"
+  | "compliance"
+  | "technology"
+  | "supplier_training"
+  | "new_starter"
+  | "leadership";
+
+export type CourseLevel = "beginner" | "intermediate" | "advanced";
+
+export type CourseStatus = "draft" | "published" | "hidden" | "archived";
+
+export type Course = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  created_by: string | null;
+  company_id: string | null;
+  title: string;
+  slug: string;
+  description: string;
+  category: CourseCategory;
+  level: CourseLevel;
+  duration_minutes: number | null;
+  image_url: string | null;
+  is_supplier_sponsored: boolean;
+  certificate_available: boolean;
+  monetisation_type: "free" | "premium_placeholder" | "sponsored";
+  visibility: "public" | "members";
+  status: CourseStatus;
+};
+
+export type Lesson = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  course_id: string;
+  title: string;
+  slug: string;
+  summary: string | null;
+  content: string;
+  video_url: string | null;
+  duration_minutes: number | null;
+  display_order: number;
+  status: "draft" | "published" | "hidden";
+};
+
+export type CourseEnrolment = {
+  id: string;
+  created_at: string;
+  course_id: string;
+  user_id: string;
+  status: "active" | "completed" | "cancelled";
+  started_at: string;
+  completed_at: string | null;
+};
+
+export type LessonProgress = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  course_id: string;
+  lesson_id: string;
+  user_id: string;
+  status: "not_started" | "in_progress" | "completed";
+  completed_at: string | null;
+};
+
+export type CourseWithMeta = Course & {
+  company: Pick<Company, "id" | "name" | "company_type"> | null;
+  lesson_count: number;
+  completed_lesson_count: number;
+  enrolment: CourseEnrolment | null;
+};
+
+export type LessonWithProgress = Lesson & {
+  progress: LessonProgress | null;
+};
+
 export type FeedProfile = Pick<
   Profile,
   "id" | "full_name" | "headline" | "role" | "verification_tier"
@@ -577,6 +658,46 @@ export type Database = {
           user_id: string;
         };
         Update: Partial<EventRegistration>;
+        Relationships: [];
+      };
+      courses: {
+        Row: Course;
+        Insert: Partial<Course> & {
+          title: string;
+          slug: string;
+          description: string;
+        };
+        Update: Partial<Course>;
+        Relationships: [];
+      };
+      lessons: {
+        Row: Lesson;
+        Insert: Partial<Lesson> & {
+          course_id: string;
+          title: string;
+          slug: string;
+          content: string;
+        };
+        Update: Partial<Lesson>;
+        Relationships: [];
+      };
+      course_enrolments: {
+        Row: CourseEnrolment;
+        Insert: Partial<CourseEnrolment> & {
+          course_id: string;
+          user_id: string;
+        };
+        Update: Partial<CourseEnrolment>;
+        Relationships: [];
+      };
+      lesson_progress: {
+        Row: LessonProgress;
+        Insert: Partial<LessonProgress> & {
+          course_id: string;
+          lesson_id: string;
+          user_id: string;
+        };
+        Update: Partial<LessonProgress>;
         Relationships: [];
       };
     };
