@@ -1,7 +1,8 @@
 "use client";
 
-import { BriefcaseBusiness, Megaphone, TrendingUp, UserPlus } from "lucide-react";
+import { BriefcaseBusiness, TrendingUp, UserPlus } from "lucide-react";
 
+import { AdPlacementSlot } from "@/components/adverts/ad-placement";
 import { Button } from "@/components/ui/button";
 import { getRoleLabel } from "@/config/roles";
 import type { FeedProfile } from "@/types/database";
@@ -32,18 +33,15 @@ export function RightSidebar({
 }: RightSidebarProps) {
   return (
     <aside className="space-y-4">
-      <section className="rounded-md border border-slate-200 bg-white p-4 shadow-sm">
-        <div className="flex items-center gap-2">
-          <Megaphone className="size-4 text-[#0f766e]" aria-hidden="true" />
-          <h2 className="text-sm font-semibold text-slate-950">
-            Advert placeholder
-          </h2>
-        </div>
-        <div className="mt-4 rounded-md border border-dashed border-slate-300 bg-slate-50 p-4 text-sm leading-6 text-slate-600">
-          Supplier spotlight and sponsored placements will appear here in a
-          later revenue phase.
-        </div>
-      </section>
+      <AdPlacementSlot
+        placementKey="feed_right_sidebar_ad"
+        variant="sidebar"
+      />
+
+      <AdPlacementSlot
+        placementKey="supplier_spotlight_card"
+        variant="spotlight"
+      />
 
       <section className="rounded-md border border-slate-200 bg-white p-4 shadow-sm">
         <div className="flex items-center gap-2">

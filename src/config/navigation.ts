@@ -23,7 +23,7 @@ export const futureAppRoutes = [
   { label: "Messages", href: "/messages" },
   { label: "Notifications", href: "/notifications" },
   { label: "Profile", href: "/profile" },
-  { label: "Admin", href: "/admin" },
+  { label: "Admin", href: "/admin/adverts" },
 ];
 
 export const appNavigation = [
@@ -39,7 +39,7 @@ export const appNavigation = [
   { label: "Messages", href: "/messages", phase: "Live" },
   { label: "Notifications", href: "/notifications", phase: "Live" },
   { label: "Profile", href: "/profile/edit", phase: "Live" },
-  { label: "Admin", href: "#admin", phase: "Phase 14", adminOnly: true },
+  { label: "Admin", href: "/admin/adverts", phase: "Phase 12", adminOnly: true },
 ];
 
 export const feedTopics = [

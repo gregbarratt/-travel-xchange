@@ -579,6 +579,118 @@ export type NotificationWithActor = AppNotification & {
   actor: Pick<Profile, "id" | "full_name" | "headline" | "role"> | null;
 };
 
+export type AdPackageType =
+  | "supplier_spotlight"
+  | "feed_sidebar"
+  | "sponsored_post"
+  | "newsletter_sponsor"
+  | "featured_supplier"
+  | "job_board_package";
+
+export type AdPricingModel =
+  | "cpm"
+  | "cpc"
+  | "fixed_monthly"
+  | "sponsorship_placeholder";
+
+export type AdPlacementKey =
+  | "homepage_hero_banner"
+  | "feed_right_sidebar_ad"
+  | "feed_sponsored_post"
+  | "jobs_featured_employer"
+  | "news_sponsored_article"
+  | "events_sponsor_banner"
+  | "training_course_sponsor"
+  | "group_sponsor"
+  | "newsletter_sponsor"
+  | "mobile_inter_card_ad"
+  | "supplier_spotlight_card";
+
+export type Advertiser = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  created_by: string;
+  company_id: string | null;
+  name: string;
+  website_url: string | null;
+  contact_email: string | null;
+  billing_status: "placeholder" | "trial" | "active" | "past_due";
+  status: "draft" | "active" | "paused" | "suspended";
+};
+
+export type AdCampaign = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  advertiser_id: string;
+  created_by: string;
+  name: string;
+  package_type: AdPackageType;
+  pricing_model: AdPricingModel;
+  budget_amount: number | null;
+  starts_at: string | null;
+  ends_at: string | null;
+  status: "draft" | "active" | "paused" | "ended";
+};
+
+export type AdCreative = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  campaign_id: string;
+  created_by: string;
+  title: string;
+  body: string;
+  cta_label: string;
+  image_url: string | null;
+  target_url: string | null;
+  sponsor_label: string;
+  status: "draft" | "active" | "paused" | "archived";
+};
+
+export type AdPlacement = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  campaign_id: string;
+  creative_id: string;
+  created_by: string;
+  placement_key: AdPlacementKey;
+  placement_label: string;
+  weight: number;
+  starts_at: string | null;
+  ends_at: string | null;
+  status: "draft" | "active" | "paused" | "ended";
+};
+
+export type AdImpression = {
+  id: string;
+  created_at: string;
+  placement_id: string | null;
+  creative_id: string | null;
+  campaign_id: string | null;
+  user_id: string | null;
+  page_path: string | null;
+  metadata: Record<string, unknown>;
+};
+
+export type AdClick = {
+  id: string;
+  created_at: string;
+  placement_id: string | null;
+  creative_id: string | null;
+  campaign_id: string | null;
+  user_id: string | null;
+  page_path: string | null;
+  target_url: string | null;
+  metadata: Record<string, unknown>;
+};
+
+export type AdPlacementWithCreative = AdPlacement & {
+  creative: AdCreative;
+};
+
 export type FeedProfile = Pick<
   Profile,
   "id" | "full_name" | "headline" | "role" | "verification_tier"
@@ -902,6 +1014,60 @@ export type Database = {
           title: string;
         };
         Update: Partial<AppNotification>;
+        Relationships: [];
+      };
+      advertisers: {
+        Row: Advertiser;
+        Insert: Partial<Advertiser> & {
+          created_by: string;
+          name: string;
+        };
+        Update: Partial<Advertiser>;
+        Relationships: [];
+      };
+      ad_campaigns: {
+        Row: AdCampaign;
+        Insert: Partial<AdCampaign> & {
+          advertiser_id: string;
+          created_by: string;
+          name: string;
+        };
+        Update: Partial<AdCampaign>;
+        Relationships: [];
+      };
+      ad_creatives: {
+        Row: AdCreative;
+        Insert: Partial<AdCreative> & {
+          campaign_id: string;
+          created_by: string;
+          title: string;
+          body: string;
+        };
+        Update: Partial<AdCreative>;
+        Relationships: [];
+      };
+      ad_placements: {
+        Row: AdPlacement;
+        Insert: Partial<AdPlacement> & {
+          campaign_id: string;
+          creative_id: string;
+          created_by: string;
+          placement_key: AdPlacementKey;
+          placement_label: string;
+        };
+        Update: Partial<AdPlacement>;
+        Relationships: [];
+      };
+      ad_impressions: {
+        Row: AdImpression;
+        Insert: Partial<AdImpression>;
+        Update: Partial<AdImpression>;
+        Relationships: [];
+      };
+      ad_clicks: {
+        Row: AdClick;
+        Insert: Partial<AdClick>;
+        Update: Partial<AdClick>;
         Relationships: [];
       };
     };

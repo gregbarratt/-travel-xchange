@@ -6,7 +6,8 @@ import { useRouter } from "next/navigation";
 import { Bell, Search } from "lucide-react";
 
 import { LogoutButton } from "@/components/auth/logout-button";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { AdPlacementSlot } from "@/components/adverts/ad-placement";
+import { buttonVariants } from "@/components/ui/button";
 import { AppSidebar } from "@/components/dashboard/app-sidebar";
 import { FeedComposer } from "@/components/dashboard/feed-composer";
 import { FeedPostCard } from "@/components/dashboard/feed-post-card";
@@ -433,15 +434,14 @@ export function DashboardPanel() {
                     Profile
                   </Link>
                 ) : null}
-                <Button
-                  className="size-9 bg-transparent p-0 text-slate-600 hover:bg-slate-100"
-                  type="button"
-                  variant="ghost"
-                  title="Notifications placeholder"
+                <Link
+                  className="inline-flex size-9 items-center justify-center rounded-md text-slate-600 hover:bg-slate-100 hover:text-slate-950"
+                  href="/notifications"
+                  title="Notifications"
                 >
                   <Bell className="size-4" aria-hidden="true" />
-                  <span className="sr-only">Notifications placeholder</span>
-                </Button>
+                  <span className="sr-only">Notifications</span>
+                </Link>
                 <LogoutButton />
               </div>
             </div>
@@ -513,6 +513,12 @@ export function DashboardPanel() {
                 isSubmitting={isSubmittingPost}
                 onSubmit={handleCreatePost}
                 profile={profile}
+              />
+
+              <AdPlacementSlot
+                fallback="none"
+                placementKey="feed_sponsored_post"
+                variant="feed"
               />
 
               <div className="flex gap-2 overflow-x-auto pb-1">

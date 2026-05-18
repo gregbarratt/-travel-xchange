@@ -6,8 +6,26 @@ to GitHub before the next phase begins.
 
 ## Current status
 
-Phase 11 adds basic member messaging and notifications. Payments and full admin
-features are still intentionally reserved for later phases.
+Phase 12 adds the first advertising and sponsorship system. Payments and full
+admin moderation features are still intentionally reserved for later phases.
+
+Built by Phase 12:
+
+- Advert manager page at `/admin/adverts`
+- Advertiser creation
+- Campaign creation
+- Creative creation
+- Placement creation
+- Reusable ad placement component
+- Feed sponsored post placement
+- Feed right sidebar advert placement
+- Supplier spotlight card placement
+- Impression and click tracking tables
+- Advertising pricing placeholders for CPM, CPC, fixed monthly sponsorship, and
+  manual sponsorship packages
+- Phase 12 Supabase SQL schema in `supabase/phase-12-adverts.sql`
+- Database types for `advertisers`, `ad_campaigns`, `ad_creatives`,
+  `ad_placements`, `ad_impressions`, and `ad_clicks`
 
 Built by Phase 11:
 
@@ -171,9 +189,11 @@ Built by Phase 2:
     the support and Q&A tables.
 12. If Phase 10 is already installed, run `supabase/phase-11-messaging.sql` to
     add the messages and notifications tables.
-13. Copy `.env.example` to `.env.local`.
-14. Add your Supabase project URL and anon key to `.env.local`.
-15. Restart the local app.
+13. If Phase 11 is already installed, run `supabase/phase-12-adverts.sql` to add
+    the advertising and sponsorship tables.
+14. Copy `.env.example` to `.env.local`.
+15. Add your Supabase project URL and anon key to `.env.local`.
+16. Restart the local app.
 
 Do not put the service role key in browser code. Keep real keys out of Git.
 
