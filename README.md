@@ -6,9 +6,21 @@ to GitHub before the next phase begins.
 
 ## Current status
 
-Phase 7 adds the news and supplier updates area. Events, training, support,
-messaging, payments, and full admin features are still intentionally reserved
-for later phases.
+Phase 8 adds the events directory. Training, support, messaging, payments, and
+full admin features are still intentionally reserved for later phases.
+
+Built by Phase 8:
+
+- Events listing page at `/events`
+- Event detail page at `/events/[id]`
+- Create event page at `/events/create`
+- Event type and format filters
+- Search by title, description, venue, or location
+- Event registration placeholder
+- Calendar style sidebar placeholder
+- Featured event placeholder
+- Phase 8 Supabase SQL schema in `supabase/phase-8-events.sql`
+- Database types for `events` and `event_registrations`
 
 Built by Phase 7:
 
@@ -109,9 +121,11 @@ Built by Phase 2:
    jobs board tables.
 8. If Phase 6 is already installed, run `supabase/phase-7-news.sql` to add the
    news and supplier update tables.
-9. Copy `.env.example` to `.env.local`.
-10. Add your Supabase project URL and anon key to `.env.local`.
-11. Restart the local app.
+9. If Phase 7 is already installed, run `supabase/phase-8-events.sql` to add
+   the events and registrations tables.
+10. Copy `.env.example` to `.env.local`.
+11. Add your Supabase project URL and anon key to `.env.local`.
+12. Restart the local app.
 
 Do not put the service role key in browser code. Keep real keys out of Git.
 

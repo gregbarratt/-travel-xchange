@@ -32,7 +32,7 @@ export const appNavigation = [
   { label: "News", href: "/news", phase: "Live" },
   { label: "Groups", href: "/groups", phase: "Live" },
   { label: "Jobs", href: "/jobs", phase: "Live" },
-  { label: "Events", href: "#events", phase: "Phase 8" },
+  { label: "Events", href: "/events", phase: "Live" },
   { label: "Training", href: "#training", phase: "Phase 9" },
   { label: "Suppliers", href: "#suppliers", phase: "Live" },
   { label: "Support", href: "#support", phase: "Phase 10" },

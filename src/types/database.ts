@@ -304,6 +304,65 @@ export type ArticleWithMeta = Article & {
   tags: string[];
 };
 
+export type EventType =
+  | "webinar"
+  | "fam_trip"
+  | "roadshow"
+  | "conference"
+  | "training_day"
+  | "networking"
+  | "virtual_event"
+  | "trade_show";
+
+export type EventDeliveryFormat = "online" | "in_person" | "hybrid";
+
+export type EventStatus =
+  | "draft"
+  | "published"
+  | "cancelled"
+  | "hidden"
+  | "archived";
+
+export type Event = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  created_by: string;
+  company_id: string | null;
+  title: string;
+  slug: string;
+  description: string;
+  event_type: EventType;
+  delivery_format: EventDeliveryFormat;
+  starts_at: string;
+  ends_at: string | null;
+  timezone: string;
+  venue_name: string | null;
+  location: string | null;
+  registration_url: string | null;
+  capacity: number | null;
+  image_url: string | null;
+  is_featured: boolean;
+  visibility: "public" | "members";
+  status: EventStatus;
+};
+
+export type EventRegistration = {
+  id: string;
+  created_at: string;
+  event_id: string;
+  user_id: string;
+  note: string | null;
+  status: "interested" | "registered" | "cancelled" | "attended";
+};
+
+export type EventWithMeta = Event & {
+  company: Pick<Company, "id" | "name" | "company_type"> | null;
+  creator: Pick<Profile, "id" | "full_name" | "headline" | "role"> | null;
+  registration_count: number;
+  is_registered_by_current_user: boolean;
+};
+
 export type FeedProfile = Pick<
   Profile,
   "id" | "full_name" | "headline" | "role" | "verification_tier"
@@ -497,6 +556,27 @@ export type Database = {
           name: string;
         };
         Update: Partial<ArticleTag>;
+        Relationships: [];
+      };
+      events: {
+        Row: Event;
+        Insert: Partial<Event> & {
+          created_by: string;
+          title: string;
+          slug: string;
+          description: string;
+          starts_at: string;
+        };
+        Update: Partial<Event>;
+        Relationships: [];
+      };
+      event_registrations: {
+        Row: EventRegistration;
+        Insert: Partial<EventRegistration> & {
+          event_id: string;
+          user_id: string;
+        };
+        Update: Partial<EventRegistration>;
         Relationships: [];
       };
     };
