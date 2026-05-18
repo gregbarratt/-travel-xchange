@@ -6,9 +6,36 @@ to GitHub before the next phase begins.
 
 ## Current status
 
-Phase 1 adds the first public brand, layout, and landing page. Authentication,
-profiles, feeds, database tables, and paid features are still intentionally
-reserved for later phases.
+Phase 2 adds the first authentication and onboarding flow. Profiles, feeds,
+groups, jobs, news, events, training, support, messaging, payments, and admin
+features are still intentionally reserved for later phases.
+
+Built by Phase 2:
+
+- Supabase browser client setup
+- Sign up page at `/register`
+- Login page at `/login`
+- Forgot password placeholder
+- Onboarding page at `/onboarding`
+- Role selection and starter profile/company form
+- Starter dashboard at `/dashboard`
+- Phase 2 Supabase SQL schema in `supabase/schema.sql`
+- Database types for `profiles`, `companies`, and `user_roles`
+
+## Supabase setup for Phase 2
+
+1. Create a Supabase project.
+2. In Supabase, open the SQL editor.
+3. Run the SQL from `supabase/schema.sql`.
+4. Copy `.env.example` to `.env.local`.
+5. Add your Supabase project URL and anon key to `.env.local`.
+6. Restart the local app.
+
+Do not put the service role key in browser code. Keep real keys out of Git.
+
+## Phase 1 status
+
+Phase 1 adds the first public brand, layout, and landing page.
 
 Built by Phase 1:
 

@@ -1,6 +1,6 @@
 # Supabase
 
-Supabase setup will start in Phase 2.
+Phase 2 adds the browser Supabase client used by registration, login,
+onboarding, and the starter dashboard.
 
-This folder is intentionally empty for Phase 0 so no database keys or login
-logic are added before they are needed.
+Use `.env.local` for real Supabase keys. Do not commit `.env.local`.

@@ -43,16 +43,24 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <Link
-          className={cn(
-            buttonVariants({ size: "lg" }),
-            "hidden bg-[#0f766e] hover:bg-[#115e59] sm:inline-flex",
-          )}
-          href="/pricing"
-        >
-          Join waitlist
-          <ArrowRight className="size-4" aria-hidden="true" />
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            className="hidden rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-950 sm:inline-flex"
+            href="/login"
+          >
+            Log in
+          </Link>
+          <Link
+            className={cn(
+              buttonVariants({ size: "lg" }),
+              "hidden bg-[#0f766e] hover:bg-[#115e59] sm:inline-flex",
+            )}
+            href="/register"
+          >
+            Join now
+            <ArrowRight className="size-4" aria-hidden="true" />
+          </Link>
+        </div>
       </div>
     </header>
   );

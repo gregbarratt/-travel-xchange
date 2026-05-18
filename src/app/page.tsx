@@ -145,9 +145,9 @@ export default function Home() {
                     buttonVariants({ size: "lg" }),
                     "w-full bg-[#0f766e] text-white hover:bg-[#115e59] sm:w-auto",
                   )}
-                  href="/pricing"
+                  href="/register"
                 >
-                  Join waitlist
+                  Create account
                   <ArrowRight className="size-4" aria-hidden="true" />
                 </Link>
                 <Link
@@ -307,8 +307,9 @@ export default function Home() {
                 Public brand and layout are ready for review.
               </h2>
               <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">
-                Once this phase is tested and pushed, Phase 2 will add
-                authentication and onboarding with Supabase.
+                Phase 2 adds the first account, onboarding, and dashboard flow.
+                After this is tested and pushed, Phase 3 will add the main
+                social feed experience.
               </p>
             </div>
             <Link
@@ -316,9 +317,9 @@ export default function Home() {
                 buttonVariants({ size: "lg" }),
                 "w-full bg-[#0f766e] hover:bg-[#115e59] sm:w-auto",
               )}
-              href="/contact"
+              href="/register"
             >
-              Contact placeholder
+              Create account
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
           </div>
