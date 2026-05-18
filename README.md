@@ -6,9 +6,24 @@ to GitHub before the next phase begins.
 
 ## Current status
 
-Phase 4 adds member, company, and supplier profile pages. Groups, jobs, news,
-events, training, support, messaging, payments, and full admin features are
-still intentionally reserved for later phases.
+Phase 5 adds community groups and group discussions. Jobs, news, events,
+training, support, messaging, payments, and full admin features are still
+intentionally reserved for later phases.
+
+Built by Phase 5:
+
+- Groups directory at `/groups`
+- Create group page at `/groups/create`
+- Group detail page at `/groups/[id]`
+- Join and leave groups
+- Group discussion posts
+- Group category filters
+- Starter example groups such as Cruise Sellers, Luxury Travel, Homeworkers,
+  Supplier Updates, and Travel Compliance
+- Phase 5 Supabase SQL schema in `supabase/phase-5-groups.sql`
+- Database types for `groups`, `group_members`, and `group_posts`
+
+Built by Phase 4:
 
 Built by Phase 4:
 
@@ -63,9 +78,11 @@ Built by Phase 2:
    feed tables.
 5. If Phase 3 is already installed, run `supabase/phase-4-profiles.sql` to add
    the profile and company page tables.
-6. Copy `.env.example` to `.env.local`.
-7. Add your Supabase project URL and anon key to `.env.local`.
-8. Restart the local app.
+6. If Phase 4 is already installed, run `supabase/phase-5-groups.sql` to add
+   the groups and discussions tables.
+7. Copy `.env.example` to `.env.local`.
+8. Add your Supabase project URL and anon key to `.env.local`.
+9. Restart the local app.
 
 Do not put the service role key in browser code. Keep real keys out of Git.
 

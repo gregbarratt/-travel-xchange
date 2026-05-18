@@ -126,6 +126,60 @@ export type CompanyFollower = {
   user_id: string;
 };
 
+export type GroupCategory =
+  | "general"
+  | "cruise"
+  | "luxury"
+  | "specialist"
+  | "touring_adventure"
+  | "homeworking"
+  | "compliance"
+  | "supplier_updates"
+  | "marketing";
+
+export type Group = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  created_by: string | null;
+  name: string;
+  slug: string;
+  description: string;
+  category: GroupCategory;
+  visibility: "public" | "members" | "private";
+  image_url: string | null;
+  status: "active" | "archived" | "hidden";
+};
+
+export type GroupMember = {
+  id: string;
+  created_at: string;
+  group_id: string;
+  user_id: string;
+  role: "owner" | "moderator" | "member";
+  status: "active" | "removed";
+};
+
+export type GroupPost = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  group_id: string;
+  created_by: string;
+  content: string;
+  status: "published" | "hidden" | "deleted";
+};
+
+export type GroupPostWithAuthor = GroupPost & {
+  author: Pick<Profile, "id" | "full_name" | "headline" | "role"> | null;
+};
+
+export type GroupWithStats = Group & {
+  is_joined_by_current_user: boolean;
+  member_count: number;
+  post_count: number;
+};
+
 export type FeedProfile = Pick<
   Profile,
   "id" | "full_name" | "headline" | "role" | "verification_tier"
@@ -232,6 +286,35 @@ export type Database = {
           user_id: string;
         };
         Update: Partial<CompanyFollower>;
+        Relationships: [];
+      };
+      groups: {
+        Row: Group;
+        Insert: Partial<Group> & {
+          name: string;
+          slug: string;
+          description: string;
+        };
+        Update: Partial<Group>;
+        Relationships: [];
+      };
+      group_members: {
+        Row: GroupMember;
+        Insert: Partial<GroupMember> & {
+          group_id: string;
+          user_id: string;
+        };
+        Update: Partial<GroupMember>;
+        Relationships: [];
+      };
+      group_posts: {
+        Row: GroupPost;
+        Insert: Partial<GroupPost> & {
+          group_id: string;
+          created_by: string;
+          content: string;
+        };
+        Update: Partial<GroupPost>;
         Relationships: [];
       };
     };
