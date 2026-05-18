@@ -373,15 +373,13 @@ export function MessagesCentre() {
     setIsCreating(true);
     setActionError(null);
 
-    const { data: conversationData, error: conversationError } = await supabase
-      .from("conversations")
-      .insert({
-        conversation_type: "direct",
-        created_by: userId,
-        status: "active",
-      })
-      .select("id")
-      .single();
+    const { data: conversationId, error: conversationError } = await supabase.rpc(
+      "create_direct_conversation",
+      {
+        first_message: firstMessage,
+        target_user_id: recipientId,
+      },
+    );
 
     if (conversationError) {
       setActionError(
@@ -392,61 +390,6 @@ export function MessagesCentre() {
       setIsCreating(false);
       return;
     }
-
-    const conversationId = conversationData.id;
-    const uniqueMemberIds = Array.from(new Set([userId, recipientId]));
-
-    const { error: ownerError } = await supabase
-      .from("conversation_members")
-      .insert({
-        conversation_id: conversationId,
-        last_read_at: new Date().toISOString(),
-        role: "owner",
-        status: "active",
-        user_id: userId,
-      });
-
-    if (ownerError) {
-      setActionError(ownerError.message);
-      setIsCreating(false);
-      return;
-    }
-
-    const otherMemberIds = uniqueMemberIds.filter((memberId) => memberId !== userId);
-
-    if (otherMemberIds.length > 0) {
-      const { error: membersError } = await supabase
-        .from("conversation_members")
-        .insert(
-          otherMemberIds.map((memberId) => ({
-            conversation_id: conversationId,
-            role: "member",
-            status: "active",
-            user_id: memberId,
-          })),
-        );
-
-      if (membersError) {
-        setActionError(membersError.message);
-        setIsCreating(false);
-        return;
-      }
-    }
-
-    const { error: messageError } = await supabase.from("messages").insert({
-      content: firstMessage,
-      conversation_id: conversationId,
-      sender_id: userId,
-      status: "sent",
-    });
-
-    if (messageError) {
-      setActionError(messageError.message);
-      setIsCreating(false);
-      return;
-    }
-
-    await createNotifications(conversationId, otherMemberIds, firstMessage);
 
     setNewConversationText("");
     setSelectedConversationId(conversationId);

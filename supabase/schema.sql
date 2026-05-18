@@ -1920,3 +1920,111 @@ create index if not exists notifications_user_created_idx
 on public.notifications (user_id, created_at desc);
 create index if not exists notifications_user_unread_idx
 on public.notifications (user_id, is_read, status);
+
+create or replace function public.create_direct_conversation(
+  target_user_id uuid,
+  first_message text
+)
+returns uuid
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  current_user_id uuid := auth.uid();
+  clean_message text := trim(first_message);
+  new_conversation_id uuid;
+begin
+  if current_user_id is null then
+    raise exception 'You must be logged in to start a conversation.';
+  end if;
+
+  if target_user_id is null then
+    raise exception 'Choose a member to message.';
+  end if;
+
+  if clean_message is null or char_length(clean_message) = 0 then
+    raise exception 'Write a message before starting a conversation.';
+  end if;
+
+  if not exists (
+    select 1
+    from public.profiles
+    where profiles.id = target_user_id
+  ) then
+    raise exception 'That member profile could not be found.';
+  end if;
+
+  insert into public.conversations (created_by, conversation_type, status)
+  values (current_user_id, 'direct', 'active')
+  returning id into new_conversation_id;
+
+  insert into public.conversation_members (
+    conversation_id,
+    user_id,
+    role,
+    last_read_at,
+    status
+  )
+  values (
+    new_conversation_id,
+    current_user_id,
+    'owner',
+    now(),
+    'active'
+  )
+  on conflict (conversation_id, user_id)
+  do update set status = 'active', last_read_at = now();
+
+  if target_user_id <> current_user_id then
+    insert into public.conversation_members (
+      conversation_id,
+      user_id,
+      role,
+      status
+    )
+    values (
+      new_conversation_id,
+      target_user_id,
+      'member',
+      'active'
+    )
+    on conflict (conversation_id, user_id)
+    do update set status = 'active';
+  end if;
+
+  insert into public.messages (
+    conversation_id,
+    sender_id,
+    content,
+    status
+  )
+  values (
+    new_conversation_id,
+    current_user_id,
+    clean_message,
+    'sent'
+  );
+
+  insert into public.notifications (
+    user_id,
+    actor_id,
+    type,
+    title,
+    body,
+    href
+  )
+  values (
+    target_user_id,
+    current_user_id,
+    'message',
+    'New message',
+    left(clean_message, 180),
+    '/messages'
+  );
+
+  return new_conversation_id;
+end;
+$$;
+
+grant execute on function public.create_direct_conversation(uuid, text) to authenticated;

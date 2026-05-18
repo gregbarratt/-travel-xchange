@@ -3,10 +3,16 @@ export function isMissingTableError(
   tableNames: string[],
 ) {
   const message = error.message?.toLowerCase() ?? "";
+  const mentionsKnownTable = tableNames.some((tableName) =>
+    message.includes(tableName.toLowerCase()),
+  );
 
   return (
     error.code === "42P01" ||
     error.code === "PGRST205" ||
-    tableNames.some((tableName) => message.includes(tableName.toLowerCase()))
+    (mentionsKnownTable &&
+      (message.includes("could not find") ||
+        message.includes("does not exist") ||
+        message.includes("schema cache")))
   );
 }

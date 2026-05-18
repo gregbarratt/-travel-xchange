@@ -906,7 +906,15 @@ export type Database = {
       };
     };
     Views: Record<string, never>;
-    Functions: Record<string, never>;
+    Functions: {
+      create_direct_conversation: {
+        Args: {
+          target_user_id: string;
+          first_message: string;
+        };
+        Returns: string;
+      };
+    };
     Enums: {
       travel_xchange_role: TravelXchangeRole;
       verification_tier: VerificationTier;
