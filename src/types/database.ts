@@ -51,6 +51,68 @@ export type UserRole = {
   role: TravelXchangeRole;
 };
 
+export type PostTopic =
+  | "general"
+  | "supplier_updates"
+  | "questions"
+  | "jobs"
+  | "events"
+  | "training";
+
+export type Post = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  created_by: string;
+  company_id: string | null;
+  title: string | null;
+  content: string;
+  topic: PostTopic;
+  image_url: string | null;
+  visibility: "public" | "members";
+  status: "draft" | "published" | "hidden" | "deleted";
+};
+
+export type Comment = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  post_id: string;
+  created_by: string;
+  content: string;
+  status: "published" | "hidden" | "deleted";
+};
+
+export type PostLike = {
+  id: string;
+  created_at: string;
+  post_id: string;
+  user_id: string;
+};
+
+export type Follow = {
+  id: string;
+  created_at: string;
+  follower_id: string;
+  following_id: string;
+};
+
+export type FeedProfile = Pick<
+  Profile,
+  "id" | "full_name" | "headline" | "role" | "verification_tier"
+>;
+
+export type FeedPost = Post & {
+  author: FeedProfile | null;
+  like_count: number;
+  comment_count: number;
+  is_liked_by_current_user: boolean;
+};
+
+export type FeedComment = Comment & {
+  author: Pick<Profile, "id" | "full_name"> | null;
+};
+
 export type Database = {
   public: {
     Tables: {
@@ -77,6 +139,43 @@ export type Database = {
           role: TravelXchangeRole;
         };
         Update: Partial<UserRole>;
+        Relationships: [];
+      };
+      posts: {
+        Row: Post;
+        Insert: Partial<Post> & {
+          created_by: string;
+          content: string;
+        };
+        Update: Partial<Post>;
+        Relationships: [];
+      };
+      comments: {
+        Row: Comment;
+        Insert: Partial<Comment> & {
+          post_id: string;
+          created_by: string;
+          content: string;
+        };
+        Update: Partial<Comment>;
+        Relationships: [];
+      };
+      post_likes: {
+        Row: PostLike;
+        Insert: Partial<PostLike> & {
+          post_id: string;
+          user_id: string;
+        };
+        Update: Partial<PostLike>;
+        Relationships: [];
+      };
+      follows: {
+        Row: Follow;
+        Insert: Partial<Follow> & {
+          follower_id: string;
+          following_id: string;
+        };
+        Update: Partial<Follow>;
         Relationships: [];
       };
     };

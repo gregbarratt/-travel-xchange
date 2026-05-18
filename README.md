@@ -6,9 +6,24 @@ to GitHub before the next phase begins.
 
 ## Current status
 
-Phase 2 adds the first authentication and onboarding flow. Profiles, feeds,
-groups, jobs, news, events, training, support, messaging, payments, and admin
-features are still intentionally reserved for later phases.
+Phase 3 adds the first logged-in Xchange Feed experience. Groups, jobs, news,
+events, training, support, messaging, payments, and full admin features are
+still intentionally reserved for later phases.
+
+Built by Phase 3:
+
+- Logged-in app shell at `/dashboard`
+- Left navigation for the future member areas
+- Central Xchange Feed
+- Right sidebar with advertising, jobs, trending, and follow placeholders
+- Create post form
+- Post cards
+- Like posts
+- Comment on posts
+- Basic topic filtering
+- Follow user data support
+- Phase 3 Supabase SQL schema in `supabase/phase-3-feed.sql`
+- Database types for `posts`, `comments`, `post_likes`, and `follows`
 
 Built by Phase 2:
 
@@ -18,18 +33,20 @@ Built by Phase 2:
 - Forgot password placeholder
 - Onboarding page at `/onboarding`
 - Role selection and starter profile/company form
-- Starter dashboard at `/dashboard`
+- Starter dashboard at `/dashboard`, now upgraded by Phase 3
 - Phase 2 Supabase SQL schema in `supabase/schema.sql`
 - Database types for `profiles`, `companies`, and `user_roles`
 
-## Supabase setup for Phase 2
+## Supabase setup
 
 1. Create a Supabase project.
 2. In Supabase, open the SQL editor.
-3. Run the SQL from `supabase/schema.sql`.
-4. Copy `.env.example` to `.env.local`.
-5. Add your Supabase project URL and anon key to `.env.local`.
-6. Restart the local app.
+3. Run the SQL from `supabase/schema.sql` for a fresh project.
+4. If Phase 2 is already installed, run `supabase/phase-3-feed.sql` to add only
+   the feed tables.
+5. Copy `.env.example` to `.env.local`.
+6. Add your Supabase project URL and anon key to `.env.local`.
+7. Restart the local app.
 
 Do not put the service role key in browser code. Keep real keys out of Git.
 
