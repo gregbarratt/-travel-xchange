@@ -6,8 +6,21 @@ to GitHub before the next phase begins.
 
 ## Current status
 
-Phase 9 adds the training academy. Support, messaging, payments, and full admin
+Phase 10 adds the support and Q&A hub. Messaging, payments, and full admin
 features are still intentionally reserved for later phases.
+
+Built by Phase 10:
+
+- Support homepage at `/support`
+- Ask a question page at `/support/ask`
+- Question detail page at `/support/[id]`
+- Answer posting
+- Mark best answer flow for the person who asked the question
+- Category filters for travel trade support topics
+- Search questions
+- Question upvotes and answer helpful votes
+- Phase 10 Supabase SQL schema in `supabase/phase-10-support.sql`
+- Database types for `questions`, `answers`, and `question_votes`
 
 Built by Phase 9:
 
@@ -140,9 +153,11 @@ Built by Phase 2:
    the events and registrations tables.
 10. If Phase 8 is already installed, run `supabase/phase-9-training.sql` to add
     the training academy tables and starter courses.
-11. Copy `.env.example` to `.env.local`.
-12. Add your Supabase project URL and anon key to `.env.local`.
-13. Restart the local app.
+11. If Phase 9 is already installed, run `supabase/phase-10-support.sql` to add
+    the support and Q&A tables.
+12. Copy `.env.example` to `.env.local`.
+13. Add your Supabase project URL and anon key to `.env.local`.
+14. Restart the local app.
 
 Do not put the service role key in browser code. Keep real keys out of Git.
 

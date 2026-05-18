@@ -444,6 +444,70 @@ export type LessonWithProgress = Lesson & {
   progress: LessonProgress | null;
 };
 
+export type QuestionCategory =
+  | "booking_systems"
+  | "suppliers"
+  | "payments"
+  | "atol_compliance"
+  | "marketing"
+  | "cruise"
+  | "long_haul"
+  | "complaints_handling"
+  | "new_starter_help";
+
+export type QuestionStatus =
+  | "draft"
+  | "published"
+  | "resolved"
+  | "hidden"
+  | "deleted";
+
+export type Question = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  created_by: string;
+  title: string;
+  slug: string;
+  content: string;
+  category: QuestionCategory;
+  best_answer_id: string | null;
+  visibility: "public" | "members";
+  status: QuestionStatus;
+};
+
+export type Answer = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  question_id: string;
+  created_by: string;
+  content: string;
+  is_best_answer: boolean;
+  status: "published" | "hidden" | "deleted";
+};
+
+export type QuestionVote = {
+  id: string;
+  created_at: string;
+  question_id: string;
+  answer_id: string | null;
+  user_id: string;
+  vote_type: "upvote" | "helpful";
+};
+
+export type QuestionWithMeta = Question & {
+  author: Pick<Profile, "id" | "full_name" | "headline" | "role"> | null;
+  answer_count: number;
+  vote_count: number;
+};
+
+export type AnswerWithMeta = Answer & {
+  author: Pick<Profile, "id" | "full_name" | "headline" | "role"> | null;
+  helpful_count: number;
+  is_voted_by_current_user: boolean;
+};
+
 export type FeedProfile = Pick<
   Profile,
   "id" | "full_name" | "headline" | "role" | "verification_tier"
@@ -698,6 +762,37 @@ export type Database = {
           user_id: string;
         };
         Update: Partial<LessonProgress>;
+        Relationships: [];
+      };
+      questions: {
+        Row: Question;
+        Insert: Partial<Question> & {
+          created_by: string;
+          title: string;
+          slug: string;
+          content: string;
+        };
+        Update: Partial<Question>;
+        Relationships: [];
+      };
+      answers: {
+        Row: Answer;
+        Insert: Partial<Answer> & {
+          question_id: string;
+          created_by: string;
+          content: string;
+        };
+        Update: Partial<Answer>;
+        Relationships: [];
+      };
+      question_votes: {
+        Row: QuestionVote;
+        Insert: Partial<QuestionVote> & {
+          question_id: string;
+          user_id: string;
+          vote_type: "upvote" | "helpful";
+        };
+        Update: Partial<QuestionVote>;
         Relationships: [];
       };
     };
