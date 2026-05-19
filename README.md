@@ -6,11 +6,29 @@ to GitHub before the next phase begins.
 
 ## Current status
 
+Phase 20 adds the first deployment guide for Vercel, Supabase production
+settings, Stripe webhooks, domain setup, and final smoke testing. The live
+deployment still needs to be completed manually in Vercel with the project
+owner's accounts and real environment variables.
+
+Built by Phase 20:
+
+- Admin deployment guide page at `/admin/deployment`
+- Vercel deployment steps
+- Supabase production setup notes
+- Stripe webhook setup notes
+- Custom domain setup notes
+- Final smoke test checklist
+- Environment variable map
+- Deployment notes in `docs/deployment`
+- No Supabase SQL required for this phase
+
+Built by Phase 19:
+
 Phase 19 adds production readiness foundations before deployment. It improves
 error handling, loading states, SEO files, security headers, environment review,
 and the owner launch checklist.
 
-Built by Phase 19:
 
 - Production readiness admin page at `/admin/production-readiness`
 - Environment variable review that shows set or missing without exposing values
@@ -320,10 +338,12 @@ Built by Phase 2:
     API service helpers.
 20. Phase 19 has no Supabase SQL. It adds production readiness checks, SEO
     files, security headers, and fallback pages.
-21. Copy `.env.example` to `.env.local`.
-22. Add your Supabase project URL, anon key, and service role key to
+21. Phase 20 has no Supabase SQL. It adds deployment notes and smoke-test
+    guidance for Vercel, Supabase, Stripe, and domains.
+22. Copy `.env.example` to `.env.local`.
+23. Add your Supabase project URL, anon key, and service role key to
     `.env.local`.
-23. Restart the local app.
+24. Restart the local app.
 
 Do not put the service role key in browser code. Keep real keys out of Git.
 
