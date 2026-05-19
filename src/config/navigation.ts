@@ -23,6 +23,7 @@ export const futureAppRoutes = [
   { label: "Messages", href: "/messages" },
   { label: "Notifications", href: "/notifications" },
   { label: "Profile", href: "/profile" },
+  { label: "Billing", href: "/billing" },
   { label: "Admin", href: "/admin/adverts" },
 ];
 
@@ -39,6 +40,7 @@ export const appNavigation = [
   { label: "Messages", href: "/messages", phase: "Live" },
   { label: "Notifications", href: "/notifications", phase: "Live" },
   { label: "Profile", href: "/profile/edit", phase: "Live" },
+  { label: "Billing", href: "/billing", phase: "Live" },
   { label: "Admin", href: "/admin/adverts", phase: "Phase 12", adminOnly: true },
 ];
 

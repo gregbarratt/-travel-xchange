@@ -691,6 +691,51 @@ export type AdPlacementWithCreative = AdPlacement & {
   creative: AdCreative;
 };
 
+export type PaymentCustomer = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  user_id: string;
+  stripe_customer_id: string;
+  email: string | null;
+  metadata: Record<string, unknown>;
+};
+
+export type BillingSubscription = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  user_id: string;
+  plan_key: string | null;
+  status: string;
+  stripe_customer_id: string;
+  stripe_subscription_id: string;
+  stripe_price_id: string | null;
+  current_period_start: string | null;
+  current_period_end: string | null;
+  cancel_at_period_end: boolean;
+  trial_end: string | null;
+  metadata: Record<string, unknown>;
+};
+
+export type BillingInvoice = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  user_id: string;
+  stripe_customer_id: string | null;
+  stripe_invoice_id: string;
+  stripe_subscription_id: string | null;
+  amount_due: number | null;
+  amount_paid: number | null;
+  currency: string | null;
+  hosted_invoice_url: string | null;
+  invoice_pdf: string | null;
+  status: string;
+  paid_at: string | null;
+  metadata: Record<string, unknown>;
+};
+
 export type FeedProfile = Pick<
   Profile,
   "id" | "full_name" | "headline" | "role" | "verification_tier"
@@ -1068,6 +1113,35 @@ export type Database = {
         Row: AdClick;
         Insert: Partial<AdClick>;
         Update: Partial<AdClick>;
+        Relationships: [];
+      };
+      payment_customers: {
+        Row: PaymentCustomer;
+        Insert: Partial<PaymentCustomer> & {
+          stripe_customer_id: string;
+          user_id: string;
+        };
+        Update: Partial<PaymentCustomer>;
+        Relationships: [];
+      };
+      subscriptions: {
+        Row: BillingSubscription;
+        Insert: Partial<BillingSubscription> & {
+          status: string;
+          stripe_customer_id: string;
+          stripe_subscription_id: string;
+          user_id: string;
+        };
+        Update: Partial<BillingSubscription>;
+        Relationships: [];
+      };
+      invoices: {
+        Row: BillingInvoice;
+        Insert: Partial<BillingInvoice> & {
+          stripe_invoice_id: string;
+          user_id: string;
+        };
+        Update: Partial<BillingInvoice>;
         Relationships: [];
       };
     };

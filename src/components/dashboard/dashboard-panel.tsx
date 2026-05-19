@@ -7,6 +7,7 @@ import { Bell, CheckCircle2, Search, UserRound } from "lucide-react";
 
 import { LogoutButton } from "@/components/auth/logout-button";
 import { AdPlacementSlot } from "@/components/adverts/ad-placement";
+import { SubscriptionBadge } from "@/components/billing/subscription-badge";
 import { buttonVariants } from "@/components/ui/button";
 import { AppSidebar } from "@/components/dashboard/app-sidebar";
 import { FeedComposer } from "@/components/dashboard/feed-composer";
@@ -21,6 +22,7 @@ import {
 import { cn } from "@/lib/utils";
 import type {
   Comment,
+  BillingSubscription,
   FeedComment,
   FeedPost,
   FeedProfile,
@@ -63,6 +65,9 @@ export function DashboardPanel() {
   const router = useRouter();
   const configured = isSupabaseConfigured();
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [subscription, setSubscription] = useState<BillingSubscription | null>(
+    null,
+  );
   const [email, setEmail] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
   const [posts, setPosts] = useState<FeedPost[]>([]);
@@ -282,7 +287,17 @@ export function DashboardPanel() {
         .eq("id", userData.user.id)
         .maybeSingle();
 
+      const { data: subscriptionRows } = await supabase
+        .from("subscriptions")
+        .select("*")
+        .eq("user_id", userData.user.id)
+        .order("created_at", { ascending: false })
+        .limit(1);
+
       setProfile(profileData);
+      setSubscription(
+        ((subscriptionRows ?? []) as BillingSubscription[])[0] ?? null,
+      );
       setIsLoading(false);
       await Promise.all([
         loadFeed(userData.user.id, activeTopic),
@@ -472,9 +487,14 @@ export function DashboardPanel() {
                     <p className="text-xs font-extrabold uppercase text-[#6f86b5]">
                       Role
                     </p>
-                    <p className="mt-1 text-base font-bold text-[#061b4f]">
-                      {profile?.role ? getRoleLabel(profile.role) : "Not selected"}
-                    </p>
+                    <div className="mt-1 flex flex-wrap items-center gap-2">
+                      <p className="text-base font-bold text-[#061b4f]">
+                        {profile?.role
+                          ? getRoleLabel(profile.role)
+                          : "Not selected"}
+                      </p>
+                      <SubscriptionBadge subscription={subscription} />
+                    </div>
                   </div>
                   <div>
                     <p className="text-xs font-extrabold uppercase text-[#6f86b5]">

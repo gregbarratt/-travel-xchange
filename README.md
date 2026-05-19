@@ -6,8 +6,22 @@ to GitHub before the next phase begins.
 
 ## Current status
 
-Phase 12 adds the first advertising and sponsorship system. Payments and full
-admin moderation features are still intentionally reserved for later phases.
+Phase 13 adds the first Stripe Billing subscription foundation. Full production
+payment rollout, tax review, and full admin moderation features are still
+intentionally reserved for later phases.
+
+Built by Phase 13:
+
+- Pricing page at `/pricing`
+- Billing dashboard at `/billing`
+- Account subscription page at `/account/subscription`
+- Stripe Checkout server route at `/api/stripe/checkout`
+- Stripe customer portal server route at `/api/stripe/portal`
+- Stripe webhook route at `/api/stripe/webhook`
+- Subscription status and premium member badge placeholder
+- Invoice record placeholders
+- Phase 13 Supabase SQL schema in `supabase/phase-13-payments.sql`
+- Database types for `payment_customers`, `subscriptions`, and `invoices`
 
 Built by Phase 12:
 
@@ -191,11 +205,37 @@ Built by Phase 2:
     add the messages and notifications tables.
 13. If Phase 11 is already installed, run `supabase/phase-12-adverts.sql` to add
     the advertising and sponsorship tables.
-14. Copy `.env.example` to `.env.local`.
-15. Add your Supabase project URL and anon key to `.env.local`.
-16. Restart the local app.
+14. If Phase 12 is already installed, run `supabase/phase-13-payments.sql` to
+    add the Stripe Billing tables.
+15. Copy `.env.example` to `.env.local`.
+16. Add your Supabase project URL, anon key, and service role key to
+    `.env.local`.
+17. Restart the local app.
 
 Do not put the service role key in browser code. Keep real keys out of Git.
+
+## Stripe setup
+
+Phase 13 is designed for Stripe test mode first.
+
+1. Create Stripe Products and recurring monthly Prices for each paid plan.
+2. Add the matching Price IDs to `.env.local`:
+   - `STRIPE_PRICE_PREMIUM_PROFESSIONAL`
+   - `STRIPE_PRICE_SUPPLIER_BASIC`
+   - `STRIPE_PRICE_SUPPLIER_PRO`
+   - `STRIPE_PRICE_RECRUITER`
+   - `STRIPE_PRICE_ADVERTISER`
+3. Add `STRIPE_SECRET_KEY` from Stripe test mode.
+4. Add `STRIPE_WEBHOOK_SECRET` after creating a webhook endpoint for
+   `/api/stripe/webhook`.
+5. Listen for these webhook events:
+   - `checkout.session.completed`
+   - `customer.subscription.created`
+   - `customer.subscription.updated`
+   - `customer.subscription.deleted`
+   - `invoice.payment_succeeded`
+   - `invoice.payment_failed`
+   - `invoice.finalized`
 
 ## Phase 1 status
 

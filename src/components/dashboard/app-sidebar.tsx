@@ -4,6 +4,7 @@ import {
   BriefcaseBusiness,
   Building2,
   CalendarDays,
+  CreditCard,
   GraduationCap,
   HelpCircle,
   Home,
@@ -19,6 +20,7 @@ import type { Profile } from "@/types/database";
 
 const navIcons = {
   Admin: ShieldCheck,
+  Billing: CreditCard,
   Events: CalendarDays,
   Groups: Users,
   Home,
