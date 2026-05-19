@@ -1,6 +1,6 @@
 # Shared types
 
-Shared TypeScript types will live here as the platform grows.
+Database-backed TypeScript types for the web app live here.
 
-This prepares the project for a future mobile app without building the mobile
-app in Phase 0.
+Phase 18 also adds `packages/shared` for smaller platform-neutral definitions
+that a future Expo app can reuse without importing web-specific code.

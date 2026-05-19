@@ -6,4 +6,4 @@ Planned feature areas include authentication, onboarding, profiles, feed, groups
 jobs, news, events, training, support, messaging, adverts, payments, admin,
 search, analytics, compliance, and mobile app preparation.
 
-No product features are implemented in Phase 0.
+Feature folders should stay focused by product area as the platform grows.

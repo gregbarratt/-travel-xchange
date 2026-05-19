@@ -6,11 +6,27 @@ to GitHub before the next phase begins.
 
 ## Current status
 
+Phase 18 prepares the project for a future mobile app without building the
+mobile app yet. It adds shared definitions, a mobile navigation plan, and a
+starter API service layer that can be reused when Expo is introduced later.
+
+Built by Phase 18:
+
+- Shared package at `packages/shared`
+- Shared role, verification, navigation, and API result definitions
+- Mobile preparation folder at `apps/mobile`
+- Mobile authentication flow notes
+- Example Expo app configuration
+- Mobile tab and drawer navigation plan
+- API client layer in `src/lib/api`
+- No Supabase SQL required for this phase
+
+Built by Phase 17:
+
 Phase 17 adds the first legal and compliance layer for the public MVP. These
 pages are starter drafts and should be reviewed by a qualified legal adviser
 before a production launch.
 
-Built by Phase 17:
 
 - Terms and Conditions at `/legal/terms`
 - Privacy Policy at `/legal/privacy`
@@ -278,10 +294,12 @@ Built by Phase 2:
     add analytics event and dashboard metric tables.
 18. Phase 17 has no Supabase SQL. It adds public legal pages and a browser-only
     cookie preference banner.
-19. Copy `.env.example` to `.env.local`.
-20. Add your Supabase project URL, anon key, and service role key to
+19. Phase 18 has no Supabase SQL. It prepares shared mobile-ready structure and
+    API service helpers.
+20. Copy `.env.example` to `.env.local`.
+21. Add your Supabase project URL, anon key, and service role key to
     `.env.local`.
-21. Restart the local app.
+22. Restart the local app.
 
 Do not put the service role key in browser code. Keep real keys out of Git.
 
@@ -355,6 +373,8 @@ Built in this phase:
 - `src/features` is reserved for product features added in later phases.
 - `src/lib` contains helper code and future service connections.
 - `src/types` contains shared TypeScript types.
+- `packages/shared` contains mobile-ready shared definitions.
+- `apps/mobile` contains the future mobile app preparation notes.
 - `public` contains public files such as icons and images.
 
 ## Local setup

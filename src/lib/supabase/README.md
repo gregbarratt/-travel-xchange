@@ -11,6 +11,9 @@ impressions, clicks, subscription status, invoices, reports, moderation
 actions, audit logs, verification requests, global search, analytics events,
 dashboard metrics, and follow data.
 
+Phase 18 does not add Supabase tables. It prepares shared mobile-ready types and
+API service helpers so a future Expo app can use the same platform structure.
+
 Phase 16 keeps analytics lightweight inside PostgreSQL. It records starter
 events and reads aggregate counts from existing MVP tables so the owner can see
 early platform activity without adding a separate analytics warehouse yet.
