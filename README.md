@@ -6,11 +6,33 @@ to GitHub before the next phase begins.
 
 ## Current status
 
+Phase 19 adds production readiness foundations before deployment. It improves
+error handling, loading states, SEO files, security headers, environment review,
+and the owner launch checklist.
+
+Built by Phase 19:
+
+- Production readiness admin page at `/admin/production-readiness`
+- Environment variable review that shows set or missing without exposing values
+- Launch checklist for security, Supabase, Stripe, content, accessibility, and
+  deployment
+- Friendly app error page
+- Friendly global error page
+- Friendly not-found page
+- Root loading skeleton
+- Sitemap at `/sitemap.xml`
+- Robots file at `/robots.txt`
+- SEO metadata base, Open Graph, and Twitter metadata
+- Basic production security headers in `next.config.ts`
+- Updated `.env.example`
+- No Supabase SQL required for this phase
+
+Built by Phase 18:
+
 Phase 18 prepares the project for a future mobile app without building the
 mobile app yet. It adds shared definitions, a mobile navigation plan, and a
 starter API service layer that can be reused when Expo is introduced later.
 
-Built by Phase 18:
 
 - Shared package at `packages/shared`
 - Shared role, verification, navigation, and API result definitions
@@ -296,10 +318,12 @@ Built by Phase 2:
     cookie preference banner.
 19. Phase 18 has no Supabase SQL. It prepares shared mobile-ready structure and
     API service helpers.
-20. Copy `.env.example` to `.env.local`.
-21. Add your Supabase project URL, anon key, and service role key to
+20. Phase 19 has no Supabase SQL. It adds production readiness checks, SEO
+    files, security headers, and fallback pages.
+21. Copy `.env.example` to `.env.local`.
+22. Add your Supabase project URL, anon key, and service role key to
     `.env.local`.
-22. Restart the local app.
+23. Restart the local app.
 
 Do not put the service role key in browser code. Keep real keys out of Git.
 
