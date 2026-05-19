@@ -6,11 +6,29 @@ to GitHub before the next phase begins.
 
 ## Current status
 
+Phase 17 adds the first legal and compliance layer for the public MVP. These
+pages are starter drafts and should be reviewed by a qualified legal adviser
+before a production launch.
+
+Built by Phase 17:
+
+- Terms and Conditions at `/legal/terms`
+- Privacy Policy at `/legal/privacy`
+- Cookie Policy at `/legal/cookies`
+- Community Guidelines at `/legal/community-guidelines`
+- Acceptable Use Policy at `/legal/acceptable-use`
+- Advertiser Terms at `/legal/advertiser-terms`
+- Job Posting Terms at `/legal/job-posting-terms`
+- Data deletion and privacy request page at `/legal/data-request`
+- Cookie consent banner with accept, reject, and manage options
+- Legal links in the public footer
+- No Supabase SQL required for this phase
+
+Built by Phase 16:
+
 Phase 16 adds the first owner analytics dashboard. More advanced product
 analytics, revenue reporting, and warehouse-style reporting are still
 intentionally reserved for later phases.
-
-Built by Phase 16:
 
 - Admin analytics page at `/admin/analytics`
 - Member growth and active-user metric cards
@@ -258,10 +276,12 @@ Built by Phase 2:
     PostgreSQL search indexes.
 17. If Phase 15 is already installed, run `supabase/phase-16-analytics.sql` to
     add analytics event and dashboard metric tables.
-18. Copy `.env.example` to `.env.local`.
-19. Add your Supabase project URL, anon key, and service role key to
+18. Phase 17 has no Supabase SQL. It adds public legal pages and a browser-only
+    cookie preference banner.
+19. Copy `.env.example` to `.env.local`.
+20. Add your Supabase project URL, anon key, and service role key to
     `.env.local`.
-20. Restart the local app.
+21. Restart the local app.
 
 Do not put the service role key in browser code. Keep real keys out of Git.
 
