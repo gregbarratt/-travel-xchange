@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import {
   AlertTriangle,
+  BarChart3,
   BriefcaseBusiness,
   FileText,
   Megaphone,
@@ -33,6 +34,12 @@ type AdminCount = {
 
 const countCards: Array<Omit<AdminCount, "value">> = [
   { href: "/admin/users", icon: Users, label: "Members", table: "profiles" },
+  {
+    href: "/admin/analytics",
+    icon: BarChart3,
+    label: "Analytics metrics",
+    table: "dashboard_metrics",
+  },
   { href: "/admin/posts", icon: FileText, label: "Posts", table: "posts" },
   { href: "/admin/reports", icon: AlertTriangle, label: "Reports", table: "reports" },
   {
@@ -44,6 +51,28 @@ const countCards: Array<Omit<AdminCount, "value">> = [
   { href: "/admin/jobs", icon: BriefcaseBusiness, label: "Jobs", table: "jobs" },
   { href: "/admin/articles", icon: Megaphone, label: "Articles", table: "articles" },
 ];
+
+const phase16SetupMessage =
+  "The Phase 16 analytics tables are not installed yet. Run supabase/phase-16-analytics.sql in Supabase, then refresh this page.";
+
+function getAdminDashboardErrorMessage(error: { code?: string; message?: string }) {
+  if (isMissingTableError(error, ["analytics_events", "dashboard_metrics"])) {
+    return phase16SetupMessage;
+  }
+
+  if (
+    isMissingTableError(error, [
+      "reports",
+      "moderation_actions",
+      "audit_logs",
+      "verification_requests",
+    ])
+  ) {
+    return phase14SetupMessage;
+  }
+
+  return error.message ?? "The admin dashboard could not be loaded.";
+}
 
 function formatDate(value: string) {
   return new Intl.DateTimeFormat("en-GB", {
@@ -96,16 +125,7 @@ function AdminDashboardContent({ userId }: { userId: string }) {
         .select("*", { count: "exact", head: true });
 
       if (countError) {
-        setError(
-          isMissingTableError(countError, [
-            "reports",
-            "moderation_actions",
-            "audit_logs",
-            "verification_requests",
-          ])
-            ? phase14SetupMessage
-            : countError.message,
-        );
+        setError(getAdminDashboardErrorMessage(countError));
         setIsLoading(false);
         return;
       }
@@ -132,16 +152,7 @@ function AdminDashboardContent({ userId }: { userId: string }) {
     const firstError = reportError ?? auditError;
 
     if (firstError) {
-      setError(
-        isMissingTableError(firstError, [
-          "reports",
-          "moderation_actions",
-          "audit_logs",
-          "verification_requests",
-        ])
-          ? phase14SetupMessage
-          : firstError.message,
-      );
+      setError(getAdminDashboardErrorMessage(firstError));
       setIsLoading(false);
       return;
     }

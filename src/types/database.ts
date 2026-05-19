@@ -804,6 +804,28 @@ export type VerificationRequest = {
   metadata: Record<string, unknown>;
 };
 
+export type AnalyticsEvent = {
+  id: string;
+  created_at: string;
+  user_id: string | null;
+  event_name: string;
+  entity_type: string | null;
+  entity_id: string | null;
+  page_path: string | null;
+  metadata: Record<string, unknown>;
+};
+
+export type DashboardMetric = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  metric_key: string;
+  label: string;
+  value: number;
+  period: "all_time" | "daily" | "weekly" | "monthly" | "placeholder";
+  metadata: Record<string, unknown>;
+};
+
 export type FeedProfile = Pick<
   Profile,
   "id" | "full_name" | "headline" | "role" | "verification_tier"
@@ -1249,6 +1271,23 @@ export type Database = {
           user_id: string;
         };
         Update: Partial<VerificationRequest>;
+        Relationships: [];
+      };
+      analytics_events: {
+        Row: AnalyticsEvent;
+        Insert: Partial<AnalyticsEvent> & {
+          event_name: string;
+        };
+        Update: Partial<AnalyticsEvent>;
+        Relationships: [];
+      };
+      dashboard_metrics: {
+        Row: DashboardMetric;
+        Insert: Partial<DashboardMetric> & {
+          label: string;
+          metric_key: string;
+        };
+        Update: Partial<DashboardMetric>;
         Relationships: [];
       };
     };

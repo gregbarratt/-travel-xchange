@@ -6,11 +6,25 @@ to GitHub before the next phase begins.
 
 ## Current status
 
-Phase 15 adds global search and discovery across the MVP areas we have built so
-far. Hosted search services such as Algolia are still intentionally reserved for
-later scale work.
+Phase 16 adds the first owner analytics dashboard. More advanced product
+analytics, revenue reporting, and warehouse-style reporting are still
+intentionally reserved for later phases.
+
+Built by Phase 16:
+
+- Admin analytics page at `/admin/analytics`
+- Member growth and active-user metric cards
+- Popular posts panel using likes and comments
+- Jobs, news, training, adverts, and revenue placeholder metrics
+- Latest analytics events list
+- Safe test event recorder
+- Phase 16 Supabase SQL schema in `supabase/phase-16-analytics.sql`
+- Database types for `analytics_events` and `dashboard_metrics`
 
 Built by Phase 15:
+
+Phase 15 adds global search and discovery across the MVP areas we have built so
+far.
 
 - Search page at `/search`
 - Global dashboard search box
@@ -25,8 +39,6 @@ Built by Phase 14:
 
 Phase 14 adds the first admin dashboard, moderation queues, verification
 review, and owner controls.
-
-Built by Phase 14:
 
 - Admin dashboard at `/admin`
 - User management page at `/admin/users`
@@ -244,10 +256,12 @@ Built by Phase 2:
     the admin dashboard, moderation, audit, and verification tables.
 16. If Phase 14 is already installed, run `supabase/phase-15-search.sql` to add
     PostgreSQL search indexes.
-17. Copy `.env.example` to `.env.local`.
-18. Add your Supabase project URL, anon key, and service role key to
+17. If Phase 15 is already installed, run `supabase/phase-16-analytics.sql` to
+    add analytics event and dashboard metric tables.
+18. Copy `.env.example` to `.env.local`.
+19. Add your Supabase project URL, anon key, and service role key to
     `.env.local`.
-19. Restart the local app.
+20. Restart the local app.
 
 Do not put the service role key in browser code. Keep real keys out of Git.
 
