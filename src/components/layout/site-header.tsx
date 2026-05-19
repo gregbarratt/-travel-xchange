@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight, Compass } from "lucide-react";
 
 import { buttonVariants } from "@/components/ui/button";
+import { launchConfig, publicAuthEnabled } from "@/config/launch";
 import { landingAnchors, publicRoutes } from "@/config/navigation";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
@@ -23,15 +24,17 @@ export function SiteHeader() {
           className="hidden items-center gap-1 text-sm font-medium text-slate-600 lg:flex"
           aria-label="Primary"
         >
-          {landingAnchors.map((item) => (
-            <Link
-              className="rounded-lg px-3 py-2 hover:bg-slate-100 hover:text-slate-950"
-              href={`/${item.href}`}
-              key={item.href}
-            >
-              {item.label}
-            </Link>
-          ))}
+          {publicAuthEnabled
+            ? landingAnchors.map((item) => (
+                <Link
+                  className="rounded-lg px-3 py-2 hover:bg-slate-100 hover:text-slate-950"
+                  href={`/${item.href}`}
+                  key={item.href}
+                >
+                  {item.label}
+                </Link>
+              ))
+            : null}
           {publicRoutes.slice(1).map((item) => (
             <Link
               className="rounded-lg px-3 py-2 hover:bg-slate-100 hover:text-slate-950"
@@ -43,24 +46,30 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
-          <Link
-            className="hidden rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-950 sm:inline-flex"
-            href="/login"
-          >
-            Log in
-          </Link>
-          <Link
-            className={cn(
-              buttonVariants({ size: "lg" }),
-              "hidden bg-[#0f766e] hover:bg-[#115e59] sm:inline-flex",
-            )}
-            href="/register"
-          >
-            Join now
-            <ArrowRight className="size-4" aria-hidden="true" />
-          </Link>
-        </div>
+        {publicAuthEnabled ? (
+          <div className="flex items-center gap-2">
+            <Link
+              className="hidden rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-950 sm:inline-flex"
+              href="/login"
+            >
+              Log in
+            </Link>
+            <Link
+              className={cn(
+                buttonVariants({ size: "lg" }),
+                "hidden bg-[#0f766e] hover:bg-[#115e59] sm:inline-flex",
+              )}
+              href="/register"
+            >
+              Join now
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
+          </div>
+        ) : (
+          <div className="hidden rounded-lg border border-[#f52968]/20 bg-[#fff1f6] px-3 py-2 text-sm font-extrabold text-[#f52968] sm:block">
+            {launchConfig.status}
+          </div>
+        )}
       </div>
     </header>
   );

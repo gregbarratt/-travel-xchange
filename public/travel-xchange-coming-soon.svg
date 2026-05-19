@@ -1,0 +1,139 @@
+<svg width="1400" height="1400" viewBox="0 0 1400 1400" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Travel Xchange coming soon launch graphic</title>
+  <desc id="desc">A Travel Xchange launch graphic saying something new is coming for travel professionals.</desc>
+  <rect width="1400" height="1400" fill="#FAFCFF"/>
+  <defs>
+    <linearGradient id="txHot" x1="172" y1="125" x2="1227" y2="1224" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F51F6B"/>
+      <stop offset="0.48" stop-color="#FF7A2F"/>
+      <stop offset="1" stop-color="#FFB000"/>
+    </linearGradient>
+    <linearGradient id="txX" x1="325" y1="227" x2="552" y2="433" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F51F6B"/>
+      <stop offset="1" stop-color="#FF9A00"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#09204A" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+  <path d="M-19 91C92 36 174 11 291 -12" stroke="url(#txHot)" stroke-width="18" stroke-linecap="round"/>
+  <path d="M-5 132C127 66 228 35 352 18" stroke="url(#txHot)" stroke-width="8" stroke-linecap="round" opacity="0.75"/>
+  <path d="M-14 1228C126 1269 244 1322 334 1408" stroke="url(#txHot)" stroke-width="14" stroke-linecap="round"/>
+  <path d="M-7 1290C117 1320 226 1366 302 1420" stroke="url(#txHot)" stroke-width="5" stroke-linecap="round" opacity="0.75"/>
+  <path d="M1044 1331C1179 1271 1282 1194 1407 1067" stroke="url(#txHot)" stroke-width="64" stroke-linecap="round" opacity="0.9"/>
+  <path d="M1104 1370C1226 1317 1327 1246 1423 1142" stroke="#F51F6B" stroke-width="20" stroke-linecap="round" opacity="0.65"/>
+  <g opacity="0.13">
+    <circle cx="91" cy="370" r="3" fill="#082F49"/>
+    <circle cx="114" cy="370" r="3" fill="#082F49"/>
+    <circle cx="137" cy="370" r="3" fill="#082F49"/>
+    <circle cx="160" cy="370" r="3" fill="#082F49"/>
+    <circle cx="183" cy="370" r="3" fill="#082F49"/>
+    <circle cx="206" cy="370" r="3" fill="#082F49"/>
+    <circle cx="229" cy="370" r="3" fill="#082F49"/>
+    <circle cx="252" cy="370" r="3" fill="#082F49"/>
+    <circle cx="275" cy="370" r="3" fill="#082F49"/>
+    <circle cx="91" cy="393" r="3" fill="#082F49"/>
+    <circle cx="114" cy="393" r="3" fill="#082F49"/>
+    <circle cx="137" cy="393" r="3" fill="#082F49"/>
+    <circle cx="160" cy="393" r="3" fill="#082F49"/>
+    <circle cx="183" cy="393" r="3" fill="#082F49"/>
+    <circle cx="206" cy="393" r="3" fill="#082F49"/>
+    <circle cx="229" cy="393" r="3" fill="#082F49"/>
+    <circle cx="252" cy="393" r="3" fill="#082F49"/>
+    <circle cx="91" cy="416" r="3" fill="#082F49"/>
+    <circle cx="114" cy="416" r="3" fill="#082F49"/>
+    <circle cx="137" cy="416" r="3" fill="#082F49"/>
+    <circle cx="160" cy="416" r="3" fill="#082F49"/>
+    <circle cx="183" cy="416" r="3" fill="#082F49"/>
+    <circle cx="206" cy="416" r="3" fill="#082F49"/>
+    <circle cx="91" cy="439" r="3" fill="#082F49"/>
+    <circle cx="114" cy="439" r="3" fill="#082F49"/>
+    <circle cx="137" cy="439" r="3" fill="#082F49"/>
+    <circle cx="160" cy="439" r="3" fill="#082F49"/>
+  </g>
+  <g opacity="0.12">
+    <circle cx="1157" cy="408" r="3" fill="#082F49"/>
+    <circle cx="1180" cy="408" r="3" fill="#082F49"/>
+    <circle cx="1203" cy="408" r="3" fill="#082F49"/>
+    <circle cx="1226" cy="408" r="3" fill="#082F49"/>
+    <circle cx="1249" cy="408" r="3" fill="#082F49"/>
+    <circle cx="1272" cy="408" r="3" fill="#082F49"/>
+    <circle cx="1295" cy="408" r="3" fill="#082F49"/>
+    <circle cx="1157" cy="431" r="3" fill="#082F49"/>
+    <circle cx="1180" cy="431" r="3" fill="#082F49"/>
+    <circle cx="1203" cy="431" r="3" fill="#082F49"/>
+    <circle cx="1226" cy="431" r="3" fill="#082F49"/>
+    <circle cx="1249" cy="431" r="3" fill="#082F49"/>
+    <circle cx="1272" cy="431" r="3" fill="#082F49"/>
+    <circle cx="1157" cy="454" r="3" fill="#082F49"/>
+    <circle cx="1180" cy="454" r="3" fill="#082F49"/>
+    <circle cx="1203" cy="454" r="3" fill="#082F49"/>
+    <circle cx="1226" cy="454" r="3" fill="#082F49"/>
+    <circle cx="1249" cy="454" r="3" fill="#082F49"/>
+  </g>
+  <g transform="translate(294 190)">
+    <path d="M39 34C111 89 179 149 237 224" stroke="url(#txX)" stroke-width="56" stroke-linecap="round"/>
+    <path d="M226 27C157 88 91 152 31 223" stroke="url(#txX)" stroke-width="56" stroke-linecap="round"/>
+  </g>
+  <text x="606" y="305" fill="#082F49" font-family="Segoe UI, Arial, sans-serif" font-size="132" font-weight="800">Travel</text>
+  <text x="620" y="390" fill="#082F49" font-family="Segoe UI, Arial, sans-serif" font-size="58" letter-spacing="22" font-weight="600">XCHANGE</text>
+  <text x="700" y="642" text-anchor="middle" fill="#082F49" font-family="Segoe UI, Arial, sans-serif" font-size="132" font-weight="900" letter-spacing="4">SOMETHING</text>
+  <text x="700" y="778" text-anchor="middle" fill="url(#txHot)" font-family="Segoe UI, Arial, sans-serif" font-size="102" font-weight="900" letter-spacing="4">NEW IS COMING</text>
+  <text x="700" y="866" text-anchor="middle" fill="#082F49" font-family="Segoe UI, Arial, sans-serif" font-size="44" font-weight="700">A smarter home for travel professionals.</text>
+  <path d="M530 910C640 889 761 890 871 910" stroke="url(#txHot)" stroke-width="8" stroke-linecap="round"/>
+  <path d="M1125 219C1164 234 1205 242 1248 241" stroke="#F51F6B" stroke-width="4" stroke-dasharray="12 14" stroke-linecap="round"/>
+  <path d="M1248 241C1305 236 1310 183 1270 177C1235 172 1217 216 1251 247C1279 273 1327 286 1364 298" stroke="#FF7A2F" stroke-width="4" stroke-dasharray="12 14" stroke-linecap="round"/>
+  <path d="M1260 142L1364 96L1320 183L1307 154L1260 142Z" fill="#082F49"/>
+  <path d="M1299 151L1338 206L1320 183L1307 154L1299 151Z" fill="#082F49"/>
+  <g filter="url(#softShadow)">
+    <g transform="translate(197 976)">
+      <circle cx="0" cy="0" r="76" fill="white"/>
+      <path d="M-32 -30H24V31H-32V-30Z" stroke="#F51F6B" stroke-width="7" stroke-linejoin="round"/>
+      <path d="M-18 -16H7V5H-18V-16Z" stroke="#F51F6B" stroke-width="5"/>
+      <path d="M18 -14H43V28H18V-14Z" stroke="#F51F6B" stroke-width="5"/>
+      <path d="M-18 16H8M-18 30H8" stroke="#F51F6B" stroke-width="5" stroke-linecap="round"/>
+      <text x="0" y="130" text-anchor="middle" fill="#082F49" font-family="Segoe UI, Arial, sans-serif" font-size="30" font-weight="800">News</text>
+    </g>
+    <g transform="translate(407 976)">
+      <circle cx="0" cy="0" r="76" fill="white"/>
+      <path d="M-39 7L-11 -11L47 -35V38L-11 14L-39 7Z" stroke="#F51F6B" stroke-width="7" stroke-linejoin="round"/>
+      <path d="M-12 15L-3 43" stroke="#F51F6B" stroke-width="7" stroke-linecap="round"/>
+      <path d="M47 -7C60 -5 60 8 47 12" stroke="#F51F6B" stroke-width="6" stroke-linecap="round"/>
+      <text x="0" y="130" text-anchor="middle" fill="#082F49" font-family="Segoe UI, Arial, sans-serif" font-size="30" font-weight="800">Supplier</text>
+      <text x="0" y="166" text-anchor="middle" fill="#082F49" font-family="Segoe UI, Arial, sans-serif" font-size="30" font-weight="800">Updates</text>
+    </g>
+    <g transform="translate(617 976)">
+      <circle cx="0" cy="0" r="76" fill="white"/>
+      <rect x="-39" y="-35" width="78" height="76" rx="4" stroke="#F51F6B" stroke-width="7"/>
+      <path d="M-39 -10H39M-18 -48V-25M18 -48V-25" stroke="#F51F6B" stroke-width="7" stroke-linecap="round"/>
+      <path d="M-20 10H-10M8 10H18M-20 31H-10M8 31H18" stroke="#F51F6B" stroke-width="6" stroke-linecap="round"/>
+      <text x="0" y="130" text-anchor="middle" fill="#082F49" font-family="Segoe UI, Arial, sans-serif" font-size="30" font-weight="800">Events</text>
+    </g>
+    <g transform="translate(827 976)">
+      <circle cx="0" cy="0" r="76" fill="white"/>
+      <path d="M-53 -1L0 -31L53 -1L0 29L-53 -1Z" stroke="#F51F6B" stroke-width="7" stroke-linejoin="round"/>
+      <path d="M-31 14V44C-11 57 16 57 37 44V14" stroke="#F51F6B" stroke-width="7" stroke-linecap="round"/>
+      <path d="M53 -1V45" stroke="#F51F6B" stroke-width="6" stroke-linecap="round"/>
+      <text x="0" y="130" text-anchor="middle" fill="#082F49" font-family="Segoe UI, Arial, sans-serif" font-size="30" font-weight="800">Training</text>
+    </g>
+    <g transform="translate(1037 976)">
+      <circle cx="0" cy="0" r="76" fill="white"/>
+      <rect x="-46" y="-20" width="92" height="59" rx="8" stroke="#F51F6B" stroke-width="7"/>
+      <path d="M-18 -20V-38H18V-20M-46 5H46M-9 4H9V19H-9V4Z" stroke="#F51F6B" stroke-width="7" stroke-linejoin="round"/>
+      <text x="0" y="130" text-anchor="middle" fill="#082F49" font-family="Segoe UI, Arial, sans-serif" font-size="30" font-weight="800">Opportunities</text>
+    </g>
+  </g>
+  <g filter="url(#softShadow)">
+    <rect x="305" y="1190" width="790" height="84" rx="42" fill="#082F49"/>
+    <rect x="305" y="1190" width="790" height="84" rx="42" stroke="url(#txHot)" stroke-width="8"/>
+    <text x="700" y="1247" text-anchor="middle" fill="white" font-family="Segoe UI, Arial, sans-serif" font-size="42" font-weight="900" letter-spacing="3">FOLLOW FOR LAUNCH UPDATES</text>
+    <path d="M1019 1218L1044 1232L1019 1246" stroke="white" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g opacity="0.13" fill="#082F49">
+    <path d="M1088 1195H1120V1330H1088V1195Z"/>
+    <path d="M1104 1136L1132 1195H1076L1104 1136Z"/>
+    <path d="M1171 1144H1198V1330H1171V1144Z"/>
+    <path d="M1160 1194H1210V1212H1160V1194Z"/>
+    <path d="M1245 1163C1265 1186 1280 1216 1288 1253C1295 1285 1293 1310 1281 1330H1210C1195 1308 1191 1284 1198 1258C1206 1219 1221 1187 1245 1163Z"/>
+  </g>
+</svg>

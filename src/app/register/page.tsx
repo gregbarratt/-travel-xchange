@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 
+import { AuthDisabledCard } from "@/components/auth/auth-disabled-card";
 import { AuthCard } from "@/components/auth/auth-card";
 import { AuthForm } from "@/components/auth/auth-form";
+import { publicAuthEnabled } from "@/config/launch";
 
 export const metadata: Metadata = {
   title: "Register",
@@ -9,6 +11,10 @@ export const metadata: Metadata = {
 };
 
 export default function RegisterPage() {
+  if (!publicAuthEnabled) {
+    return <AuthDisabledCard mode="register" />;
+  }
+
   return (
     <AuthCard
       title="Create your account"

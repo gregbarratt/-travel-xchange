@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 
+import { AuthDisabledCard } from "@/components/auth/auth-disabled-card";
 import { OnboardingForm } from "@/components/auth/onboarding-form";
 import { PublicPageShell } from "@/components/layout/public-page-shell";
+import { publicAuthEnabled } from "@/config/launch";
 
 export const metadata: Metadata = {
   title: "Onboarding",
@@ -9,6 +11,10 @@ export const metadata: Metadata = {
 };
 
 export default function OnboardingPage() {
+  if (!publicAuthEnabled) {
+    return <AuthDisabledCard mode="onboarding" />;
+  }
+
   return (
     <PublicPageShell>
       <main className="bg-[#f8fafc] px-4 py-12 sm:px-6 lg:px-8">

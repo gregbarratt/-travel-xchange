@@ -6,6 +6,14 @@ to GitHub before the next phase begins.
 
 ## Current status
 
+Post-deployment launch hold:
+
+- Public homepage now shows a Travel Xchange "Something new is coming" page.
+- Public login, registration, and onboarding are paused while the live site is
+  prepared.
+- Set `NEXT_PUBLIC_PUBLIC_AUTH_ENABLED=true` when public member access should
+  reopen.
+
 Phase 20 adds the first deployment guide for Vercel, Supabase production
 settings, Stripe webhooks, domain setup, and final smoke testing. The live
 deployment still needs to be completed manually in Vercel with the project
