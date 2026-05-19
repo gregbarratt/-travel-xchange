@@ -14,6 +14,7 @@ export const landingAnchors = [
 export const futureAppRoutes = [
   { label: "News", href: "/news" },
   { label: "Xchange Feed", href: "/feed" },
+  { label: "Search", href: "/search" },
   { label: "Groups", href: "/groups" },
   { label: "Jobs", href: "/jobs" },
   { label: "Events", href: "/events" },
@@ -30,6 +31,7 @@ export const futureAppRoutes = [
 export const appNavigation = [
   { label: "Home", href: "/dashboard", phase: "Live" },
   { label: "Xchange Feed", href: "/dashboard", phase: "Live" },
+  { label: "Search", href: "/search", phase: "Live" },
   { label: "News", href: "/news", phase: "Live" },
   { label: "Groups", href: "/groups", phase: "Live" },
   { label: "Jobs", href: "/jobs", phase: "Live" },

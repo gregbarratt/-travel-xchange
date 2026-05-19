@@ -6,9 +6,25 @@ to GitHub before the next phase begins.
 
 ## Current status
 
+Phase 15 adds global search and discovery across the MVP areas we have built so
+far. Hosted search services such as Algolia are still intentionally reserved for
+later scale work.
+
+Built by Phase 15:
+
+- Search page at `/search`
+- Global dashboard search box
+- Search category filters for people, companies, suppliers, posts, groups,
+  jobs, events, news, training, and questions
+- Trending topic shortcuts
+- Recommended discovery placeholder cards
+- Sidebar Search navigation
+- PostgreSQL trigram search indexes in `supabase/phase-15-search.sql`
+
+Built by Phase 14:
+
 Phase 14 adds the first admin dashboard, moderation queues, verification
-review, and owner controls. Full production moderation policies and legal
-workflow refinements are still intentionally reserved for later phases.
+review, and owner controls.
 
 Built by Phase 14:
 
@@ -226,10 +242,12 @@ Built by Phase 2:
     add the Stripe Billing tables.
 15. If Phase 13 is already installed, run `supabase/phase-14-admin.sql` to add
     the admin dashboard, moderation, audit, and verification tables.
-16. Copy `.env.example` to `.env.local`.
-17. Add your Supabase project URL, anon key, and service role key to
+16. If Phase 14 is already installed, run `supabase/phase-15-search.sql` to add
+    PostgreSQL search indexes.
+17. Copy `.env.example` to `.env.local`.
+18. Add your Supabase project URL, anon key, and service role key to
     `.env.local`.
-18. Restart the local app.
+19. Restart the local app.
 
 Do not put the service role key in browser code. Keep real keys out of Git.
 

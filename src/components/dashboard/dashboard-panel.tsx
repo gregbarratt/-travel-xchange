@@ -3,7 +3,7 @@
 import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Bell, CheckCircle2, Search, UserRound } from "lucide-react";
+import { Bell, CheckCircle2, UserRound } from "lucide-react";
 
 import { LogoutButton } from "@/components/auth/logout-button";
 import { AdPlacementSlot } from "@/components/adverts/ad-placement";
@@ -13,6 +13,7 @@ import { AppSidebar } from "@/components/dashboard/app-sidebar";
 import { FeedComposer } from "@/components/dashboard/feed-composer";
 import { FeedPostCard } from "@/components/dashboard/feed-post-card";
 import { RightSidebar } from "@/components/dashboard/right-sidebar";
+import { GlobalSearchBox } from "@/components/search/global-search-box";
 import { feedTopics } from "@/config/navigation";
 import { getRoleLabel } from "@/config/roles";
 import {
@@ -433,10 +434,11 @@ export function DashboardPanel() {
                   Welcome, {memberName}
                 </h1>
               </div>
-              <div className="hidden min-w-72 items-center gap-3 rounded-lg border border-[#b8cae8] bg-white/85 px-4 py-3 text-sm text-[#4d6b9e] shadow-[0_10px_24px_rgba(7,36,91,0.1)] md:flex">
-                <Search className="size-4 text-[#063b86]" aria-hidden="true" />
-                Search arrives in Phase 15
-              </div>
+              <GlobalSearchBox
+                className="hidden min-w-72 md:flex"
+                placeholder="Search people, jobs, groups..."
+                size="compact"
+              />
               <div className="flex items-center gap-2">
                 {profile?.id ? (
                   <Link

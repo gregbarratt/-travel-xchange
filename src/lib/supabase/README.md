@@ -1,6 +1,6 @@
 # Supabase
 
-Phase 14 uses the browser Supabase client for registration, login, onboarding,
+Phase 15 uses the browser Supabase client for registration, login, onboarding,
 the member dashboard, the Xchange Feed, post likes, comments, profile pages,
 company pages, supplier pages, groups, group discussions, jobs, applications,
 bookmarks, news articles, supplier updates, article tags, categories, and
@@ -8,7 +8,11 @@ events, event registrations, training courses, lessons, enrolments, lesson
 progress, support questions, answers, support votes, conversations, messages,
 notifications, advertisers, ad campaigns, ad creatives, ad placements,
 impressions, clicks, subscription status, invoices, reports, moderation
-actions, audit logs, verification requests, and follow data.
+actions, audit logs, verification requests, global search, and follow data.
+
+Phase 15 keeps search inside PostgreSQL using existing tables and trigram
+indexes. Algolia or another hosted search service can be added later when the
+MVP needs faster ranking, typo tolerance, and richer faceting.
 
 Phase 13 also adds a server Supabase helper for Stripe checkout, billing portal,
 and webhook routes. The server helper uses `SUPABASE_SERVICE_ROLE_KEY`, which
