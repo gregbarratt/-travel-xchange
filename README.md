@@ -6,11 +6,28 @@ to GitHub before the next phase begins.
 
 ## Current status
 
-Phase 13 adds the first Stripe Billing subscription foundation. Full production
-payment rollout, tax review, and full admin moderation features are still
-intentionally reserved for later phases.
+Phase 14 adds the first admin dashboard, moderation queues, verification
+review, and owner controls. Full production moderation policies and legal
+workflow refinements are still intentionally reserved for later phases.
+
+Built by Phase 14:
+
+- Admin dashboard at `/admin`
+- User management page at `/admin/users`
+- Post moderation page at `/admin/posts`
+- Report queue at `/admin/reports`
+- Verification review page at `/admin/verification`
+- Jobs admin page at `/admin/jobs`
+- Articles admin page at `/admin/articles`
+- Admin-only navigation visibility
+- Audit log and moderation action recording
+- Phase 14 Supabase SQL schema in `supabase/phase-14-admin.sql`
+- Database types for `reports`, `moderation_actions`, `audit_logs`, and
+  `verification_requests`
 
 Built by Phase 13:
+
+Phase 13 adds the first Stripe Billing subscription foundation.
 
 - Pricing page at `/pricing`
 - Billing dashboard at `/billing`
@@ -207,10 +224,12 @@ Built by Phase 2:
     the advertising and sponsorship tables.
 14. If Phase 12 is already installed, run `supabase/phase-13-payments.sql` to
     add the Stripe Billing tables.
-15. Copy `.env.example` to `.env.local`.
-16. Add your Supabase project URL, anon key, and service role key to
+15. If Phase 13 is already installed, run `supabase/phase-14-admin.sql` to add
+    the admin dashboard, moderation, audit, and verification tables.
+16. Copy `.env.example` to `.env.local`.
+17. Add your Supabase project URL, anon key, and service role key to
     `.env.local`.
-17. Restart the local app.
+18. Restart the local app.
 
 Do not put the service role key in browser code. Keep real keys out of Git.
 

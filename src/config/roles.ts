@@ -1,3 +1,4 @@
+import { systemRoleOptions } from "@/config/admin";
 import type { TravelXchangeRole } from "@/types/database";
 
 export const roleOptions: Array<{ label: string; value: TravelXchangeRole }> = [
@@ -27,8 +28,10 @@ export const companyTypeOptions = [
   { label: "Other industry partner", value: "other" },
 ];
 
+export const allRoleOptions = [...roleOptions, ...systemRoleOptions];
+
 export function getRoleLabel(role: TravelXchangeRole) {
-  return roleOptions.find((option) => option.value === role)?.label ?? role;
+  return allRoleOptions.find((option) => option.value === role)?.label ?? role;
 }
 
 export function getCompanyTypeLabel(companyType: string) {

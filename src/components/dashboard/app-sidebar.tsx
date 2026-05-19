@@ -15,6 +15,7 @@ import {
   Users,
 } from "lucide-react";
 
+import { isAdminRole } from "@/config/admin";
 import { appNavigation } from "@/config/navigation";
 import type { Profile } from "@/types/database";
 
@@ -40,19 +41,12 @@ type AppSidebarProps = {
   profile: Profile | null;
 };
 
-function canSeeAdmin(profile: Profile | null) {
-  return Boolean(
-    profile?.role &&
-      ["admin", "moderator", "super_admin"].includes(profile.role),
-  );
-}
-
 export function AppSidebar({
   activeLabel = "Xchange Feed",
   profile,
 }: AppSidebarProps) {
   const visibleItems = appNavigation.filter(
-    (item) => !item.adminOnly || canSeeAdmin(profile),
+    (item) => !item.adminOnly || isAdminRole(profile?.role),
   );
 
   return (

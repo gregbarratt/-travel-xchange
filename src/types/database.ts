@@ -736,6 +736,74 @@ export type BillingInvoice = {
   metadata: Record<string, unknown>;
 };
 
+export type ReportContentType = "post" | "comment" | "user" | "company";
+
+export type ReportStatus = "open" | "reviewing" | "resolved" | "dismissed";
+
+export type ModerationReport = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  reporter_id: string;
+  reported_user_id: string | null;
+  content_type: ReportContentType;
+  content_id: string | null;
+  reason: string;
+  details: string | null;
+  status: ReportStatus;
+  assigned_to: string | null;
+  resolved_by: string | null;
+  resolved_at: string | null;
+  admin_notes: string | null;
+  metadata: Record<string, unknown>;
+};
+
+export type ModerationAction = {
+  id: string;
+  created_at: string;
+  moderator_id: string;
+  target_type: string;
+  target_id: string | null;
+  action: string;
+  reason: string | null;
+  notes: string | null;
+  metadata: Record<string, unknown>;
+};
+
+export type AuditLog = {
+  id: string;
+  created_at: string;
+  actor_id: string | null;
+  action: string;
+  entity_type: string;
+  entity_id: string | null;
+  summary: string;
+  metadata: Record<string, unknown>;
+};
+
+export type VerificationRequestStatus =
+  | "pending"
+  | "in_review"
+  | "approved"
+  | "rejected"
+  | "more_info";
+
+export type VerificationRequest = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  user_id: string;
+  requested_tier: VerificationTier;
+  company_id: string | null;
+  evidence_url: string | null;
+  notes: string | null;
+  status: VerificationRequestStatus;
+  reviewed_by: string | null;
+  reviewed_at: string | null;
+  admin_notes: string | null;
+  metadata: Record<string, unknown>;
+};
+
 export type FeedProfile = Pick<
   Profile,
   "id" | "full_name" | "headline" | "role" | "verification_tier"
@@ -1142,6 +1210,45 @@ export type Database = {
           user_id: string;
         };
         Update: Partial<BillingInvoice>;
+        Relationships: [];
+      };
+      reports: {
+        Row: ModerationReport;
+        Insert: Partial<ModerationReport> & {
+          reporter_id: string;
+          content_type: ReportContentType;
+          reason: string;
+        };
+        Update: Partial<ModerationReport>;
+        Relationships: [];
+      };
+      moderation_actions: {
+        Row: ModerationAction;
+        Insert: Partial<ModerationAction> & {
+          moderator_id: string;
+          target_type: string;
+          action: string;
+        };
+        Update: Partial<ModerationAction>;
+        Relationships: [];
+      };
+      audit_logs: {
+        Row: AuditLog;
+        Insert: Partial<AuditLog> & {
+          action: string;
+          entity_type: string;
+          summary: string;
+        };
+        Update: Partial<AuditLog>;
+        Relationships: [];
+      };
+      verification_requests: {
+        Row: VerificationRequest;
+        Insert: Partial<VerificationRequest> & {
+          requested_tier: VerificationTier;
+          user_id: string;
+        };
+        Update: Partial<VerificationRequest>;
         Relationships: [];
       };
     };

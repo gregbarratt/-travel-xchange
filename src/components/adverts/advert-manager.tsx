@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { MemberPageShell } from "@/components/member/member-page-shell";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { SelectField, TextareaField, TextField } from "@/components/ui/field";
+import { isAdminRole } from "@/config/admin";
 import {
   adPackageOptions,
   adPlacementOptions,
@@ -116,20 +117,32 @@ export function AdvertManager() {
     setUserId(userData.user.id);
     setEmail(userData.user.email ?? null);
 
-    const [{ data: profileData }, advertiserResult] = await Promise.all([
-      supabase
-        .from("profiles")
-        .select("*")
-        .eq("id", userData.user.id)
-        .maybeSingle(),
-      supabase
-        .from("advertisers")
-        .select("*")
-        .eq("created_by", userData.user.id)
-        .order("created_at", { ascending: false }),
-    ]);
+    const { data: profileData, error: profileError } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", userData.user.id)
+      .maybeSingle();
 
     setViewerProfile(profileData);
+
+    if (profileError) {
+      setError(profileError.message);
+      setIsLoading(false);
+      return;
+    }
+
+    if (!profileData || !isAdminRole(profileData.role)) {
+      setError(
+        "Admin access is required for the advert manager. Set this account as an admin in Supabase during Phase 14 testing.",
+      );
+      setIsLoading(false);
+      return;
+    }
+
+    const advertiserResult = await supabase
+      .from("advertisers")
+      .select("*")
+      .order("created_at", { ascending: false });
 
     if (advertiserResult.error) {
       setError(
