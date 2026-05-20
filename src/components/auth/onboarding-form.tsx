@@ -178,7 +178,7 @@ export function OnboardingForm() {
           autoComplete="name"
           label="Full name"
           name="full_name"
-          placeholder="Greg Barratt"
+          placeholder="Your full name"
           required
         />
         <SelectField

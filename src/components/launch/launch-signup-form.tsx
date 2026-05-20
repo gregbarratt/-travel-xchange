@@ -138,7 +138,7 @@ export function LaunchSignupForm() {
           label="Full name"
           name="full_name"
           onChange={(event) => setFullName(event.target.value)}
-          placeholder="Greg Barratt"
+          placeholder="Your full name"
           value={fullName}
         />
         <TextField
