@@ -9,7 +9,11 @@ progress, support questions, answers, support votes, conversations, messages,
 notifications, advertisers, ad campaigns, ad creatives, ad placements,
 impressions, clicks, subscription status, invoices, reports, moderation
 actions, audit logs, verification requests, global search, analytics events,
-dashboard metrics, and follow data.
+dashboard metrics, launch waitlist signups, and follow data.
+
+The launch waitlist stores public "follow for launch" interest in
+`launch_signups`. It does not create Supabase Auth users, so people can register
+their interest before public member accounts are switched back on.
 
 Phase 18 does not add Supabase tables. It prepares shared mobile-ready types and
 API service helpers so a future Expo app can use the same platform structure.

@@ -2,6 +2,7 @@ import type { TravelXchangeRole, VerificationTier } from "@/types/database";
 
 export const adminNavigation = [
   { label: "Dashboard", href: "/admin" },
+  { label: "Launch signups", href: "/admin/launch-signups" },
   { label: "Analytics", href: "/admin/analytics" },
   { label: "Production", href: "/admin/production-readiness" },
   { label: "Deployment", href: "/admin/deployment" },

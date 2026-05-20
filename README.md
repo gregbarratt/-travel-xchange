@@ -11,6 +11,11 @@ Post-deployment launch hold:
 - Public homepage now shows a Travel Xchange "Something new is coming" page.
 - Public login, registration, and onboarding are paused while the live site is
   prepared.
+- The homepage collects pre-launch interest through a waitlist form without
+  activating member accounts.
+- Admins can review the waitlist at `/admin/launch-signups`.
+- Run `supabase/phase-21-launch-signups.sql` before using the waitlist form on
+  the live site.
 - Set `NEXT_PUBLIC_PUBLIC_AUTH_ENABLED=true` when public member access should
   reopen.
 
@@ -348,10 +353,12 @@ Built by Phase 2:
     files, security headers, and fallback pages.
 21. Phase 20 has no Supabase SQL. It adds deployment notes and smoke-test
     guidance for Vercel, Supabase, Stripe, and domains.
-22. Copy `.env.example` to `.env.local`.
-23. Add your Supabase project URL, anon key, and service role key to
+22. Post-launch waitlist signups use `supabase/phase-21-launch-signups.sql`.
+    Run it to store launch interest without creating active user accounts.
+23. Copy `.env.example` to `.env.local`.
+24. Add your Supabase project URL, anon key, and service role key to
     `.env.local`.
-24. Restart the local app.
+25. Restart the local app.
 
 Do not put the service role key in browser code. Keep real keys out of Git.
 

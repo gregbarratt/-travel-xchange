@@ -1,8 +1,5 @@
 export const publicRoutes = [
   { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Pricing", href: "/pricing" },
-  { label: "Contact", href: "/contact" },
 ];
 
 export const landingAnchors = [

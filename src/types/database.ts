@@ -826,6 +826,40 @@ export type DashboardMetric = {
   metadata: Record<string, unknown>;
 };
 
+export type LaunchSignupStatus =
+  | "new"
+  | "contacted"
+  | "invited"
+  | "converted"
+  | "archived";
+
+export type LaunchSignupRoleInterest =
+  | "travel_professional"
+  | "supplier"
+  | "recruiter"
+  | "trainer"
+  | "travel_technology"
+  | "advertiser"
+  | "student"
+  | "other";
+
+export type LaunchSignup = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  full_name: string | null;
+  email: string;
+  company_name: string | null;
+  role_interest: LaunchSignupRoleInterest;
+  message: string | null;
+  source_page: string;
+  status: LaunchSignupStatus;
+  admin_notes: string | null;
+  invited_at: string | null;
+  converted_user_id: string | null;
+  metadata: Record<string, unknown>;
+};
+
 export type FeedProfile = Pick<
   Profile,
   "id" | "full_name" | "headline" | "role" | "verification_tier"
@@ -1288,6 +1322,15 @@ export type Database = {
           metric_key: string;
         };
         Update: Partial<DashboardMetric>;
+        Relationships: [];
+      };
+      launch_signups: {
+        Row: LaunchSignup;
+        Insert: Partial<LaunchSignup> & {
+          email: string;
+          role_interest: LaunchSignupRoleInterest;
+        };
+        Update: Partial<LaunchSignup>;
         Relationships: [];
       };
     };
