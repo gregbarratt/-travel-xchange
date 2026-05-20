@@ -14,9 +14,10 @@ import {
 
 type AuthFormProps = {
   mode: "login" | "register";
+  redirectPath?: string;
 };
 
-export function AuthForm({ mode }: AuthFormProps) {
+export function AuthForm({ mode, redirectPath = "/dashboard" }: AuthFormProps) {
   const router = useRouter();
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -88,7 +89,7 @@ export function AuthForm({ mode }: AuthFormProps) {
       return;
     }
 
-    router.push("/dashboard");
+    router.push(redirectPath);
   }
 
   return (

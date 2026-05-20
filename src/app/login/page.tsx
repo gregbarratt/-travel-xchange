@@ -1,29 +1,23 @@
 import type { Metadata } from "next";
 
-import { AuthDisabledCard } from "@/components/auth/auth-disabled-card";
 import { AuthCard } from "@/components/auth/auth-card";
 import { AuthForm } from "@/components/auth/auth-form";
-import { publicAuthEnabled } from "@/config/launch";
 
 export const metadata: Metadata = {
-  title: "Login",
-  description: "Log in to the Travel Xchange member area.",
+  title: "Owner Login",
+  description: "Hidden owner and admin login for Travel Xchange.",
 };
 
 export default function LoginPage() {
-  if (!publicAuthEnabled) {
-    return <AuthDisabledCard mode="login" />;
-  }
-
   return (
     <AuthCard
-      title="Log in"
-      description="Access your Travel Xchange dashboard, onboarding, and future member tools."
-      footerText="New to Travel Xchange?"
-      footerHref="/register"
-      footerLinkText="Create an account"
+      title="Owner / admin login"
+      description="This hidden page is for existing Travel Xchange owner and admin accounts only. Public member registration is still closed."
+      footerText="Not an admin?"
+      footerHref="/"
+      footerLinkText="Back to launch page"
     >
-      <AuthForm mode="login" />
+      <AuthForm mode="login" redirectPath="/admin" />
       <div
         className="mt-6 rounded-lg border border-slate-200 bg-[#f8fafc] p-4 text-sm leading-6 text-slate-600"
         id="forgot-password"
