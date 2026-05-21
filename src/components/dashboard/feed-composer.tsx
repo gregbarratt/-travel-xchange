@@ -1,7 +1,7 @@
 "use client";
 
 import type { FormEvent } from "react";
-import { SendHorizontal } from "lucide-react";
+import { MessageSquarePlus, SendHorizontal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { feedTopics } from "@/config/navigation";
@@ -25,6 +25,23 @@ export function FeedComposer({
       className="tx-card p-5"
       onSubmit={onSubmit}
     >
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <p className="inline-flex items-center gap-2 text-xs font-extrabold uppercase text-[#063b86]">
+            <MessageSquarePlus className="size-4" aria-hidden="true" />
+            Start a conversation
+          </p>
+          <h2 className="mt-1 text-lg font-extrabold text-[#061b4f]">
+            Share with the Travel Xchange community
+          </h2>
+        </div>
+        <div className="flex flex-wrap gap-2 text-xs font-bold text-[#4d6b9e]">
+          <span className="rounded-lg bg-[#eef5ff] px-3 py-1">Discussion</span>
+          <span className="rounded-lg bg-[#fff0f5] px-3 py-1">Question</span>
+          <span className="rounded-lg bg-[#fff7ed] px-3 py-1">Update</span>
+        </div>
+      </div>
+
       <div className="flex gap-3">
         <div className="tx-navy-avatar flex size-12 shrink-0 items-center justify-center rounded-lg text-sm font-bold text-white">
           {profile?.full_name?.slice(0, 2).toUpperCase() ?? "TX"}
@@ -38,7 +55,7 @@ export function FeedComposer({
             id="post-content"
             maxLength={2000}
             name="content"
-            placeholder="Share an update, ask a question, or start a trade conversation..."
+            placeholder="Start a discussion, ask a question, or share a supplier update..."
             required
           />
         </div>

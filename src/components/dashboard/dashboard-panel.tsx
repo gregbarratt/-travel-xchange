@@ -3,7 +3,15 @@
 import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Bell, CheckCircle2, UserRound } from "lucide-react";
+import {
+  Bell,
+  CheckCircle2,
+  Compass,
+  MessageSquareText,
+  PlusCircle,
+  UserRound,
+  UsersRound,
+} from "lucide-react";
 
 import { LogoutButton } from "@/components/auth/logout-button";
 import { AdPlacementSlot } from "@/components/adverts/ad-placement";
@@ -417,34 +425,52 @@ export function DashboardPanel() {
   }
 
   const memberName = profile?.full_name ?? "Travel Xchange member";
+  const memberInitials =
+    profile?.full_name
+      ?.split(" ")
+      .map((part) => part[0])
+      .join("")
+      .slice(0, 2)
+      .toUpperCase() ?? "TX";
 
   return (
     <div className="tx-dashboard-bg min-h-screen text-[#061b4f]">
-      <div className="grid min-h-screen lg:grid-cols-[250px_minmax(0,1fr)]">
+      <div className="grid min-h-screen lg:grid-cols-[280px_minmax(0,1fr)]">
         <AppSidebar profile={profile} />
 
         <div className="min-w-0">
           <header className="tx-topline sticky top-0 z-20 backdrop-blur">
-            <div className="flex items-center justify-between gap-4 px-5 py-5 sm:px-8">
+            <div className="flex flex-col gap-4 px-5 py-4 sm:px-8 xl:flex-row xl:items-center xl:justify-between">
               <div className="min-w-0">
-                <p className="text-xs font-extrabold uppercase tracking-wide text-[#063b86]">
-                  Xchange Feed
+                <p className="inline-flex items-center gap-2 text-xs font-extrabold uppercase text-[#063b86]">
+                  <Compass className="size-4" aria-hidden="true" />
+                  Home feed
                 </p>
-                <h1 className="truncate text-2xl font-extrabold tracking-normal text-[#061b4f]">
-                  Welcome, {memberName}
+                <h1 className="mt-1 truncate text-2xl font-extrabold text-[#061b4f]">
+                  Good to see you, {memberName}
                 </h1>
               </div>
-              <GlobalSearchBox
-                className="hidden min-w-72 md:flex"
-                placeholder="Search people, jobs, groups..."
-                size="compact"
-              />
-              <div className="flex items-center gap-2">
+              <div className="flex min-w-0 flex-1 flex-col gap-3 sm:flex-row sm:items-center xl:max-w-3xl">
+                <GlobalSearchBox
+                  className="min-w-0 flex-1"
+                  placeholder="Search conversations, people, jobs, groups..."
+                  size="compact"
+                />
+                <Link
+                  className={cn(
+                    buttonVariants({ size: "lg" }),
+                    "tx-action shrink-0 px-4",
+                  )}
+                  href="#post-content"
+                >
+                  <PlusCircle className="size-4" aria-hidden="true" />
+                  Create
+                </Link>
                 {profile?.id ? (
                   <Link
                     className={cn(
                       buttonVariants({ variant: "outline", size: "lg" }),
-                      "hidden border-[#b8cae8] bg-white/90 px-4 text-[#061b4f] shadow-[0_10px_22px_rgba(7,36,91,0.08)] hover:bg-white sm:inline-flex",
+                      "shrink-0 border-[#b8cae8] bg-white/90 px-4 text-[#061b4f] shadow-[0_10px_22px_rgba(7,36,91,0.08)] hover:bg-white",
                     )}
                     href={`/profile/${profile.id}`}
                   >
@@ -453,7 +479,7 @@ export function DashboardPanel() {
                   </Link>
                 ) : null}
                 <Link
-                  className="inline-flex size-10 items-center justify-center rounded-lg text-[#061b4f] hover:bg-white/80"
+                  className="inline-flex size-10 shrink-0 items-center justify-center rounded-lg text-[#061b4f] hover:bg-white/80"
                   href="/notifications"
                   title="Notifications"
                 >
@@ -475,66 +501,127 @@ export function DashboardPanel() {
                 </div>
               ) : null}
 
-              <div className="tx-card p-5">
-                <div className="grid gap-3 md:grid-cols-3">
-                  <div>
-                    <p className="text-xs font-extrabold uppercase text-[#6f86b5]">
-                      Email
+              <div className="tx-engage-hero overflow-hidden rounded-lg border border-[#b8cae8]/70 bg-white">
+                <div className="grid gap-5 p-5 lg:grid-cols-[minmax(0,1fr)_260px] lg:p-6">
+                  <div className="min-w-0">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="rounded-lg bg-[#fff0f5] px-3 py-1 text-xs font-extrabold uppercase text-[#f52968]">
+                        Travel trade community
+                      </span>
+                      <span className="inline-flex items-center gap-1 rounded-lg bg-[#eef5ff] px-3 py-1 text-xs font-bold text-[#063b86]">
+                        <UsersRound className="size-3.5" aria-hidden="true" />
+                        Live member workspace
+                      </span>
+                    </div>
+                    <h2 className="mt-4 text-2xl font-extrabold text-[#061b4f]">
+                      Conversations, communities, and opportunities in one place.
+                    </h2>
+                    <p className="mt-2 max-w-3xl text-sm leading-6 text-[#4d6b9e]">
+                      Use the home feed to share supplier updates, ask practical
+                      trade questions, discover jobs and events, and keep your
+                      network moving.
                     </p>
-                    <p className="mt-1 break-words text-base font-bold text-[#061b4f]">
-                      {email ?? "Not signed in"}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-xs font-extrabold uppercase text-[#6f86b5]">
-                      Role
-                    </p>
-                    <div className="mt-1 flex flex-wrap items-center gap-2">
-                      <p className="text-base font-bold text-[#061b4f]">
-                        {profile?.role
-                          ? getRoleLabel(profile.role)
-                          : "Not selected"}
-                      </p>
-                      <SubscriptionBadge subscription={subscription} />
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      {[
+                        ["Home feed", "all"],
+                        ["Communities", "groups"],
+                        ["Q&A", "questions"],
+                        ["Supplier updates", "supplier_updates"],
+                      ].map(([label, value]) => (
+                        <button
+                          className={cn(
+                            "rounded-lg border px-4 py-2 text-sm font-bold transition",
+                            (value === "all" && activeTopic === "all") ||
+                              value === activeTopic
+                              ? "border-[#ff3d61] bg-white text-[#f52968] shadow-[0_10px_22px_rgba(245,41,104,0.12)]"
+                              : "border-[#c8d8ef] bg-white/86 text-[#061b4f] hover:border-[#ff7a2f] hover:text-[#f52968]",
+                          )}
+                          key={value}
+                          onClick={() => {
+                            if (value === "groups") {
+                              router.push("/groups");
+                              return;
+                            }
+
+                            setActiveTopic(value as TopicFilter);
+                          }}
+                          type="button"
+                        >
+                          {label}
+                        </button>
+                      ))}
                     </div>
                   </div>
-                  <div>
-                    <p className="text-xs font-extrabold uppercase text-[#6f86b5]">
-                      Onboarding
-                    </p>
-                    <p className="mt-1 inline-flex items-center gap-2 text-base font-bold text-[#061b4f]">
-                      {profile?.onboarding_completed ? "Complete" : "Not complete"}
-                      {profile?.onboarding_completed ? (
-                        <CheckCircle2
-                          className="size-4 text-[#063b86]"
-                          aria-hidden="true"
-                        />
-                      ) : null}
-                    </p>
+
+                  <div className="rounded-lg border border-[#d9e4f5] bg-white/86 p-4 shadow-[0_14px_30px_rgba(7,36,91,0.08)]">
+                    <div className="flex items-center gap-3">
+                      <div className="tx-navy-avatar flex size-12 shrink-0 items-center justify-center rounded-lg text-sm font-bold text-white">
+                        {memberInitials}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="truncate text-base font-extrabold text-[#061b4f]">
+                          {memberName}
+                        </p>
+                        <p className="truncate text-xs font-semibold text-[#4d6b9e]">
+                          {email ?? "Signed in member"}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="mt-4 space-y-3 border-t border-[#d9e4f5] pt-4">
+                      <div>
+                        <p className="text-[11px] font-extrabold uppercase text-[#6f86b5]">
+                          Role
+                        </p>
+                        <div className="mt-1 flex flex-wrap items-center gap-2">
+                          <p className="text-sm font-bold text-[#061b4f]">
+                            {profile?.role
+                              ? getRoleLabel(profile.role)
+                              : "Not selected"}
+                          </p>
+                          <SubscriptionBadge subscription={subscription} />
+                        </div>
+                      </div>
+                      <div>
+                        <p className="text-[11px] font-extrabold uppercase text-[#6f86b5]">
+                          Onboarding
+                        </p>
+                        <p className="mt-1 inline-flex items-center gap-2 text-sm font-bold text-[#061b4f]">
+                          {profile?.onboarding_completed
+                            ? "Complete"
+                            : "Not complete"}
+                          {profile?.onboarding_completed ? (
+                            <CheckCircle2
+                              className="size-4 text-[#063b86]"
+                              aria-hidden="true"
+                            />
+                          ) : null}
+                        </p>
+                      </div>
+                    </div>
+                    {profile?.id ? (
+                      <div className="mt-4 grid grid-cols-2 gap-2">
+                        <Link
+                          className={cn(
+                            buttonVariants({ size: "sm" }),
+                            "tx-action",
+                          )}
+                          href={`/profile/${profile.id}`}
+                        >
+                          View
+                        </Link>
+                        <Link
+                          className={cn(
+                            buttonVariants({ variant: "outline", size: "sm" }),
+                            "border-[#b8cae8] bg-white text-[#061b4f] hover:bg-[#f4f8ff]",
+                          )}
+                          href="/profile/edit"
+                        >
+                          Edit
+                        </Link>
+                      </div>
+                    ) : null}
                   </div>
                 </div>
-                {profile?.id ? (
-                  <div className="mt-5 flex flex-wrap gap-3 border-t border-[#d9e4f5] pt-5">
-                    <Link
-                      className={cn(
-                        buttonVariants({ size: "lg" }),
-                        "tx-action px-5",
-                      )}
-                      href={`/profile/${profile.id}`}
-                    >
-                      View profile
-                    </Link>
-                    <Link
-                      className={cn(
-                        buttonVariants({ variant: "outline", size: "lg" }),
-                        "border-[#b8cae8] bg-white px-5 text-[#061b4f] hover:bg-[#f4f8ff]",
-                      )}
-                      href="/profile/edit"
-                    >
-                      Edit profile
-                    </Link>
-                  </div>
-                ) : null}
               </div>
 
               <FeedComposer
@@ -550,7 +637,11 @@ export function DashboardPanel() {
                 variant="feed"
               />
 
-              <div className="flex gap-2 overflow-x-auto pb-1">
+              <div className="tx-card-soft flex items-center gap-3 overflow-x-auto p-2">
+                <div className="hidden items-center gap-2 px-2 text-xs font-extrabold uppercase text-[#6f86b5] sm:flex">
+                  <MessageSquareText className="size-4" aria-hidden="true" />
+                  Conversations
+                </div>
                 {feedTopics.map((topic) => (
                   <button
                     className={cn(
@@ -563,7 +654,7 @@ export function DashboardPanel() {
                     onClick={() => setActiveTopic(topic.value as TopicFilter)}
                     type="button"
                   >
-                    {topic.label}
+                    {topic.value === "all" ? "Home feed" : topic.label}
                   </button>
                 ))}
               </div>

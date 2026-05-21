@@ -132,15 +132,18 @@
 @layer components {
   .tx-dashboard-bg {
     background:
-      linear-gradient(118deg, rgba(255, 255, 255, 0.96) 0%, rgba(246, 250, 255, 0.94) 45%, rgba(228, 240, 255, 0.9) 100%),
-      repeating-radial-gradient(circle at 79% 0%, rgba(21, 62, 131, 0.12) 0 1px, transparent 1px 8px),
-      linear-gradient(145deg, #f7fbff 0%, #edf5ff 100%);
+      radial-gradient(circle at 92% 0%, rgba(245, 41, 104, 0.08), transparent 28rem),
+      radial-gradient(circle at 0% 100%, rgba(255, 122, 47, 0.1), transparent 28rem),
+      linear-gradient(118deg, rgba(255, 255, 255, 0.97) 0%, rgba(246, 250, 255, 0.95) 45%, rgba(228, 240, 255, 0.9) 100%),
+      repeating-radial-gradient(circle at 79% 0%, rgba(21, 62, 131, 0.12) 0 1px, transparent 1px 8px);
   }
 
   .tx-topline {
+    border-bottom: 1px solid rgba(112, 145, 197, 0.22);
     background:
       linear-gradient(90deg, rgba(255, 255, 255, 0.9), rgba(241, 248, 255, 0.68)),
       repeating-radial-gradient(circle at 70% 0%, rgba(22, 76, 145, 0.13) 0 1px, transparent 1px 9px);
+    box-shadow: 0 12px 30px rgba(7, 36, 91, 0.06);
   }
 
   .tx-card {
@@ -155,6 +158,29 @@
     border-radius: 0.5rem;
     background: rgba(255, 255, 255, 0.86);
     box-shadow: 0 12px 28px rgba(7, 36, 91, 0.07);
+  }
+
+  .tx-engage-hero {
+    position: relative;
+    box-shadow: 0 20px 48px rgba(7, 36, 91, 0.09), 0 1px 3px rgba(7, 36, 91, 0.08);
+  }
+
+  .tx-engage-hero::before {
+    position: absolute;
+    inset: 0;
+    content: "";
+    background:
+      linear-gradient(105deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.86) 54%, rgba(232, 242, 255, 0.78) 100%),
+      url("/travel-identity-sidebar.svg");
+    background-position: center, right bottom;
+    background-repeat: no-repeat;
+    background-size: auto, min(42rem, 70%) auto;
+    opacity: 0.98;
+  }
+
+  .tx-engage-hero > * {
+    position: relative;
+    z-index: 1;
   }
 
   .tx-action {
