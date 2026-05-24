@@ -2,7 +2,14 @@
 
 import Link from "next/link";
 import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
-import { ArrowLeft, MessageCircle, SendHorizontal, Users } from "lucide-react";
+import {
+  ArrowLeft,
+  Info,
+  MessageCircle,
+  SendHorizontal,
+  Sparkles,
+  Users,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { MemberPageShell } from "@/components/member/member-page-shell";
@@ -255,7 +262,7 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
         <Link
           className={cn(
             buttonVariants({ variant: "outline", size: "lg" }),
-            "hidden sm:inline-flex",
+            "hidden border-[#b8cae8] bg-white text-[#061b4f] hover:bg-[#f4f8ff] sm:inline-flex",
           )}
           href="/groups"
         >
@@ -268,19 +275,19 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
       viewerProfile={viewerProfile}
     >
       {!configured ? (
-        <div className="rounded-md border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
+        <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
           Supabase is not connected yet, so group discussions cannot load.
         </div>
       ) : null}
 
       {isLoading ? (
-        <div className="rounded-md border border-slate-200 bg-white p-6 text-sm text-slate-600 shadow-sm">
+        <div className="tx-card p-6 text-sm text-[#4d6b9e]">
           Loading group...
         </div>
       ) : null}
 
       {error ? (
-        <div className="rounded-md border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
+        <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
           {error}
         </div>
       ) : null}
@@ -288,19 +295,19 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
       {group ? (
         <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_320px]">
           <section className="space-y-5">
-            <article className="overflow-hidden rounded-md border border-slate-200 bg-white shadow-sm">
-              <div className="h-32 bg-[linear-gradient(120deg,#082f49,#0f766e)]" />
+            <article className="tx-card overflow-hidden">
+              <div className="h-36 bg-[linear-gradient(120deg,#061b4f_0%,#063b86_54%,#f52968_100%)]" />
               <div className="p-5 sm:p-6">
                 <div className="-mt-16 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                   <div className="flex items-end gap-4">
-                    <div className="flex size-24 items-center justify-center rounded-md border-4 border-white bg-[#e0f2f1] text-2xl font-semibold text-[#0f766e] shadow-sm">
+                    <div className="tx-navy-avatar flex size-24 items-center justify-center rounded-lg border-4 border-white text-2xl font-extrabold text-white">
                       {initials(group.name)}
                     </div>
                     <div className="pb-1">
-                      <span className="rounded-md bg-[#e0f2f1] px-2 py-1 text-xs font-semibold text-[#0f766e]">
+                      <span className="rounded-lg bg-[#fff0f5] px-2 py-1 text-xs font-extrabold text-[#f52968]">
                         {getGroupCategoryLabel(group.category)}
                       </span>
-                      <h2 className="mt-3 text-2xl font-semibold tracking-normal text-slate-950">
+                      <h2 className="mt-3 text-2xl font-extrabold text-[#061b4f]">
                         {group.name}
                       </h2>
                     </div>
@@ -309,8 +316,8 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
                     className={cn(
                       "h-10 px-4",
                       isMember
-                        ? "bg-[#082f49] hover:bg-[#0c4a6e]"
-                        : "bg-[#0f766e] hover:bg-[#115e59]",
+                        ? "bg-[#061b4f] hover:bg-[#063b86]"
+                        : "tx-action",
                     )}
                     disabled={isJoining}
                     onClick={handleMembershipToggle}
@@ -320,16 +327,27 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
                     {isMember ? "Joined" : "Join group"}
                   </Button>
                 </div>
-                <p className="mt-6 text-sm leading-6 text-slate-700">
+                <p className="mt-6 text-sm leading-6 text-[#4d6b9e]">
                   {group.description}
                 </p>
               </div>
             </article>
 
-            <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
-              <h2 className="text-lg font-semibold text-slate-950">
-                Group discussion
-              </h2>
+            <article className="tx-card p-5">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <p className="inline-flex items-center gap-2 text-xs font-extrabold uppercase text-[#063b86]">
+                    <MessageCircle className="size-4" aria-hidden="true" />
+                    Group discussion
+                  </p>
+                  <h2 className="mt-1 text-lg font-extrabold text-[#061b4f]">
+                    Share with this community
+                  </h2>
+                </div>
+                <span className="rounded-lg bg-[#eef5ff] px-3 py-1 text-xs font-bold text-[#063b86]">
+                  {isMember ? "You are a member" : "Join to post"}
+                </span>
+              </div>
 
               {isMember ? (
                 <form className="mt-4 space-y-3" onSubmit={handlePostSubmit}>
@@ -337,7 +355,7 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
                     Write a group post
                   </label>
                   <textarea
-                    className="min-h-28 w-full resize-y rounded-md border border-slate-300 px-3 py-3 text-sm leading-6 text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-[#0f766e] focus:ring-3 focus:ring-[#0f766e]/15"
+                    className="min-h-28 w-full resize-y rounded-lg border border-[#b8cae8] bg-white/82 px-4 py-3 text-sm leading-6 text-[#061b4f] outline-none transition placeholder:text-[#7288b8] focus:border-[#063b86] focus:ring-3 focus:ring-[#063b86]/15"
                     id="group-post"
                     maxLength={2000}
                     onChange={(event) => setPostDraft(event.target.value)}
@@ -345,12 +363,12 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
                     value={postDraft}
                   />
                   {postError ? (
-                    <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+                    <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">
                       {postError}
                     </p>
                   ) : null}
                   <Button
-                    className="h-10 bg-[#0f766e] px-4 text-white hover:bg-[#115e59]"
+                    className="tx-action h-10 px-4"
                     disabled={isPosting}
                     type="submit"
                   >
@@ -359,7 +377,7 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
                   </Button>
                 </form>
               ) : (
-                <div className="mt-4 rounded-md border border-slate-200 bg-slate-50 p-4 text-sm leading-6 text-slate-600">
+                <div className="mt-4 rounded-lg border border-[#d9e4f5] bg-[#f6f9ff]/80 p-4 text-sm leading-6 text-[#4d6b9e]">
                   Join this group to post in the discussion.
                 </div>
               )}
@@ -369,50 +387,50 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
               {posts.length > 0 ? (
                 posts.map((post) => (
                   <article
-                    className="rounded-md border border-slate-200 bg-white p-5 shadow-sm"
+                    className="tx-card p-5"
                     key={post.id}
                   >
                     <div className="flex items-start gap-3">
-                      <div className="flex size-11 shrink-0 items-center justify-center rounded-md bg-[#e0f2f1] text-sm font-semibold text-[#0f766e]">
+                      <div className="tx-navy-avatar flex size-11 shrink-0 items-center justify-center rounded-lg text-sm font-bold text-white">
                         {initials(post.author?.full_name ?? null)}
                       </div>
                       <div className="min-w-0">
                         {post.author?.id ? (
                           <Link
-                            className="font-semibold text-slate-950 hover:text-[#0f766e]"
+                            className="font-extrabold text-[#061b4f] hover:text-[#f52968]"
                             href={`/profile/${post.author.id}`}
                           >
                             {post.author.full_name ?? "Travel Xchange member"}
                           </Link>
                         ) : (
-                          <p className="font-semibold text-slate-950">
+                          <p className="font-extrabold text-[#061b4f]">
                             Travel Xchange member
                           </p>
                         )}
-                        <p className="mt-1 text-xs leading-5 text-slate-500">
+                        <p className="mt-1 text-xs leading-5 text-[#4d6b9e]">
                           {post.author?.headline ??
                             (post.author?.role
                               ? getRoleLabel(post.author.role)
                               : "Group member")}{" "}
-                          · {formatDate(post.created_at)}
+                          - {formatDate(post.created_at)}
                         </p>
                       </div>
                     </div>
-                    <p className="mt-4 whitespace-pre-wrap text-sm leading-6 text-slate-800">
+                    <p className="mt-4 whitespace-pre-wrap text-sm leading-6 text-[#203b70]">
                       {post.content}
                     </p>
                   </article>
                 ))
               ) : (
-                <div className="rounded-md border border-slate-200 bg-white p-8 text-center shadow-sm">
+                <div className="tx-card p-8 text-center">
                   <MessageCircle
-                    className="mx-auto size-8 text-[#0f766e]"
+                    className="mx-auto size-8 text-[#f52968]"
                     aria-hidden="true"
                   />
-                  <h2 className="mt-4 text-lg font-semibold text-slate-950">
+                  <h2 className="mt-4 text-lg font-extrabold text-[#061b4f]">
                     No posts yet
                   </h2>
-                  <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-slate-600">
+                  <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-[#4d6b9e]">
                     Start the first discussion in this group.
                   </p>
                 </div>
@@ -421,37 +439,43 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
           </section>
 
           <aside className="space-y-5">
-            <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
-              <h2 className="text-lg font-semibold text-slate-950">
-                Group details
-              </h2>
+            <article className="tx-card-soft p-5">
+              <div className="flex items-center gap-2">
+                <Info className="size-4 text-[#063b86]" aria-hidden="true" />
+                <h2 className="text-lg font-extrabold text-[#061b4f]">
+                  Group details
+                </h2>
+              </div>
               <div className="mt-4 space-y-3 text-sm">
                 <div className="flex items-center justify-between gap-3">
-                  <span className="text-slate-500">Members</span>
-                  <span className="font-semibold text-slate-950">
+                  <span className="text-[#4d6b9e]">Members</span>
+                  <span className="font-extrabold text-[#061b4f]">
                     {memberCount}
                   </span>
                 </div>
                 <div className="flex items-center justify-between gap-3">
-                  <span className="text-slate-500">Posts</span>
-                  <span className="font-semibold text-slate-950">
+                  <span className="text-[#4d6b9e]">Posts</span>
+                  <span className="font-extrabold text-[#061b4f]">
                     {posts.length}
                   </span>
                 </div>
                 <div className="flex items-center justify-between gap-3">
-                  <span className="text-slate-500">Visibility</span>
-                  <span className="font-semibold capitalize text-slate-950">
+                  <span className="text-[#4d6b9e]">Visibility</span>
+                  <span className="font-extrabold capitalize text-[#061b4f]">
                     {group.visibility}
                   </span>
                 </div>
               </div>
             </article>
 
-            <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
-              <h2 className="text-lg font-semibold text-slate-950">
-                Coming later
-              </h2>
-              <div className="mt-4 space-y-3 text-sm leading-6 text-slate-600">
+            <article className="tx-card-soft p-5">
+              <div className="flex items-center gap-2">
+                <Sparkles className="size-4 text-[#ff7a2f]" aria-hidden="true" />
+                <h2 className="text-lg font-extrabold text-[#061b4f]">
+                  Coming later
+                </h2>
+              </div>
+              <div className="mt-4 space-y-3 text-sm leading-6 text-[#4d6b9e]">
                 <p>Group sponsor slots arrive in Phase 12.</p>
                 <p>Moderation tools arrive in Phase 14.</p>
                 <p>Group search arrives in Phase 15.</p>

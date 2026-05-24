@@ -2,7 +2,7 @@
 
 import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Plus } from "lucide-react";
+import { ArrowLeft, Lightbulb, Plus, UsersRound } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { MemberPageShell } from "@/components/member/member-page-shell";
@@ -148,7 +148,7 @@ export function GroupCreateForm() {
         <Link
           className={cn(
             buttonVariants({ variant: "outline", size: "lg" }),
-            "hidden sm:inline-flex",
+            "hidden border-[#b8cae8] bg-white text-[#061b4f] hover:bg-[#f4f8ff] sm:inline-flex",
           )}
           href="/groups"
         >
@@ -161,84 +161,124 @@ export function GroupCreateForm() {
       viewerProfile={viewerProfile}
     >
       {!configured ? (
-        <div className="rounded-md border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
+        <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
           Supabase is not connected yet, so groups cannot save.
         </div>
       ) : null}
 
       {isLoading ? (
-        <div className="rounded-md border border-slate-200 bg-white p-6 text-sm text-slate-600 shadow-sm">
+        <div className="tx-card p-6 text-sm text-[#4d6b9e]">
           Loading group form...
         </div>
       ) : null}
 
-      <form
-        className="mx-auto max-w-3xl space-y-5 rounded-md border border-slate-200 bg-white p-5 shadow-sm"
-        onSubmit={handleSubmit}
-      >
-        {error ? (
-          <div className="rounded-md border border-red-200 bg-red-50 p-4 text-sm leading-6 text-red-700">
-            {error}
+      <div className="mx-auto grid max-w-6xl gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <form className="tx-card space-y-5 p-5 sm:p-6" onSubmit={handleSubmit}>
+          <div>
+            <p className="inline-flex items-center gap-2 text-xs font-extrabold uppercase text-[#063b86]">
+              <UsersRound className="size-4" aria-hidden="true" />
+              New community
+            </p>
+            <h2 className="mt-1 text-2xl font-extrabold text-[#061b4f]">
+              Create a focused travel trade group
+            </h2>
+            <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">
+              Keep the name specific, describe who it is for, and choose the
+              right category so members can find it quickly.
+            </p>
           </div>
-        ) : null}
 
-        <TextField
-          label="Group name"
-          name="name"
-          placeholder="Luxury Cruise Sellers"
-          required
-        />
+          {error ? (
+            <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm leading-6 text-red-700">
+              {error}
+            </div>
+          ) : null}
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          <SelectField
-            label="Category"
-            name="category"
-            options={groupCategoryOptions
-              .filter((option) => option.value !== "all")
-              .map((option) => ({
-                label: option.label,
-                value: option.value,
-              }))}
+          <TextField
+            label="Group name"
+            name="name"
+            placeholder="Luxury Cruise Sellers"
+            required
           />
-          <SelectField
-            label="Visibility"
-            name="visibility"
-            options={[
-              { label: "Members only", value: "members" },
-              { label: "Public preview", value: "public" },
-              { label: "Private", value: "private" },
-            ]}
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <SelectField
+              label="Category"
+              name="category"
+              options={groupCategoryOptions
+                .filter((option) => option.value !== "all")
+                .map((option) => ({
+                  label: option.label,
+                  value: option.value,
+                }))}
+            />
+            <SelectField
+              label="Visibility"
+              name="visibility"
+              options={[
+                { label: "Members only", value: "members" },
+                { label: "Public preview", value: "public" },
+                { label: "Private", value: "private" },
+              ]}
+            />
+          </div>
+
+          <TextareaField
+            hint="Explain who the group is for and what members should discuss."
+            label="Description"
+            name="description"
+            placeholder="A focused group for agents selling luxury cruise holidays."
+            required
           />
-        </div>
 
-        <TextareaField
-          hint="Explain who the group is for and what members should discuss."
-          label="Description"
-          name="description"
-          placeholder="A focused group for agents selling luxury cruise holidays."
-          required
-        />
+          <div className="flex flex-col gap-3 border-t border-[#d9e4f5] pt-5 sm:flex-row sm:items-center sm:justify-between">
+            <Link
+              className={cn(
+                buttonVariants({ variant: "outline", size: "lg" }),
+                "justify-center border-[#b8cae8] bg-white text-[#061b4f] hover:bg-[#f4f8ff] sm:hidden",
+              )}
+              href="/groups"
+            >
+              Back to groups
+            </Link>
+            <Button
+              className="tx-action h-11 px-5"
+              disabled={isSaving}
+              type="submit"
+            >
+              <Plus className="size-4" aria-hidden="true" />
+              {isSaving ? "Creating" : "Create group"}
+            </Button>
+          </div>
+        </form>
 
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <Link
-            className={cn(
-              buttonVariants({ variant: "outline", size: "lg" }),
-              "justify-center sm:hidden",
-            )}
-            href="/groups"
-          >
-            Back to groups
-          </Link>
-          <Button
-            className="h-11 bg-[#0f766e] px-5 text-white hover:bg-[#115e59]"
-            disabled={isSaving}
-            type="submit"
-          >
-            <Plus className="size-4" aria-hidden="true" />
-            {isSaving ? "Creating" : "Create group"}
-          </Button>
-        </div>
-      </form>
+        <aside className="space-y-4">
+          <section className="tx-card-soft p-5">
+            <div className="flex items-center gap-2">
+              <Lightbulb className="size-4 text-[#ff7a2f]" aria-hidden="true" />
+              <h2 className="text-base font-extrabold text-[#061b4f]">
+                Good group ideas
+              </h2>
+            </div>
+            <div className="mt-4 space-y-3 text-sm leading-6 text-[#4d6b9e]">
+              <p>Cruise Sellers</p>
+              <p>Luxury Travel</p>
+              <p>Disney Specialists</p>
+              <p>Marketing for Travel Agents</p>
+            </div>
+          </section>
+
+          <section className="tx-card-soft p-5">
+            <h2 className="text-base font-extrabold text-[#061b4f]">
+              Simple rule
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-[#4d6b9e]">
+              A useful group should make it obvious who should join and what
+              they should talk about.
+            </p>
+          </section>
+        </aside>
+      </div>
     </MemberPageShell>
   );
 }

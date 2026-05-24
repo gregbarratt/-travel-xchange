@@ -41,6 +41,7 @@ export type Company = {
   website_url: string | null;
   description: string | null;
   verification_tier: VerificationTier;
+  page_visibility: "public" | "private";
   status: "draft" | "active" | "suspended";
 };
 
@@ -124,6 +125,60 @@ export type CompanyFollower = {
   created_at: string;
   company_id: string;
   user_id: string;
+};
+
+export type SupplierPageRoleKey = "page_admin" | "bdm" | "marketer" | string;
+
+export type SupplierPagePermissionKey =
+  | "manage_profile"
+  | "manage_news"
+  | "manage_jobs"
+  | "manage_events"
+  | "manage_media"
+  | "manage_roles";
+
+export type SupplierPagePermission = {
+  key: SupplierPagePermissionKey;
+  created_at: string;
+  section_key: string;
+  label: string;
+  description: string | null;
+  status: "active" | "archived";
+};
+
+export type SupplierPageRole = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  company_id: string;
+  created_by: string | null;
+  role_key: SupplierPageRoleKey;
+  name: string;
+  description: string | null;
+  role_type: "baseline" | "custom";
+  is_system: boolean;
+  status: "active" | "archived";
+};
+
+export type SupplierPageMember = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  company_id: string;
+  user_id: string;
+  role_id: string;
+  assigned_by: string | null;
+  status: "active" | "invited" | "removed";
+};
+
+export type SupplierPageRolePermission = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  role_id: string;
+  permission_key: SupplierPagePermissionKey;
+  is_allowed: boolean;
+  updated_by: string | null;
 };
 
 export type GroupCategory =
@@ -966,6 +1021,45 @@ export type Database = {
           user_id: string;
         };
         Update: Partial<CompanyFollower>;
+        Relationships: [];
+      };
+      supplier_page_permissions: {
+        Row: SupplierPagePermission;
+        Insert: Partial<SupplierPagePermission> & {
+          key: SupplierPagePermissionKey;
+          section_key: string;
+          label: string;
+        };
+        Update: Partial<SupplierPagePermission>;
+        Relationships: [];
+      };
+      supplier_page_roles: {
+        Row: SupplierPageRole;
+        Insert: Partial<SupplierPageRole> & {
+          company_id: string;
+          role_key: SupplierPageRoleKey;
+          name: string;
+        };
+        Update: Partial<SupplierPageRole>;
+        Relationships: [];
+      };
+      supplier_page_members: {
+        Row: SupplierPageMember;
+        Insert: Partial<SupplierPageMember> & {
+          company_id: string;
+          user_id: string;
+          role_id: string;
+        };
+        Update: Partial<SupplierPageMember>;
+        Relationships: [];
+      };
+      supplier_page_role_permissions: {
+        Row: SupplierPageRolePermission;
+        Insert: Partial<SupplierPageRolePermission> & {
+          role_id: string;
+          permission_key: SupplierPagePermissionKey;
+        };
+        Update: Partial<SupplierPageRolePermission>;
         Relationships: [];
       };
       groups: {

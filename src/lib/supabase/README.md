@@ -11,6 +11,10 @@ impressions, clicks, subscription status, invoices, reports, moderation
 actions, audit logs, verification requests, global search, analytics events,
 dashboard metrics, launch waitlist signups, and follow data.
 
+Supplier page role access starts in `supabase/phase-22-supplier-access-phase-1.sql`.
+It adds public/private supplier page visibility, baseline page roles, and
+permission toggles that page admins can control.
+
 The launch waitlist stores public "follow for launch" interest in
 `launch_signups`. It does not create Supabase Auth users, so people can register
 their interest before public member accounts are switched back on.

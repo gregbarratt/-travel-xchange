@@ -38,7 +38,6 @@ const navIcons = {
   Suppliers: Building2,
   Support: HelpCircle,
   Training: GraduationCap,
-  "Xchange Feed": MessageCircle,
 };
 
 type AppSidebarProps = {
@@ -49,7 +48,7 @@ type AppSidebarProps = {
 const navSections = [
   {
     label: "Discover",
-    items: ["Home", "Xchange Feed", "Search", "Groups", "News"],
+    items: ["Home", "Search", "Groups", "News"],
   },
   {
     label: "Trade tools",
@@ -69,7 +68,7 @@ const communityShortcuts = [
 ];
 
 export function AppSidebar({
-  activeLabel = "Xchange Feed",
+  activeLabel = "Home",
   profile,
 }: AppSidebarProps) {
   const visibleItems = appNavigation.filter(

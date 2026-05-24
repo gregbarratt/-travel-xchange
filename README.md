@@ -6,6 +6,16 @@ to GitHub before the next phase begins.
 
 ## Current status
 
+Supplier page access, Phase 1:
+
+- Supplier/company pages now have a database-level `page_visibility` foundation
+  for public or private pages.
+- Baseline supplier page roles are defined: Page admin, BDM, and Marketer.
+- Page admins have full control, while BDM and Marketer permissions start off
+  optional and can be toggled by permission.
+- Run `supabase/phase-22-supplier-access-phase-1.sql` before using this access
+  model in Supabase.
+
 Post-deployment launch hold:
 
 - Public homepage now shows a Travel Xchange "Something new is coming" page.

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Plus, Users } from "lucide-react";
+import { ArrowRight, MessageCircle, Plus, Sparkles, TrendingUp, Users } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { MemberPageShell } from "@/components/member/member-page-shell";
@@ -198,7 +198,7 @@ export function GroupsDirectory() {
         <Link
           className={cn(
             buttonVariants({ size: "lg" }),
-            "hidden bg-[#0f766e] text-white hover:bg-[#115e59] sm:inline-flex",
+            "tx-action hidden sm:inline-flex",
           )}
           href="/groups/create"
         >
@@ -211,43 +211,83 @@ export function GroupsDirectory() {
       viewerProfile={viewerProfile}
     >
       {!configured ? (
-        <div className="rounded-md border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
+        <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
           Supabase is not connected yet, so groups cannot load.
         </div>
       ) : null}
 
-      <section className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <section className="tx-engage-hero overflow-hidden rounded-lg border border-[#b8cae8]/70 bg-white">
+        <div className="grid gap-5 p-5 lg:grid-cols-[minmax(0,1fr)_280px] lg:p-6">
           <div>
-            <h2 className="text-lg font-semibold text-slate-950">
-              Find your trade community
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-2 rounded-lg bg-[#fff0f5] px-3 py-1 text-xs font-extrabold uppercase text-[#f52968]">
+                <Users className="size-3.5" aria-hidden="true" />
+                Communities
+              </span>
+              <span className="rounded-lg bg-[#eef5ff] px-3 py-1 text-xs font-bold text-[#063b86]">
+                Travel trade spaces
+              </span>
+            </div>
+            <h2 className="mt-4 text-2xl font-extrabold text-[#061b4f]">
+              Find the right room for every trade conversation.
             </h2>
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-[#4d6b9e]">
               Join focused spaces for cruise, luxury, compliance, supplier
               updates, homeworkers, marketing, and more.
             </p>
+            <div className="mt-5 flex flex-wrap gap-2">
+              {["Cruise", "Luxury", "Supplier Updates", "Homeworkers"].map(
+                (topic) => (
+                  <span
+                    className="rounded-lg border border-[#c8d8ef] bg-white/86 px-3 py-2 text-xs font-bold text-[#061b4f]"
+                    key={topic}
+                  >
+                    {topic}
+                  </span>
+                ),
+              )}
+            </div>
           </div>
-          <Link
-            className={cn(
-              buttonVariants({ size: "lg" }),
-              "bg-[#0f766e] text-white hover:bg-[#115e59] sm:hidden",
-            )}
-            href="/groups/create"
-          >
-            <Plus className="size-4" aria-hidden="true" />
-            Create group
-          </Link>
+          <div className="rounded-lg border border-[#d9e4f5] bg-white/88 p-4 shadow-[0_14px_30px_rgba(7,36,91,0.08)]">
+            <div className="flex items-center gap-3">
+              <div className="tx-navy-avatar flex size-12 items-center justify-center rounded-lg text-white">
+                <Sparkles className="size-5" aria-hidden="true" />
+              </div>
+              <div>
+                <p className="text-sm font-extrabold text-[#061b4f]">
+                  Build useful communities
+                </p>
+                <p className="text-xs font-semibold text-[#4d6b9e]">
+                  Groups power niche discussion.
+                </p>
+              </div>
+            </div>
+            <Link
+              className={cn(
+                buttonVariants({ size: "lg" }),
+                "tx-action mt-4 w-full",
+              )}
+              href="/groups/create"
+            >
+              <Plus className="size-4" aria-hidden="true" />
+              Create group
+            </Link>
+          </div>
         </div>
       </section>
 
-      <div className="mt-5 flex gap-2 overflow-x-auto pb-1">
+      <div className="tx-card-soft mt-5 flex items-center gap-3 overflow-x-auto p-2">
+        <div className="hidden items-center gap-2 px-2 text-xs font-extrabold uppercase text-[#6f86b5] sm:flex">
+          <TrendingUp className="size-4" aria-hidden="true" />
+          Browse
+        </div>
         {groupCategoryOptions.map((category) => (
           <button
             className={cn(
-              "min-w-max rounded-md border px-3 py-2 text-sm font-medium transition",
+              "min-w-max rounded-lg border px-4 py-2 text-sm font-bold transition",
               activeCategory === category.value
-                ? "border-[#0f766e] bg-[#e0f2f1] text-[#0f766e]"
-                : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50",
+                ? "border-[#ff3d61] bg-white text-[#f52968] shadow-[0_10px_22px_rgba(245,41,104,0.12)]"
+                : "border-[#c8d8ef] bg-white/86 text-[#061b4f] hover:border-[#ff7a2f] hover:text-[#f52968]",
             )}
             key={category.value}
             onClick={() => setActiveCategory(category.value)}
@@ -259,23 +299,23 @@ export function GroupsDirectory() {
       </div>
 
       {error ? (
-        <div className="mt-5 rounded-md border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
+        <div className="mt-5 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
           {error}
         </div>
       ) : null}
 
       {isLoading ? (
-        <div className="mt-5 rounded-md border border-slate-200 bg-white p-6 text-sm text-slate-600 shadow-sm">
+        <div className="tx-card mt-5 p-6 text-sm text-[#4d6b9e]">
           Loading groups...
         </div>
       ) : null}
 
       {!isLoading && filteredGroups.length === 0 && !error ? (
-        <div className="mt-5 rounded-md border border-slate-200 bg-white p-8 text-center shadow-sm">
-          <h2 className="text-lg font-semibold text-slate-950">
+        <div className="tx-card mt-5 p-8 text-center">
+          <h2 className="text-lg font-extrabold text-[#061b4f]">
             No groups yet
           </h2>
-          <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-slate-600">
+          <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-[#4d6b9e]">
             Create the first group for this category.
           </p>
         </div>
@@ -284,39 +324,39 @@ export function GroupsDirectory() {
       <section className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {filteredGroups.map((group) => (
           <article
-            className="flex flex-col rounded-md border border-slate-200 bg-white p-5 shadow-sm"
+            className="tx-card flex flex-col overflow-hidden p-5"
             key={group.id}
           >
             <div className="flex items-start justify-between gap-3">
               <div>
-                <span className="rounded-md bg-[#e0f2f1] px-2 py-1 text-xs font-semibold text-[#0f766e]">
+                <span className="rounded-lg bg-[#fff0f5] px-2 py-1 text-xs font-extrabold text-[#f52968]">
                   {getGroupCategoryLabel(group.category)}
                 </span>
-                <h2 className="mt-4 text-lg font-semibold text-slate-950">
+                <h2 className="mt-4 text-lg font-extrabold text-[#061b4f]">
                   {group.name}
                 </h2>
               </div>
-              <div className="flex size-11 shrink-0 items-center justify-center rounded-md bg-[#082f49] text-white">
+              <div className="tx-navy-avatar flex size-11 shrink-0 items-center justify-center rounded-lg text-white">
                 <Users className="size-5" aria-hidden="true" />
               </div>
             </div>
-            <p className="mt-3 flex-1 text-sm leading-6 text-slate-600">
+            <p className="mt-3 flex-1 text-sm leading-6 text-[#4d6b9e]">
               {group.description}
             </p>
-            <div className="mt-5 grid grid-cols-2 gap-3 border-t border-slate-100 pt-4 text-sm">
+            <div className="mt-5 grid grid-cols-2 gap-3 border-t border-[#d9e4f5] pt-4 text-sm">
               <div>
-                <p className="text-xs font-semibold uppercase text-slate-500">
+                <p className="text-xs font-extrabold uppercase text-[#6f86b5]">
                   Members
                 </p>
-                <p className="mt-1 font-semibold text-slate-950">
+                <p className="mt-1 font-extrabold text-[#061b4f]">
                   {group.member_count}
                 </p>
               </div>
               <div>
-                <p className="text-xs font-semibold uppercase text-slate-500">
+                <p className="text-xs font-extrabold uppercase text-[#6f86b5]">
                   Posts
                 </p>
-                <p className="mt-1 font-semibold text-slate-950">
+                <p className="mt-1 font-extrabold text-[#061b4f]">
                   {group.post_count}
                 </p>
               </div>
@@ -325,23 +365,25 @@ export function GroupsDirectory() {
               <Link
                 className={cn(
                   buttonVariants({ variant: "outline", size: "lg" }),
-                  "justify-center bg-white",
+                  "justify-center border-[#b8cae8] bg-white text-[#061b4f] hover:bg-[#f4f8ff]",
                 )}
                 href={`/groups/${group.id}`}
               >
                 Open
+                <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
               <Button
                 className={cn(
                   "h-10",
                   group.is_joined_by_current_user
-                    ? "bg-[#082f49] hover:bg-[#0c4a6e]"
-                    : "bg-[#0f766e] hover:bg-[#115e59]",
+                    ? "bg-[#061b4f] hover:bg-[#063b86]"
+                    : "tx-action",
                 )}
                 disabled={busyGroupId === group.id}
                 onClick={() => handleMembershipToggle(group)}
                 type="button"
               >
+                <MessageCircle className="size-4" aria-hidden="true" />
                 {group.is_joined_by_current_user ? "Joined" : "Join"}
               </Button>
             </div>

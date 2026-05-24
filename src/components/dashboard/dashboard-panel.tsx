@@ -444,7 +444,7 @@ export function DashboardPanel() {
               <div className="min-w-0">
                 <p className="inline-flex items-center gap-2 text-xs font-extrabold uppercase text-[#063b86]">
                   <Compass className="size-4" aria-hidden="true" />
-                  Home feed
+                  Community Home
                 </p>
                 <h1 className="mt-1 truncate text-2xl font-extrabold text-[#061b4f]">
                   Good to see you, {memberName}
@@ -523,7 +523,7 @@ export function DashboardPanel() {
                     </p>
                     <div className="mt-5 flex flex-wrap gap-2">
                       {[
-                        ["Home feed", "all"],
+                        ["Latest", "all"],
                         ["Communities", "groups"],
                         ["Q&A", "questions"],
                         ["Supplier updates", "supplier_updates"],
@@ -654,7 +654,7 @@ export function DashboardPanel() {
                     onClick={() => setActiveTopic(topic.value as TopicFilter)}
                     type="button"
                   >
-                    {topic.value === "all" ? "Home feed" : topic.label}
+                    {topic.value === "all" ? "Latest" : topic.label}
                   </button>
                 ))}
               </div>
