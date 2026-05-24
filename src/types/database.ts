@@ -135,6 +135,9 @@ export type SupplierPagePermissionKey =
   | "manage_jobs"
   | "manage_events"
   | "manage_media"
+  | "manage_training"
+  | "manage_adverts"
+  | "manage_team"
   | "manage_roles";
 
 export type SupplierPagePermission = {

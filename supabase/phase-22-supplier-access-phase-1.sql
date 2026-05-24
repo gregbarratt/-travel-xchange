@@ -24,6 +24,9 @@ values
   ('manage_jobs', 'jobs', 'Manage jobs', 'Create and manage supplier job listings.'),
   ('manage_events', 'events', 'Manage events', 'Create and manage supplier events, webinars, and roadshows.'),
   ('manage_media', 'media', 'Manage media/gallery', 'Manage supplier media, images, gallery, and downloadable assets.'),
+  ('manage_training', 'training', 'Manage training', 'Manage supplier training modules and academy content.'),
+  ('manage_adverts', 'adverts', 'Manage adverts', 'Manage supplier adverts, spotlight cards, and sponsorship slots.'),
+  ('manage_team', 'team', 'Manage team', 'Manage supplier page team members and page assignments.'),
   ('manage_roles', 'settings', 'Manage roles and permissions', 'Manage supplier page roles and permission settings.')
 on conflict (key) do update
 set

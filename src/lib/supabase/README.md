@@ -15,6 +15,10 @@ Supplier page role access starts in `supabase/phase-22-supplier-access-phase-1.s
 It adds public/private supplier page visibility, baseline page roles, and
 permission toggles that page admins can control.
 
+Phase 2 uses `supabase/phase-23-supplier-custom-roles.sql` to add the latest
+supplier page sections to the permission catalogue. Custom role create, update,
+delete, and permission changes are handled through protected API routes.
+
 The launch waitlist stores public "follow for launch" interest in
 `launch_signups`. It does not create Supabase Auth users, so people can register
 their interest before public member accounts are switched back on.

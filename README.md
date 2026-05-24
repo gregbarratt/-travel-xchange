@@ -6,6 +6,15 @@ to GitHub before the next phase begins.
 
 ## Current status
 
+Supplier page access, Phase 2:
+
+- Supplier page admins can create custom page roles.
+- Page admins can edit or delete custom roles.
+- Page admins can toggle section permissions for baseline and custom roles.
+- Supplier role changes are handled through protected API routes, so users
+  cannot bypass the screen by calling the app directly.
+- Run `supabase/phase-23-supplier-custom-roles.sql` after Phase 1 SQL.
+
 Supplier page access, Phase 1:
 
 - Supplier/company pages now have a database-level `page_visibility` foundation

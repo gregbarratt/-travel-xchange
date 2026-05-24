@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 
 import { MemberPageShell } from "@/components/member/member-page-shell";
 import { VerificationBadge } from "@/components/profile/verification-badge";
+import { SupplierRoleManager } from "@/components/company/supplier-role-manager";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { getCompanyTypeLabel, getRoleLabel } from "@/config/roles";
 import { isMissingTableError } from "@/lib/supabase/errors";
@@ -334,6 +335,10 @@ export function CompanyPage({ companyId, variant }: CompanyPageProps) {
           </section>
 
           <aside className="space-y-5">
+            {variant === "supplier" ? (
+              <SupplierRoleManager companyId={company.id} />
+            ) : null}
+
             <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
               <div className="flex items-center gap-2">
                 <Users className="size-5 text-[#0f766e]" aria-hidden="true" />

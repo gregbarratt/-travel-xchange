@@ -65,6 +65,24 @@ export const supplierPagePermissions = [
     section: "media",
   },
   {
+    description: "Manage supplier training modules and academy content.",
+    key: "manage_training",
+    label: "Manage training",
+    section: "training",
+  },
+  {
+    description: "Manage supplier adverts, spotlight cards, and sponsorship slots.",
+    key: "manage_adverts",
+    label: "Manage adverts",
+    section: "adverts",
+  },
+  {
+    description: "Manage supplier page team members and page assignments.",
+    key: "manage_team",
+    label: "Manage team",
+    section: "team",
+  },
+  {
     description: "Manage supplier page roles and permission settings.",
     key: "manage_roles",
     label: "Manage roles and permissions",
@@ -89,6 +107,30 @@ export type SupplierPageViewer = {
   isApprovedMember?: boolean;
   isPageAdmin?: boolean;
 };
+
+export type SupplierPageRoleRecord = {
+  description?: string | null;
+  id?: string;
+  isSystem?: boolean;
+  name: string;
+  permissions?: SupplierPagePermissionMap;
+  roleKey: string;
+  roleType: "baseline" | "custom";
+  status?: "active" | "archived";
+};
+
+export type SupplierPageCustomRoleInput = {
+  description?: string | null;
+  name: string;
+  permissions?: SupplierPagePermissionMap;
+};
+
+export const assignableSupplierPagePermissions = supplierPagePermissions.filter(
+  (permission) => permission.key !== "manage_roles",
+);
+
+export const assignableSupplierPagePermissionKeys =
+  assignableSupplierPagePermissions.map((permission) => permission.key);
 
 function isActiveAccess(access: SupplierPageMemberAccess | null | undefined) {
   return Boolean(access && (access.status ?? "active") === "active");
@@ -130,6 +172,25 @@ export function supplierPageRoleHasFullControl(roleKey: string | null) {
   return roleKey === "page_admin";
 }
 
+export function canManageSupplierPageRoleSettings(
+  access: SupplierPageMemberAccess | null | undefined,
+) {
+  return (
+    isActiveAccess(access) &&
+    supplierPageRoleHasFullControl(access?.roleKey ?? null)
+  );
+}
+
+export function assertCanManageSupplierPageRoleSettings(
+  access: SupplierPageMemberAccess | null | undefined,
+) {
+  if (!canManageSupplierPageRoleSettings(access)) {
+    throw new Error(
+      "Only the supplier page admin can manage roles and permissions.",
+    );
+  }
+}
+
 export function canManageSupplierPageArea(
   access: SupplierPageMemberAccess | null | undefined,
   permissionKey: SupplierPagePermissionKey,
@@ -160,10 +221,126 @@ export function toggleSupplierPagePermission(
   permissionKey: SupplierPagePermissionKey,
   isAllowed: boolean,
 ) {
-  assertCanManageSupplierPageArea(actorAccess, "manage_roles");
+  assertCanManageSupplierPageRoleSettings(actorAccess);
 
   return {
     ...currentPermissions,
-    [permissionKey]: isAllowed,
+    [permissionKey]: permissionKey === "manage_roles" ? false : isAllowed,
   };
+}
+
+export function normalizeCustomSupplierRoleName(name: string) {
+  return name.trim().replace(/\s+/g, " ");
+}
+
+export function createSupplierPageRoleKey(name: string) {
+  const slug = normalizeCustomSupplierRoleName(name)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "")
+    .slice(0, 40);
+
+  return `custom_${slug || "role"}`;
+}
+
+export function buildSupplierPagePermissionMap(
+  actorAccess: SupplierPageMemberAccess | null | undefined,
+  permissions: SupplierPagePermissionMap = {},
+) {
+  assertCanManageSupplierPageRoleSettings(actorAccess);
+
+  return supplierPagePermissions.reduce<SupplierPagePermissionMap>(
+    (permissionMap, permission) => ({
+      ...permissionMap,
+      [permission.key]:
+        permission.key !== "manage_roles" && permissions[permission.key] === true,
+    }),
+    {},
+  );
+}
+
+export function createCustomSupplierPageRoleDraft(
+  actorAccess: SupplierPageMemberAccess | null | undefined,
+  input: SupplierPageCustomRoleInput,
+  existingRoleKeys: string[] = [],
+): SupplierPageRoleRecord {
+  assertCanManageSupplierPageRoleSettings(actorAccess);
+
+  const name = normalizeCustomSupplierRoleName(input.name);
+
+  if (name.length < 2) {
+    throw new Error("Role name must be at least 2 characters.");
+  }
+
+  const roleKey = createSupplierPageRoleKey(name);
+
+  if (existingRoleKeys.includes(roleKey)) {
+    throw new Error("A supplier page role with this name already exists.");
+  }
+
+  return {
+    description: input.description?.trim() || null,
+    isSystem: false,
+    name,
+    permissions: buildSupplierPagePermissionMap(
+      actorAccess,
+      input.permissions ?? {},
+    ),
+    roleKey,
+    roleType: "custom",
+    status: "active",
+  };
+}
+
+export function updateSupplierPageRoleDraft(
+  actorAccess: SupplierPageMemberAccess | null | undefined,
+  role: SupplierPageRoleRecord,
+  input: Partial<SupplierPageCustomRoleInput>,
+): SupplierPageRoleRecord {
+  assertCanManageSupplierPageRoleSettings(actorAccess);
+
+  if (role.roleKey === "page_admin") {
+    throw new Error("The page admin role cannot be edited.");
+  }
+
+  const nextName =
+    role.roleType === "custom" && typeof input.name === "string"
+      ? normalizeCustomSupplierRoleName(input.name)
+      : role.name;
+
+  if (role.roleType === "custom" && nextName.length < 2) {
+    throw new Error("Role name must be at least 2 characters.");
+  }
+
+  return {
+    ...role,
+    description:
+      role.roleType === "custom" && typeof input.description !== "undefined"
+        ? input.description?.trim() || null
+        : role.description ?? null,
+    name: nextName,
+    permissions: buildSupplierPagePermissionMap(
+      actorAccess,
+      input.permissions ?? role.permissions ?? {},
+    ),
+  };
+}
+
+export function assertCanDeleteSupplierPageRole(
+  actorAccess: SupplierPageMemberAccess | null | undefined,
+  role: SupplierPageRoleRecord,
+) {
+  assertCanManageSupplierPageRoleSettings(actorAccess);
+
+  if (role.roleType !== "custom" || role.isSystem) {
+    throw new Error("Only custom supplier page roles can be deleted.");
+  }
+}
+
+export function userCanAccessOnlyPermittedSupplierSections(
+  access: SupplierPageMemberAccess,
+) {
+  return assignableSupplierPagePermissionKeys.filter((permissionKey) =>
+    canManageSupplierPageArea(access, permissionKey),
+  );
 }
