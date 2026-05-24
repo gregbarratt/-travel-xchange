@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 
 import { MemberPageShell } from "@/components/member/member-page-shell";
 import { VerificationBadge } from "@/components/profile/verification-badge";
+import { SupplierContentSubmissionForm } from "@/components/company/supplier-content-submission-form";
 import { SupplierRoleManager } from "@/components/company/supplier-role-manager";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { getCompanyTypeLabel, getRoleLabel } from "@/config/roles";
@@ -332,6 +333,10 @@ export function CompanyPage({ companyId, variant }: CompanyPageProps) {
                 </a>
               ) : null}
             </article>
+
+            {variant === "supplier" ? (
+              <SupplierContentSubmissionForm companyId={company.id} />
+            ) : null}
           </section>
 
           <aside className="space-y-5">

@@ -184,6 +184,43 @@ export type SupplierPageRolePermission = {
   updated_by: string | null;
 };
 
+export type SupplierPageSectionKey =
+  | "profile"
+  | "news"
+  | "jobs"
+  | "events"
+  | "media"
+  | "training"
+  | "adverts"
+  | "team";
+
+export type SupplierPageSectionSetting = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  company_id: string;
+  section_key: SupplierPageSectionKey;
+  visibility: "public" | "private";
+  updated_by: string | null;
+};
+
+export type SupplierPageContentSubmission = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  company_id: string;
+  section_key: SupplierPageSectionKey;
+  created_by: string;
+  title: string;
+  content: string;
+  media_url: string | null;
+  status: "pending" | "approved" | "rejected";
+  reviewed_by: string | null;
+  reviewed_at: string | null;
+  rejection_reason: string | null;
+  metadata: Record<string, unknown>;
+};
+
 export type GroupCategory =
   | "general"
   | "cruise"
@@ -1063,6 +1100,27 @@ export type Database = {
           permission_key: SupplierPagePermissionKey;
         };
         Update: Partial<SupplierPageRolePermission>;
+        Relationships: [];
+      };
+      supplier_page_section_settings: {
+        Row: SupplierPageSectionSetting;
+        Insert: Partial<SupplierPageSectionSetting> & {
+          company_id: string;
+          section_key: SupplierPageSectionKey;
+        };
+        Update: Partial<SupplierPageSectionSetting>;
+        Relationships: [];
+      };
+      supplier_page_content_submissions: {
+        Row: SupplierPageContentSubmission;
+        Insert: Partial<SupplierPageContentSubmission> & {
+          company_id: string;
+          section_key: SupplierPageSectionKey;
+          created_by: string;
+          title: string;
+          content: string;
+        };
+        Update: Partial<SupplierPageContentSubmission>;
         Relationships: [];
       };
       groups: {

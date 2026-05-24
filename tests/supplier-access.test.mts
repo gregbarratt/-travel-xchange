@@ -7,10 +7,16 @@ import {
   buildSupplierPagePermissionMap,
   canManageSupplierPageArea,
   canManageSupplierPageRoleSettings,
+  canEditSupplierPageSection,
   createCustomSupplierPageRoleDraft,
+  createSupplierPageSubmissionDraft,
   isBaselineSupplierPageRole,
+  isSupplierPageSectionVisibleToViewer,
   isSupplierPagePublic,
+  isSupplierPageSubmissionPubliclyVisible,
   isSupplierPageVisibleToViewer,
+  reviewSupplierPageSubmission,
+  setSupplierPageSectionVisibility,
   supplierPageBaselineRoleKeys,
   supplierPagePermissions,
   toggleSupplierPagePermission,
@@ -229,5 +235,129 @@ describe("supplier page access control", () => {
     );
     assert.equal(canManageSupplierPageArea(customAccess, "manage_jobs"), false);
     assert.equal(canManageSupplierPageArea(customAccess, "manage_profile"), false);
+  });
+
+  it("allows page admins to set each supplier page section public or private", () => {
+    const sectionSetting = setSupplierPageSectionVisibility(
+      pageAdminAccess,
+      "news",
+      "private",
+    );
+
+    assert.deepEqual(sectionSetting, {
+      sectionKey: "news",
+      visibility: "private",
+    });
+
+    assert.throws(
+      () =>
+        setSupplierPageSectionVisibility(
+          { roleKey: "bdm", status: "active" },
+          "events",
+          "private",
+        ),
+      /Only the supplier page admin/,
+    );
+  });
+
+  it("shows public sections to agents and keeps private sections for approved users", () => {
+    assert.equal(isSupplierPageSectionVisibleToViewer("public"), true);
+    assert.equal(isSupplierPageSectionVisibleToViewer("private"), false);
+    assert.equal(
+      isSupplierPageSectionVisibleToViewer("private", {
+        isApprovedMember: true,
+      }),
+      true,
+    );
+    assert.equal(
+      isSupplierPageSectionVisibleToViewer("private", {
+        isPageAdmin: true,
+      }),
+      true,
+    );
+  });
+
+  it("creates agent supplier content as pending and keeps it hidden publicly", () => {
+    const submission = createSupplierPageSubmissionDraft({
+      content: "This is a helpful supplier update for agents to review.",
+      createdBy: "agent-user-id",
+      sectionKey: "news",
+      sectionVisibility: "public",
+      title: "Cruise launch update",
+      viewer: { isApprovedMember: false },
+    });
+
+    assert.equal(submission.status, "pending");
+    assert.equal(submission.reviewerNotificationRequired, true);
+    assert.equal(isSupplierPageSubmissionPubliclyVisible(submission.status), false);
+  });
+
+  it("blocks agent submissions to private sections unless joined or approved", () => {
+    assert.throws(
+      () =>
+        createSupplierPageSubmissionDraft({
+          content: "This private section content should not go through.",
+          createdBy: "agent-user-id",
+          sectionKey: "events",
+          sectionVisibility: "private",
+          title: "Private event idea",
+          viewer: { isApprovedMember: false },
+        }),
+      /private/,
+    );
+
+    const submission = createSupplierPageSubmissionDraft({
+      content: "This private section content is from an approved member.",
+      createdBy: "member-user-id",
+      sectionKey: "events",
+      sectionVisibility: "private",
+      title: "Approved event idea",
+      viewer: { isApprovedMember: true },
+    });
+
+    assert.equal(submission.status, "pending");
+  });
+
+  it("allows admins and moderators to approve or reject pending supplier content", () => {
+    const approved = reviewSupplierPageSubmission(pageAdminAccess, "approved");
+    const rejected = reviewSupplierPageSubmission(pageAdminAccess, "rejected");
+    const moderatorApproved = reviewSupplierPageSubmission(
+      { roleKey: "moderator", status: "active" },
+      "approved",
+      { isPlatformModerator: true },
+    );
+
+    assert.equal(approved.status, "approved");
+    assert.equal(rejected.status, "rejected");
+    assert.equal(moderatorApproved.status, "approved");
+    assert.equal(isSupplierPageSubmissionPubliclyVisible(approved.status), true);
+    assert.equal(isSupplierPageSubmissionPubliclyVisible(rejected.status), false);
+
+    assert.throws(
+      () =>
+        reviewSupplierPageSubmission(
+          { roleKey: "marketer", status: "active" },
+          "approved",
+        ),
+      /Only the supplier page admin/,
+    );
+  });
+
+  it("does not let agents edit sections without explicit permission", () => {
+    const agentAccess: SupplierPageMemberAccess = {
+      permissions: {},
+      roleKey: "custom_agent_contributor",
+      status: "active",
+    };
+
+    const permittedAccess: SupplierPageMemberAccess = {
+      permissions: { manage_news: true },
+      roleKey: "custom_news_contributor",
+      status: "active",
+    };
+
+    assert.equal(canEditSupplierPageSection(agentAccess, "news"), false);
+    assert.equal(canEditSupplierPageSection(permittedAccess, "news"), true);
+    assert.equal(canEditSupplierPageSection(permittedAccess, "events"), false);
   });
 });

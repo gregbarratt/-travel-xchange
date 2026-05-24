@@ -3,9 +3,12 @@ import type { SupabaseClient, User } from "@supabase/supabase-js";
 import type {
   Database,
   Profile,
+  SupplierPageContentSubmission,
   SupplierPagePermissionKey,
   SupplierPageRole,
   SupplierPageRolePermission,
+  SupplierPageSectionKey,
+  SupplierPageSectionSetting,
 } from "@/types/database";
 
 export type SupplierPageRoleWithPermissions = SupplierPageRole & {
@@ -18,6 +21,34 @@ export const supplierRoleTableNames = [
   "supplier_page_members",
   "supplier_page_role_permissions",
 ];
+
+export const supplierVisibilityTableNames = [
+  "supplier_page_section_settings",
+  "supplier_page_content_submissions",
+];
+
+const supplierSectionKeys = [
+  "profile",
+  "news",
+  "jobs",
+  "events",
+  "media",
+  "training",
+  "adverts",
+  "team",
+] as const satisfies readonly SupplierPageSectionKey[];
+
+export function isSupplierPageSectionKey(
+  value: string,
+): value is SupplierPageSectionKey {
+  return supplierSectionKeys.includes(value as SupplierPageSectionKey);
+}
+
+export function isSupplierPageSectionVisibility(
+  value: string,
+): value is SupplierPageSectionSetting["visibility"] {
+  return value === "public" || value === "private";
+}
 
 export function isPlatformAdmin(profile: Pick<Profile, "role"> | null) {
   return (
@@ -118,6 +149,217 @@ export async function listSupplierPageRoles(
       (permissions ?? []) as SupplierPageRolePermission[],
     ),
   };
+}
+
+export async function listSupplierPageSectionSettings(
+  supabase: SupabaseClient<Database>,
+  companyId: string,
+  updatedBy?: string,
+) {
+  const { data: existingSettings, error } = await supabase
+    .from("supplier_page_section_settings")
+    .select("*")
+    .eq("company_id", companyId)
+    .order("section_key", { ascending: true });
+
+  if (error) {
+    return { error, settings: [] as SupplierPageSectionSetting[] };
+  }
+
+  const existingKeys = new Set(
+    (existingSettings ?? []).map((setting) => setting.section_key),
+  );
+  const missingSettings = supplierSectionKeys.filter(
+    (sectionKey) => !existingKeys.has(sectionKey),
+  );
+
+  if (missingSettings.length > 0) {
+    const { error: upsertError } = await supabase
+      .from("supplier_page_section_settings")
+      .upsert(
+        missingSettings.map((sectionKey) => ({
+          company_id: companyId,
+          section_key: sectionKey,
+          updated_by: updatedBy ?? null,
+          visibility: "public" as const,
+        })),
+        { onConflict: "company_id,section_key" },
+      );
+
+    if (upsertError) {
+      return { error: upsertError, settings: [] as SupplierPageSectionSetting[] };
+    }
+
+    const { data: refreshedSettings, error: refreshError } = await supabase
+      .from("supplier_page_section_settings")
+      .select("*")
+      .eq("company_id", companyId)
+      .order("section_key", { ascending: true });
+
+    return {
+      error: refreshError,
+      settings: (refreshedSettings ?? []) as SupplierPageSectionSetting[],
+    };
+  }
+
+  return {
+    error: null,
+    settings: (existingSettings ?? []) as SupplierPageSectionSetting[],
+  };
+}
+
+export async function getSupplierPageSectionVisibility(
+  supabase: SupabaseClient<Database>,
+  companyId: string,
+  sectionKey: SupplierPageSectionKey,
+) {
+  const { data, error } = await supabase
+    .from("supplier_page_section_settings")
+    .select("visibility")
+    .eq("company_id", companyId)
+    .eq("section_key", sectionKey)
+    .maybeSingle();
+
+  if (error) {
+    return { error, visibility: null };
+  }
+
+  return {
+    error: null,
+    visibility: data?.visibility ?? ("public" as const),
+  };
+}
+
+export async function getSupplierPageViewerContext(
+  supabase: SupabaseClient<Database>,
+  companyId: string,
+  user: User,
+) {
+  const [{ data: company }, { data: profile }, { data: memberships }] =
+    await Promise.all([
+      supabase
+        .from("companies")
+        .select("id, created_by")
+        .eq("id", companyId)
+        .maybeSingle(),
+      supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", user.id)
+        .maybeSingle(),
+      supabase
+        .from("supplier_page_members")
+        .select("role_id")
+        .eq("company_id", companyId)
+        .eq("user_id", user.id)
+        .eq("status", "active"),
+    ]);
+
+  if (!company) {
+    return {
+      access: { roleKey: null, status: "removed" as const },
+      company: null,
+      viewer: {
+        isApprovedMember: false,
+        isPageAdmin: false,
+        isPlatformModerator: false,
+      },
+    };
+  }
+
+  const roleIds = (memberships ?? []).map((membership) => membership.role_id);
+  const { data: roles } =
+    roleIds.length > 0
+      ? await supabase
+          .from("supplier_page_roles")
+          .select("role_key")
+          .eq("company_id", companyId)
+          .eq("status", "active")
+          .in("id", roleIds)
+      : { data: [] };
+
+  const roleKey = roles?.[0]?.role_key ?? null;
+  const isPlatformModerator = isPlatformAdmin(profile);
+  const isPageAdmin =
+    company.created_by === user.id ||
+    isPlatformModerator ||
+    roles?.some((role) => role.role_key === "page_admin") === true;
+  const isApprovedMember = isPageAdmin || roleIds.length > 0;
+
+  return {
+    access: {
+      roleKey: isPageAdmin ? "page_admin" : roleKey,
+      status: isApprovedMember ? ("active" as const) : ("removed" as const),
+    },
+    company,
+    viewer: {
+      isApprovedMember,
+      isPageAdmin,
+      isPlatformModerator,
+    },
+  };
+}
+
+export async function listPendingSupplierPageSubmissions(
+  supabase: SupabaseClient<Database>,
+  companyId: string,
+) {
+  const { data, error } = await supabase
+    .from("supplier_page_content_submissions")
+    .select("*")
+    .eq("company_id", companyId)
+    .eq("status", "pending")
+    .order("created_at", { ascending: false });
+
+  return {
+    error,
+    submissions: (data ?? []) as SupplierPageContentSubmission[],
+  };
+}
+
+export async function listSupplierPageReviewerIds(
+  supabase: SupabaseClient<Database>,
+  companyId: string,
+) {
+  const [{ data: company }, { data: pageAdminRoles }, { data: moderators }] =
+    await Promise.all([
+      supabase
+        .from("companies")
+        .select("created_by")
+        .eq("id", companyId)
+        .maybeSingle(),
+      supabase
+        .from("supplier_page_roles")
+        .select("id")
+        .eq("company_id", companyId)
+        .eq("role_key", "page_admin")
+        .eq("status", "active"),
+      supabase
+        .from("profiles")
+        .select("id")
+        .in("role", ["moderator", "admin", "super_admin"]),
+    ]);
+
+  const roleIds = (pageAdminRoles ?? []).map((role) => role.id);
+  const { data: pageAdminMembers } =
+    roleIds.length > 0
+      ? await supabase
+          .from("supplier_page_members")
+          .select("user_id")
+          .eq("company_id", companyId)
+          .eq("status", "active")
+          .in("role_id", roleIds)
+      : { data: [] };
+
+  return Array.from(
+    new Set(
+      [
+        company?.created_by,
+        ...(pageAdminMembers ?? []).map((member) => member.user_id),
+        ...(moderators ?? []).map((moderator) => moderator.id),
+      ].filter(Boolean) as string[],
+    ),
+  );
 }
 
 async function getSupplierPageRoleIds(

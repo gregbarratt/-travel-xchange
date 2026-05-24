@@ -6,6 +6,17 @@ to GitHub before the next phase begins.
 
 ## Current status
 
+Supplier page access, Phase 3:
+
+- Supplier page sections can now be set as public or private.
+- Page admins can control section visibility from the supplier page.
+- Agents can submit supplier content for review without publishing it straight
+  away.
+- Pending supplier content appears in an approval queue for page admins and
+  moderators.
+- Approved content can become visible; rejected or pending content stays hidden.
+- Run `supabase/phase-24-supplier-visibility-approval.sql` after Phase 2 SQL.
+
 Supplier page access, Phase 2:
 
 - Supplier page admins can create custom page roles.
@@ -374,10 +385,16 @@ Built by Phase 2:
     guidance for Vercel, Supabase, Stripe, and domains.
 22. Post-launch waitlist signups use `supabase/phase-21-launch-signups.sql`.
     Run it to store launch interest without creating active user accounts.
-23. Copy `.env.example` to `.env.local`.
-24. Add your Supabase project URL, anon key, and service role key to
+23. Supplier access Phase 1 uses
+    `supabase/phase-22-supplier-access-phase-1.sql`.
+24. Supplier access Phase 2 uses
+    `supabase/phase-23-supplier-custom-roles.sql`.
+25. Supplier access Phase 3 uses
+    `supabase/phase-24-supplier-visibility-approval.sql`.
+26. Copy `.env.example` to `.env.local`.
+27. Add your Supabase project URL, anon key, and service role key to
     `.env.local`.
-25. Restart the local app.
+28. Restart the local app.
 
 Do not put the service role key in browser code. Keep real keys out of Git.
 

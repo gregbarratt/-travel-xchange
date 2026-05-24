@@ -106,6 +106,36 @@ export type SupplierPageMemberAccess = {
 export type SupplierPageViewer = {
   isApprovedMember?: boolean;
   isPageAdmin?: boolean;
+  isPlatformModerator?: boolean;
+};
+
+type SupplierPagePermissionSection =
+  (typeof supplierPagePermissions)[number]["section"];
+
+export type SupplierPageSectionKey = Exclude<
+  SupplierPagePermissionSection,
+  "settings"
+>;
+
+export type SupplierPageSectionVisibility = "public" | "private";
+
+export type SupplierPageSectionSettingDraft = {
+  sectionKey: SupplierPageSectionKey;
+  visibility: SupplierPageSectionVisibility;
+};
+
+export type SupplierPageSubmissionStatus =
+  | "pending"
+  | "approved"
+  | "rejected";
+
+export type SupplierPageSubmissionDraft = {
+  content: string;
+  createdBy: string;
+  reviewerNotificationRequired: boolean;
+  sectionKey: SupplierPageSectionKey;
+  status: SupplierPageSubmissionStatus;
+  title: string;
 };
 
 export type SupplierPageRoleRecord = {
@@ -132,6 +162,19 @@ export const assignableSupplierPagePermissions = supplierPagePermissions.filter(
 export const assignableSupplierPagePermissionKeys =
   assignableSupplierPagePermissions.map((permission) => permission.key);
 
+export const supplierPageSections = Array.from(
+  new Map(
+    assignableSupplierPagePermissions.map((permission) => [
+      permission.section,
+      {
+        key: permission.section as SupplierPageSectionKey,
+        label: permission.label.replace("Manage ", ""),
+        permissionKey: permission.key,
+      },
+    ]),
+  ).values(),
+);
+
 function isActiveAccess(access: SupplierPageMemberAccess | null | undefined) {
   return Boolean(access && (access.status ?? "active") === "active");
 }
@@ -156,8 +199,39 @@ export function isSupplierPageVisibleToViewer(
 ) {
   return (
     pageVisibility === "public" ||
-    Boolean(viewer.isPageAdmin || viewer.isApprovedMember)
+    Boolean(
+      viewer.isPageAdmin ||
+        viewer.isApprovedMember ||
+        viewer.isPlatformModerator,
+    )
   );
+}
+
+export function isSupplierPageSectionVisibleToViewer(
+  sectionVisibility: SupplierPageSectionVisibility,
+  viewer: SupplierPageViewer = {},
+) {
+  return (
+    sectionVisibility === "public" ||
+    Boolean(
+      viewer.isApprovedMember ||
+        viewer.isPageAdmin ||
+        viewer.isPlatformModerator,
+    )
+  );
+}
+
+export function setSupplierPageSectionVisibility(
+  actorAccess: SupplierPageMemberAccess | null | undefined,
+  sectionKey: SupplierPageSectionKey,
+  visibility: SupplierPageSectionVisibility,
+): SupplierPageSectionSettingDraft {
+  assertCanManageSupplierPageRoleSettings(actorAccess);
+
+  return {
+    sectionKey,
+    visibility,
+  };
 }
 
 export function isBaselineSupplierPageRole(
@@ -343,4 +417,83 @@ export function userCanAccessOnlyPermittedSupplierSections(
   return assignableSupplierPagePermissionKeys.filter((permissionKey) =>
     canManageSupplierPageArea(access, permissionKey),
   );
+}
+
+export function canEditSupplierPageSection(
+  access: SupplierPageMemberAccess | null | undefined,
+  sectionKey: SupplierPageSectionKey,
+) {
+  const permission = supplierPagePermissions.find(
+    (supplierPermission) => supplierPermission.section === sectionKey,
+  );
+
+  return permission ? canManageSupplierPageArea(access, permission.key) : false;
+}
+
+export function createSupplierPageSubmissionDraft(input: {
+  actorAccess?: SupplierPageMemberAccess | null;
+  content: string;
+  createdBy: string;
+  sectionKey: SupplierPageSectionKey;
+  sectionVisibility: SupplierPageSectionVisibility;
+  title: string;
+  viewer?: SupplierPageViewer;
+}): SupplierPageSubmissionDraft {
+  if (
+    !isSupplierPageSectionVisibleToViewer(
+      input.sectionVisibility,
+      input.viewer ?? {},
+    )
+  ) {
+    throw new Error("This supplier page section is private.");
+  }
+
+  const title = input.title.trim();
+  const content = input.content.trim();
+
+  if (title.length < 2) {
+    throw new Error("Add a title before submitting content.");
+  }
+
+  if (content.length < 10) {
+    throw new Error("Add a little more detail before submitting content.");
+  }
+
+  const isPageAdmin = canManageSupplierPageRoleSettings(input.actorAccess);
+  const status = isPageAdmin ? "approved" : "pending";
+
+  return {
+    content,
+    createdBy: input.createdBy,
+    reviewerNotificationRequired: status === "pending",
+    sectionKey: input.sectionKey,
+    status,
+    title,
+  };
+}
+
+export function isSupplierPageSubmissionPubliclyVisible(
+  status: SupplierPageSubmissionStatus,
+) {
+  return status === "approved";
+}
+
+export function reviewSupplierPageSubmission(
+  reviewerAccess: SupplierPageMemberAccess | null | undefined,
+  decision: "approved" | "rejected",
+  reviewer: SupplierPageViewer = {},
+) {
+  if (
+    !canManageSupplierPageRoleSettings(reviewerAccess) &&
+    !reviewer.isPlatformModerator
+  ) {
+    throw new Error(
+      "Only the supplier page admin or a platform moderator can review supplier content.",
+    );
+  }
+
+  return {
+    reviewedAt: new Date().toISOString(),
+    status: decision,
+  };
 }

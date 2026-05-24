@@ -19,6 +19,11 @@ Phase 2 uses `supabase/phase-23-supplier-custom-roles.sql` to add the latest
 supplier page sections to the permission catalogue. Custom role create, update,
 delete, and permission changes are handled through protected API routes.
 
+Phase 3 uses `supabase/phase-24-supplier-visibility-approval.sql` to add
+section-level public/private visibility and the supplier content approval
+queue. Agent submissions are stored as pending until a page admin or platform
+moderator reviews them.
+
 The launch waitlist stores public "follow for launch" interest in
 `launch_signups`. It does not create Supabase Auth users, so people can register
 their interest before public member accounts are switched back on.

@@ -1,15 +1,34 @@
 "use client";
 
 import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
-import { Loader2, Plus, Save, ShieldCheck, Trash2 } from "lucide-react";
+import {
+  CheckCircle2,
+  Eye,
+  Loader2,
+  Lock,
+  MessageSquareWarning,
+  Plus,
+  Save,
+  ShieldCheck,
+  Trash2,
+  XCircle,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { supplierPagePermissions } from "@/lib/suppliers/access-control";
+import {
+  supplierPagePermissions,
+  supplierPageSections,
+} from "@/lib/suppliers/access-control";
 import {
   createSupabaseBrowserClient,
   isSupabaseConfigured,
 } from "@/lib/supabase/client";
-import type { SupplierPagePermissionKey } from "@/types/database";
+import type {
+  SupplierPageContentSubmission,
+  SupplierPagePermissionKey,
+  SupplierPageSectionKey,
+  SupplierPageSectionSetting,
+} from "@/types/database";
 
 type SupplierRoleManagerProps = {
   companyId: string;
@@ -30,6 +49,16 @@ type SupplierRoleManagerResponse = {
   roles?: SupplierRoleManagerRole[];
 };
 
+type SupplierSectionResponse = {
+  error?: string;
+  sections?: SupplierPageSectionSetting[];
+};
+
+type SupplierSubmissionResponse = {
+  error?: string;
+  submissions?: SupplierPageContentSubmission[];
+};
+
 const editablePermissions = supplierPagePermissions.filter(
   (permission) => permission.key !== "manage_roles",
 );
@@ -37,6 +66,10 @@ const editablePermissions = supplierPagePermissions.filter(
 export function SupplierRoleManager({ companyId }: SupplierRoleManagerProps) {
   const configured = isSupabaseConfigured();
   const [roles, setRoles] = useState<SupplierRoleManagerRole[]>([]);
+  const [sections, setSections] = useState<SupplierPageSectionSetting[]>([]);
+  const [submissions, setSubmissions] = useState<
+    SupplierPageContentSubmission[]
+  >([]);
   const [canManage, setCanManage] = useState(false);
   const [isLoading, setIsLoading] = useState(configured);
   const [isSaving, setIsSaving] = useState(false);
@@ -96,6 +129,37 @@ export function SupplierRoleManager({ companyId }: SupplierRoleManagerProps) {
       return;
     }
 
+    const [sectionsResponse, submissionsResponse] = await Promise.all([
+      fetch(`/api/supplier-pages/${companyId}/sections`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      fetch(`/api/supplier-pages/${companyId}/submissions`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    ]);
+    const sectionPayload = (await sectionsResponse.json().catch(() => ({}))) as
+      SupplierSectionResponse;
+    const submissionPayload = (await submissionsResponse
+      .json()
+      .catch(() => ({}))) as SupplierSubmissionResponse;
+
+    if (!sectionsResponse.ok) {
+      setError(
+        sectionPayload.error ??
+          "Supplier section visibility settings could not be loaded.",
+      );
+    } else {
+      setSections(sectionPayload.sections ?? []);
+    }
+
+    if (submissionsResponse.ok) {
+      setSubmissions(submissionPayload.submissions ?? []);
+    }
+
     setRoles(payload.roles ?? []);
     setCanManage(true);
     setIsLoading(false);
@@ -145,6 +209,91 @@ export function SupplierRoleManager({ companyId }: SupplierRoleManagerProps) {
 
     setRoles(payload.roles ?? []);
     setMessage(successMessage);
+  }
+
+  async function handleSaveSections() {
+    const token = await getAccessToken();
+
+    if (!token) {
+      setError("Please log in again before managing supplier sections.");
+      return;
+    }
+
+    setError(null);
+    setMessage(null);
+    setIsSaving(true);
+
+    const response = await fetch(`/api/supplier-pages/${companyId}/sections`, {
+      body: JSON.stringify({
+        sections: sections.map((section) => ({
+          sectionKey: section.section_key,
+          visibility: section.visibility,
+        })),
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      method: "PATCH",
+    });
+    const payload = (await response.json().catch(() => ({}))) as
+      SupplierSectionResponse;
+
+    setIsSaving(false);
+
+    if (!response.ok) {
+      setError(
+        payload.error ?? "Supplier section visibility could not be saved.",
+      );
+      return;
+    }
+
+    setSections(payload.sections ?? []);
+    setMessage("Supplier section visibility saved.");
+  }
+
+  async function handleReviewSubmission(
+    submissionId: string,
+    decision: "approved" | "rejected",
+  ) {
+    const token = await getAccessToken();
+
+    if (!token) {
+      setError("Please log in again before reviewing supplier content.");
+      return;
+    }
+
+    setError(null);
+    setMessage(null);
+    setIsSaving(true);
+
+    const response = await fetch(
+      `/api/supplier-pages/${companyId}/submissions/${submissionId}`,
+      {
+        body: JSON.stringify({ decision }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        method: "PATCH",
+      },
+    );
+    const payload = (await response.json().catch(() => ({}))) as
+      SupplierSubmissionResponse;
+
+    setIsSaving(false);
+
+    if (!response.ok) {
+      setError(payload.error ?? "Supplier content could not be reviewed.");
+      return;
+    }
+
+    setSubmissions(payload.submissions ?? []);
+    setMessage(
+      decision === "approved"
+        ? "Supplier content approved."
+        : "Supplier content rejected.",
+    );
   }
 
   async function handleCreateRole(event: FormEvent<HTMLFormElement>) {
@@ -212,6 +361,26 @@ export function SupplierRoleManager({ companyId }: SupplierRoleManagerProps) {
         [permissionKey]: isAllowed,
       },
     });
+  }
+
+  function updateSectionVisibility(
+    sectionKey: SupplierPageSectionKey,
+    visibility: SupplierPageSectionSetting["visibility"],
+  ) {
+    setSections((currentSections) =>
+      currentSections.map((section) =>
+        section.section_key === sectionKey
+          ? { ...section, visibility }
+          : section,
+      ),
+    );
+  }
+
+  function getSectionLabel(sectionKey: SupplierPageSectionKey) {
+    return (
+      supplierPageSections.find((section) => section.key === sectionKey)?.label ??
+      sectionKey
+    );
   }
 
   if (!configured || (!isLoading && !canManage)) {
@@ -283,6 +452,134 @@ export function SupplierRoleManager({ companyId }: SupplierRoleManagerProps) {
           </Button>
         </div>
       </form>
+
+      <section className="mt-5 rounded-lg border border-[#dbe7f7] bg-white p-4">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h3 className="font-bold text-[#061b4f]">Section visibility</h3>
+            <p className="mt-1 text-sm leading-5 text-[#4d6b9e]">
+              Choose which supplier sections agents can see before they are
+              approved or joined.
+            </p>
+          </div>
+          <Button
+            className="w-fit bg-[#061b4f] text-white hover:bg-[#123b7a]"
+            disabled={isSaving || sections.length === 0}
+            onClick={() => void handleSaveSections()}
+            type="button"
+          >
+            <Save className="size-4" aria-hidden="true" />
+            Save visibility
+          </Button>
+        </div>
+
+        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          {supplierPageSections.map((section) => {
+            const currentSetting = sections.find(
+              (setting) => setting.section_key === section.key,
+            );
+            const visibility = currentSetting?.visibility ?? "public";
+
+            return (
+              <label
+                className="rounded-lg border border-[#edf3fb] bg-[#f8fbff] p-3 text-sm"
+                key={section.key}
+              >
+                <span className="flex items-center gap-2 font-bold text-[#061b4f]">
+                  {visibility === "public" ? (
+                    <Eye className="size-4 text-[#0f766e]" aria-hidden="true" />
+                  ) : (
+                    <Lock className="size-4 text-[#f72f6b]" aria-hidden="true" />
+                  )}
+                  {section.label}
+                </span>
+                <select
+                  className="mt-3 h-10 w-full rounded-lg border border-[#b8cae8] bg-white px-3 text-sm text-[#061b4f] outline-none focus:border-[#063b86] focus:ring-3 focus:ring-[#063b86]/15"
+                  onChange={(event) =>
+                    updateSectionVisibility(
+                      section.key,
+                      event.target.value as SupplierPageSectionSetting["visibility"],
+                    )
+                  }
+                  value={visibility}
+                >
+                  <option value="public">Public to agents</option>
+                  <option value="private">Private to approved users</option>
+                </select>
+              </label>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="mt-5 rounded-lg border border-[#dbe7f7] bg-white p-4">
+        <div className="flex items-start gap-3">
+          <MessageSquareWarning
+            className="mt-1 size-5 text-[#f72f6b]"
+            aria-hidden="true"
+          />
+          <div>
+            <h3 className="font-bold text-[#061b4f]">Approval queue</h3>
+            <p className="mt-1 text-sm leading-5 text-[#4d6b9e]">
+              Agent-created supplier content stays hidden here until approved.
+            </p>
+          </div>
+        </div>
+
+        {submissions.length === 0 ? (
+          <p className="mt-4 rounded-lg border border-[#edf3fb] bg-[#f8fbff] p-3 text-sm text-[#4d6b9e]">
+            No supplier content is waiting for review.
+          </p>
+        ) : (
+          <div className="mt-4 space-y-3">
+            {submissions.map((submission) => (
+              <div
+                className="rounded-lg border border-[#edf3fb] bg-[#f8fbff] p-3"
+                key={submission.id}
+              >
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                  <div>
+                    <p className="text-xs font-bold uppercase text-[#4d6b9e]">
+                      {getSectionLabel(submission.section_key)}
+                    </p>
+                    <h4 className="mt-1 font-bold text-[#061b4f]">
+                      {submission.title}
+                    </h4>
+                    <p className="mt-2 text-sm leading-5 text-[#4d6b9e]">
+                      {submission.content}
+                    </p>
+                  </div>
+                  <div className="flex shrink-0 gap-2">
+                    <Button
+                      className="bg-[#0f766e] text-white hover:bg-[#115e59]"
+                      disabled={isSaving}
+                      onClick={() =>
+                        void handleReviewSubmission(submission.id, "approved")
+                      }
+                      type="button"
+                    >
+                      <CheckCircle2 className="size-4" aria-hidden="true" />
+                      Approve
+                    </Button>
+                    <Button
+                      className="border-red-200 text-red-700 hover:bg-red-50"
+                      disabled={isSaving}
+                      onClick={() =>
+                        void handleReviewSubmission(submission.id, "rejected")
+                      }
+                      type="button"
+                      variant="outline"
+                    >
+                      <XCircle className="size-4" aria-hidden="true" />
+                      Reject
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
 
       <div className="mt-5 space-y-4">
         {roles.map((role) => {
