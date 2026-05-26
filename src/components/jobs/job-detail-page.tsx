@@ -47,6 +47,10 @@ function isMissingJobsTable(error: { code?: string; message?: string }) {
 }
 
 function formatSalary(job: Job) {
+  if (job.salary_label) {
+    return job.salary_label;
+  }
+
   if (!job.salary_min && !job.salary_max) {
     return "Salary not listed";
   }
@@ -66,7 +70,11 @@ function formatSalary(job: Job) {
     : `Up to ${formatter.format(job.salary_max ?? 0)}`;
 }
 
-function formatDate(value: string) {
+function formatDate(value: string | null) {
+  if (!value) {
+    return null;
+  }
+
   return new Intl.DateTimeFormat("en-GB", {
     day: "numeric",
     month: "short",
@@ -245,6 +253,8 @@ export function JobDetailPage({ jobId }: JobDetailPageProps) {
   }
 
   const isOwner = Boolean(job && userId === job.created_by);
+  const isExternalListing = job?.application_type === "external";
+  const externalApplyUrl = job ? job.source_url || job.application_url || "" : "";
 
   return (
     <MemberPageShell
@@ -299,13 +309,25 @@ export function JobDetailPage({ jobId }: JobDetailPageProps) {
                         Featured
                       </span>
                     ) : null}
+                    {job.work_style ? (
+                      <span className="rounded-md bg-sky-50 px-2 py-1 text-xs font-semibold text-sky-700">
+                        {job.work_style}
+                      </span>
+                    ) : null}
+                    {isExternalListing ? (
+                      <span className="rounded-md bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-700">
+                        External apply
+                      </span>
+                    ) : null}
                   </div>
                   <h2 className="mt-4 text-3xl font-semibold tracking-normal text-slate-950">
                     {job.title}
                   </h2>
                   <p className="mt-3 text-sm leading-6 text-slate-600">
-                    {company?.name ?? "Recruiter/company not linked"} · Posted{" "}
-                    {formatDate(job.created_at)}
+                    {company?.name ??
+                      job.recruiter_name ??
+                      "Recruiter/company not linked"}{" "}
+                    - Posted {formatDate(job.posted_date ?? job.created_at)}
                   </p>
                 </div>
                 <Button
@@ -324,7 +346,7 @@ export function JobDetailPage({ jobId }: JobDetailPageProps) {
                 </Button>
               </div>
 
-              <div className="mt-6 grid gap-3 border-t border-slate-100 pt-5 sm:grid-cols-3">
+              <div className="mt-6 grid gap-3 border-t border-slate-100 pt-5 sm:grid-cols-2 xl:grid-cols-4">
                 <div className="rounded-md bg-slate-50 p-4">
                   <p className="text-xs font-semibold uppercase text-slate-500">
                     Location
@@ -339,7 +361,8 @@ export function JobDetailPage({ jobId }: JobDetailPageProps) {
                     Type
                   </p>
                   <p className="mt-2 text-sm font-medium text-slate-950">
-                    {getEmploymentTypeLabel(job.employment_type)}
+                    {job.job_type_label ??
+                      getEmploymentTypeLabel(job.employment_type)}
                   </p>
                 </div>
                 <div className="rounded-md bg-slate-50 p-4">
@@ -348,6 +371,14 @@ export function JobDetailPage({ jobId }: JobDetailPageProps) {
                   </p>
                   <p className="mt-2 text-sm font-medium text-slate-950">
                     {formatSalary(job)}
+                  </p>
+                </div>
+                <div className="rounded-md bg-slate-50 p-4">
+                  <p className="text-xs font-semibold uppercase text-slate-500">
+                    Expires
+                  </p>
+                  <p className="mt-2 text-sm font-medium text-slate-950">
+                    {formatDate(job.expiry_date) ?? "No expiry set"}
                   </p>
                 </div>
               </div>
@@ -371,14 +402,65 @@ export function JobDetailPage({ jobId }: JobDetailPageProps) {
                   "The employer has not added a specific requirements list yet."}
               </p>
             </article>
+
+            {job.ideal_candidate ? (
+              <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
+                <h2 className="text-lg font-semibold text-slate-950">
+                  Ideal candidate
+                </h2>
+                <p className="mt-4 whitespace-pre-wrap text-sm leading-6 text-slate-700">
+                  {job.ideal_candidate}
+                </p>
+              </article>
+            ) : null}
+
+            {job.key_skills?.length ? (
+              <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
+                <h2 className="text-lg font-semibold text-slate-950">
+                  Key skills
+                </h2>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {job.key_skills.map((skill) => (
+                    <span
+                      className="rounded-md bg-[#e0f2f1] px-2 py-1 text-xs font-semibold text-[#0f766e]"
+                      key={skill}
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </article>
+            ) : null}
           </section>
 
           <aside className="space-y-5">
             <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
               <h2 className="text-lg font-semibold text-slate-950">
-                Register interest
+                {isExternalListing
+                  ? "External application"
+                  : "Register interest"}
               </h2>
-              {isOwner ? (
+              {isExternalListing ? (
+                <div className="mt-3 space-y-3">
+                  <p className="text-sm leading-6 text-slate-600">
+                    {job.source_note ?? "Apply via original recruiter/job board."}
+                  </p>
+                  {externalApplyUrl ? (
+                    <a
+                      className={cn(
+                        buttonVariants({ size: "lg" }),
+                        "w-full bg-[#082f49] text-white hover:bg-[#0c4a6e]",
+                      )}
+                      href={externalApplyUrl}
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      Apply externally
+                      <ExternalLink className="size-4" aria-hidden="true" />
+                    </a>
+                  ) : null}
+                </div>
+              ) : isOwner ? (
                 <p className="mt-3 text-sm leading-6 text-slate-600">
                   You posted this job. Applicant management arrives in later
                   recruiter and admin phases.
@@ -441,10 +523,15 @@ export function JobDetailPage({ jobId }: JobDetailPageProps) {
                   </Link>
                 </div>
               ) : (
-                <p className="mt-3 text-sm leading-6 text-slate-600">
-                  This job is attributed to the posting user until a company is
-                  connected.
-                </p>
+                <div className="mt-3 space-y-2">
+                  <p className="font-semibold text-slate-950">
+                    {job.recruiter_name ?? "Recruiter/company not linked"}
+                  </p>
+                  <p className="text-sm leading-6 text-slate-600">
+                    This external listing is attributed to the recruiter source
+                    until a company profile is connected.
+                  </p>
+                </div>
               )}
             </article>
 
@@ -453,13 +540,13 @@ export function JobDetailPage({ jobId }: JobDetailPageProps) {
                 Application links
               </h2>
               <div className="mt-4 space-y-3">
-                {job.application_url ? (
+                {externalApplyUrl ? (
                   <a
                     className={cn(
                       buttonVariants({ size: "lg" }),
                       "w-full bg-[#082f49] text-white hover:bg-[#0c4a6e]",
                     )}
-                    href={job.application_url}
+                    href={externalApplyUrl}
                     rel="noreferrer"
                     target="_blank"
                   >
@@ -479,9 +566,12 @@ export function JobDetailPage({ jobId }: JobDetailPageProps) {
                     <Mail className="size-4" aria-hidden="true" />
                   </a>
                 ) : null}
-                {!job.application_url && !job.contact_email ? (
+                {!externalApplyUrl && !job.contact_email ? (
                   <p className="text-sm leading-6 text-slate-600">
-                    Use Register interest for this MVP listing.
+                    {isExternalListing
+                      ? job.source_note ??
+                        "Apply via original recruiter/job board."
+                      : "Use Register interest for this MVP listing."}
                   </p>
                 ) : null}
               </div>

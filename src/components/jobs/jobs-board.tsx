@@ -10,7 +10,6 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import {
   getEmploymentTypeLabel,
   getJobCategoryLabel,
-  getJobPackageLabel,
   jobCategoryOptions,
 } from "@/config/jobs";
 import { isMissingTableError } from "@/lib/supabase/errors";
@@ -39,6 +38,10 @@ function isMissingJobsTable(error: { code?: string; message?: string }) {
 }
 
 function formatSalary(job: JobWithCompany) {
+  if (job.salary_label) {
+    return job.salary_label;
+  }
+
   if (!job.salary_min && !job.salary_max) {
     return "Salary not listed";
   }
@@ -56,6 +59,27 @@ function formatSalary(job: JobWithCompany) {
   return job.salary_min
     ? `From ${formatter.format(job.salary_min)}`
     : `Up to ${formatter.format(job.salary_max ?? 0)}`;
+}
+
+function formatDate(value: string | null) {
+  if (!value) {
+    return null;
+  }
+
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  }).format(new Date(value));
+}
+
+function isExpired(job: Job) {
+  if (!job.expiry_date) {
+    return false;
+  }
+
+  const today = new Date().toISOString().slice(0, 10);
+  return job.expiry_date < today;
 }
 
 export function JobsBoard() {
@@ -104,7 +128,7 @@ export function JobsBoard() {
         supabase
           .from("jobs")
           .select("*")
-          .eq("status", "published")
+          .in("status", ["published", "active"])
           .order("is_featured", { ascending: false })
           .order("created_at", { ascending: false }),
       ]);
@@ -118,7 +142,7 @@ export function JobsBoard() {
       return;
     }
 
-    const typedJobs = (jobRows ?? []) as Job[];
+    const typedJobs = ((jobRows ?? []) as Job[]).filter((job) => !isExpired(job));
     const jobIds = typedJobs.map((job) => job.id);
     const companyIds = Array.from(
       new Set(typedJobs.map((job) => job.company_id).filter(Boolean) as string[]),
@@ -386,13 +410,27 @@ export function JobsBoard() {
                           Featured
                         </span>
                       ) : null}
+                      {job.work_style ? (
+                        <span className="rounded-md bg-sky-50 px-2 py-1 text-xs font-semibold text-sky-700">
+                          {job.work_style}
+                        </span>
+                      ) : null}
+                      {job.application_type === "external" ? (
+                        <span className="rounded-md bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-700">
+                          External apply
+                        </span>
+                      ) : null}
                     </div>
                     <h2 className="mt-3 text-xl font-semibold tracking-normal text-slate-950">
                       {job.title}
                     </h2>
                     <p className="mt-2 text-sm leading-6 text-slate-600">
-                      {job.company?.name ?? "Recruiter/company not linked"} ·{" "}
-                      {getEmploymentTypeLabel(job.employment_type)}
+                      {job.company?.name ??
+                        job.recruiter_name ??
+                        "Recruiter/company not linked"}{" "}
+                      -{" "}
+                      {job.job_type_label ??
+                        getEmploymentTypeLabel(job.employment_type)}
                     </p>
                   </div>
                   <Button
@@ -431,10 +469,10 @@ export function JobsBoard() {
                   </div>
                   <div>
                     <p className="text-xs font-semibold uppercase text-slate-500">
-                      Package
+                      Expires
                     </p>
                     <p className="mt-1 font-medium text-slate-950">
-                      {getJobPackageLabel(job.package_type)}
+                      {formatDate(job.expiry_date) ?? "No expiry set"}
                     </p>
                   </div>
                 </div>
@@ -479,7 +517,7 @@ export function JobsBoard() {
                   >
                     <p className="font-semibold text-slate-950">{job.title}</p>
                     <p className="mt-1 text-xs text-slate-500">
-                      {job.company?.name ?? job.location}
+                      {job.company?.name ?? job.recruiter_name ?? job.location}
                     </p>
                   </Link>
                 ))}

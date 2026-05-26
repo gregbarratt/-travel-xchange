@@ -3,6 +3,7 @@ import type { SupabaseClient, User } from "@supabase/supabase-js";
 import type {
   Database,
   Profile,
+  SupplierPageAccessRequest,
   SupplierPageContentSubmission,
   SupplierPagePermissionKey,
   SupplierPageRole,
@@ -25,6 +26,12 @@ export const supplierRoleTableNames = [
 export const supplierVisibilityTableNames = [
   "supplier_page_section_settings",
   "supplier_page_content_submissions",
+];
+
+export const supplierAgentAccessTableNames = [
+  "supplier_page_access_requests",
+  "supplier_page_members",
+  "supplier_page_roles",
 ];
 
 const supplierSectionKeys = [
@@ -126,6 +133,7 @@ export async function listSupplierPageRoles(
         .from("supplier_page_roles")
         .select("*")
         .eq("company_id", companyId)
+        .neq("role_key", "approved_agent")
         .neq("status", "archived")
         .order("is_system", { ascending: false })
         .order("created_at", { ascending: true }),
@@ -373,6 +381,169 @@ async function getSupplierPageRoleIds(
     .neq("status", "archived");
 
   return (data ?? []).map((role) => role.id);
+}
+
+export async function ensureApprovedAgentRole(
+  supabase: SupabaseClient<Database>,
+  companyId: string,
+) {
+  const { data: existingRole, error: existingRoleError } = await supabase
+    .from("supplier_page_roles")
+    .select("*")
+    .eq("company_id", companyId)
+    .eq("role_key", "approved_agent")
+    .maybeSingle();
+
+  if (existingRoleError) {
+    return { error: existingRoleError, role: null };
+  }
+
+  if (existingRole) {
+    return { error: null, role: existingRole as SupplierPageRole };
+  }
+
+  const { data: company, error: companyError } = await supabase
+    .from("companies")
+    .select("created_by")
+    .eq("id", companyId)
+    .maybeSingle();
+
+  if (companyError || !company) {
+    return {
+      error:
+        companyError ??
+        new Error("Supplier page not found while creating approved agent role."),
+      role: null,
+    };
+  }
+
+  const { data: role, error: roleError } = await supabase
+    .from("supplier_page_roles")
+    .insert({
+      company_id: companyId,
+      created_by: company.created_by,
+      description:
+        "Can view private supplier sections after approval but cannot manage page areas.",
+      is_system: true,
+      name: "Approved agent",
+      role_key: "approved_agent",
+      role_type: "baseline",
+      status: "active",
+    })
+    .select("*")
+    .single();
+
+  if (roleError) {
+    return { error: roleError, role: null };
+  }
+
+  const { data: permissions, error: permissionsError } = await supabase
+    .from("supplier_page_permissions")
+    .select("key")
+    .eq("status", "active");
+
+  if (permissionsError) {
+    return { error: permissionsError, role: null };
+  }
+
+  const { error: permissionInsertError } = await supabase
+    .from("supplier_page_role_permissions")
+    .upsert(
+      (permissions ?? []).map((permission) => ({
+        is_allowed: false,
+        permission_key: permission.key,
+        role_id: role.id,
+        updated_by: company.created_by,
+      })),
+      { onConflict: "role_id,permission_key" },
+    );
+
+  if (permissionInsertError) {
+    return { error: permissionInsertError, role: null };
+  }
+
+  return { error: null, role: role as SupplierPageRole };
+}
+
+export async function getSupplierPageAccessRequestForUser(
+  supabase: SupabaseClient<Database>,
+  companyId: string,
+  userId: string,
+) {
+  const { data, error } = await supabase
+    .from("supplier_page_access_requests")
+    .select("*")
+    .eq("company_id", companyId)
+    .eq("user_id", userId)
+    .maybeSingle();
+
+  return {
+    error,
+    request: data ? (data as SupplierPageAccessRequest) : null,
+  };
+}
+
+export async function listPendingSupplierPageAccessRequests(
+  supabase: SupabaseClient<Database>,
+  companyId: string,
+) {
+  const { data, error } = await supabase
+    .from("supplier_page_access_requests")
+    .select("*")
+    .eq("company_id", companyId)
+    .eq("status", "pending")
+    .order("created_at", { ascending: true });
+
+  return {
+    error,
+    requests: (data ?? []) as SupplierPageAccessRequest[],
+  };
+}
+
+export async function listApprovedSupplierPageAgents(
+  supabase: SupabaseClient<Database>,
+  companyId: string,
+) {
+  const roleResult = await ensureApprovedAgentRole(supabase, companyId);
+
+  if (roleResult.error || !roleResult.role) {
+    return {
+      error: roleResult.error,
+      members: [] as { id: string; user_id: string }[],
+    };
+  }
+
+  const { data, error } = await supabase
+    .from("supplier_page_members")
+    .select("id, user_id")
+    .eq("company_id", companyId)
+    .eq("role_id", roleResult.role.id)
+    .eq("status", "active")
+    .order("created_at", { ascending: false });
+
+  return {
+    error,
+    members: (data ?? []) as { id: string; user_id: string }[],
+  };
+}
+
+export async function listSupplierAccessProfiles(
+  supabase: SupabaseClient<Database>,
+  userIds: string[],
+) {
+  if (userIds.length === 0) {
+    return [] as Pick<Profile, "id" | "full_name" | "headline" | "role">[];
+  }
+
+  const { data } = await supabase
+    .from("profiles")
+    .select("id, full_name, headline, role")
+    .in("id", Array.from(new Set(userIds)));
+
+  return (data ?? []) as Pick<
+    Profile,
+    "id" | "full_name" | "headline" | "role"
+  >[];
 }
 
 function mapSupplierPageRolesWithPermissions(

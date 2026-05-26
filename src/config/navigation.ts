@@ -34,6 +34,7 @@ export const appNavigation = [
   { label: "Training", href: "/training", phase: "Live" },
   { label: "Suppliers", href: "#suppliers", phase: "Live" },
   { label: "Support", href: "/support", phase: "Live" },
+  { label: "Managed pages", href: "/workspace/pages", phase: "Live" },
   { label: "Messages", href: "/messages", phase: "Live" },
   { label: "Notifications", href: "/notifications", phase: "Live" },
   { label: "Profile", href: "/profile/edit", phase: "Live" },

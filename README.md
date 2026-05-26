@@ -6,6 +6,36 @@ to GitHub before the next phase begins.
 
 ## Current status
 
+Supplier page access, Phase 4:
+
+- `Managed pages` now appears under `My Workspace` so owners, supplier page
+  admins, moderators, and admins can quickly find pages they manage.
+- Agents can request access to private supplier page sections.
+- Supplier page admins can approve or reject access requests.
+- Approved agents get private viewing access only.
+- Approved agents do not receive edit permissions.
+- Pending and rejected agents do not get private access.
+- Supplier page admin tools are tucked behind a `Supplier admin panel` button
+  on the supplier page, so admins can still view the page like agents do.
+- Supplier page admins can update logo and cover banner image URLs from the
+  supplier admin panel.
+- Super admins can manage supplier access centrally at
+  `/admin/supplier-access`.
+- Super admins can manually add or remove approved agents for a supplier page.
+- Run `supabase/phase-25-supplier-agent-access.sql` after Phase 3 SQL.
+- Run `supabase/phase-26-supplier-branding.sql` to add supplier logo and cover
+  image fields.
+
+Jobs seed update:
+
+- Five external-application travel job listings can be seeded into the jobs
+  board without overwriting existing jobs.
+- Jobs now support recruiter name, salary label, job type label, work style,
+  ideal candidate, key skills, source note, source URL, posted date, expiry
+  date, and external/internal application type.
+- Active jobs are visible when their expiry date has not passed.
+- Run `supabase/phase-27-seed-external-jobs.sql` after Phase 6 SQL.
+
 Supplier page access, Phase 3:
 
 - Supplier page sections can now be set as public or private.
@@ -391,10 +421,14 @@ Built by Phase 2:
     `supabase/phase-23-supplier-custom-roles.sql`.
 25. Supplier access Phase 3 uses
     `supabase/phase-24-supplier-visibility-approval.sql`.
-26. Copy `.env.example` to `.env.local`.
-27. Add your Supabase project URL, anon key, and service role key to
+26. Supplier access Phase 4 uses
+    `supabase/phase-25-supplier-agent-access.sql`.
+27. Supplier branding uses `supabase/phase-26-supplier-branding.sql`.
+28. External job seeds use `supabase/phase-27-seed-external-jobs.sql`.
+29. Copy `.env.example` to `.env.local`.
+30. Add your Supabase project URL, anon key, and service role key to
     `.env.local`.
-28. Restart the local app.
+31. Restart the local app.
 
 Do not put the service role key in browser code. Keep real keys out of Git.
 

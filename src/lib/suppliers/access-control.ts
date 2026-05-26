@@ -129,6 +129,12 @@ export type SupplierPageSubmissionStatus =
   | "approved"
   | "rejected";
 
+export type SupplierPageAccessRequestStatus =
+  | "pending"
+  | "approved"
+  | "rejected"
+  | "cancelled";
+
 export type SupplierPageSubmissionDraft = {
   content: string;
   createdBy: string;
@@ -136,6 +142,13 @@ export type SupplierPageSubmissionDraft = {
   sectionKey: SupplierPageSectionKey;
   status: SupplierPageSubmissionStatus;
   title: string;
+};
+
+export type SupplierPageAccessRequestDraft = {
+  companyId: string;
+  message: string | null;
+  status: SupplierPageAccessRequestStatus;
+  userId: string;
 };
 
 export type SupplierPageRoleRecord = {
@@ -489,6 +502,56 @@ export function reviewSupplierPageSubmission(
   ) {
     throw new Error(
       "Only the supplier page admin or a platform moderator can review supplier content.",
+    );
+  }
+
+  return {
+    reviewedAt: new Date().toISOString(),
+    status: decision,
+  };
+}
+
+export function canRequestSupplierPageAccess(
+  viewer: SupplierPageViewer = {},
+) {
+  return !viewer.isApprovedMember && !viewer.isPageAdmin;
+}
+
+export function createSupplierPageAccessRequestDraft(input: {
+  companyId: string;
+  message?: string | null;
+  userId: string;
+  viewer?: SupplierPageViewer;
+}): SupplierPageAccessRequestDraft {
+  if (!canRequestSupplierPageAccess(input.viewer ?? {})) {
+    throw new Error("You already have access to this supplier page.");
+  }
+
+  const message = input.message?.trim() || null;
+
+  if (message && message.length > 500) {
+    throw new Error("Keep the access request message under 500 characters.");
+  }
+
+  return {
+    companyId: input.companyId,
+    message,
+    status: "pending",
+    userId: input.userId,
+  };
+}
+
+export function reviewSupplierPageAccessRequest(
+  reviewerAccess: SupplierPageMemberAccess | null | undefined,
+  decision: "approved" | "rejected",
+  reviewer: SupplierPageViewer = {},
+) {
+  if (
+    !canManageSupplierPageRoleSettings(reviewerAccess) &&
+    !reviewer.isPlatformModerator
+  ) {
+    throw new Error(
+      "Only the supplier page admin or a platform moderator can review access requests.",
     );
   }
 

@@ -25,6 +25,7 @@ type AdminJob = Job & {
 
 const jobStatusOptions: Array<{ label: string; value: JobStatus }> = [
   { label: "Published", value: "published" },
+  { label: "Active", value: "active" },
   { label: "Closed", value: "closed" },
   { label: "Hidden", value: "hidden" },
   { label: "Deleted", value: "deleted" },
@@ -197,12 +198,14 @@ function AdminJobsContent({ userId }: { userId: string }) {
                 </AdminStatusBadge>
               </div>
               <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">
-                {job.company?.name ?? "No company"} -{" "}
+                {job.company?.name ?? job.recruiter_name ?? "No company"} -{" "}
                 {getJobCategoryLabel(job.category)} -{" "}
                 {getJobPackageLabel(job.package_type)}
               </p>
               <p className="mt-1 text-xs font-medium text-[#7288b8]">
-                Created {formatDate(job.created_at)}
+                Posted {formatDate(job.posted_date ?? job.created_at)}
+                {job.expiry_date ? ` - Expires ${formatDate(job.expiry_date)}` : ""}
+                {job.application_type === "external" ? " - External apply" : ""}
               </p>
             </div>
 

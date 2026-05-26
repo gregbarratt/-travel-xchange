@@ -39,6 +39,8 @@ export type Company = {
   name: string;
   company_type: string;
   website_url: string | null;
+  logo_url: string | null;
+  cover_image_url: string | null;
   description: string | null;
   verification_tier: VerificationTier;
   page_visibility: "public" | "private";
@@ -221,6 +223,26 @@ export type SupplierPageContentSubmission = {
   metadata: Record<string, unknown>;
 };
 
+export type SupplierPageAccessRequestStatus =
+  | "pending"
+  | "approved"
+  | "rejected"
+  | "cancelled";
+
+export type SupplierPageAccessRequest = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  company_id: string;
+  user_id: string;
+  message: string | null;
+  status: SupplierPageAccessRequestStatus;
+  reviewed_by: string | null;
+  reviewed_at: string | null;
+  admin_notes: string | null;
+  metadata: Record<string, unknown>;
+};
+
 export type GroupCategory =
   | "general"
   | "cruise"
@@ -307,6 +329,7 @@ export type Job = {
   updated_at: string;
   created_by: string;
   company_id: string | null;
+  recruiter_name: string | null;
   title: string;
   slug: string;
   category: JobCategory;
@@ -316,14 +339,24 @@ export type Job = {
   salary_min: number | null;
   salary_max: number | null;
   salary_currency: string;
+  salary_label: string | null;
+  job_type_label: string | null;
+  work_style: string | null;
   description: string;
   requirements: string | null;
+  ideal_candidate: string | null;
+  key_skills: string[];
+  source_note: string | null;
+  source_url: string;
+  posted_date: string | null;
+  expiry_date: string | null;
+  application_type: "internal_interest" | "external";
   application_url: string | null;
   contact_email: string | null;
   package_type: JobPackageType;
   is_featured: boolean;
   visibility: "public" | "members";
-  status: "draft" | "published" | "closed" | "hidden" | "deleted";
+  status: "draft" | "published" | "active" | "closed" | "hidden" | "deleted";
 };
 
 export type JobApplication = {
@@ -1121,6 +1154,15 @@ export type Database = {
           content: string;
         };
         Update: Partial<SupplierPageContentSubmission>;
+        Relationships: [];
+      };
+      supplier_page_access_requests: {
+        Row: SupplierPageAccessRequest;
+        Insert: Partial<SupplierPageAccessRequest> & {
+          company_id: string;
+          user_id: string;
+        };
+        Update: Partial<SupplierPageAccessRequest>;
         Relationships: [];
       };
       groups: {

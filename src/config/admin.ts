@@ -7,6 +7,7 @@ export const adminNavigation = [
   { label: "Production", href: "/admin/production-readiness" },
   { label: "Deployment", href: "/admin/deployment" },
   { label: "Users", href: "/admin/users" },
+  { label: "Supplier access", href: "/admin/supplier-access" },
   { label: "Posts", href: "/admin/posts" },
   { label: "Reports", href: "/admin/reports" },
   { label: "Verification", href: "/admin/verification" },

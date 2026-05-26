@@ -30,6 +30,7 @@ const navIcons = {
   Groups: Users,
   Home,
   Jobs: BriefcaseBusiness,
+  "Managed pages": Building2,
   Messages: MessageCircle,
   News: Newspaper,
   Notifications: Bell,
@@ -56,7 +57,14 @@ const navSections = [
   },
   {
     label: "My workspace",
-    items: ["Messages", "Notifications", "Profile", "Billing", "Admin"],
+    items: [
+      "Managed pages",
+      "Messages",
+      "Notifications",
+      "Profile",
+      "Billing",
+      "Admin",
+    ],
   },
 ];
 

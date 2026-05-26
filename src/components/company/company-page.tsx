@@ -7,8 +7,9 @@ import { useRouter } from "next/navigation";
 
 import { MemberPageShell } from "@/components/member/member-page-shell";
 import { VerificationBadge } from "@/components/profile/verification-badge";
+import { SupplierAdminPanel } from "@/components/company/supplier-admin-panel";
+import { SupplierAccessRequestPanel } from "@/components/company/supplier-access-request-panel";
 import { SupplierContentSubmissionForm } from "@/components/company/supplier-content-submission-form";
-import { SupplierRoleManager } from "@/components/company/supplier-role-manager";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { getCompanyTypeLabel, getRoleLabel } from "@/config/roles";
 import { isMissingTableError } from "@/lib/supabase/errors";
@@ -231,14 +232,30 @@ export function CompanyPage({ companyId, variant }: CompanyPageProps) {
         <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
           <section className="space-y-5">
             <article className="overflow-hidden rounded-md border border-slate-200 bg-white shadow-sm">
-              <div className="h-32 bg-[linear-gradient(120deg,#0f172a,#0f766e)]" />
+              <div
+                className="h-32 bg-[linear-gradient(120deg,#0f172a,#0f766e)] bg-cover bg-center"
+                style={
+                  company.cover_image_url
+                    ? { backgroundImage: `url(${company.cover_image_url})` }
+                    : undefined
+                }
+              />
               <div className="p-5 sm:p-6">
-                <div className="-mt-16 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                <div className="-mt-16 mb-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                   <div className="flex items-end gap-4">
-                    <div className="flex size-24 items-center justify-center rounded-md border-4 border-white bg-[#e0f2f1] text-2xl font-semibold text-[#0f766e] shadow-sm">
-                      {initials(company.name)}
+                    <div className="flex size-24 shrink-0 items-center justify-center overflow-hidden rounded-md border-4 border-white bg-[#e0f2f1] text-2xl font-semibold text-[#0f766e] shadow-sm">
+                      {company.logo_url ? (
+                        <span
+                          aria-label={`${company.name} logo`}
+                          className="size-full bg-cover bg-center"
+                          role="img"
+                          style={{ backgroundImage: `url(${company.logo_url})` }}
+                        />
+                      ) : (
+                        initials(company.name)
+                      )}
                     </div>
-                    <div className="pb-1">
+                    <div className="translate-y-5 pb-1">
                       <div className="flex flex-wrap items-center gap-2">
                         <h2 className="text-2xl font-semibold tracking-normal text-slate-950">
                           {company.name}
@@ -335,13 +352,35 @@ export function CompanyPage({ companyId, variant }: CompanyPageProps) {
             </article>
 
             {variant === "supplier" ? (
+              <SupplierAdminPanel
+                companyId={company.id}
+                initialCoverImageUrl={company.cover_image_url}
+                initialLogoUrl={company.logo_url}
+                onBrandingSaved={(branding) =>
+                  setCompany((current) =>
+                    current
+                      ? {
+                          ...current,
+                          cover_image_url: branding.cover_image_url,
+                          logo_url: branding.logo_url,
+                        }
+                      : current,
+                  )
+                }
+              />
+            ) : null}
+
+            {variant === "supplier" ? (
               <SupplierContentSubmissionForm companyId={company.id} />
             ) : null}
           </section>
 
           <aside className="space-y-5">
             {variant === "supplier" ? (
-              <SupplierRoleManager companyId={company.id} />
+              <SupplierAccessRequestPanel
+                companyId={company.id}
+                hideManagerView
+              />
             ) : null}
 
             <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">

@@ -24,6 +24,20 @@ section-level public/private visibility and the supplier content approval
 queue. Agent submissions are stored as pending until a page admin or platform
 moderator reviews them.
 
+Phase 4 uses `supabase/phase-25-supplier-agent-access.sql` to let agents
+request access to private supplier page sections. Approved agents receive a
+view-only supplier page membership and no page-editing permissions. Super
+admins can also manage this access centrally at `/admin/supplier-access`.
+
+`supabase/phase-26-supplier-branding.sql` adds URL-based logo and cover image
+fields to supplier/company pages. Supplier page admins can update these from
+the supplier admin panel on the supplier page. File uploads will move to
+Supabase Storage later.
+
+`supabase/phase-27-seed-external-jobs.sql` adds five external-application travel
+job listings. It extends jobs with recruiter/source fields and expiry dates, then
+only inserts a job when its slug does not already exist.
+
 The launch waitlist stores public "follow for launch" interest in
 `launch_signups`. It does not create Supabase Auth users, so people can register
 their interest before public member accounts are switched back on.

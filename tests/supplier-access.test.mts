@@ -8,12 +8,15 @@ import {
   canManageSupplierPageArea,
   canManageSupplierPageRoleSettings,
   canEditSupplierPageSection,
+  canRequestSupplierPageAccess,
   createCustomSupplierPageRoleDraft,
+  createSupplierPageAccessRequestDraft,
   createSupplierPageSubmissionDraft,
   isBaselineSupplierPageRole,
   isSupplierPageSectionVisibleToViewer,
   isSupplierPagePublic,
   isSupplierPageSubmissionPubliclyVisible,
+  reviewSupplierPageAccessRequest,
   isSupplierPageVisibleToViewer,
   reviewSupplierPageSubmission,
   setSupplierPageSectionVisibility,
@@ -359,5 +362,90 @@ describe("supplier page access control", () => {
     assert.equal(canEditSupplierPageSection(agentAccess, "news"), false);
     assert.equal(canEditSupplierPageSection(permittedAccess, "news"), true);
     assert.equal(canEditSupplierPageSection(permittedAccess, "events"), false);
+  });
+
+  it("lets agents request supplier page access when they are not approved yet", () => {
+    assert.equal(canRequestSupplierPageAccess(), true);
+    assert.equal(
+      canRequestSupplierPageAccess({ isApprovedMember: true }),
+      false,
+    );
+    assert.equal(canRequestSupplierPageAccess({ isPageAdmin: true }), false);
+
+    const request = createSupplierPageAccessRequestDraft({
+      companyId: "supplier-company-id",
+      message: "I sell this supplier and would like access to trade updates.",
+      userId: "agent-user-id",
+      viewer: { isApprovedMember: false },
+    });
+
+    assert.equal(request.status, "pending");
+    assert.equal(request.companyId, "supplier-company-id");
+    assert.equal(
+      request.message,
+      "I sell this supplier and would like access to trade updates.",
+    );
+  });
+
+  it("blocks duplicate access requests from already approved users", () => {
+    assert.throws(
+      () =>
+        createSupplierPageAccessRequestDraft({
+          companyId: "supplier-company-id",
+          message: "Please approve me again.",
+          userId: "agent-user-id",
+          viewer: { isApprovedMember: true },
+        }),
+      /already have access/,
+    );
+  });
+
+  it("allows supplier page admins and platform moderators to approve access requests", () => {
+    const approved = reviewSupplierPageAccessRequest(
+      pageAdminAccess,
+      "approved",
+    );
+    const rejected = reviewSupplierPageAccessRequest(
+      pageAdminAccess,
+      "rejected",
+    );
+    const moderatorApproved = reviewSupplierPageAccessRequest(
+      { roleKey: "moderator", status: "active" },
+      "approved",
+      { isPlatformModerator: true },
+    );
+
+    assert.equal(approved.status, "approved");
+    assert.equal(rejected.status, "rejected");
+    assert.equal(moderatorApproved.status, "approved");
+
+    assert.throws(
+      () =>
+        reviewSupplierPageAccessRequest(
+          { roleKey: "registered_user", status: "active" },
+          "approved",
+        ),
+      /Only the supplier page admin/,
+    );
+  });
+
+  it("approved agents can view private sections but still cannot edit them", () => {
+    assert.equal(
+      isSupplierPageSectionVisibleToViewer("private", {
+        isApprovedMember: true,
+      }),
+      true,
+    );
+    assert.equal(
+      canEditSupplierPageSection(
+        {
+          permissions: {},
+          roleKey: "approved_agent",
+          status: "active",
+        },
+        "news",
+      ),
+      false,
+    );
   });
 });

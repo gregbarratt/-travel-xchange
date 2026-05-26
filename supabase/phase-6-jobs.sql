@@ -19,6 +19,7 @@ create table if not exists public.jobs (
   updated_at timestamptz not null default now(),
   created_by uuid not null references public.profiles(id) on delete cascade,
   company_id uuid references public.companies(id) on delete set null,
+  recruiter_name text,
   title text not null,
   slug text not null unique,
   category text not null default 'travel_sales',
@@ -30,8 +31,20 @@ create table if not exists public.jobs (
   salary_min integer,
   salary_max integer,
   salary_currency text not null default 'GBP',
+  salary_label text,
+  job_type_label text,
+  work_style text,
   description text not null check (char_length(trim(description)) between 1 and 5000),
   requirements text,
+  ideal_candidate text,
+  key_skills text[] not null default '{}',
+  source_note text,
+  source_url text not null default '',
+  posted_date date,
+  expiry_date date,
+  application_type text not null default 'internal_interest' check (
+    application_type in ('internal_interest', 'external')
+  ),
   application_url text,
   contact_email text,
   package_type text not null default 'basic' check (
@@ -39,8 +52,55 @@ create table if not exists public.jobs (
   ),
   is_featured boolean not null default false,
   visibility text not null default 'members' check (visibility in ('public', 'members')),
-  status text not null default 'published' check (status in ('draft', 'published', 'closed', 'hidden', 'deleted'))
+  status text not null default 'published' check (status in ('draft', 'published', 'active', 'closed', 'hidden', 'deleted'))
 );
+
+alter table public.jobs
+add column if not exists recruiter_name text;
+
+alter table public.jobs
+add column if not exists salary_label text;
+
+alter table public.jobs
+add column if not exists job_type_label text;
+
+alter table public.jobs
+add column if not exists work_style text;
+
+alter table public.jobs
+add column if not exists ideal_candidate text;
+
+alter table public.jobs
+add column if not exists key_skills text[] not null default '{}';
+
+alter table public.jobs
+add column if not exists source_note text;
+
+alter table public.jobs
+add column if not exists source_url text not null default '';
+
+alter table public.jobs
+add column if not exists posted_date date;
+
+alter table public.jobs
+add column if not exists expiry_date date;
+
+alter table public.jobs
+add column if not exists application_type text not null default 'internal_interest';
+
+alter table public.jobs
+drop constraint if exists jobs_status_check;
+
+alter table public.jobs
+add constraint jobs_status_check
+check (status in ('draft', 'published', 'active', 'closed', 'hidden', 'deleted'));
+
+alter table public.jobs
+drop constraint if exists jobs_application_type_check;
+
+alter table public.jobs
+add constraint jobs_application_type_check
+check (application_type in ('internal_interest', 'external'));
 
 create table if not exists public.job_applications (
   id uuid primary key default gen_random_uuid(),
@@ -74,7 +134,11 @@ alter table public.job_bookmarks enable row level security;
 drop policy if exists "Members can view published jobs" on public.jobs;
 create policy "Members can view published jobs"
 on public.jobs for select
-using (auth.role() = 'authenticated' and status = 'published');
+using (
+  auth.role() = 'authenticated'
+  and status in ('published', 'active')
+  and (expiry_date is null or expiry_date >= current_date)
+);
 
 drop policy if exists "Users can create their own jobs" on public.jobs;
 create policy "Users can create their own jobs"
@@ -154,6 +218,7 @@ using (auth.uid() = user_id);
 
 create index if not exists jobs_slug_idx on public.jobs (slug);
 create index if not exists jobs_created_at_idx on public.jobs (created_at desc);
+create index if not exists jobs_status_expiry_date_idx on public.jobs (status, expiry_date);
 create index if not exists jobs_category_idx on public.jobs (category);
 create index if not exists jobs_location_idx on public.jobs (location);
 create index if not exists jobs_company_id_idx on public.jobs (company_id);
