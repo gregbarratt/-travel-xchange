@@ -36,6 +36,14 @@ Jobs seed update:
 - Active jobs are visible when their expiry date has not passed.
 - Run `supabase/phase-27-seed-external-jobs.sql` after Phase 6 SQL.
 
+Admin user management update:
+
+- Super Admins can now create or promote a user from `/admin/users`.
+- The form can invite a new email address, prepare the profile, set the main
+  role, and set the verification tier without running Supabase SQL manually.
+- Existing users can be promoted by entering their email and choosing the new
+  role.
+
 Supplier page access, Phase 3:
 
 - Supplier page sections can now be set as public or private.
@@ -425,10 +433,12 @@ Built by Phase 2:
     `supabase/phase-25-supplier-agent-access.sql`.
 27. Supplier branding uses `supabase/phase-26-supplier-branding.sql`.
 28. External job seeds use `supabase/phase-27-seed-external-jobs.sql`.
-29. Copy `.env.example` to `.env.local`.
-30. Add your Supabase project URL, anon key, and service role key to
+29. Profile and supplier media uploads use `supabase/phase-29-profile-media.sql`.
+    Run it to add profile photo, banner, and Supabase Storage support.
+30. Copy `.env.example` to `.env.local`.
+31. Add your Supabase project URL, anon key, and service role key to
     `.env.local`.
-31. Restart the local app.
+32. Restart the local app.
 
 Do not put the service role key in browser code. Keep real keys out of Git.
 

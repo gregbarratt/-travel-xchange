@@ -55,6 +55,8 @@ create table if not exists public.profiles (
   full_name text,
   headline text,
   location text,
+  avatar_url text,
+  cover_image_url text,
   role public.travel_xchange_role not null default 'registered_user',
   verification_tier public.verification_tier not null default 'unverified',
   company_id uuid references public.companies(id) on delete set null,
@@ -92,6 +94,12 @@ for each row execute function public.set_updated_at();
 alter table public.profiles enable row level security;
 alter table public.companies enable row level security;
 alter table public.user_roles enable row level security;
+
+alter table public.profiles
+add column if not exists avatar_url text;
+
+alter table public.profiles
+add column if not exists cover_image_url text;
 
 drop policy if exists "Users can view their own profile" on public.profiles;
 create policy "Users can view their own profile"

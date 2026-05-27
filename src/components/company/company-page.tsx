@@ -233,29 +233,28 @@ export function CompanyPage({ companyId, variant }: CompanyPageProps) {
           <section className="space-y-5">
             <article className="overflow-hidden rounded-md border border-slate-200 bg-white shadow-sm">
               <div
-                className="h-32 bg-[linear-gradient(120deg,#0f172a,#0f766e)] bg-cover bg-center"
+                className="h-44 bg-[linear-gradient(120deg,#061b4f,#0f766e)] bg-cover bg-center"
                 style={
                   company.cover_image_url
                     ? { backgroundImage: `url(${company.cover_image_url})` }
                     : undefined
                 }
               />
-              <div className="p-5 sm:p-6">
-                <div className="-mt-16 mb-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-                  <div className="flex items-end gap-4">
-                    <div className="flex size-24 shrink-0 items-center justify-center overflow-hidden rounded-md border-4 border-white bg-[#e0f2f1] text-2xl font-semibold text-[#0f766e] shadow-sm">
+              <div className="px-5 pb-5 sm:px-6 sm:pb-6">
+                <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
+                    <div className="-mt-14 flex size-28 shrink-0 items-center justify-center overflow-hidden rounded-md border-4 border-white bg-[#e0f2f1] text-2xl font-semibold text-[#0f766e] shadow-sm">
                       {company.logo_url ? (
-                        <span
-                          aria-label={`${company.name} logo`}
-                          className="size-full bg-cover bg-center"
-                          role="img"
-                          style={{ backgroundImage: `url(${company.logo_url})` }}
+                        <img
+                          alt=""
+                          className="size-full object-cover"
+                          src={company.logo_url}
                         />
                       ) : (
                         initials(company.name)
                       )}
                     </div>
-                    <div className="translate-y-5 pb-1">
+                    <div className="sm:pb-3">
                       <div className="flex flex-wrap items-center gap-2">
                         <h2 className="text-2xl font-semibold tracking-normal text-slate-950">
                           {company.name}

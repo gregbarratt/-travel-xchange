@@ -25,6 +25,8 @@ export type Profile = {
   full_name: string | null;
   headline: string | null;
   location: string | null;
+  avatar_url: string | null;
+  cover_image_url: string | null;
   role: TravelXchangeRole;
   verification_tier: VerificationTier;
   company_id: string | null;

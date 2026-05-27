@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
-import { Save, User } from "lucide-react";
+import { ImagePlus, Loader2, Save, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { MemberPageShell } from "@/components/member/member-page-shell";
@@ -15,6 +15,7 @@ import {
   isSupabaseConfigured,
 } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
+import { uploadPublicImage } from "@/lib/media/uploads";
 import { normalizeWebsiteUrl } from "@/lib/urls";
 import type {
   Profile,
@@ -54,6 +55,8 @@ export function ProfileEditForm() {
   const [fullName, setFullName] = useState("");
   const [headline, setHeadline] = useState("");
   const [location, setLocation] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState("");
+  const [coverImageUrl, setCoverImageUrl] = useState("");
   const [role, setRole] = useState<TravelXchangeRole>("registered_user");
   const [companyName, setCompanyName] = useState("");
   const [companyType, setCompanyType] = useState("");
@@ -68,6 +71,9 @@ export function ProfileEditForm() {
   const [experienceCurrent, setExperienceCurrent] = useState(false);
   const [isLoading, setIsLoading] = useState(configured);
   const [isSaving, setIsSaving] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState<
+    "avatar" | "cover" | null
+  >(null);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -111,6 +117,8 @@ export function ProfileEditForm() {
     setFullName(profileData.full_name ?? "");
     setHeadline(profileData.headline ?? "");
     setLocation(profileData.location ?? "");
+    setAvatarUrl(profileData.avatar_url ?? "");
+    setCoverImageUrl(profileData.cover_image_url ?? "");
     setRole(profileData.role);
 
     if (profileData.company_id) {
@@ -185,6 +193,44 @@ export function ProfileEditForm() {
     return () => window.clearTimeout(timeoutId);
   }, [loadProfile]);
 
+  async function handleProfileImageUpload(
+    file: File | undefined,
+    type: "avatar" | "cover",
+  ) {
+    if (!file || !supabase || !userId) {
+      return;
+    }
+
+    setUploadingImage(type);
+    setError(null);
+    setMessage(null);
+
+    try {
+      const publicUrl = await uploadPublicImage(
+        supabase,
+        file,
+        `profiles/${userId}`,
+        type,
+      );
+
+      if (type === "avatar") {
+        setAvatarUrl(publicUrl);
+      } else {
+        setCoverImageUrl(publicUrl);
+      }
+
+      setMessage("Image uploaded. Save the profile to keep it.");
+    } catch (uploadError) {
+      setError(
+        uploadError instanceof Error
+          ? uploadError.message
+          : "The image could not be uploaded.",
+      );
+    } finally {
+      setUploadingImage(null);
+    }
+  }
+
   async function handleSave(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -246,6 +292,8 @@ export function ProfileEditForm() {
         full_name: fullName.trim() || null,
         headline: headline.trim() || null,
         location: location.trim() || null,
+        avatar_url: avatarUrl || null,
+        cover_image_url: coverImageUrl || null,
         onboarding_completed: true,
         role,
       })
@@ -385,6 +433,102 @@ export function ProfileEditForm() {
             {message}
           </div>
         ) : null}
+
+        <section className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="flex items-center gap-2">
+            <ImagePlus className="size-5 text-[#0f766e]" aria-hidden="true" />
+            <h2 className="text-lg font-semibold text-slate-950">
+              Profile images
+            </h2>
+          </div>
+          <p className="mt-2 text-sm leading-6 text-slate-600">
+            Upload a profile photo and a wide banner image. JPG, PNG, WebP, or
+            GIF files up to 5MB are supported.
+          </p>
+
+          <div className="mt-5 grid gap-4 lg:grid-cols-[220px_minmax(0,1fr)]">
+            <div>
+              <div className="flex size-28 items-center justify-center overflow-hidden rounded-md border-4 border-white bg-[#e0f2f1] text-2xl font-semibold text-[#0f766e] shadow-sm ring-1 ring-slate-200">
+                {avatarUrl ? (
+                  <img alt="" className="size-full object-cover" src={avatarUrl} />
+                ) : (
+                  fullName
+                    .split(" ")
+                    .filter(Boolean)
+                    .slice(0, 2)
+                    .map((part) => part[0])
+                    .join("")
+                    .toUpperCase() || "TX"
+                )}
+              </div>
+              <label className="mt-4 block">
+                <span className="text-sm font-medium text-slate-800">
+                  Profile photo
+                </span>
+                <input
+                  accept="image/jpeg,image/png,image/webp,image/gif"
+                  className="mt-2 block w-full text-sm text-slate-700"
+                  disabled={uploadingImage !== null}
+                  onChange={(event) =>
+                    void handleProfileImageUpload(
+                      event.target.files?.[0],
+                      "avatar",
+                    )
+                  }
+                  type="file"
+                />
+              </label>
+            </div>
+
+            <div>
+              <div
+                className="h-36 rounded-md border border-slate-200 bg-[linear-gradient(120deg,#061b4f,#0f766e)] bg-cover bg-center"
+                style={
+                  coverImageUrl
+                    ? { backgroundImage: `url(${coverImageUrl})` }
+                    : undefined
+                }
+              />
+              <label className="mt-4 block">
+                <span className="text-sm font-medium text-slate-800">
+                  Banner image
+                </span>
+                <input
+                  accept="image/jpeg,image/png,image/webp,image/gif"
+                  className="mt-2 block w-full text-sm text-slate-700"
+                  disabled={uploadingImage !== null}
+                  onChange={(event) =>
+                    void handleProfileImageUpload(event.target.files?.[0], "cover")
+                  }
+                  type="file"
+                />
+              </label>
+            </div>
+          </div>
+
+          {uploadingImage ? (
+            <div className="mt-4 flex items-center gap-2 rounded-md border border-slate-200 bg-slate-50 p-3 text-sm text-slate-600">
+              <Loader2 className="size-4 animate-spin" aria-hidden="true" />
+              Uploading {uploadingImage === "avatar" ? "profile photo" : "banner"}
+              ...
+            </div>
+          ) : null}
+
+          <div className="mt-4 rounded-md border border-[#dbe7f7] bg-[#f7faff] p-4 text-sm leading-6 text-slate-700">
+            <p className="font-semibold text-[#061b4f]">
+              Image guidance
+            </p>
+            <p className="mt-1">
+              Profile photo: use a square image, ideally 800 x 800 px.
+            </p>
+            <p>
+              Banner image: use a wide image, ideally 1600 x 400 px. Keep
+              important text, faces, or logos near the centre so they do not
+              get cropped on mobile.
+            </p>
+            <p>Maximum file size: 5MB.</p>
+          </div>
+        </section>
 
         <section className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
           <h2 className="text-lg font-semibold text-slate-950">

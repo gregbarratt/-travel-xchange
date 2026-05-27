@@ -5,6 +5,7 @@ import { ImagePlus, Loader2, Save } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { TextField } from "@/components/ui/field";
+import { uploadPublicImage } from "@/lib/media/uploads";
 import {
   createSupabaseBrowserClient,
   isSupabaseConfigured,
@@ -40,6 +41,9 @@ export function SupplierBrandingForm({
   const [coverImageUrl, setCoverImageUrl] = useState(initialCoverImageUrl ?? "");
   const [isLoading, setIsLoading] = useState(configured);
   const [isSaving, setIsSaving] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState<"logo" | "cover" | null>(
+    null,
+  );
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
 
@@ -93,6 +97,44 @@ export function SupplierBrandingForm({
 
     return () => window.clearTimeout(timeoutId);
   }, [loadBranding]);
+
+  async function handleBrandImageUpload(
+    file: File | undefined,
+    type: "logo" | "cover",
+  ) {
+    if (!file || !supabase) {
+      return;
+    }
+
+    setUploadingImage(type);
+    setError(null);
+    setMessage(null);
+
+    try {
+      const publicUrl = await uploadPublicImage(
+        supabase,
+        file,
+        `companies/${companyId}`,
+        type,
+      );
+
+      if (type === "logo") {
+        setLogoUrl(publicUrl);
+      } else {
+        setCoverImageUrl(publicUrl);
+      }
+
+      setMessage("Image uploaded. Save brand images to keep it.");
+    } catch (uploadError) {
+      setError(
+        uploadError instanceof Error
+          ? uploadError.message
+          : "The image could not be uploaded.",
+      );
+    } finally {
+      setUploadingImage(null);
+    }
+  }
 
   async function handleSave(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -148,8 +190,8 @@ export function SupplierBrandingForm({
         <div>
           <h2 className="text-lg font-bold text-[#061b4f]">Brand images</h2>
           <p className="mt-1 text-sm leading-6 text-[#4d6b9e]">
-            Paste image links for the supplier logo and cover banner. File
-            uploads will come later with Supabase Storage.
+            Upload a supplier logo and cover banner. You can still paste image
+            links if the image is already hosted elsewhere.
           </p>
         </div>
       </div>
@@ -174,6 +216,76 @@ export function SupplierBrandingForm({
       ) : null}
 
       <form className="mt-5 grid gap-4" onSubmit={handleSave}>
+        <div className="grid gap-4 lg:grid-cols-[180px_minmax(0,1fr)]">
+          <div>
+            <div className="flex size-28 items-center justify-center overflow-hidden rounded-lg border border-[#c8d7ee] bg-[#e0f2f1] text-2xl font-bold text-[#0f766e]">
+              {logoUrl ? (
+                <img alt="" className="size-full object-cover" src={logoUrl} />
+              ) : (
+                "TX"
+              )}
+            </div>
+            <label className="mt-3 block">
+              <span className="text-sm font-semibold text-[#061b4f]">
+                Upload logo
+              </span>
+              <input
+                accept="image/jpeg,image/png,image/webp,image/gif"
+                className="mt-2 block w-full text-sm text-[#4d6b9e]"
+                disabled={uploadingImage !== null || isSaving}
+                onChange={(event) =>
+                  void handleBrandImageUpload(event.target.files?.[0], "logo")
+                }
+                type="file"
+              />
+            </label>
+          </div>
+
+          <div>
+            <div
+              className="h-36 rounded-lg border border-[#c8d7ee] bg-[linear-gradient(120deg,#061b4f,#0f766e)] bg-cover bg-center"
+              style={
+                coverImageUrl
+                  ? { backgroundImage: `url(${coverImageUrl})` }
+                  : undefined
+              }
+            />
+            <label className="mt-3 block">
+              <span className="text-sm font-semibold text-[#061b4f]">
+                Upload cover banner
+              </span>
+              <input
+                accept="image/jpeg,image/png,image/webp,image/gif"
+                className="mt-2 block w-full text-sm text-[#4d6b9e]"
+                disabled={uploadingImage !== null || isSaving}
+                onChange={(event) =>
+                  void handleBrandImageUpload(event.target.files?.[0], "cover")
+                }
+                type="file"
+              />
+            </label>
+          </div>
+        </div>
+
+        {uploadingImage ? (
+          <div className="flex items-center gap-2 rounded-lg border border-[#dbe7f7] bg-[#f7faff] p-3 text-sm text-[#4d6b9e]">
+            <Loader2 className="size-4 animate-spin" aria-hidden="true" />
+            Uploading {uploadingImage === "logo" ? "logo" : "cover banner"}...
+          </div>
+        ) : null}
+
+        <div className="rounded-lg border border-[#dbe7f7] bg-[#f7faff] p-4 text-sm leading-6 text-[#29456f]">
+          <p className="font-semibold text-[#061b4f]">Image guidance</p>
+          <p className="mt-1">
+            Supplier logo: use a square image, ideally 800 x 800 px.
+          </p>
+          <p>
+            Cover banner: use a wide image, ideally 1600 x 400 px. Keep key
+            brand marks and text near the centre so they stay visible on mobile.
+          </p>
+          <p>Maximum file size: 5MB.</p>
+        </div>
+
         <TextField
           hint="Example: https://example.com/logo.png"
           label="Logo image URL"

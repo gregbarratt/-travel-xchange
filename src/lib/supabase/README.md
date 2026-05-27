@@ -30,9 +30,9 @@ view-only supplier page membership and no page-editing permissions. Super
 admins can also manage this access centrally at `/admin/supplier-access`.
 
 `supabase/phase-26-supplier-branding.sql` adds URL-based logo and cover image
-fields to supplier/company pages. Supplier page admins can update these from
-the supplier admin panel on the supplier page. File uploads will move to
-Supabase Storage later.
+fields to supplier/company pages. `supabase/phase-29-profile-media.sql` adds
+Supabase Storage support so members can upload profile photos, profile banners,
+supplier logos, and supplier cover banners.
 
 `supabase/phase-27-seed-external-jobs.sql` adds five external-application travel
 job listings. It extends jobs with recruiter/source fields and expiry dates, then

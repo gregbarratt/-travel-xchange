@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 
 import {
   AdminEmptyState,
@@ -8,7 +8,8 @@ import {
   getStatusTone,
 } from "@/components/admin/admin-ui";
 import { AdminPageShell } from "@/components/admin/admin-page-shell";
-import { SelectField } from "@/components/ui/field";
+import { Button } from "@/components/ui/button";
+import { SelectField, TextField } from "@/components/ui/field";
 import { allRoleOptions, getRoleLabel } from "@/config/roles";
 import {
   getVerificationTierLabel,
@@ -19,6 +20,10 @@ import {
   isSupabaseConfigured,
 } from "@/lib/supabase/client";
 import type { Profile, TravelXchangeRole, VerificationTier } from "@/types/database";
+
+type AdminProfile = Profile & {
+  email: string | null;
+};
 
 function formatDate(value: string) {
   return new Intl.DateTimeFormat("en-GB", {
@@ -35,18 +40,37 @@ export function AdminUsersPage() {
       description="Review member accounts, update roles, and set verification tiers for trusted travel trade users."
       title="User management"
     >
-      {({ userId }) => <AdminUsersContent userId={userId} />}
+      {({ userId, viewerProfile }) => (
+        <AdminUsersContent userId={userId} viewerProfile={viewerProfile} />
+      )}
     </AdminPageShell>
   );
 }
 
-function AdminUsersContent({ userId }: { userId: string }) {
+function AdminUsersContent({
+  userId,
+  viewerProfile,
+}: {
+  userId: string;
+  viewerProfile: Profile;
+}) {
   const configured = isSupabaseConfigured();
-  const [profiles, setProfiles] = useState<Profile[]>([]);
+  const [profiles, setProfiles] = useState<AdminProfile[]>([]);
   const [isLoading, setIsLoading] = useState(configured);
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [isCreatingUser, setIsCreatingUser] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [newUserEmail, setNewUserEmail] = useState(
+    "accounts@onetravelclub.co.uk",
+  );
+  const [newUserFullName, setNewUserFullName] = useState(
+    "One Travel Club Accounts",
+  );
+  const [newUserRole, setNewUserRole] =
+    useState<TravelXchangeRole>("super_admin");
+  const [newUserVerification, setNewUserVerification] =
+    useState<VerificationTier>("admin_verified");
 
   const supabase = useMemo(() => {
     if (!configured) {
@@ -62,22 +86,79 @@ function AdminUsersContent({ userId }: { userId: string }) {
       return;
     }
 
-    const { data, error: profileError } = await supabase
-      .from("profiles")
-      .select("*")
-      .order("updated_at", { ascending: false })
-      .limit(80);
+    const token = await getAccessToken(supabase);
 
-    if (profileError) {
-      setError(profileError.message);
+    if (!token) {
+      setError("Please log in again before loading users.");
       setIsLoading(false);
       return;
     }
 
-    setProfiles((data ?? []) as Profile[]);
+    const response = await fetch("/api/admin/users", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const payload = (await response.json().catch(() => null)) as
+      | { error?: string; profiles?: AdminProfile[] }
+      | null;
+
+    if (!response.ok) {
+      setError(payload?.error ?? "Users could not be loaded.");
+      setIsLoading(false);
+      return;
+    }
+
+    setProfiles(payload?.profiles ?? []);
     setError(null);
     setIsLoading(false);
   }, [supabase]);
+
+  async function handleCreateOrPromoteUser(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (!supabase) {
+      return;
+    }
+
+    const token = await getAccessToken(supabase);
+
+    if (!token) {
+      setError("Please log in again before creating a user.");
+      return;
+    }
+
+    setIsCreatingUser(true);
+    setError(null);
+    setMessage(null);
+
+    const response = await fetch("/api/admin/users", {
+      body: JSON.stringify({
+        email: newUserEmail,
+        fullName: newUserFullName,
+        role: newUserRole,
+        verificationTier: newUserVerification,
+      }),
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+    });
+    const payload = (await response.json().catch(() => null)) as
+      | { error?: string; message?: string }
+      | null;
+
+    if (!response.ok) {
+      setError(payload?.error ?? "The user could not be created or updated.");
+      setIsCreatingUser(false);
+      return;
+    }
+
+    setMessage(payload?.message ?? "User updated.");
+    setIsCreatingUser(false);
+    await loadProfiles();
+  }
 
   async function updateProfileRole(profile: Profile, role: TravelXchangeRole) {
     if (!supabase || profile.role === role) {
@@ -183,6 +264,73 @@ function AdminUsersContent({ userId }: { userId: string }) {
         </div>
       ) : null}
 
+      <section className="tx-card p-5">
+        <div>
+          <h2 className="text-lg font-extrabold text-[#061b4f]">
+            Create or promote user
+          </h2>
+          <p className="mt-1 text-sm leading-6 text-[#4d6b9e]">
+            Super Admins can invite a new person or upgrade an existing account
+            by email. This keeps owner access inside Travel Xchange instead of
+            requiring SQL.
+          </p>
+        </div>
+
+        {viewerProfile.role === "super_admin" ? (
+          <form
+            className="mt-5 grid gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_220px_260px_auto] xl:items-end"
+            onSubmit={handleCreateOrPromoteUser}
+          >
+            <TextField
+              label="Email"
+              name="new-user-email"
+              onChange={(event) => setNewUserEmail(event.target.value)}
+              placeholder="accounts@onetravelclub.co.uk"
+              required
+              type="email"
+              value={newUserEmail}
+            />
+            <TextField
+              label="Full name"
+              name="new-user-full-name"
+              onChange={(event) => setNewUserFullName(event.target.value)}
+              placeholder="One Travel Club Accounts"
+              value={newUserFullName}
+            />
+            <SelectField
+              label="Role"
+              name="new-user-role"
+              onChange={(event) =>
+                setNewUserRole(event.target.value as TravelXchangeRole)
+              }
+              options={allRoleOptions}
+              value={newUserRole}
+            />
+            <SelectField
+              label="Verification"
+              name="new-user-verification"
+              onChange={(event) =>
+                setNewUserVerification(event.target.value as VerificationTier)
+              }
+              options={verificationTierOptions}
+              value={newUserVerification}
+            />
+            <Button
+              className="h-11 bg-[#061b4f] px-5 text-white hover:bg-[#063b86]"
+              disabled={isCreatingUser}
+              type="submit"
+            >
+              {isCreatingUser ? "Saving" : "Create / update"}
+            </Button>
+          </form>
+        ) : (
+          <div className="mt-4 rounded-lg border border-[#d9e4f5] bg-[#f8fbff] p-4 text-sm leading-6 text-[#4d6b9e]">
+            Only a Super Admin can create users or promote someone to admin
+            roles.
+          </div>
+        )}
+      </section>
+
       <section className="tx-card overflow-hidden">
         <div className="border-b border-[#d9e4f5] p-5">
           <h2 className="text-lg font-extrabold text-[#061b4f]">
@@ -213,6 +361,11 @@ function AdminUsersContent({ userId }: { userId: string }) {
                 <p className="mt-1 text-sm leading-6 text-[#4d6b9e]">
                   {profile.headline ?? "No headline yet"}
                 </p>
+                {profile.email ? (
+                  <p className="mt-1 text-sm font-semibold text-[#063b86]">
+                    {profile.email}
+                  </p>
+                ) : null}
                 <p className="mt-1 text-xs font-medium text-[#7288b8]">
                   Joined {formatDate(profile.created_at)}
                 </p>
@@ -251,4 +404,11 @@ function AdminUsersContent({ userId }: { userId: string }) {
       </section>
     </div>
   );
+}
+
+async function getAccessToken(
+  supabase: ReturnType<typeof createSupabaseBrowserClient>,
+) {
+  const { data } = await supabase.auth.getSession();
+  return data.session?.access_token ?? null;
 }
