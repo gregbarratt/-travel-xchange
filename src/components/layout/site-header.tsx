@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 
 import { TravelXchangeLogo } from "@/components/brand/travel-xchange-logo";
 import { buttonVariants } from "@/components/ui/button";
-import { launchConfig, publicAuthEnabled } from "@/config/launch";
+import { publicAuthEnabled } from "@/config/launch";
 import { landingAnchors, publicRoutes } from "@/config/navigation";
 import { cn } from "@/lib/utils";
 
@@ -64,9 +64,12 @@ export function SiteHeader() {
             </Link>
           </div>
         ) : (
-          <div className="hidden rounded-lg border border-[#f52968]/20 bg-[#fff1f6] px-3 py-2 text-sm font-extrabold text-[#f52968] sm:block">
-            {launchConfig.status}
-          </div>
+          <Link
+            className="hidden rounded-lg border border-[#f52968]/20 bg-[#fff1f6] px-3 py-2 text-sm font-extrabold text-[#f52968] hover:bg-[#ffe3ee] sm:block"
+            href="/login"
+          >
+            Log in
+          </Link>
         )}
       </div>
     </header>

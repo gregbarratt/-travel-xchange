@@ -129,7 +129,7 @@ export function AuthForm({ mode, redirectPath = "/dashboard" }: AuthFormProps) {
           className="inline-flex text-sm font-semibold text-[#0f766e] hover:text-[#115e59]"
           href="/login#forgot-password"
         >
-          Forgot password placeholder
+          Forgot password?
         </Link>
       ) : null}
 
