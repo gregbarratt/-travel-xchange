@@ -7,12 +7,12 @@ import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SelectField, TextareaField, TextField } from "@/components/ui/field";
 import { companyTypeOptions } from "@/config/roles";
-import type { TravelXchangeRole } from "@/types/database";
 
 const registrationRoleOptions: Array<{
   label: string;
-  value: TravelXchangeRole;
+  value: string;
 }> = [
+  { label: "Select your role", value: "" },
   {
     label: "Travel agent / homeworker",
     value: "verified_travel_professional",
@@ -24,9 +24,10 @@ const registrationRoleOptions: Array<{
   { label: "Student / new entrant", value: "registered_user" },
 ];
 
-const filteredCompanyTypeOptions = companyTypeOptions.filter(
-  (option) => option.value !== "",
-);
+const filteredCompanyTypeOptions = [
+  { label: "Select business type", value: "" },
+  ...companyTypeOptions.filter((option) => option.value !== ""),
+];
 
 export function RegistrationRequestForm() {
   const [error, setError] = useState<string | null>(null);
@@ -93,7 +94,7 @@ export function RegistrationRequestForm() {
         </h2>
         <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">
           Create your free login first. We then use the trade details below to
-          route your approval request.
+          route your approval request. All fields are required.
         </p>
         <div className="mt-5 grid gap-5 md:grid-cols-2">
           <TextField
@@ -132,6 +133,7 @@ export function RegistrationRequestForm() {
             label="Location"
             name="location"
             placeholder="Manchester, UK"
+            required
           />
         </div>
       </div>
@@ -148,7 +150,6 @@ export function RegistrationRequestForm() {
           <TextField
             label="Business / supplier name"
             name="company_name"
-            placeholder="One Travel Club"
             required
           />
           <SelectField
@@ -163,6 +164,7 @@ export function RegistrationRequestForm() {
             label="Website"
             name="website_url"
             placeholder="www.example.com"
+            required
           />
         </div>
       </div>
@@ -172,8 +174,8 @@ export function RegistrationRequestForm() {
           Travel trade identifiers
         </h2>
         <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">
-          Add any relevant numbers you use in the trade. These help admins
-          verify who you are.
+          Add any relevant numbers you use in the trade. These are optional,
+          but they help admins verify who you are.
         </p>
         <div className="mt-5 grid gap-5 md:grid-cols-2">
           <TextField
@@ -205,6 +207,7 @@ export function RegistrationRequestForm() {
           label="Anything the approver should know?"
           name="approval_note"
           placeholder="Add any details that will help your company admin or Travel Xchange admin approve your request."
+          required
         />
       </div>
 

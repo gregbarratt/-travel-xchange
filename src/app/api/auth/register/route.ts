@@ -132,7 +132,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const role = body.role ?? "registered_user";
+  const role = cleanText(body.role) as TravelXchangeRole;
   const payload: Required<RegistrationPayload> = {
     abtaNumber: cleanText(body.abtaNumber),
     agentNumber: cleanText(body.agentNumber),
@@ -149,9 +149,21 @@ export async function POST(request: Request) {
     websiteUrl: normalizeWebsiteUrl(cleanText(body.websiteUrl)) ?? "",
   };
 
-  if (!payload.email || !payload.password || !payload.fullName) {
+  if (
+    !payload.email ||
+    !payload.password ||
+    !payload.fullName ||
+    !payload.role ||
+    !payload.location ||
+    !payload.companyName ||
+    !payload.companyType ||
+    !payload.websiteUrl ||
+    !payload.approvalNote
+  ) {
     return NextResponse.json(
-      { error: "Please enter your name, email address, and password." },
+      {
+        error: "Please complete every required field.",
+      },
       { status: 400 },
     );
   }
@@ -166,16 +178,6 @@ export async function POST(request: Request) {
   if (!publicRegistrationRoles.has(payload.role)) {
     return NextResponse.json(
       { error: "Please choose a valid Travel Xchange role." },
-      { status: 400 },
-    );
-  }
-
-  if (!payload.companyName || !payload.companyType) {
-    return NextResponse.json(
-      {
-        error:
-          "Please tell us which supplier, agency, or business you work with.",
-      },
       { status: 400 },
     );
   }
