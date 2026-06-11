@@ -75,6 +75,14 @@ export function AdminPageShell({
       return;
     }
 
+    if (!profileData || !isAdminRole(profileData.role)) {
+      router.replace("/dashboard");
+      setViewerProfile(null);
+      setUserId(null);
+      setIsLoading(false);
+      return;
+    }
+
     setViewerProfile(profileData as Profile | null);
     setError(null);
     setIsLoading(false);
@@ -87,6 +95,28 @@ export function AdminPageShell({
 
     return () => window.clearTimeout(timeoutId);
   }, [loadAdmin]);
+
+  if (!configured) {
+    return (
+      <AdminAccessStatus
+        title="Setup needed"
+        message="Supabase is not configured yet. Add your Supabase keys to .env.local, then restart the local app."
+      />
+    );
+  }
+
+  if (error) {
+    return <AdminAccessStatus title="Access check failed" message={error} />;
+  }
+
+  if (isLoading || !viewerProfile || !userId) {
+    return (
+      <AdminAccessStatus
+        title="Checking access"
+        message="Checking whether this account can open this area."
+      />
+    );
+  }
 
   return (
     <MemberPageShell
@@ -130,42 +160,26 @@ export function AdminPageShell({
           </nav>
         </section>
 
-        {!configured ? (
-          <div className="tx-card border-amber-200 bg-amber-50 p-5 text-sm leading-6 text-amber-900">
-            Supabase is not configured yet. Add your Supabase keys to
-            .env.local, then restart the local app.
-          </div>
-        ) : null}
-
-        {isLoading ? (
-          <div className="tx-card p-6 text-sm text-[#4d6b9e]">
-            Loading admin controls...
-          </div>
-        ) : null}
-
-        {error ? (
-          <div className="tx-card border-amber-200 bg-amber-50 p-5 text-sm leading-6 text-amber-900">
-            {error}
-          </div>
-        ) : null}
-
-        {!isLoading && viewerProfile && !isAdminRole(viewerProfile.role) ? (
-          <div className="tx-card p-8 text-center">
-            <h2 className="text-xl font-extrabold text-[#061b4f]">
-              Admin access only
-            </h2>
-            <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-[#4d6b9e]">
-              Your account is logged in, but it has not been marked as an admin
-              or moderator yet. We will set your owner role in Supabase during
-              the Phase 14 test.
-            </p>
-          </div>
-        ) : null}
-
-        {!isLoading && viewerProfile && userId && isAdminRole(viewerProfile.role)
-          ? children({ userId, viewerProfile })
-          : null}
+        {children({ userId, viewerProfile })}
       </div>
     </MemberPageShell>
+  );
+}
+
+function AdminAccessStatus({
+  message,
+  title,
+}: {
+  message: string;
+  title: string;
+}) {
+  return (
+    <main className="flex min-h-screen items-center justify-center bg-[#f6f9fd] px-5 text-[#061b4f]">
+      <section className="w-full max-w-md rounded-xl border border-[#d9e4f5] bg-white p-6 text-center shadow-[0_18px_55px_rgba(6,27,79,0.1)]">
+        <ShieldCheck className="mx-auto size-8 text-[#063b86]" aria-hidden="true" />
+        <h1 className="mt-4 text-xl font-extrabold">{title}</h1>
+        <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">{message}</p>
+      </section>
+    </main>
   );
 }

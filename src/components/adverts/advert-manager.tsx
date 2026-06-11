@@ -132,9 +132,9 @@ export function AdvertManager() {
     }
 
     if (!profileData || !isAdminRole(profileData.role)) {
-      setError(
-        "Admin access is required for the advert manager. Set this account as an admin in Supabase during Phase 14 testing.",
-      );
+      router.replace("/dashboard");
+      setViewerProfile(null);
+      setUserId(null);
       setIsLoading(false);
       return;
     }
@@ -385,6 +385,24 @@ export function AdvertManager() {
     (placement) => placement.status === "active",
   );
   const creativeMap = new Map(creatives.map((creative) => [creative.id, creative]));
+
+  if (!configured) {
+    return (
+      <AdvertAccessStatus
+        title="Setup needed"
+        message="Supabase is not connected yet, so adverts cannot load."
+      />
+    );
+  }
+
+  if (isLoading || !viewerProfile || !userId) {
+    return (
+      <AdvertAccessStatus
+        title="Checking access"
+        message="Checking whether this account can open this area."
+      />
+    );
+  }
 
   return (
     <MemberPageShell
@@ -702,5 +720,23 @@ export function AdvertManager() {
         </aside>
       </div>
     </MemberPageShell>
+  );
+}
+
+function AdvertAccessStatus({
+  message,
+  title,
+}: {
+  message: string;
+  title: string;
+}) {
+  return (
+    <main className="flex min-h-screen items-center justify-center bg-[#f6f9fd] px-5 text-[#061b4f]">
+      <section className="w-full max-w-md rounded-xl border border-[#d9e4f5] bg-white p-6 text-center shadow-[0_18px_55px_rgba(6,27,79,0.1)]">
+        <Megaphone className="mx-auto size-8 text-[#063b86]" aria-hidden="true" />
+        <h1 className="mt-4 text-xl font-extrabold">{title}</h1>
+        <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">{message}</p>
+      </section>
+    </main>
   );
 }
