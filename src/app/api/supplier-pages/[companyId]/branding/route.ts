@@ -13,11 +13,18 @@ type RouteContext = {
 };
 
 type SupplierBrandingBody = {
+  coverImageFit?: string | null;
+  coverImagePosition?: string | null;
   coverImageUrl?: string | null;
+  cover_image_fit?: string | null;
+  cover_image_position?: string | null;
   cover_image_url?: string | null;
   logoUrl?: string | null;
   logo_url?: string | null;
 };
+
+const brandingSelect =
+  "id, logo_url, cover_image_url, cover_image_fit, cover_image_position";
 
 export async function GET(request: NextRequest, context: RouteContext) {
   const result = await authorizeBrandingManager(request, context);
@@ -29,7 +36,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
   const { companyId, supabase } = result;
   const { data, error } = await supabase
     .from("companies")
-    .select("id, logo_url, cover_image_url")
+    .select(brandingSelect)
     .eq("id", companyId)
     .maybeSingle();
 
@@ -61,15 +68,23 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
   const coverImageUrl = normalizeWebsiteUrl(
     String(body?.coverImageUrl ?? body?.cover_image_url ?? ""),
   );
+  const coverImageFit = normalizeCoverImageFit(
+    body?.coverImageFit ?? body?.cover_image_fit,
+  );
+  const coverImagePosition = normalizeCoverImagePosition(
+    body?.coverImagePosition ?? body?.cover_image_position,
+  );
 
   const { data, error } = await supabase
     .from("companies")
     .update({
+      cover_image_fit: coverImageFit,
+      cover_image_position: coverImagePosition,
       cover_image_url: coverImageUrl,
       logo_url: logoUrl,
     })
     .eq("id", companyId)
-    .select("id, logo_url, cover_image_url")
+    .select(brandingSelect)
     .single();
 
   if (error) {
@@ -87,15 +102,40 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
 
 function getBrandingSetupMessage(message: string) {
   if (
+    message.includes("cover_image_fit") ||
+    message.includes("cover_image_position") ||
     message.includes("logo_url") ||
     message.includes("cover_image_url") ||
+    message.includes("companies.cover_image_fit") ||
+    message.includes("companies.cover_image_position") ||
     message.includes("companies.logo_url") ||
     message.includes("companies.cover_image_url")
   ) {
-    return "The supplier branding fields are not installed yet. Run supabase/phase-26-supplier-branding.sql in Supabase, then refresh this page.";
+    return "The supplier branding fields are not installed yet. Run supabase/phase-30-supplier-cover-position.sql in Supabase, then refresh this page.";
   }
 
   return message;
+}
+
+function normalizeCoverImageFit(value: string | null | undefined) {
+  return value === "contain" ? "contain" : "cover";
+}
+
+function normalizeCoverImagePosition(value: string | null | undefined) {
+  if (!value) {
+    return "50% 50%";
+  }
+
+  const match = value.match(/^(\d{1,3})% (\d{1,3})%$/);
+
+  if (!match) {
+    return "50% 50%";
+  }
+
+  const x = Math.min(100, Math.max(0, Number(match[1])));
+  const y = Math.min(100, Math.max(0, Number(match[2])));
+
+  return `${x}% ${y}%`;
 }
 
 async function authorizeBrandingManager(

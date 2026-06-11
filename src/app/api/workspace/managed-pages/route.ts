@@ -11,6 +11,8 @@ import type { Company, Profile } from "@/types/database";
 type ManagedPage = Pick<
   Company,
   | "company_type"
+  | "cover_image_fit"
+  | "cover_image_position"
   | "id"
   | "name"
   | "page_visibility"
@@ -26,6 +28,8 @@ type ManagedPage = Pick<
 type ManagedCompanyRow = Pick<
   Company,
   | "company_type"
+  | "cover_image_fit"
+  | "cover_image_position"
   | "id"
   | "name"
   | "page_visibility"
@@ -35,7 +39,7 @@ type ManagedCompanyRow = Pick<
   Partial<Pick<Company, "cover_image_url" | "logo_url">>;
 
 const managedCompanySelect =
-  "id, name, company_type, logo_url, cover_image_url, page_visibility, status, verification_tier";
+  "id, name, company_type, logo_url, cover_image_url, cover_image_fit, cover_image_position, page_visibility, status, verification_tier";
 
 export async function GET(request: NextRequest) {
   if (!isSupabaseServerConfigured()) {
@@ -179,6 +183,8 @@ function mapManagedPage(
 ): ManagedPage {
   return {
     company_type: company.company_type,
+    cover_image_fit: company.cover_image_fit ?? "cover",
+    cover_image_position: company.cover_image_position ?? "50% 50%",
     cover_image_url: company.cover_image_url ?? null,
     href: `/suppliers/${company.id}`,
     id: company.id,

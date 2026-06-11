@@ -43,6 +43,8 @@ export type Company = {
   website_url: string | null;
   logo_url: string | null;
   cover_image_url: string | null;
+  cover_image_fit: "cover" | "contain";
+  cover_image_position: string;
   description: string | null;
   verification_tier: VerificationTier;
   page_visibility: "public" | "private";

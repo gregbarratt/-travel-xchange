@@ -233,10 +233,16 @@ export function CompanyPage({ companyId, variant }: CompanyPageProps) {
           <section className="space-y-5">
             <article className="overflow-hidden rounded-md border border-slate-200 bg-white shadow-sm">
               <div
-                className="h-44 bg-[linear-gradient(120deg,#061b4f,#0f766e)] bg-cover bg-center"
+                className="h-44 bg-[linear-gradient(120deg,#061b4f,#0f766e)] bg-center"
                 style={
                   company.cover_image_url
-                    ? { backgroundImage: `url(${company.cover_image_url})` }
+                    ? {
+                        backgroundImage: `url(${company.cover_image_url})`,
+                        backgroundPosition:
+                          company.cover_image_position ?? "50% 50%",
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: company.cover_image_fit ?? "cover",
+                      }
                     : undefined
                 }
               />
@@ -353,6 +359,10 @@ export function CompanyPage({ companyId, variant }: CompanyPageProps) {
             {variant === "supplier" ? (
               <SupplierAdminPanel
                 companyId={company.id}
+                initialCoverImageFit={company.cover_image_fit ?? "cover"}
+                initialCoverImagePosition={
+                  company.cover_image_position ?? "50% 50%"
+                }
                 initialCoverImageUrl={company.cover_image_url}
                 initialLogoUrl={company.logo_url}
                 onBrandingSaved={(branding) =>
@@ -360,6 +370,8 @@ export function CompanyPage({ companyId, variant }: CompanyPageProps) {
                     current
                       ? {
                           ...current,
+                          cover_image_fit: branding.cover_image_fit,
+                          cover_image_position: branding.cover_image_position,
                           cover_image_url: branding.cover_image_url,
                           logo_url: branding.logo_url,
                         }

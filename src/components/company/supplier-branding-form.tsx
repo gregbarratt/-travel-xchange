@@ -1,10 +1,10 @@
 "use client";
 
 import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
-import { ImagePlus, Loader2, Save } from "lucide-react";
+import { ImagePlus, Loader2, Save, UploadCloud } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { TextField } from "@/components/ui/field";
+import { SelectField, TextField } from "@/components/ui/field";
 import { uploadPublicImage } from "@/lib/media/uploads";
 import {
   createSupabaseBrowserClient,
@@ -14,8 +14,12 @@ import {
 type SupplierBrandingFormProps = {
   companyId: string;
   initialCoverImageUrl?: string | null;
+  initialCoverImageFit?: "cover" | "contain" | null;
+  initialCoverImagePosition?: string | null;
   initialLogoUrl?: string | null;
   onSaved?: (branding: {
+    cover_image_fit: "cover" | "contain";
+    cover_image_position: string;
     cover_image_url: string | null;
     logo_url: string | null;
   }) => void;
@@ -23,6 +27,8 @@ type SupplierBrandingFormProps = {
 
 type BrandingResponse = {
   branding?: {
+    cover_image_fit: "cover" | "contain";
+    cover_image_position: string;
     cover_image_url: string | null;
     logo_url: string | null;
   };
@@ -30,8 +36,29 @@ type BrandingResponse = {
   message?: string;
 };
 
+function parseCoverImagePosition(value: string | null | undefined) {
+  const fallback = { x: 50, y: 50 };
+
+  if (!value) {
+    return fallback;
+  }
+
+  const match = value.match(/^(\d{1,3})% (\d{1,3})%$/);
+
+  if (!match) {
+    return fallback;
+  }
+
+  return {
+    x: Math.min(100, Math.max(0, Number(match[1]))),
+    y: Math.min(100, Math.max(0, Number(match[2]))),
+  };
+}
+
 export function SupplierBrandingForm({
   companyId,
+  initialCoverImageFit,
+  initialCoverImagePosition,
   initialCoverImageUrl,
   initialLogoUrl,
   onSaved,
@@ -39,6 +66,12 @@ export function SupplierBrandingForm({
   const configured = isSupabaseConfigured();
   const [logoUrl, setLogoUrl] = useState(initialLogoUrl ?? "");
   const [coverImageUrl, setCoverImageUrl] = useState(initialCoverImageUrl ?? "");
+  const [coverImageFit, setCoverImageFit] = useState<"cover" | "contain">(
+    initialCoverImageFit ?? "cover",
+  );
+  const initialPosition = parseCoverImagePosition(initialCoverImagePosition);
+  const [coverPositionX, setCoverPositionX] = useState(initialPosition.x);
+  const [coverPositionY, setCoverPositionY] = useState(initialPosition.y);
   const [isLoading, setIsLoading] = useState(configured);
   const [isSaving, setIsSaving] = useState(false);
   const [uploadingImage, setUploadingImage] = useState<"logo" | "cover" | null>(
@@ -46,6 +79,8 @@ export function SupplierBrandingForm({
   );
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
+  const coverImagePosition = `${coverPositionX}% ${coverPositionY}%`;
+  const uploadsDisabled = uploadingImage !== null || isSaving;
 
   const supabase = useMemo(() => {
     if (!configured) {
@@ -88,6 +123,12 @@ export function SupplierBrandingForm({
 
     setLogoUrl(payload.branding?.logo_url ?? "");
     setCoverImageUrl(payload.branding?.cover_image_url ?? "");
+    setCoverImageFit(payload.branding?.cover_image_fit ?? "cover");
+    const nextPosition = parseCoverImagePosition(
+      payload.branding?.cover_image_position,
+    );
+    setCoverPositionX(nextPosition.x);
+    setCoverPositionY(nextPosition.y);
   }, [companyId, getAccessToken]);
 
   useEffect(() => {
@@ -152,6 +193,8 @@ export function SupplierBrandingForm({
 
     const response = await fetch(`/api/supplier-pages/${companyId}/branding`, {
       body: JSON.stringify({
+        coverImageFit,
+        coverImagePosition,
         coverImageUrl,
         logoUrl,
       }),
@@ -173,6 +216,12 @@ export function SupplierBrandingForm({
 
     setLogoUrl(payload.branding.logo_url ?? "");
     setCoverImageUrl(payload.branding.cover_image_url ?? "");
+    setCoverImageFit(payload.branding.cover_image_fit ?? "cover");
+    const savedPosition = parseCoverImagePosition(
+      payload.branding.cover_image_position,
+    );
+    setCoverPositionX(savedPosition.x);
+    setCoverPositionY(savedPosition.y);
     setMessage(payload.message ?? "Supplier brand images saved.");
     onSaved?.(payload.branding);
   }
@@ -225,14 +274,23 @@ export function SupplierBrandingForm({
                 "TX"
               )}
             </div>
-            <label className="mt-3 block">
-              <span className="text-sm font-semibold text-[#061b4f]">
-                Upload logo
+            <label
+              aria-disabled={uploadsDisabled}
+              className={`mt-3 flex cursor-pointer flex-col gap-2 rounded-lg border-2 border-dashed border-[#f52968]/55 bg-[#fff5f8] p-4 text-sm text-[#061b4f] transition hover:border-[#f52968] hover:bg-[#fff0f5] ${
+                uploadsDisabled ? "pointer-events-none opacity-60" : ""
+              }`}
+            >
+              <span className="flex items-center gap-2 font-extrabold">
+                <UploadCloud className="size-4 text-[#f52968]" aria-hidden="true" />
+                Select logo image
+              </span>
+              <span className="text-xs leading-5 text-[#4d6b9e]">
+                Square image, ideally 800 x 800 px.
               </span>
               <input
                 accept="image/jpeg,image/png,image/webp,image/gif"
-                className="mt-2 block w-full text-sm text-[#4d6b9e]"
-                disabled={uploadingImage !== null || isSaving}
+                className="sr-only"
+                disabled={uploadsDisabled}
                 onChange={(event) =>
                   void handleBrandImageUpload(event.target.files?.[0], "logo")
                 }
@@ -243,21 +301,35 @@ export function SupplierBrandingForm({
 
           <div>
             <div
-              className="h-36 rounded-lg border border-[#c8d7ee] bg-[linear-gradient(120deg,#061b4f,#0f766e)] bg-cover bg-center"
+              className="h-36 rounded-lg border border-[#c8d7ee] bg-[linear-gradient(120deg,#061b4f,#0f766e)] bg-center"
               style={
                 coverImageUrl
-                  ? { backgroundImage: `url(${coverImageUrl})` }
+                  ? {
+                      backgroundImage: `url(${coverImageUrl})`,
+                      backgroundPosition: coverImagePosition,
+                      backgroundRepeat: "no-repeat",
+                      backgroundSize: coverImageFit,
+                    }
                   : undefined
               }
             />
-            <label className="mt-3 block">
-              <span className="text-sm font-semibold text-[#061b4f]">
-                Upload cover banner
+            <label
+              aria-disabled={uploadsDisabled}
+              className={`mt-3 flex cursor-pointer flex-col gap-2 rounded-lg border-2 border-dashed border-[#f52968]/55 bg-[#fff5f8] p-4 text-sm text-[#061b4f] transition hover:border-[#f52968] hover:bg-[#fff0f5] ${
+                uploadsDisabled ? "pointer-events-none opacity-60" : ""
+              }`}
+            >
+              <span className="flex items-center gap-2 font-extrabold">
+                <UploadCloud className="size-4 text-[#f52968]" aria-hidden="true" />
+                Select cover banner
+              </span>
+              <span className="text-xs leading-5 text-[#4d6b9e]">
+                Wide image, ideally 1600 x 400 px.
               </span>
               <input
                 accept="image/jpeg,image/png,image/webp,image/gif"
-                className="mt-2 block w-full text-sm text-[#4d6b9e]"
-                disabled={uploadingImage !== null || isSaving}
+                className="sr-only"
+                disabled={uploadsDisabled}
                 onChange={(event) =>
                   void handleBrandImageUpload(event.target.files?.[0], "cover")
                 }
@@ -265,6 +337,58 @@ export function SupplierBrandingForm({
               />
             </label>
           </div>
+        </div>
+
+        <div className="grid gap-4 rounded-lg border border-[#dbe7f7] bg-[#f7faff] p-4 lg:grid-cols-[220px_minmax(0,1fr)_minmax(0,1fr)]">
+          <SelectField
+            hint="Fill crops the image to fit. Fit shows the full image."
+            label="Cover display"
+            name="cover_image_fit"
+            onChange={(event) =>
+              setCoverImageFit(
+                event.target.value === "contain" ? "contain" : "cover",
+              )
+            }
+            options={[
+              { label: "Fill banner", value: "cover" },
+              { label: "Fit whole image", value: "contain" },
+            ]}
+            value={coverImageFit}
+          />
+
+          <label className="block">
+            <span className="text-sm font-bold text-[#061b4f]">
+              Move image left / right
+            </span>
+            <input
+              className="mt-4 w-full accent-[#f52968]"
+              max={100}
+              min={0}
+              onChange={(event) => setCoverPositionX(Number(event.target.value))}
+              type="range"
+              value={coverPositionX}
+            />
+            <span className="mt-2 block text-xs text-[#4d6b9e]">
+              Position: {coverPositionX}%
+            </span>
+          </label>
+
+          <label className="block">
+            <span className="text-sm font-bold text-[#061b4f]">
+              Move image up / down
+            </span>
+            <input
+              className="mt-4 w-full accent-[#f52968]"
+              max={100}
+              min={0}
+              onChange={(event) => setCoverPositionY(Number(event.target.value))}
+              type="range"
+              value={coverPositionY}
+            />
+            <span className="mt-2 block text-xs text-[#4d6b9e]">
+              Position: {coverPositionY}%
+            </span>
+          </label>
         </div>
 
         {uploadingImage ? (
@@ -282,28 +406,41 @@ export function SupplierBrandingForm({
           <p>
             Cover banner: use a wide image, ideally 1600 x 400 px. Keep key
             brand marks and text near the centre so they stay visible on mobile.
+            Use the cover display and position controls above if the image needs
+            adjusting.
           </p>
           <p>Maximum file size: 5MB.</p>
         </div>
 
-        <TextField
-          hint="Example: https://example.com/logo.png"
-          label="Logo image URL"
-          name="logo_url"
-          onChange={(event) => setLogoUrl(event.target.value)}
-          placeholder="https://example.com/logo.png"
-          type="text"
-          value={logoUrl}
-        />
-        <TextField
-          hint="Wide images work best. Example: https://example.com/cover.jpg"
-          label="Cover banner image URL"
-          name="cover_image_url"
-          onChange={(event) => setCoverImageUrl(event.target.value)}
-          placeholder="https://example.com/cover.jpg"
-          type="text"
-          value={coverImageUrl}
-        />
+        <details className="rounded-lg border border-[#dbe7f7] bg-white p-4">
+          <summary className="cursor-pointer text-sm font-extrabold text-[#061b4f]">
+            Advanced image URLs
+          </summary>
+          <div className="mt-4 grid gap-4">
+            <p className="text-sm leading-6 text-[#4d6b9e]">
+              Only use these if the image is already hosted somewhere else. Most
+              suppliers should use the select image boxes above.
+            </p>
+            <TextField
+              hint="Example: https://example.com/logo.png"
+              label="Logo image URL"
+              name="logo_url"
+              onChange={(event) => setLogoUrl(event.target.value)}
+              placeholder="https://example.com/logo.png"
+              type="text"
+              value={logoUrl}
+            />
+            <TextField
+              hint="Wide images work best. Example: https://example.com/cover.jpg"
+              label="Cover banner image URL"
+              name="cover_image_url"
+              onChange={(event) => setCoverImageUrl(event.target.value)}
+              placeholder="https://example.com/cover.jpg"
+              type="text"
+              value={coverImageUrl}
+            />
+          </div>
+        </details>
         <Button
           className="w-fit bg-[#061b4f] text-white hover:bg-[#123b7a]"
           disabled={isSaving}

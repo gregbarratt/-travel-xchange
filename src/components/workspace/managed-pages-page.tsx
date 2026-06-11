@@ -18,6 +18,8 @@ import type { Company, Profile } from "@/types/database";
 type ManagedPage = Pick<
   Company,
   | "company_type"
+  | "cover_image_fit"
+  | "cover_image_position"
   | "cover_image_url"
   | "id"
   | "logo_url"
@@ -159,10 +161,16 @@ export function ManagedPagesPage() {
               key={`${page.id}-${page.managementReason}`}
             >
               <div
-                className="h-24 bg-[linear-gradient(120deg,#061b4f,#0f766e)] bg-cover bg-center"
+                className="h-24 bg-[linear-gradient(120deg,#061b4f,#0f766e)] bg-center"
                 style={
                   page.cover_image_url
-                    ? { backgroundImage: `url(${page.cover_image_url})` }
+                    ? {
+                        backgroundImage: `url(${page.cover_image_url})`,
+                        backgroundPosition:
+                          page.cover_image_position ?? "50% 50%",
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: page.cover_image_fit ?? "cover",
+                      }
                     : undefined
                 }
               />

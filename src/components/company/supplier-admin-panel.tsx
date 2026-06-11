@@ -14,9 +14,13 @@ import {
 
 type SupplierAdminPanelProps = {
   companyId: string;
+  initialCoverImageFit?: "cover" | "contain" | null;
+  initialCoverImagePosition?: string | null;
   initialCoverImageUrl?: string | null;
   initialLogoUrl?: string | null;
   onBrandingSaved?: (branding: {
+    cover_image_fit: "cover" | "contain";
+    cover_image_position: string;
     cover_image_url: string | null;
     logo_url: string | null;
   }) => void;
@@ -30,6 +34,8 @@ type SupplierAdminAccessResponse = {
 
 export function SupplierAdminPanel({
   companyId,
+  initialCoverImageFit,
+  initialCoverImagePosition,
   initialCoverImageUrl,
   initialLogoUrl,
   onBrandingSaved,
@@ -142,6 +148,8 @@ export function SupplierAdminPanel({
         <div className="space-y-4">
           <SupplierBrandingForm
             companyId={companyId}
+            initialCoverImageFit={initialCoverImageFit}
+            initialCoverImagePosition={initialCoverImagePosition}
             initialCoverImageUrl={initialCoverImageUrl}
             initialLogoUrl={initialLogoUrl}
             onSaved={onBrandingSaved}
