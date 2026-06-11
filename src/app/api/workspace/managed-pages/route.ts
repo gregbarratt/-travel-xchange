@@ -35,7 +35,7 @@ type ManagedCompanyRow = Pick<
   Partial<Pick<Company, "cover_image_url" | "logo_url">>;
 
 const managedCompanySelect =
-  "id, name, company_type, page_visibility, status, verification_tier";
+  "id, name, company_type, logo_url, cover_image_url, page_visibility, status, verification_tier";
 
 export async function GET(request: NextRequest) {
   if (!isSupabaseServerConfigured()) {
