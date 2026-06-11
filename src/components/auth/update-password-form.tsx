@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { CheckCircle2, Loader2 } from "lucide-react";
 
@@ -15,6 +15,7 @@ export function UpdatePasswordForm() {
   const configured = isSupabaseConfigured();
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
+  const [isPreparingSession, setIsPreparingSession] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const supabase = useMemo(() => {
@@ -24,6 +25,65 @@ export function UpdatePasswordForm() {
 
     return createSupabaseBrowserClient();
   }, [configured]);
+
+  useEffect(() => {
+    if (!supabase || typeof window === "undefined") {
+      return;
+    }
+
+    const supabaseClient = supabase;
+    let isMounted = true;
+
+    async function prepareRecoverySession() {
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get("code");
+
+      if (code) {
+        setIsPreparingSession(true);
+
+        const { error: exchangeError } =
+          await supabaseClient.auth.exchangeCodeForSession(code);
+
+        if (!isMounted) {
+          return;
+        }
+
+        setIsPreparingSession(false);
+
+        if (exchangeError) {
+          setError(
+            "This reset link has expired or has already been used. Please request a new password reset email.",
+          );
+          return;
+        }
+
+        window.history.replaceState({}, document.title, window.location.pathname);
+        return;
+      }
+
+      const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+      const isRecoveryLink =
+        hashParams.get("type") === "recovery" && hashParams.has("access_token");
+
+      if (isRecoveryLink) {
+        const { data } = await supabaseClient.auth.getSession();
+
+        if (data.session) {
+          window.history.replaceState(
+            {},
+            document.title,
+            window.location.pathname,
+          );
+        }
+      }
+    }
+
+    prepareRecoverySession();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [supabase]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -107,13 +167,13 @@ export function UpdatePasswordForm() {
 
       <Button
         className="h-11 w-full bg-[#0f766e] hover:bg-[#115e59]"
-        disabled={isSubmitting}
+        disabled={isPreparingSession || isSubmitting}
         type="submit"
       >
-        {isSubmitting ? (
+        {isPreparingSession || isSubmitting ? (
           <Loader2 className="size-4 animate-spin" aria-hidden="true" />
         ) : null}
-        Update password
+        {isPreparingSession ? "Checking reset link" : "Update password"}
       </Button>
     </form>
   );

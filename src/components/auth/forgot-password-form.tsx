@@ -114,9 +114,13 @@ export function ForgotPasswordForm() {
 }
 
 function getPasswordResetRedirectUrl() {
-  const configuredAppUrl = process.env.NEXT_PUBLIC_APP_URL;
-  const fallbackAppUrl =
-    typeof window === "undefined" ? "http://localhost:3000" : window.location.origin;
+  if (typeof window !== "undefined") {
+    return `${window.location.origin}/update-password`;
+  }
+
+  const configuredAppUrl =
+    process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+  const fallbackAppUrl = configuredAppUrl;
   const appUrl = (configuredAppUrl || fallbackAppUrl).replace(/\/$/, "");
 
   return `${appUrl}/update-password`;
