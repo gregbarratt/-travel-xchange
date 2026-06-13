@@ -113,6 +113,16 @@ function getErrorMessage(error: { message?: string } | null) {
 }
 
 export async function POST(request: Request) {
+  if (process.env.TRAVEL_XCHANGE_PUBLIC_REGISTRATION !== "true") {
+    return NextResponse.json(
+      {
+        error:
+          "Public registration is temporarily closed while Travel Xchange prepares private beta access.",
+      },
+      { status: 403 },
+    );
+  }
+
   if (!isSupabaseServerConfigured()) {
     return NextResponse.json(
       {

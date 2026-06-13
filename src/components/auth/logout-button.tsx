@@ -26,6 +26,7 @@ export function LogoutButton() {
   async function handleLogout() {
     setIsSigningOut(true);
     await supabase?.auth.signOut();
+    await fetch("/api/auth/session", { method: "DELETE" }).catch(() => null);
     setIsSigningOut(false);
     router.push("/");
   }

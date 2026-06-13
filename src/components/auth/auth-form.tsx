@@ -51,41 +51,48 @@ export function AuthForm({ mode, redirectPath = "/dashboard" }: AuthFormProps) {
     setIsSubmitting(true);
 
     if (mode === "register") {
-      const { data, error: signUpError } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo: `${window.location.origin}/onboarding`,
-        },
-      });
-
       setIsSubmitting(false);
-
-      if (signUpError) {
-        setError(signUpError.message);
-        return;
-      }
-
-      setMessage(
-        "Account created. Check your email to confirm the account, then log in.",
+      setError(
+        "Public registration is temporarily closed while Travel Xchange prepares private beta access.",
       );
-
-      if (data.session) {
-        router.push("/onboarding");
-      }
-
       return;
     }
 
-    const { error: signInError } = await supabase.auth.signInWithPassword({
+    const { data, error: signInError } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
+    if (signInError) {
+      setIsSubmitting(false);
+      setError(signInError.message);
+      return;
+    }
+
+    if (!data.session) {
+      setIsSubmitting(false);
+      setError("Travel Xchange could not create a secure login session.");
+      return;
+    }
+
+    const sessionResponse = await fetch("/api/auth/session", {
+      body: JSON.stringify({
+        accessToken: data.session.access_token,
+        expiresIn: data.session.expires_in,
+        refreshToken: data.session.refresh_token,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+    });
+
     setIsSubmitting(false);
 
-    if (signInError) {
-      setError(signInError.message);
+    if (!sessionResponse.ok) {
+      setError(
+        "Your login details were accepted, but the secure platform session could not be saved. Please try again.",
+      );
       return;
     }
 
