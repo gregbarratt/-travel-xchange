@@ -36,9 +36,9 @@ export default function ErrorPage({
           </button>
           <Link
             className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-[#082f49] hover:bg-slate-50"
-            href="/dashboard"
+            href="/login"
           >
-            Back to dashboard
+            Back to login
           </Link>
         </div>
       </section>

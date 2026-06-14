@@ -46,10 +46,10 @@ export function AuthDisabledCard({ mode }: AuthDisabledCardProps) {
           <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
             <Link
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#061b4f] px-5 py-3 text-sm font-bold text-white hover:bg-[#082f6f]"
-              href="/"
+              href="/login"
             >
               <ArrowLeft className="size-4" aria-hidden="true" />
-              Back to coming soon
+              Back to login
             </Link>
             <Link
               className="inline-flex items-center justify-center gap-2 rounded-lg border border-[#d9e4f5] bg-white px-5 py-3 text-sm font-bold text-[#061b4f] hover:bg-[#eef5ff]"

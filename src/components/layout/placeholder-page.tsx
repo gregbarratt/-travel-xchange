@@ -1,6 +1,5 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { ArrowRight } from "lucide-react";
 
 import { PublicPageShell } from "@/components/layout/public-page-shell";
 import { buttonVariants } from "@/components/ui/button";
@@ -38,19 +37,9 @@ export function PlaceholderPage({
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Link
                   className={cn(buttonVariants({ size: "lg" }), "sm:w-auto")}
-                  href="/"
+                  href="/login"
                 >
-                  Back to home
-                </Link>
-                <Link
-                  className={cn(
-                    buttonVariants({ variant: "outline", size: "lg" }),
-                    "sm:w-auto",
-                  )}
-                  href="/contact"
-                >
-                  Contact placeholder
-                  <ArrowRight className="size-4" aria-hidden="true" />
+                  Go to login
                 </Link>
               </div>
             </div>

@@ -21,16 +21,16 @@ export default function NotFound() {
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           <Link
             className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-[#082f49] hover:bg-slate-50"
-            href="/"
+            href="/login"
           >
             <ArrowLeft className="size-4" aria-hidden="true" />
-            Public home
+            Back to login
           </Link>
           <Link
             className="rounded-lg bg-[#0f766e] px-4 py-2 text-sm font-semibold text-white hover:bg-[#115e59]"
-            href="/dashboard"
+            href="/login"
           >
-            Member dashboard
+            Log in
           </Link>
         </div>
       </section>
