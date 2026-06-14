@@ -10,6 +10,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         allow: [
           "/",
+          "/forgot-password",
           "/login",
           "/register",
           "/update-password",
@@ -17,9 +18,12 @@ export default function robots(): MetadataRoute.Robots {
         ],
         disallow: [
           "/account",
+          "/about",
           "/admin",
           "/api",
           "/billing",
+          "/companies",
+          "/contact",
           "/dashboard",
           "/events",
           "/groups",
@@ -31,6 +35,8 @@ export default function robots(): MetadataRoute.Robots {
           "/pricing",
           "/profile",
           "/profile/edit",
+          "/search",
+          "/supplier-updates",
           "/support",
           "/suppliers",
           "/training",

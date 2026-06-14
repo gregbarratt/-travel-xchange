@@ -57,19 +57,19 @@ export default function LoginPage() {
               Log in
             </h1>
             <p className="mt-3 text-sm leading-6 text-[#4d6b9e]">
-              Access the Travel Xchange platform with your account, or create a
-              free account if you are new to the community.
+              Access the Travel Xchange platform with an approved account.
+              Public registration is paused while we prepare private beta.
             </p>
 
             <div className="mt-8">
               <AuthForm mode="login" redirectPath="/dashboard" />
               <div className="mt-4 rounded-lg border border-[#d9e4f5] bg-[#f8fafc] p-4 text-sm leading-6 text-[#4d6b9e]">
-                New to Travel Xchange?{" "}
+                Need access?{" "}
                 <Link
                   className="font-extrabold text-[#0f766e] hover:text-[#115e59]"
                   href="/register"
                 >
-                  Create your free account
+                  View the registration notice
                 </Link>
                 .
               </div>
@@ -126,13 +126,13 @@ export default function LoginPage() {
                   aria-hidden="true"
                 />
                 <p className="text-sm leading-6 text-[#4d6b9e]">
-                  New to Travel Xchange? Access is free for travel
+                  Travel Xchange is free to access for approved travel
                   professionals and industry partners.{" "}
                   <Link
                     className="font-extrabold text-[#0f766e] hover:text-[#115e59]"
                     href="/register"
                   >
-                    Create your free account
+                    View the access notice
                   </Link>
                   .
                 </p>
@@ -141,7 +141,7 @@ export default function LoginPage() {
                 className="mt-5 inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#f52968] to-[#ff7a2f] px-5 py-3 text-sm font-extrabold text-white shadow-[0_14px_30px_rgba(245,41,104,0.22)] hover:opacity-95"
                 href="/register"
               >
-                Create free account
+                View access notice
                 <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
               <div className="mt-4 flex items-center gap-2 text-sm font-extrabold text-[#061b4f]">

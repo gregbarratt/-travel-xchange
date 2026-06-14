@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const routeSet = new Set([
     ...publicRoutes.map((route) => route.href),
     ...legalRoutes.map((route) => route.href),
+    "/forgot-password",
     "/login",
     "/register",
     "/update-password",

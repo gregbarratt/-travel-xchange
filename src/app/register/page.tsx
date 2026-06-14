@@ -7,7 +7,8 @@ import { PublicPageShell } from "@/components/layout/public-page-shell";
 
 export const metadata: Metadata = {
   title: "Register",
-  description: "Create a free Travel Xchange member account.",
+  description:
+    "Travel Xchange registration is paused while private beta access is prepared.",
 };
 
 export default function RegisterPage() {
