@@ -9,6 +9,10 @@ export const metadata: Metadata = {
   title: "Register",
   description:
     "Travel Xchange registration is paused while private beta access is prepared.",
+  robots: {
+    follow: false,
+    index: false,
+  },
 };
 
 export default function RegisterPage() {

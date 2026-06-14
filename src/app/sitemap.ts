@@ -1,25 +1,16 @@
 import type { MetadataRoute } from "next";
 
-import { legalRoutes } from "@/config/legal";
-import { publicRoutes } from "@/config/navigation";
 import { getAppUrl } from "@/lib/site-url";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const appUrl = getAppUrl();
   const now = new Date();
-  const routeSet = new Set([
-    ...publicRoutes.map((route) => route.href),
-    ...legalRoutes.map((route) => route.href),
-    "/forgot-password",
-    "/login",
-    "/register",
-    "/update-password",
-  ]);
+  const closedLaunchRoutes = ["/"];
 
-  return Array.from(routeSet).map((route) => ({
-    changeFrequency: route === "/" ? "weekly" : "monthly",
+  return closedLaunchRoutes.map((route) => ({
+    changeFrequency: "weekly",
     lastModified: now,
-    priority: route === "/" ? 1 : 0.7,
+    priority: 1,
     url: `${appUrl}${route}`,
   }));
 }

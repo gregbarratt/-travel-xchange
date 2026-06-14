@@ -6,6 +6,10 @@ import { UpdatePasswordForm } from "@/components/auth/update-password-form";
 export const metadata: Metadata = {
   title: "Update Password",
   description: "Set a new Travel Xchange admin password.",
+  robots: {
+    follow: false,
+    index: false,
+  },
 };
 
 export default function UpdatePasswordPage() {

@@ -18,6 +18,10 @@ import { PublicPageShell } from "@/components/layout/public-page-shell";
 export const metadata: Metadata = {
   title: "Log in",
   description: "Log in to Travel Xchange.",
+  robots: {
+    follow: false,
+    index: false,
+  },
 };
 
 const overviewItems = [

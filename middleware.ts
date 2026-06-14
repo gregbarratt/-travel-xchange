@@ -8,10 +8,15 @@ import {
   refreshTokenCookieName,
   refreshTokenMaxAgeSeconds,
 } from "./src/lib/auth/session-cookies";
+import {
+  canViewInternalPricing,
+  isProfileApprovedForPlatform,
+} from "./src/lib/auth/platform-access";
 import type { Database } from "./src/types/database";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const accessPendingRoute = "/access-pending";
 
 const publicExactRoutes = new Set([
   "/",
@@ -45,6 +50,10 @@ function redirectToLogin(request: NextRequest) {
   return response;
 }
 
+function redirectToAccessPending(request: NextRequest) {
+  return NextResponse.redirect(new URL(accessPendingRoute, request.url));
+}
+
 function createSupabaseAuthClient() {
   if (!supabaseUrl || !supabaseAnonKey) {
     return null;
@@ -56,6 +65,56 @@ function createSupabaseAuthClient() {
       persistSession: false,
     },
   });
+}
+
+function createSupabaseRequestClient(accessToken: string) {
+  if (!supabaseUrl || !supabaseAnonKey) {
+    return null;
+  }
+
+  return createClient<Database>(supabaseUrl, supabaseAnonKey, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+    global: {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    },
+  });
+}
+
+async function getPlatformAccessResponse(
+  request: NextRequest,
+  accessToken: string,
+  userId: string,
+) {
+  if (request.nextUrl.pathname === accessPendingRoute) {
+    return NextResponse.next();
+  }
+
+  const supabase = createSupabaseRequestClient(accessToken);
+
+  if (!supabase) {
+    return redirectToAccessPending(request);
+  }
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("role, verification_tier")
+    .eq("id", userId)
+    .maybeSingle();
+
+  if (!isProfileApprovedForPlatform(profile)) {
+    return redirectToAccessPending(request);
+  }
+
+  if (request.nextUrl.pathname === "/pricing" && !canViewInternalPricing(profile)) {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
+  }
+
+  return NextResponse.next();
 }
 
 export async function middleware(request: NextRequest) {
@@ -78,7 +137,7 @@ export async function middleware(request: NextRequest) {
     const { data } = await supabase.auth.getUser(accessToken);
 
     if (data.user) {
-      return NextResponse.next();
+      return getPlatformAccessResponse(request, accessToken, data.user.id);
     }
   }
 
@@ -88,7 +147,11 @@ export async function middleware(request: NextRequest) {
     });
 
     if (!error && data.session) {
-      const response = NextResponse.next();
+      const response = await getPlatformAccessResponse(
+        request,
+        data.session.access_token,
+        data.session.user.id,
+      );
       response.cookies.set(
         accessTokenCookieName,
         data.session.access_token,
