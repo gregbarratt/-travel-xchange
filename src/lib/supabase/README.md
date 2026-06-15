@@ -57,4 +57,15 @@ Phase 13 also adds a server Supabase helper for Stripe checkout, billing portal,
 and webhook routes. The server helper uses `SUPABASE_SERVICE_ROLE_KEY`, which
 must stay in `.env.local` only.
 
+Forgotten-password and admin password setup emails should return users to
+`/update-password`. Set `NEXT_PUBLIC_APP_URL` to the live site and set
+`NEXT_PUBLIC_PASSWORD_RESET_REDIRECT_URL` to the exact live update-password URL
+in Vercel. In Supabase Authentication URL settings, allow the live login and
+update-password URLs before testing this on production.
+
+For branded Supabase Auth emails, use `noreply@travelxchange.co.uk` as the
+sender after SMTP is configured. The reset password email template button must
+use `{{ .ConfirmationURL }}` so Supabase can include the secure reset token and
+the app can send users to `/update-password`.
+
 Use `.env.local` for real Supabase keys. Do not commit `.env.local`.

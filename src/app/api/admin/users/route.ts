@@ -12,8 +12,10 @@ import type {
 } from "@/types/database";
 
 type AdminUserBody = {
+  action?: "create_or_promote" | "resend_access_email";
   email?: string;
   fullName?: string;
+  password?: string;
   role?: TravelXchangeRole;
   verificationTier?: VerificationTier;
 };
@@ -94,8 +96,10 @@ export async function POST(request: NextRequest) {
     | null;
   const email = body?.email?.trim().toLowerCase() ?? "";
   const fullName = body?.fullName?.trim() ?? "";
+  const password = body?.password?.trim() ?? "";
   const role = body?.role ?? "registered_user";
   const verificationTier = body?.verificationTier ?? "email_verified";
+  const action = body?.action ?? "create_or_promote";
 
   if (!email || !email.includes("@")) {
     return NextResponse.json(
@@ -115,6 +119,20 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  if (action !== "create_or_promote" && action !== "resend_access_email") {
+    return NextResponse.json(
+      { error: "Choose a valid admin user action." },
+      { status: 400 },
+    );
+  }
+
+  if (password && password.length < 6) {
+    return NextResponse.json(
+      { error: "Use at least 6 characters for the password." },
+      { status: 400 },
+    );
+  }
+
   const existingUsersResult = await listAuthUsers(supabase);
 
   if (existingUsersResult.error) {
@@ -128,28 +146,73 @@ export async function POST(request: NextRequest) {
     existingUsersResult.users.find(
       (user) => user.email?.toLowerCase() === email,
     ) ?? null;
-  let invited = false;
+  let created = false;
+  const passwordResetRedirectTo = getPasswordResetRedirectUrl(request);
 
   if (!authUser) {
-    const origin =
-      request.headers.get("origin") ??
-      process.env.NEXT_PUBLIC_APP_URL ??
-      process.env.NEXT_PUBLIC_SITE_URL;
-    const redirectTo = origin ? `${origin.replace(/\/$/, "")}/login` : undefined;
-    const { data: inviteData, error: inviteError } =
-      await supabase.auth.admin.inviteUserByEmail(email, {
-        data: {
-          full_name: fullName || email.split("@")[0],
-        },
-        redirectTo,
-      });
-
-    if (inviteError) {
-      return NextResponse.json({ error: inviteError.message }, { status: 500 });
+    if (action === "resend_access_email") {
+      return NextResponse.json(
+        { error: "Create the user before sending an access email." },
+        { status: 400 },
+      );
     }
 
-    authUser = inviteData.user;
-    invited = true;
+    if (!password) {
+      return NextResponse.json(
+        { error: "Enter a temporary password when creating a new user." },
+        { status: 400 },
+      );
+    }
+
+    const { data: createData, error: createError } =
+      await supabase.auth.admin.createUser({
+        email,
+        password,
+        email_confirm: true,
+        user_metadata: {
+          full_name: fullName || email.split("@")[0],
+        },
+      });
+
+    if (createError) {
+      return NextResponse.json({ error: createError.message }, { status: 500 });
+    }
+
+    authUser = createData.user;
+    created = true;
+  } else if (action === "resend_access_email") {
+    const { error: resetError } = await supabase.auth.resetPasswordForEmail(
+      email,
+      {
+        redirectTo: passwordResetRedirectTo,
+      },
+    );
+
+    if (resetError) {
+      return NextResponse.json(
+        { error: resetError.message },
+        { status: 500 },
+      );
+    }
+  } else if (password || fullName) {
+    const { data: updateData, error: updateError } =
+      await supabase.auth.admin.updateUserById(authUser.id, {
+        ...(password ? { password } : {}),
+        ...(fullName
+          ? {
+              user_metadata: {
+                ...authUser.user_metadata,
+                full_name: fullName,
+              },
+            }
+          : {}),
+      });
+
+    if (updateError) {
+      return NextResponse.json({ error: updateError.message }, { status: 500 });
+    }
+
+    authUser = updateData.user;
   }
 
   if (!authUser) {
@@ -203,30 +266,62 @@ export async function POST(request: NextRequest) {
   }
 
   await supabase.from("audit_logs").insert({
-    action: invited ? "profile.admin_invited" : "profile.admin_promoted",
+    action:
+      action === "resend_access_email"
+        ? "profile.admin_access_email_sent"
+        : created
+          ? "profile.admin_created"
+          : "profile.admin_promoted",
     actor_id: actorId,
     entity_id: authUser.id,
     entity_type: "profile",
     metadata: {
       email,
-      invited,
+      created,
+      password_updated: Boolean(password),
       role,
       verification_tier: verificationTier,
     },
-    summary: invited
-      ? `Invited ${email} as ${role}.`
-      : `Updated ${email} to ${role}.`,
+    summary:
+      action === "resend_access_email"
+        ? `Sent access email to ${email}.`
+        : created
+          ? `Created ${email} as ${role}.`
+          : password
+            ? `Updated ${email} to ${role} and changed their password.`
+            : `Updated ${email} to ${role}.`,
   });
 
   return NextResponse.json({
-    message: invited
-      ? "User invited and profile prepared."
-      : "Existing user updated.",
+    message:
+      action === "resend_access_email"
+        ? "Password setup email sent. Ask the user to check their inbox and junk folder."
+        : created
+          ? "User created with a temporary password and profile prepared."
+          : password
+            ? "Existing user updated and password changed."
+            : "Existing user updated.",
     profile: {
       ...(profile as Profile),
       email,
     },
   });
+}
+
+function getPasswordResetRedirectUrl(request: NextRequest) {
+  const configuredResetUrl =
+    process.env.NEXT_PUBLIC_PASSWORD_RESET_REDIRECT_URL?.trim();
+
+  if (configuredResetUrl) {
+    return configuredResetUrl;
+  }
+
+  const origin =
+    process.env.NEXT_PUBLIC_APP_URL ??
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    request.headers.get("origin");
+
+  return origin ? `${origin.replace(/\/$/, "")}/update-password` : undefined;
 }
 
 async function authorizeAdmin(

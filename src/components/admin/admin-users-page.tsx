@@ -10,11 +10,8 @@ import {
 import { AdminPageShell } from "@/components/admin/admin-page-shell";
 import { Button } from "@/components/ui/button";
 import { SelectField, TextField } from "@/components/ui/field";
-import { allRoleOptions, getRoleLabel } from "@/config/roles";
-import {
-  getVerificationTierLabel,
-  verificationTierOptions,
-} from "@/config/admin";
+import { allRoleOptions } from "@/config/roles";
+import { verificationTierOptions } from "@/config/admin";
 import {
   createSupabaseBrowserClient,
   isSupabaseConfigured,
@@ -40,37 +37,33 @@ export function AdminUsersPage() {
       description="Review member accounts, update roles, and set verification tiers for trusted travel trade users."
       title="User management"
     >
-      {({ userId, viewerProfile }) => (
-        <AdminUsersContent userId={userId} viewerProfile={viewerProfile} />
+      {({ viewerProfile }) => (
+        <AdminUsersContent viewerProfile={viewerProfile} />
       )}
     </AdminPageShell>
   );
 }
 
 function AdminUsersContent({
-  userId,
   viewerProfile,
 }: {
-  userId: string;
   viewerProfile: Profile;
 }) {
   const configured = isSupabaseConfigured();
+  const canManageUsers = viewerProfile.role === "super_admin";
   const [profiles, setProfiles] = useState<AdminProfile[]>([]);
   const [isLoading, setIsLoading] = useState(configured);
   const [busyId, setBusyId] = useState<string | null>(null);
   const [isCreatingUser, setIsCreatingUser] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [newUserEmail, setNewUserEmail] = useState(
-    "accounts@onetravelclub.co.uk",
-  );
-  const [newUserFullName, setNewUserFullName] = useState(
-    "One Travel Club Accounts",
-  );
+  const [newUserEmail, setNewUserEmail] = useState("");
+  const [newUserFullName, setNewUserFullName] = useState("");
+  const [newUserPassword, setNewUserPassword] = useState("");
   const [newUserRole, setNewUserRole] =
-    useState<TravelXchangeRole>("super_admin");
+    useState<TravelXchangeRole>("verified_travel_professional");
   const [newUserVerification, setNewUserVerification] =
-    useState<VerificationTier>("admin_verified");
+    useState<VerificationTier>("travel_professional_verified");
 
   const supabase = useMemo(() => {
     if (!configured) {
@@ -136,6 +129,7 @@ function AdminUsersContent({
       body: JSON.stringify({
         email: newUserEmail,
         fullName: newUserFullName,
+        password: newUserPassword,
         role: newUserRole,
         verificationTier: newUserVerification,
       }),
@@ -156,77 +150,161 @@ function AdminUsersContent({
     }
 
     setMessage(payload?.message ?? "User updated.");
+    setNewUserPassword("");
     setIsCreatingUser(false);
     await loadProfiles();
   }
 
-  async function updateProfileRole(profile: Profile, role: TravelXchangeRole) {
-    if (!supabase || profile.role === role) {
+  async function updateProfileRole(profile: AdminProfile, role: TravelXchangeRole) {
+    if (!supabase || profile.role === role || !canManageUsers) {
+      return;
+    }
+
+    if (!profile.email) {
+      setError("This member does not have an email address loaded.");
       return;
     }
 
     setBusyId(profile.id);
     setError(null);
+    setMessage(null);
 
-    const { error: updateError } = await supabase
-      .from("profiles")
-      .update({ role })
-      .eq("id", profile.id);
+    const token = await getAccessToken(supabase);
 
-    if (updateError) {
-      setError(updateError.message);
+    if (!token) {
+      setError("Please log in again before updating a user.");
       setBusyId(null);
       return;
     }
 
-    await supabase.from("audit_logs").insert({
-      action: "profile.role_updated",
-      actor_id: userId,
-      entity_id: profile.id,
-      entity_type: "profile",
-      summary: `Changed ${profile.full_name ?? "member"} to ${getRoleLabel(role)}.`,
+    const response = await fetch("/api/admin/users", {
+      body: JSON.stringify({
+        email: profile.email,
+        fullName: profile.full_name ?? "",
+        role,
+        verificationTier: profile.verification_tier,
+      }),
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      method: "POST",
     });
+    const payload = (await response.json().catch(() => null)) as
+      | { error?: string; message?: string }
+      | null;
 
-    setMessage("Role updated.");
+    if (!response.ok) {
+      setError(payload?.error ?? "The user role could not be updated.");
+      setBusyId(null);
+      return;
+    }
+
+    setMessage(payload?.message ?? "Role updated.");
     setBusyId(null);
     await loadProfiles();
   }
 
   async function updateVerificationTier(
-    profile: Profile,
+    profile: AdminProfile,
     verificationTier: VerificationTier,
   ) {
-    if (!supabase || profile.verification_tier === verificationTier) {
+    if (!supabase || profile.verification_tier === verificationTier || !canManageUsers) {
+      return;
+    }
+
+    if (!profile.email) {
+      setError("This member does not have an email address loaded.");
       return;
     }
 
     setBusyId(profile.id);
     setError(null);
+    setMessage(null);
 
-    const { error: updateError } = await supabase
-      .from("profiles")
-      .update({ verification_tier: verificationTier })
-      .eq("id", profile.id);
+    const token = await getAccessToken(supabase);
 
-    if (updateError) {
-      setError(updateError.message);
+    if (!token) {
+      setError("Please log in again before updating a user.");
       setBusyId(null);
       return;
     }
 
-    await supabase.from("audit_logs").insert({
-      action: "profile.verification_updated",
-      actor_id: userId,
-      entity_id: profile.id,
-      entity_type: "profile",
-      summary: `Set ${profile.full_name ?? "member"} to ${getVerificationTierLabel(
+    const response = await fetch("/api/admin/users", {
+      body: JSON.stringify({
+        email: profile.email,
+        fullName: profile.full_name ?? "",
+        role: profile.role,
         verificationTier,
-      )}.`,
+      }),
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      method: "POST",
     });
+    const payload = (await response.json().catch(() => null)) as
+      | { error?: string; message?: string }
+      | null;
 
-    setMessage("Verification tier updated.");
+    if (!response.ok) {
+      setError(payload?.error ?? "The verification tier could not be updated.");
+      setBusyId(null);
+      return;
+    }
+
+    setMessage(payload?.message ?? "Verification tier updated.");
     setBusyId(null);
     await loadProfiles();
+  }
+
+  async function sendPasswordSetupEmail(profile: AdminProfile) {
+    if (!supabase || !canManageUsers) {
+      return;
+    }
+
+    if (!profile.email) {
+      setError("This member does not have an email address loaded.");
+      return;
+    }
+
+    setBusyId(profile.id);
+    setError(null);
+    setMessage(null);
+
+    const token = await getAccessToken(supabase);
+
+    if (!token) {
+      setError("Please log in again before sending an access email.");
+      setBusyId(null);
+      return;
+    }
+
+    const response = await fetch("/api/admin/users", {
+      body: JSON.stringify({
+        action: "resend_access_email",
+        email: profile.email,
+        role: profile.role,
+        verificationTier: profile.verification_tier,
+      }),
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+    });
+    const payload = (await response.json().catch(() => null)) as
+      | { error?: string; message?: string }
+      | null;
+
+    if (!response.ok) {
+      setError(payload?.error ?? "The password setup email could not be sent.");
+      setBusyId(null);
+      return;
+    }
+
+    setMessage(payload?.message ?? "Password setup email sent.");
+    setBusyId(null);
   }
 
   useEffect(() => {
@@ -270,22 +348,22 @@ function AdminUsersContent({
             Create or promote user
           </h2>
           <p className="mt-1 text-sm leading-6 text-[#4d6b9e]">
-            Super Admins can invite a new person or upgrade an existing account
-            by email. This keeps owner access inside Travel Xchange instead of
-            requiring SQL.
+            Super Admins can create a login with a temporary password or update
+            an existing account by email. This keeps owner access inside Travel
+            Xchange instead of requiring SQL.
           </p>
         </div>
 
-        {viewerProfile.role === "super_admin" ? (
+        {canManageUsers ? (
           <form
-            className="mt-5 grid gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_220px_260px_auto] xl:items-end"
+            className="mt-5 grid gap-4 lg:grid-cols-2 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_220px_220px_260px_auto] xl:items-end"
             onSubmit={handleCreateOrPromoteUser}
           >
             <TextField
               label="Email"
               name="new-user-email"
               onChange={(event) => setNewUserEmail(event.target.value)}
-              placeholder="accounts@onetravelclub.co.uk"
+              placeholder="person@example.com"
               required
               type="email"
               value={newUserEmail}
@@ -294,8 +372,19 @@ function AdminUsersContent({
               label="Full name"
               name="new-user-full-name"
               onChange={(event) => setNewUserFullName(event.target.value)}
-              placeholder="One Travel Club Accounts"
+              placeholder="Full name"
               value={newUserFullName}
+            />
+            <TextField
+              autoComplete="new-password"
+              hint="Required for a new user. For an existing user, enter a new password only if you want to reset it."
+              label="Temporary password"
+              minLength={6}
+              name="new-user-password"
+              onChange={(event) => setNewUserPassword(event.target.value)}
+              placeholder="At least 6 characters"
+              type="password"
+              value={newUserPassword}
             />
             <SelectField
               label="Role"
@@ -344,7 +433,7 @@ function AdminUsersContent({
 
         <div className="divide-y divide-[#d9e4f5]">
           {profiles.map((profile) => (
-            <div className="grid gap-4 p-5 xl:grid-cols-[minmax(0,1fr)_220px_260px]" key={profile.id}>
+            <div className="grid gap-4 p-5 xl:grid-cols-[minmax(0,1fr)_220px_260px_190px]" key={profile.id}>
               <div>
                 <div className="flex flex-wrap items-center gap-2">
                   <h3 className="font-extrabold text-[#061b4f]">
@@ -372,7 +461,7 @@ function AdminUsersContent({
               </div>
 
               <SelectField
-                disabled={busyId === profile.id}
+                disabled={busyId === profile.id || !canManageUsers}
                 label="Role"
                 name={`role-${profile.id}`}
                 onChange={(event) =>
@@ -386,7 +475,7 @@ function AdminUsersContent({
               />
 
               <SelectField
-                disabled={busyId === profile.id}
+                disabled={busyId === profile.id || !canManageUsers}
                 label="Verification"
                 name={`verification-${profile.id}`}
                 onChange={(event) =>
@@ -398,6 +487,17 @@ function AdminUsersContent({
                 options={verificationTierOptions}
                 value={profile.verification_tier}
               />
+
+              <div className="flex items-end">
+                <Button
+                  className="h-11 w-full border border-[#b8cae8] bg-white px-4 text-[#061b4f] hover:bg-[#f8fbff]"
+                  disabled={busyId === profile.id || !canManageUsers || !profile.email}
+                  onClick={() => void sendPasswordSetupEmail(profile)}
+                  type="button"
+                >
+                  Send setup email
+                </Button>
+              </div>
             </div>
           ))}
         </div>

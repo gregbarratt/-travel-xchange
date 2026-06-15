@@ -39,10 +39,17 @@ Jobs seed update:
 Admin user management update:
 
 - Super Admins can now create or promote a user from `/admin/users`.
-- The form can invite a new email address, prepare the profile, set the main
-  role, and set the verification tier without running Supabase SQL manually.
+- The form can create a new approved login with a temporary password, prepare
+  the profile, set the main role, and set the verification tier without running
+  Supabase SQL manually.
 - Existing users can be promoted by entering their email and choosing the new
   role.
+- Existing users can have their password reset by entering a new temporary
+  password in the same admin form.
+- Super Admins can send a password setup email from the user list. The email
+  sends the user to `/update-password`.
+- The login page includes forgotten-password support, and reset emails return
+  users to `/update-password`.
 
 Supplier page access, Phase 3:
 
@@ -547,6 +554,25 @@ npm.cmd run dev
 Copy `.env.example` to `.env.local` when real service keys are needed.
 
 Do not commit `.env.local` to GitHub. It is for private keys only.
+
+For live password reset emails, set these Vercel variables:
+
+```text
+NEXT_PUBLIC_APP_URL=https://www.travelxchange.co.uk
+NEXT_PUBLIC_PASSWORD_RESET_REDIRECT_URL=https://www.travelxchange.co.uk/update-password
+```
+
+In Supabase Authentication settings, make sure these URLs are allowed:
+
+```text
+https://www.travelxchange.co.uk/login
+https://www.travelxchange.co.uk/update-password
+```
+
+In Supabase email templates, password reset emails should use
+`{{ .ConfirmationURL }}` for the button link. Do not hard-code `/login` in the
+reset email template, otherwise users will land on the login page instead of the
+password update page.
 
 ## GitHub workflow
 

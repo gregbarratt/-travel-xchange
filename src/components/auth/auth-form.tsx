@@ -65,7 +65,9 @@ export function AuthForm({ mode, redirectPath = "/dashboard" }: AuthFormProps) {
 
     if (signInError) {
       setIsSubmitting(false);
-      setError(signInError.message);
+      setError(
+        "Email or password not recognised. If your account has only just been created, please check that it has been approved.",
+      );
       return;
     }
 

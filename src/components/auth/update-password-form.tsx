@@ -15,6 +15,7 @@ export function UpdatePasswordForm() {
   const configured = isSupabaseConfigured();
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
+  const [hasRecoverySession, setHasRecoverySession] = useState(false);
   const [isPreparingSession, setIsPreparingSession] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -35,12 +36,11 @@ export function UpdatePasswordForm() {
     let isMounted = true;
 
     async function prepareRecoverySession() {
+      setIsPreparingSession(true);
       const params = new URLSearchParams(window.location.search);
       const code = params.get("code");
 
       if (code) {
-        setIsPreparingSession(true);
-
         const { error: exchangeError } =
           await supabaseClient.auth.exchangeCodeForSession(code);
 
@@ -57,6 +57,7 @@ export function UpdatePasswordForm() {
           return;
         }
 
+        setHasRecoverySession(true);
         window.history.replaceState({}, document.title, window.location.pathname);
         return;
       }
@@ -68,14 +69,39 @@ export function UpdatePasswordForm() {
       if (isRecoveryLink) {
         const { data } = await supabaseClient.auth.getSession();
 
+        if (!isMounted) {
+          return;
+        }
+
         if (data.session) {
+          setHasRecoverySession(true);
           window.history.replaceState(
             {},
             document.title,
             window.location.pathname,
           );
+          setIsPreparingSession(false);
+          return;
         }
+
+        setError(
+          "This reset link could not be opened. Please request a new password reset email.",
+        );
+        setIsPreparingSession(false);
+        return;
       }
+
+      const { data } = await supabaseClient.auth.getSession();
+
+      if (!isMounted) {
+        return;
+      }
+
+      if (data.session) {
+        setHasRecoverySession(true);
+      }
+
+      setIsPreparingSession(false);
     }
 
     prepareRecoverySession();
@@ -101,6 +127,13 @@ export function UpdatePasswordForm() {
     const password = String(formData.get("password") ?? "");
     const confirmPassword = String(formData.get("confirm-password") ?? "");
 
+    if (!hasRecoverySession) {
+      setError(
+        "Open the secure link from your password reset email before setting a new password.",
+      );
+      return;
+    }
+
     if (password !== confirmPassword) {
       setError("The two passwords do not match.");
       return;
@@ -115,7 +148,9 @@ export function UpdatePasswordForm() {
     setIsSubmitting(false);
 
     if (updateError) {
-      setError(updateError.message);
+      setError(
+        "The password could not be updated. The reset link may have expired, so please request a new one.",
+      );
       return;
     }
 

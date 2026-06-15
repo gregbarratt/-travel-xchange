@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server.js";
 import { createClient } from "@supabase/supabase-js";
 
 import {
@@ -7,12 +7,12 @@ import {
   getCookieOptions,
   refreshTokenCookieName,
   refreshTokenMaxAgeSeconds,
-} from "./src/lib/auth/session-cookies";
+} from "./lib/auth/session-cookies.ts";
 import {
   canViewInternalPricing,
   isProfileApprovedForPlatform,
-} from "./src/lib/auth/platform-access";
-import type { Database } from "./src/types/database";
+} from "./lib/auth/platform-access.ts";
+import type { Database } from "./types/database.ts";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -117,7 +117,7 @@ async function getPlatformAccessResponse(
   return NextResponse.next();
 }
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (isPublicRoute(pathname)) {

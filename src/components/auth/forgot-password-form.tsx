@@ -49,7 +49,9 @@ export function ForgotPasswordForm() {
     setIsSubmitting(false);
 
     if (resetError) {
-      setError(resetError.message);
+      setError(
+        "The password reset email could not be sent. Please check the email address and try again.",
+      );
       return;
     }
 
@@ -114,6 +116,13 @@ export function ForgotPasswordForm() {
 }
 
 function getPasswordResetRedirectUrl() {
+  const configuredResetUrl =
+    process.env.NEXT_PUBLIC_PASSWORD_RESET_REDIRECT_URL?.trim();
+
+  if (configuredResetUrl) {
+    return configuredResetUrl;
+  }
+
   if (typeof window !== "undefined") {
     return `${window.location.origin}/update-password`;
   }
