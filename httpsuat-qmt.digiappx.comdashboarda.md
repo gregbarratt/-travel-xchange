@@ -38,5 +38,5 @@ https://uat-qmt.digiappx.com/dashboard/agent
 
 
 
-**SUPABASE\_SERVICE\_ROLE\_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhncnljcHVic21vcG55ZGd2bmJuIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3OTA5NjI4NiwiZXhwIjoyMDk0NjcyMjg2fQ.19\_YvYm3-p-U\_TdujufH6Ps2qvmJIM00Ik8qjOtIiXo**
+**SUPABASE\_SERVICE\_ROLE\_KEY=[REDACTED — a live service-role key was committed here. It must be treated as leaked and rotated in the Supabase dashboard for project hgrycpubsmopnydgvnbn, because Git history retains the original. See docs/supplier-integration-layer/phase-0/05-questions-for-greg.md, "Do today".]**
 
