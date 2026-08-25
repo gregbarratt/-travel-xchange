@@ -19,3 +19,5 @@ Rules:
 | # | Decision | Status |
 |---|---|---|
 | 0001 | Stack and hosting | Proposed |
+| 0002 | The supplier layer gets its own new repository | Accepted |
+| 0003 | Reuse before rebuild; existing repositories are read-only | Accepted |

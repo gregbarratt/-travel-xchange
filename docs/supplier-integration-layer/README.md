@@ -8,14 +8,15 @@ package** (a small piece of pre-built code that knows how to talk to the
 service) instead of integrating suppliers itself. Add a fifth supplier to the
 service later and every site gets it without being touched.
 
-The four connections:
+The supplier connections (five since the August 2026 estate audit):
 
-| Supplier | What it provides | Kind |
-|---|---|---|
-| Traveltek | Cruise (30+ cruise lines behind one API) | Product feed |
-| Travelgenix | Flights + multiple hotel bedbanks | Product feed |
-| XS2Event | Sports and event tickets | Product feed |
-| Felloh | Payments (links, open banking, card, instalments, trust) | Payment rail — its own lane, never searched for products |
+| Supplier | What it provides | Kind | Starting point |
+|---|---|---|---|
+| Traveltek | Cruise (30+ cruise lines behind one API) | Product feed | Two back-office FusionAPI 0.9 clients exist; sell side to build |
+| Travelgenix | Flights + multiple hotel bedbanks | Product feed | Greenfield — no code anywhere |
+| XS2Event | Sports and event tickets | Product feed | Greenfield — public docs available |
+| RateHawk | Hotels (bedbank, B2B v3) | Product feed | Full production lifecycle exists in Hotel Pass — lifted, not rebuilt |
+| Felloh | Payments (links, open banking, card, instalments, trust) | Payment rail — its own lane, never searched for products | Three existing implementations to consolidate |
 
 Two axes of access run through everything:
 
@@ -36,11 +37,12 @@ error.**
 implementation code until Greg has answered `phase-0/05-questions-for-greg.md`
 and approved the stack and data model.
 
-Note: these documents currently live inside the **Travel Xchange** repository
-(a separate product — a community platform for the travel industry). One of
-the open Phase 0 questions is whether the supplier layer gets its own
-repository, which is the recommendation. If that happens, this folder moves
-there.
+Two decisions are already made (25 August 2026): the layer gets its **own new
+repository** (decision 0002 — these documents migrate there at Phase 1; they
+sit in the Travel Xchange repo only as a temporary home), and it is built by
+**reusing code extracted from the existing estate, never by editing existing
+repositories** (decision 0003). The full audit of what exists and what gets
+lifted is `phase-0/06-existing-systems-audit.md`.
 
 ## Read in this order
 
@@ -52,8 +54,12 @@ there.
    and credentials are needed for each supplier, and what research found.
 4. `phase-0/04-data-model-draft.md` — the proposed canonical data model, for
    review before anything is implemented.
-5. `phase-0/05-questions-for-greg.md` — every open decision in one place.
-6. `decisions/` — the decision record. One short file per significant choice.
+5. `phase-0/05-questions-for-greg.md` — every open decision in one place
+   (including the update appended after the estate audit).
+6. `phase-0/06-existing-systems-audit.md` — the read-only audit of all 12
+   existing repositories: what exists, what gets lifted, the rules the estate
+   already enforces, and the security observations found on the way.
+7. `decisions/` — the decision record. One short file per significant choice.
 
 ## Standing rules — binding on any future agent or developer
 

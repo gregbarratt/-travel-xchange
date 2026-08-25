@@ -76,3 +76,38 @@ managers with lead times outside our control, so starting them early matters.
 - **Phase 4** needs the Felloh↔Travelgenix answers.
 - The security review (**7**) gates real credentials and real money, not
   development.
+
+---
+
+## Update — 25 August 2026, after the estate audit
+
+Full detail in `06-existing-systems-audit.md`. What changed here:
+
+- **Decision 1 (repository): ANSWERED — new dedicated repository** (decision
+  record 0002). Now waiting on the practical step: **create the new repo and
+  grant this tool access to it** (or tell me the name to request). Phase 1
+  cannot scaffold until then.
+- **Decision 3 (house vs per-agent)**: still open. For context, everything in
+  the estate today runs on house credentials — one RateHawk company key
+  behind the gateway, one Traveltek username/sitename, one set of Felloh
+  organisation keys. The question is what the *future* model should be for
+  homeworker agents, per supplier.
+- **Decision 4 (booking reference)**: still open, now informed by the real
+  formats found in code (see the reference table in 06) — including a
+  namespace collision to resolve: agent IDs from the onboarding portal are
+  `OTC-NNNNN`, visually identical to booking references.
+- **Decision 6 (first adapter)**: recommendation changed to **RateHawk, by
+  extraction from Hotel Pass** — proven code, known sandbox, and it forces
+  the canonical model to fit a real integration first.
+- **The Traveltek request is refined**: the estate shows the contract is
+  **FusionAPI 0.9** (two working clients). The account-manager ask is now
+  "sell-side (search / availability / book / cancel) documentation and
+  sandbox for FusionAPI 0.9" — not "which product do we have".
+- **New questions for Greg:**
+  - (a) Confirm **RateHawk is officially the fifth connection** in scope.
+  - (b) Confirm the **CRM's historically committed Supabase anon key was
+    rotated** (its own `docs/PHASE-0-GATE.md` records the incident; squashed
+    history means it can't be verified from the repo).
+  - (c) Longer-term and no action now: should **Hotel Pass eventually become
+    a consumer site** of the central layer, or keep its direct RateHawk
+    integration?
