@@ -6,6 +6,29 @@ to GitHub before the next phase begins.
 
 ## Current status
 
+Automated trade news, Phase 31:
+
+- Travel trade news is ingested automatically from publisher RSS, Atom and JSON
+  feeds by a scheduled server-side job, every 15 minutes.
+- `Trade news` appears in the left navigation and `/news/latest` shows the
+  stories that match the topics and publishers each member follows.
+- Members follow topics such as Cruise, Aviation and Regulation; relevance is
+  resolved on the server, not hidden in the browser.
+- Travel Xchange links to the publisher and never republishes the article: each
+  card carries a headline, a short extract, the source and a link to the
+  original.
+- Disruption, insolvency, safety and legal stories always wait for a moderator.
+- Super Admins manage publishers at `/admin/news-sources`: verify a feed with a
+  live test, enable or disable it, control auto-publish, run ingestion on
+  demand and watch source health.
+- Every source ships disabled with no feed URL. A feed endpoint must be
+  verified with `Test source` before a publisher can be switched on.
+- Run `supabase/phase-31-news-ingestion.sql` after Phase 7 SQL.
+- Set `NEWS_INGESTION_CRON_SECRET` so the scheduler can call the ingestion
+  route.
+- Full reference: `docs/news-ingestion.md`.
+
+
 Supplier page access, Phase 4:
 
 - `Managed pages` now appears under `My Workspace` so owners, supplier page
