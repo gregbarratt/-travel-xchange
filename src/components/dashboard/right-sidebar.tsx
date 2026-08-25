@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 
 import { AdPlacementSlot } from "@/components/adverts/ad-placement";
+import { TradeNewsRail } from "@/components/news/trade-news-rail";
 import { Button } from "@/components/ui/button";
 import { getRoleLabel } from "@/config/roles";
 import type { FeedProfile } from "@/types/database";
@@ -63,6 +64,8 @@ export function RightSidebar({
         placementKey="supplier_spotlight_card"
         variant="spotlight"
       />
+
+      <TradeNewsRail heading="Latest trade news" limit={4} />
 
       <section className="tx-card-soft p-5">
         <div className="flex items-center gap-2">

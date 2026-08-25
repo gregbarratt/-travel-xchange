@@ -12,6 +12,7 @@ import {
   MessageCircle,
   Newspaper,
   PlusCircle,
+  Rss,
   Search,
   ShieldCheck,
   Sparkles,
@@ -38,6 +39,7 @@ const navIcons = {
   Search,
   Suppliers: Building2,
   Support: HelpCircle,
+  "Trade news": Rss,
   Training: GraduationCap,
 };
 
@@ -49,7 +51,7 @@ type AppSidebarProps = {
 const navSections = [
   {
     label: "Discover",
-    items: ["Home", "Search", "Groups", "News"],
+    items: ["Home", "Search", "Trade news", "Groups", "News"],
   },
   {
     label: "Trade tools",

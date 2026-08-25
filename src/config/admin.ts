@@ -14,6 +14,7 @@ export const adminNavigation = [
   { label: "Adverts", href: "/admin/adverts" },
   { label: "Jobs", href: "/admin/jobs" },
   { label: "Articles", href: "/admin/articles" },
+  { label: "News sources", href: "/admin/news-sources" },
 ];
 
 export const adminRoles: TravelXchangeRole[] = [

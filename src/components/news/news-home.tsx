@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 
 import { MemberPageShell } from "@/components/member/member-page-shell";
 import { ArticleCard } from "@/components/news/article-card";
+import { TradeNewsRail } from "@/components/news/trade-news-rail";
 import { buttonVariants } from "@/components/ui/button";
 import {
   articleTypeOptions,
@@ -439,6 +440,8 @@ export function NewsHome() {
         </section>
 
         <aside className="space-y-5">
+          <TradeNewsRail />
+
           <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
             <div className="flex items-center gap-2">
               <Megaphone className="size-5 text-[#0f766e]" aria-hidden="true" />
