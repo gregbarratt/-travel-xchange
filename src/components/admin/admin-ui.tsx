@@ -6,7 +6,7 @@ type StatusTone = "blue" | "green" | "amber" | "red" | "slate";
 
 const statusToneClasses: Record<StatusTone, string> = {
   amber: "bg-amber-50 text-amber-800 border-amber-200",
-  blue: "bg-[#eef5ff] text-[#063b86] border-[#b8cae8]",
+  blue: "bg-[var(--tx-accent-soft)] text-[var(--tx-accent)] border-[var(--tx-border)]",
   green: "bg-emerald-50 text-emerald-800 border-emerald-200",
   red: "bg-rose-50 text-rose-800 border-rose-200",
   slate: "bg-slate-50 text-slate-700 border-slate-200",
@@ -40,8 +40,8 @@ export function AdminEmptyState({
 }) {
   return (
     <div className="tx-card p-8 text-center">
-      <h2 className="text-lg font-extrabold text-[#061b4f]">{title}</h2>
-      <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-[#4d6b9e]">
+      <h2 className="text-lg font-extrabold text-[var(--tx-text)]">{title}</h2>
+      <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-[var(--tx-text-muted)]">
         {children}
       </p>
     </div>

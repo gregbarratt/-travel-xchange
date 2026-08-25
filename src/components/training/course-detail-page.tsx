@@ -279,7 +279,7 @@ export function CourseDetailPage({ courseId }: CourseDetailPageProps) {
           <section className="space-y-5">
             <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
               <div className="flex flex-wrap gap-2">
-                <span className="inline-flex items-center gap-1 rounded-md bg-[#e0f2f1] px-2 py-1 text-xs font-semibold text-[#0f766e]">
+                <span className="inline-flex items-center gap-1 rounded-md bg-[var(--tx-accent-soft)] px-2 py-1 text-xs font-semibold text-[var(--tx-accent)]">
                   <BookOpen className="size-3" aria-hidden="true" />
                   {getCourseCategoryLabel(course.category)}
                 </span>
@@ -352,7 +352,7 @@ export function CourseDetailPage({ courseId }: CourseDetailPageProps) {
                     </span>
                     <span className="mt-1 shrink-0 text-sm font-semibold text-slate-500">
                       {lesson.progress?.status === "completed" ? (
-                        <CheckCircle2 className="size-5 text-[#0f766e]" aria-hidden="true" />
+                        <CheckCircle2 className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
                       ) : (
                         <PlayCircle className="size-5 text-slate-400" aria-hidden="true" />
                       )}
@@ -381,7 +381,7 @@ export function CourseDetailPage({ courseId }: CourseDetailPageProps) {
                   </div>
                   <div className="mt-2 h-2 overflow-hidden rounded-full bg-slate-200">
                     <div
-                      className="h-full rounded-full bg-[#0f766e]"
+                      className="h-full rounded-full bg-[var(--tx-accent)]"
                       style={{ width: `${progress}%` }}
                     />
                   </div>
@@ -392,7 +392,7 @@ export function CourseDetailPage({ courseId }: CourseDetailPageProps) {
                     <Link
                       className={cn(
                         buttonVariants({ size: "lg" }),
-                        "mt-4 w-full bg-[#0f766e] text-white hover:bg-[#115e59]",
+                        "mt-4 w-full bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)]",
                       )}
                       href={`/training/${course.id}/lesson/${firstIncompleteLesson.id}`}
                     >
@@ -411,7 +411,7 @@ export function CourseDetailPage({ courseId }: CourseDetailPageProps) {
                     </p>
                   ) : null}
                   <Button
-                    className="mt-4 h-10 w-full bg-[#0f766e] text-white hover:bg-[#115e59]"
+                    className="mt-4 h-10 w-full bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)]"
                     disabled={isEnrolling}
                     onClick={handleEnrol}
                     type="button"

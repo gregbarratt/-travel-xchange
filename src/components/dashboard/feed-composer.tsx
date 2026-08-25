@@ -27,16 +27,16 @@ export function FeedComposer({
     >
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="inline-flex items-center gap-2 text-xs font-extrabold uppercase text-[#063b86]">
+          <p className="inline-flex items-center gap-2 text-xs font-extrabold uppercase text-[var(--tx-accent)]">
             <MessageSquarePlus className="size-4" aria-hidden="true" />
             Start a conversation
           </p>
-          <h2 className="mt-1 text-lg font-extrabold text-[#061b4f]">
+          <h2 className="mt-1 text-lg font-extrabold text-[var(--tx-text)]">
             Share with the Travel Xchange community
           </h2>
         </div>
-        <div className="flex flex-wrap gap-2 text-xs font-bold text-[#4d6b9e]">
-          <span className="rounded-lg bg-[#eef5ff] px-3 py-1">Discussion</span>
+        <div className="flex flex-wrap gap-2 text-xs font-bold text-[var(--tx-text-muted)]">
+          <span className="rounded-lg bg-[var(--tx-accent-soft)] px-3 py-1">Discussion</span>
           <span className="rounded-lg bg-[#fff0f5] px-3 py-1">Question</span>
           <span className="rounded-lg bg-[#fff7ed] px-3 py-1">Update</span>
         </div>
@@ -51,7 +51,7 @@ export function FeedComposer({
             Write a post
           </label>
           <textarea
-            className="min-h-32 w-full resize-y rounded-lg border border-[#b8cae8] bg-white/82 px-4 py-3 text-sm leading-6 text-[#061b4f] outline-none transition placeholder:text-[#7288b8] focus:border-[#063b86] focus:ring-3 focus:ring-[#063b86]/15"
+            className="min-h-32 w-full resize-y rounded-lg border border-[var(--tx-border)] bg-white/82 px-4 py-3 text-sm leading-6 text-[var(--tx-text)] outline-none transition placeholder:text-[var(--tx-text-subtle)] focus:border-[var(--tx-accent)] focus:ring-3 focus:ring-[var(--tx-accent)]/15"
             id="post-content"
             maxLength={2000}
             name="content"
@@ -61,13 +61,13 @@ export function FeedComposer({
         </div>
       </div>
 
-      <div className="mt-4 flex flex-col gap-3 border-t border-[#d9e4f5] pt-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mt-4 flex flex-col gap-3 border-t border-[var(--tx-border)] pt-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-2">
           <label className="text-xs font-extrabold uppercase text-[#6f86b5]" htmlFor="post-topic">
             Topic
           </label>
           <select
-            className="h-10 rounded-lg border border-[#b8cae8] bg-white px-4 text-sm font-medium text-[#061b4f] outline-none focus:border-[#063b86] focus:ring-3 focus:ring-[#063b86]/15"
+            className="h-10 rounded-lg border border-[var(--tx-border)] bg-white px-4 text-sm font-medium text-[var(--tx-text)] outline-none focus:border-[var(--tx-accent)] focus:ring-3 focus:ring-[var(--tx-accent)]/15"
             defaultValue="general"
             id="post-topic"
             name="topic"

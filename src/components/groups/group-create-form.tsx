@@ -148,7 +148,7 @@ export function GroupCreateForm() {
         <Link
           className={cn(
             buttonVariants({ variant: "outline", size: "lg" }),
-            "hidden border-[#b8cae8] bg-white text-[#061b4f] hover:bg-[#f4f8ff] sm:inline-flex",
+            "hidden border-[var(--tx-border)] bg-white text-[var(--tx-text)] hover:bg-[#f4f8ff] sm:inline-flex",
           )}
           href="/groups"
         >
@@ -167,7 +167,7 @@ export function GroupCreateForm() {
       ) : null}
 
       {isLoading ? (
-        <div className="tx-card p-6 text-sm text-[#4d6b9e]">
+        <div className="tx-card p-6 text-sm text-[var(--tx-text-muted)]">
           Loading group form...
         </div>
       ) : null}
@@ -175,14 +175,14 @@ export function GroupCreateForm() {
       <div className="mx-auto grid max-w-6xl gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
         <form className="tx-card space-y-5 p-5 sm:p-6" onSubmit={handleSubmit}>
           <div>
-            <p className="inline-flex items-center gap-2 text-xs font-extrabold uppercase text-[#063b86]">
+            <p className="inline-flex items-center gap-2 text-xs font-extrabold uppercase text-[var(--tx-accent)]">
               <UsersRound className="size-4" aria-hidden="true" />
               New community
             </p>
-            <h2 className="mt-1 text-2xl font-extrabold text-[#061b4f]">
+            <h2 className="mt-1 text-2xl font-extrabold text-[var(--tx-text)]">
               Create a focused travel trade group
             </h2>
-            <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">
+            <p className="mt-2 text-sm leading-6 text-[var(--tx-text-muted)]">
               Keep the name specific, describe who it is for, and choose the
               right category so members can find it quickly.
             </p>
@@ -231,11 +231,11 @@ export function GroupCreateForm() {
             required
           />
 
-          <div className="flex flex-col gap-3 border-t border-[#d9e4f5] pt-5 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col gap-3 border-t border-[var(--tx-border)] pt-5 sm:flex-row sm:items-center sm:justify-between">
             <Link
               className={cn(
                 buttonVariants({ variant: "outline", size: "lg" }),
-                "justify-center border-[#b8cae8] bg-white text-[#061b4f] hover:bg-[#f4f8ff] sm:hidden",
+                "justify-center border-[var(--tx-border)] bg-white text-[var(--tx-text)] hover:bg-[#f4f8ff] sm:hidden",
               )}
               href="/groups"
             >
@@ -255,12 +255,12 @@ export function GroupCreateForm() {
         <aside className="space-y-4">
           <section className="tx-card-soft p-5">
             <div className="flex items-center gap-2">
-              <Lightbulb className="size-4 text-[#ff7a2f]" aria-hidden="true" />
-              <h2 className="text-base font-extrabold text-[#061b4f]">
+              <Lightbulb className="size-4 text-[var(--tx-accent)]" aria-hidden="true" />
+              <h2 className="text-base font-extrabold text-[var(--tx-text)]">
                 Good group ideas
               </h2>
             </div>
-            <div className="mt-4 space-y-3 text-sm leading-6 text-[#4d6b9e]">
+            <div className="mt-4 space-y-3 text-sm leading-6 text-[var(--tx-text-muted)]">
               <p>Cruise Sellers</p>
               <p>Luxury Travel</p>
               <p>Disney Specialists</p>
@@ -269,10 +269,10 @@ export function GroupCreateForm() {
           </section>
 
           <section className="tx-card-soft p-5">
-            <h2 className="text-base font-extrabold text-[#061b4f]">
+            <h2 className="text-base font-extrabold text-[var(--tx-text)]">
               Simple rule
             </h2>
-            <p className="mt-3 text-sm leading-6 text-[#4d6b9e]">
+            <p className="mt-3 text-sm leading-6 text-[var(--tx-text-muted)]">
               A useful group should make it obvious who should join and what
               they should talk about.
             </p>

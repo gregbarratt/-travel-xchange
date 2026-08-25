@@ -19,11 +19,11 @@ export function EventCard({ event }: EventCardProps) {
     <article
       className={cn(
         "rounded-md border bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md",
-        event.is_featured ? "border-[#0f766e]" : "border-slate-200",
+        event.is_featured ? "border-[var(--tx-accent)]" : "border-slate-200",
       )}
     >
       <div className="flex flex-wrap gap-2">
-        <span className="inline-flex items-center gap-1 rounded-md bg-[#e0f2f1] px-2 py-1 text-xs font-semibold text-[#0f766e]">
+        <span className="inline-flex items-center gap-1 rounded-md bg-[var(--tx-accent-soft)] px-2 py-1 text-xs font-semibold text-[var(--tx-accent)]">
           <CalendarDays className="size-3" aria-hidden="true" />
           {getEventTypeLabel(event.event_type)}
         </span>

@@ -215,7 +215,7 @@ export function SupportHub() {
         <Link
           className={cn(
             buttonVariants({ size: "lg" }),
-            "hidden bg-[#0f766e] text-white hover:bg-[#115e59] sm:inline-flex",
+            "hidden bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)] sm:inline-flex",
           )}
           href="/support/ask"
         >
@@ -236,7 +236,7 @@ export function SupportHub() {
       <section className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <p className="text-sm font-semibold uppercase text-[#0f766e]">
+            <p className="text-sm font-semibold uppercase text-[var(--tx-accent)]">
               Phase 10 support hub
             </p>
             <h2 className="mt-2 text-2xl font-semibold tracking-normal text-slate-950">
@@ -251,7 +251,7 @@ export function SupportHub() {
           <Link
             className={cn(
               buttonVariants({ size: "lg" }),
-              "bg-[#0f766e] text-white hover:bg-[#115e59] sm:hidden",
+              "bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)] sm:hidden",
             )}
             href="/support/ask"
           >
@@ -274,7 +274,7 @@ export function SupportHub() {
                   aria-hidden="true"
                 />
                 <input
-                  className="h-10 w-full rounded-md border border-slate-300 pl-9 pr-3 text-sm outline-none focus:border-[#0f766e] focus:ring-3 focus:ring-[#0f766e]/15"
+                  className="h-10 w-full rounded-md border border-slate-300 pl-9 pr-3 text-sm outline-none focus:border-[var(--tx-accent)] focus:ring-3 focus:ring-[var(--tx-accent)]/15"
                   onChange={(event) => setSearchTerm(event.target.value)}
                   placeholder="Search supplier, payment, compliance..."
                   value={searchTerm}
@@ -288,7 +288,7 @@ export function SupportHub() {
                   className={cn(
                     "rounded-md border px-3 py-2 text-sm font-medium transition",
                     activeCategory === option.value
-                      ? "border-[#0f766e] bg-[#e0f2f1] text-[#0f766e]"
+                      ? "border-[var(--tx-accent)] bg-[var(--tx-accent-soft)] text-[var(--tx-accent)]"
                       : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50",
                   )}
                   key={option.value}
@@ -310,7 +310,7 @@ export function SupportHub() {
                   className={cn(
                     "rounded-md border px-3 py-2 text-sm font-medium transition",
                     activeStatus === option.value
-                      ? "border-[#082f49] bg-slate-100 text-[#082f49]"
+                      ? "border-[var(--tx-text)] bg-slate-100 text-[var(--tx-text)]"
                       : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50",
                   )}
                   key={option.value}
@@ -338,7 +338,7 @@ export function SupportHub() {
           {!isLoading && filteredQuestions.length === 0 && !error ? (
             <div className="rounded-md border border-slate-200 bg-white p-8 text-center shadow-sm">
               <HelpCircle
-                className="mx-auto size-8 text-[#0f766e]"
+                className="mx-auto size-8 text-[var(--tx-accent)]"
                 aria-hidden="true"
               />
               <h2 className="mt-4 text-lg font-semibold text-slate-950">
@@ -351,7 +351,7 @@ export function SupportHub() {
               <Link
                 className={cn(
                   buttonVariants({ size: "lg" }),
-                  "mt-5 bg-[#0f766e] text-white hover:bg-[#115e59]",
+                  "mt-5 bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)]",
                 )}
                 href="/support/ask"
               >
@@ -371,7 +371,7 @@ export function SupportHub() {
         <aside className="space-y-5">
           <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
             <div className="flex items-center gap-2">
-              <MessageSquare className="size-5 text-[#0f766e]" aria-hidden="true" />
+              <MessageSquare className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
               <h2 className="text-lg font-semibold text-slate-950">
                 Support activity
               </h2>
@@ -398,7 +398,7 @@ export function SupportHub() {
 
           <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="size-5 text-[#0f766e]" aria-hidden="true" />
+              <CheckCircle2 className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
               <h2 className="text-lg font-semibold text-slate-950">
                 Best answer workflow
               </h2>

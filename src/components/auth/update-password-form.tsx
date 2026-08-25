@@ -191,7 +191,7 @@ export function UpdatePasswordForm() {
           {message}
           <div className="mt-3">
             <Link
-              className="font-semibold text-[#0f766e] hover:text-[#115e59]"
+              className="font-semibold text-[var(--tx-accent)] hover:text-[var(--tx-accent-hover)]"
               href="/login"
             >
               Go to login
@@ -201,7 +201,7 @@ export function UpdatePasswordForm() {
       ) : null}
 
       <Button
-        className="h-11 w-full bg-[#0f766e] hover:bg-[#115e59]"
+        className="h-11 w-full bg-[var(--tx-accent)] hover:bg-[var(--tx-accent-hover)]"
         disabled={isPreparingSession || isSubmitting}
         type="submit"
       >

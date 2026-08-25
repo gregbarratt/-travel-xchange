@@ -186,7 +186,7 @@ export function BillingDashboard() {
   return (
     <div className="space-y-6">
       {message ? (
-        <div className="rounded-lg border border-[#b8cae8] bg-[#f6f9ff] p-4 text-sm leading-6 text-[#203b70]">
+        <div className="rounded-lg border border-[var(--tx-border)] bg-[var(--tx-surface-hover)] p-4 text-sm leading-6 text-[var(--tx-text)]">
           {message}
         </div>
       ) : null}
@@ -198,55 +198,55 @@ export function BillingDashboard() {
       ) : null}
 
       {isLoading ? (
-        <div className="rounded-lg border border-[#b8cae8] bg-white p-6 text-sm text-[#4d6b9e] shadow-sm">
+        <div className="rounded-lg border border-[var(--tx-border)] bg-white p-6 text-sm text-[var(--tx-text-muted)] shadow-sm">
           Loading billing details...
         </div>
       ) : null}
 
       <section className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
-        <div className="rounded-lg border border-[#b8cae8] bg-white p-6 shadow-sm">
+        <div className="rounded-lg border border-[var(--tx-border)] bg-white p-6 shadow-sm">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
-              <p className="text-xs font-bold uppercase text-[#4d6b9e]">
+              <p className="text-xs font-bold uppercase text-[var(--tx-text-muted)]">
                 Subscription status
               </p>
               <div className="mt-2 flex flex-wrap items-center gap-3">
-                <h2 className="text-2xl font-extrabold text-[#061b4f]">
+                <h2 className="text-2xl font-extrabold text-[var(--tx-text)]">
                   {hasActiveSubscription ? planLabel : "Free member"}
                 </h2>
                 <SubscriptionBadge subscription={subscription} />
               </div>
-              <p className="mt-3 text-sm leading-6 text-[#4d6b9e]">
+              <p className="mt-3 text-sm leading-6 text-[var(--tx-text-muted)]">
                 {subscription
                   ? `Stripe status: ${subscription.status}`
                   : "No paid subscription has been recorded yet."}
               </p>
             </div>
-            <CreditCard className="size-10 text-[#063b86]" aria-hidden="true" />
+            <CreditCard className="size-10 text-[var(--tx-accent)]" aria-hidden="true" />
           </div>
 
-          <div className="mt-6 grid gap-4 border-t border-[#d9e4f5] pt-5 sm:grid-cols-3">
+          <div className="mt-6 grid gap-4 border-t border-[var(--tx-border)] pt-5 sm:grid-cols-3">
             <div>
-              <p className="text-xs font-bold uppercase text-[#4d6b9e]">
+              <p className="text-xs font-bold uppercase text-[var(--tx-text-muted)]">
                 Current period
               </p>
-              <p className="mt-1 text-sm font-bold text-[#061b4f]">
+              <p className="mt-1 text-sm font-bold text-[var(--tx-text)]">
                 {formatDate(subscription?.current_period_start ?? null)}
               </p>
             </div>
             <div>
-              <p className="text-xs font-bold uppercase text-[#4d6b9e]">
+              <p className="text-xs font-bold uppercase text-[var(--tx-text-muted)]">
                 Renews or ends
               </p>
-              <p className="mt-1 text-sm font-bold text-[#061b4f]">
+              <p className="mt-1 text-sm font-bold text-[var(--tx-text)]">
                 {formatDate(subscription?.current_period_end ?? null)}
               </p>
             </div>
             <div>
-              <p className="text-xs font-bold uppercase text-[#4d6b9e]">
+              <p className="text-xs font-bold uppercase text-[var(--tx-text-muted)]">
                 Customer
               </p>
-              <p className="mt-1 text-sm font-bold text-[#061b4f]">
+              <p className="mt-1 text-sm font-bold text-[var(--tx-text)]">
                 {customer?.stripe_customer_id ? "Connected" : "Not connected"}
               </p>
             </div>
@@ -260,7 +260,7 @@ export function BillingDashboard() {
               View plans
             </Link>
             <Button
-              className="h-11 border border-[#b8cae8] bg-white px-4 text-[#061b4f] hover:bg-[#f4f8ff]"
+              className="h-11 border border-[var(--tx-border)] bg-white px-4 text-[var(--tx-text)] hover:bg-[#f4f8ff]"
               disabled={!customer?.stripe_customer_id || isOpeningPortal}
               onClick={() => void handleOpenPortal()}
               type="button"
@@ -276,11 +276,11 @@ export function BillingDashboard() {
           </div>
         </div>
 
-        <aside className="rounded-lg border border-[#b8cae8] bg-[#f6f9ff] p-5 shadow-sm">
-          <h2 className="text-lg font-extrabold text-[#061b4f]">
+        <aside className="rounded-lg border border-[var(--tx-border)] bg-[var(--tx-surface-hover)] p-5 shadow-sm">
+          <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
             Phase 13 notes
           </h2>
-          <p className="mt-3 text-sm leading-6 text-[#4d6b9e]">
+          <p className="mt-3 text-sm leading-6 text-[var(--tx-text-muted)]">
             This is test-mode billing. Live payments should wait until Stripe
             products, webhook settings, tax settings, and legal terms are
             reviewed.
@@ -288,10 +288,10 @@ export function BillingDashboard() {
         </aside>
       </section>
 
-      <section className="rounded-lg border border-[#b8cae8] bg-white p-6 shadow-sm">
+      <section className="rounded-lg border border-[var(--tx-border)] bg-white p-6 shadow-sm">
         <div className="flex items-center gap-2">
-          <ReceiptText className="size-5 text-[#063b86]" aria-hidden="true" />
-          <h2 className="text-lg font-extrabold text-[#061b4f]">
+          <ReceiptText className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
+          <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
             Recent invoices
           </h2>
         </div>
@@ -300,20 +300,20 @@ export function BillingDashboard() {
           {invoices.length > 0 ? (
             invoices.map((invoice) => (
               <div
-                className="flex flex-wrap items-center justify-between gap-3 rounded-lg bg-[#f6f9ff] px-4 py-3"
+                className="flex flex-wrap items-center justify-between gap-3 rounded-lg bg-[var(--tx-surface-hover)] px-4 py-3"
                 key={invoice.id}
               >
                 <div>
-                  <p className="text-sm font-bold text-[#061b4f]">
+                  <p className="text-sm font-bold text-[var(--tx-text)]">
                     {formatMoney(invoice.amount_paid, invoice.currency)}
                   </p>
-                  <p className="text-xs text-[#4d6b9e]">
+                  <p className="text-xs text-[var(--tx-text-muted)]">
                     Status: {invoice.status}
                   </p>
                 </div>
                 {invoice.hosted_invoice_url ? (
                   <a
-                    className="text-sm font-bold text-[#063b86] hover:text-[#f52968]"
+                    className="text-sm font-bold text-[var(--tx-accent)] hover:text-[var(--tx-accent)]"
                     href={invoice.hosted_invoice_url}
                     rel="noreferrer"
                     target="_blank"
@@ -324,7 +324,7 @@ export function BillingDashboard() {
               </div>
             ))
           ) : (
-            <p className="text-sm leading-6 text-[#4d6b9e]">
+            <p className="text-sm leading-6 text-[var(--tx-text-muted)]">
               Invoice records will appear here after Stripe sends invoice
               webhooks.
             </p>

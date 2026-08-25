@@ -239,7 +239,7 @@ export function LatestNewsPage() {
       activeLabel="Trade news"
       actions={
         <button
-          className="inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-lg border border-[#b8cae8] bg-white/90 px-3 text-sm font-bold text-[#061b4f] hover:bg-white"
+          className="inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-lg border border-[var(--tx-border)] bg-white/90 px-3 text-sm font-bold text-[var(--tx-text)] hover:bg-white"
           onClick={() => void loadEverything()}
           type="button"
         >
@@ -259,14 +259,14 @@ export function LatestNewsPage() {
 
       <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_320px]">
         <section className="min-w-0 space-y-4">
-          <div className="rounded-lg border border-[#d6e2f5] bg-white p-4 shadow-[0_10px_22px_rgba(7,36,91,0.06)]">
+          <div className="rounded-lg border border-[var(--tx-border)] bg-white p-4 shadow-[0_10px_22px_rgba(7,36,91,0.06)]">
             <div className="flex flex-wrap items-center gap-2">
               <button
                 className={cn(
                   "rounded-md border px-3 py-2 text-sm font-bold transition",
                   activeTopicId === null
-                    ? "border-[#063b86] bg-[#eef4ff] text-[#063b86]"
-                    : "border-[#d6e2f5] bg-white text-[#3d4d6b] hover:bg-[#f6f9ff]",
+                    ? "border-[var(--tx-accent)] bg-[var(--tx-accent-soft)] text-[var(--tx-accent)]"
+                    : "border-[var(--tx-border)] bg-white text-[var(--tx-text-muted)] hover:bg-[var(--tx-surface-hover)]",
                 )}
                 onClick={() => void selectTopic(null)}
                 type="button"
@@ -278,8 +278,8 @@ export function LatestNewsPage() {
                   className={cn(
                     "rounded-md border px-3 py-2 text-sm font-semibold transition",
                     activeTopicId === topic.id
-                      ? "border-[#063b86] bg-[#eef4ff] text-[#063b86]"
-                      : "border-[#d6e2f5] bg-white text-[#3d4d6b] hover:bg-[#f6f9ff]",
+                      ? "border-[var(--tx-accent)] bg-[var(--tx-accent-soft)] text-[var(--tx-accent)]"
+                      : "border-[var(--tx-border)] bg-white text-[var(--tx-text-muted)] hover:bg-[var(--tx-surface-hover)]",
                   )}
                   key={topic.id}
                   onClick={() => void selectTopic(topic.id)}
@@ -289,7 +289,7 @@ export function LatestNewsPage() {
                 </button>
               ))}
             </div>
-            <p className="mt-3 border-t border-[#eef2f9] pt-3 text-xs font-semibold text-[#5b6b8a]">
+            <p className="mt-3 border-t border-[var(--tx-border)] pt-3 text-xs font-semibold text-[var(--tx-text-subtle)]">
               {audienceMode === "personalised"
                 ? "Your feed is built from the topics and publishers you follow."
                 : "You have not chosen topics yet, so this is the balanced trade feed. Follow a few topics to tune it."}
@@ -303,24 +303,24 @@ export function LatestNewsPage() {
           ) : null}
 
           {isLoading ? (
-            <div className="flex items-center gap-2 rounded-lg border border-[#d6e2f5] bg-white p-6 text-sm font-semibold text-[#3d4d6b]">
+            <div className="flex items-center gap-2 rounded-lg border border-[var(--tx-border)] bg-white p-6 text-sm font-semibold text-[var(--tx-text-muted)]">
               <Loader2 className="size-4 animate-spin" aria-hidden="true" />
               Loading trade news...
             </div>
           ) : null}
 
           {!isLoading && posts.length === 0 && !error ? (
-            <div className="rounded-lg border border-[#d6e2f5] bg-white p-8 text-center shadow-[0_10px_22px_rgba(7,36,91,0.06)]">
-              <Newspaper className="mx-auto size-8 text-[#063b86]" aria-hidden="true" />
-              <h2 className="mt-4 text-lg font-extrabold text-[#061b4f]">
+            <div className="rounded-lg border border-[var(--tx-border)] bg-white p-8 text-center shadow-[0_10px_22px_rgba(7,36,91,0.06)]">
+              <Newspaper className="mx-auto size-8 text-[var(--tx-accent)]" aria-hidden="true" />
+              <h2 className="mt-4 text-lg font-extrabold text-[var(--tx-text)]">
                 No trade news yet
               </h2>
-              <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-[#3d4d6b]">
+              <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-[var(--tx-text-muted)]">
                 Trade news arrives automatically once a platform admin has verified and
                 enabled a publisher feed. Nothing is published from an unverified source.
               </p>
               <Link
-                className="mt-5 inline-flex items-center gap-2 rounded-lg bg-[#063b86] px-4 py-2.5 text-sm font-bold text-white hover:bg-[#04275c]"
+                className="mt-5 inline-flex items-center gap-2 rounded-lg bg-[var(--tx-accent)] px-4 py-2.5 text-sm font-bold text-white hover:bg-[var(--tx-accent-hover)]"
                 href="/news"
               >
                 <Newspaper className="size-4" aria-hidden="true" />
@@ -337,7 +337,7 @@ export function LatestNewsPage() {
 
           {nextCursor ? (
             <button
-              className="w-full rounded-lg border border-[#d6e2f5] bg-white px-4 py-3 text-sm font-bold text-[#063b86] hover:bg-[#f6f9ff] disabled:opacity-60"
+              className="w-full rounded-lg border border-[var(--tx-border)] bg-white px-4 py-3 text-sm font-bold text-[var(--tx-accent)] hover:bg-[var(--tx-surface-hover)] disabled:opacity-60"
               disabled={isLoadingMore}
               onClick={() => void loadMore()}
               type="button"
@@ -348,12 +348,12 @@ export function LatestNewsPage() {
         </section>
 
         <aside className="space-y-5">
-          <article className="rounded-lg border border-[#d6e2f5] bg-white p-5 shadow-[0_10px_22px_rgba(7,36,91,0.06)]">
+          <article className="rounded-lg border border-[var(--tx-border)] bg-white p-5 shadow-[0_10px_22px_rgba(7,36,91,0.06)]">
             <div className="flex items-center gap-2">
-              <Settings2 className="size-5 text-[#063b86]" aria-hidden="true" />
-              <h2 className="text-lg font-extrabold text-[#061b4f]">Follow topics</h2>
+              <Settings2 className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
+              <h2 className="text-lg font-extrabold text-[var(--tx-text)]">Follow topics</h2>
             </div>
-            <p className="mt-2 text-sm leading-6 text-[#3d4d6b]">
+            <p className="mt-2 text-sm leading-6 text-[var(--tx-text-muted)]">
               Choose what you sell. Your Latest News feed and the trade news in your
               home feed both follow these choices.
             </p>
@@ -368,8 +368,8 @@ export function LatestNewsPage() {
                       className={cn(
                         "flex w-full items-center justify-between gap-3 rounded-md border px-3 py-2 text-left text-sm font-semibold transition",
                         isFollowing
-                          ? "border-[#063b86] bg-[#eef4ff] text-[#063b86]"
-                          : "border-[#d6e2f5] bg-white text-[#3d4d6b] hover:bg-[#f6f9ff]",
+                          ? "border-[var(--tx-accent)] bg-[var(--tx-accent-soft)] text-[var(--tx-accent)]"
+                          : "border-[var(--tx-border)] bg-white text-[var(--tx-text-muted)] hover:bg-[var(--tx-surface-hover)]",
                       )}
                       disabled={isSavingFollow === topic.id}
                       onClick={() => void toggleTopicFollow(topic.id)}
@@ -390,12 +390,12 @@ export function LatestNewsPage() {
             </ul>
           </article>
 
-          <article className="rounded-lg border border-[#d6e2f5] bg-white p-5 shadow-[0_10px_22px_rgba(7,36,91,0.06)]">
+          <article className="rounded-lg border border-[var(--tx-border)] bg-white p-5 shadow-[0_10px_22px_rgba(7,36,91,0.06)]">
             <div className="flex items-center gap-2">
-              <Rss className="size-5 text-[#063b86]" aria-hidden="true" />
-              <h2 className="text-lg font-extrabold text-[#061b4f]">Where this comes from</h2>
+              <Rss className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
+              <h2 className="text-lg font-extrabold text-[var(--tx-text)]">Where this comes from</h2>
             </div>
-            <p className="mt-2 text-sm leading-6 text-[#3d4d6b]">
+            <p className="mt-2 text-sm leading-6 text-[var(--tx-text-muted)]">
               Travel Xchange links to the publisher and never republishes their article.
               Each card carries the headline, a short extract, the source and a link to
               the original.
@@ -403,13 +403,13 @@ export function LatestNewsPage() {
             {(follows?.sources ?? []).length > 0 ? (
               <ul className="mt-3 space-y-1.5">
                 {(follows?.sources ?? []).map((source) => (
-                  <li className="text-sm font-semibold text-[#061b4f]" key={source.id}>
+                  <li className="text-sm font-semibold text-[var(--tx-text)]" key={source.id}>
                     {source.publisher}
                   </li>
                 ))}
               </ul>
             ) : (
-              <p className="mt-3 text-sm leading-6 text-[#5b6b8a]">
+              <p className="mt-3 text-sm leading-6 text-[var(--tx-text-subtle)]">
                 No publisher feeds are enabled yet.
               </p>
             )}

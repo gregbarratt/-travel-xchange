@@ -316,7 +316,7 @@ function AdminUsersContent({
   }, [loadProfiles]);
 
   if (isLoading) {
-    return <div className="tx-card p-6 text-sm text-[#4d6b9e]">Loading users...</div>;
+    return <div className="tx-card p-6 text-sm text-[var(--tx-text-muted)]">Loading users...</div>;
   }
 
   if (profiles.length === 0 && !error) {
@@ -344,10 +344,10 @@ function AdminUsersContent({
 
       <section className="tx-card p-5">
         <div>
-          <h2 className="text-lg font-extrabold text-[#061b4f]">
+          <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
             Create or promote user
           </h2>
-          <p className="mt-1 text-sm leading-6 text-[#4d6b9e]">
+          <p className="mt-1 text-sm leading-6 text-[var(--tx-text-muted)]">
             Super Admins can create a login with a temporary password or update
             an existing account by email. This keeps owner access inside Travel
             Xchange instead of requiring SQL.
@@ -405,7 +405,7 @@ function AdminUsersContent({
               value={newUserVerification}
             />
             <Button
-              className="h-11 bg-[#061b4f] px-5 text-white hover:bg-[#063b86]"
+              className="h-11 bg-[var(--tx-text)] px-5 text-white hover:bg-[var(--tx-accent)]"
               disabled={isCreatingUser}
               type="submit"
             >
@@ -413,7 +413,7 @@ function AdminUsersContent({
             </Button>
           </form>
         ) : (
-          <div className="mt-4 rounded-lg border border-[#d9e4f5] bg-[#f8fbff] p-4 text-sm leading-6 text-[#4d6b9e]">
+          <div className="mt-4 rounded-lg border border-[var(--tx-border)] bg-[var(--tx-surface-hover)] p-4 text-sm leading-6 text-[var(--tx-text-muted)]">
             Only a Super Admin can create users or promote someone to admin
             roles.
           </div>
@@ -421,22 +421,22 @@ function AdminUsersContent({
       </section>
 
       <section className="tx-card overflow-hidden">
-        <div className="border-b border-[#d9e4f5] p-5">
-          <h2 className="text-lg font-extrabold text-[#061b4f]">
+        <div className="border-b border-[var(--tx-border)] p-5">
+          <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
             Member accounts
           </h2>
-          <p className="mt-1 text-sm leading-6 text-[#4d6b9e]">
+          <p className="mt-1 text-sm leading-6 text-[var(--tx-text-muted)]">
             Use this carefully. Role and verification changes affect what a
             person can access.
           </p>
         </div>
 
-        <div className="divide-y divide-[#d9e4f5]">
+        <div className="divide-y divide-[var(--tx-border)]">
           {profiles.map((profile) => (
             <div className="grid gap-4 p-5 xl:grid-cols-[minmax(0,1fr)_220px_260px_190px]" key={profile.id}>
               <div>
                 <div className="flex flex-wrap items-center gap-2">
-                  <h3 className="font-extrabold text-[#061b4f]">
+                  <h3 className="font-extrabold text-[var(--tx-text)]">
                     {profile.full_name ?? "Unnamed member"}
                   </h3>
                   <AdminStatusBadge
@@ -447,15 +447,15 @@ function AdminUsersContent({
                     {profile.onboarding_completed ? "Onboarded" : "Pending"}
                   </AdminStatusBadge>
                 </div>
-                <p className="mt-1 text-sm leading-6 text-[#4d6b9e]">
+                <p className="mt-1 text-sm leading-6 text-[var(--tx-text-muted)]">
                   {profile.headline ?? "No headline yet"}
                 </p>
                 {profile.email ? (
-                  <p className="mt-1 text-sm font-semibold text-[#063b86]">
+                  <p className="mt-1 text-sm font-semibold text-[var(--tx-accent)]">
                     {profile.email}
                   </p>
                 ) : null}
-                <p className="mt-1 text-xs font-medium text-[#7288b8]">
+                <p className="mt-1 text-xs font-medium text-[var(--tx-text-subtle)]">
                   Joined {formatDate(profile.created_at)}
                 </p>
               </div>
@@ -490,7 +490,7 @@ function AdminUsersContent({
 
               <div className="flex items-end">
                 <Button
-                  className="h-11 w-full border border-[#b8cae8] bg-white px-4 text-[#061b4f] hover:bg-[#f8fbff]"
+                  className="h-11 w-full border border-[var(--tx-border)] bg-white px-4 text-[var(--tx-text)] hover:bg-[var(--tx-surface-hover)]"
                   disabled={busyId === profile.id || !canManageUsers || !profile.email}
                   onClick={() => void sendPasswordSetupEmail(profile)}
                   type="button"

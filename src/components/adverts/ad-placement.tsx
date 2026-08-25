@@ -186,7 +186,7 @@ export function AdPlacementSlot({
     return (
       <div
         className={cn(
-          "tx-card-soft p-4 text-sm text-[#4d6b9e]",
+          "tx-card-soft p-4 text-sm text-[var(--tx-text-muted)]",
           className,
         )}
       >
@@ -208,12 +208,12 @@ export function AdPlacementSlot({
         )}
       >
         <div className="flex items-center gap-2">
-          <Megaphone className="size-4 text-[#063b86]" aria-hidden="true" />
-          <h2 className="text-base font-extrabold text-[#061b4f]">
+          <Megaphone className="size-4 text-[var(--tx-accent)]" aria-hidden="true" />
+          <h2 className="text-base font-extrabold text-[var(--tx-text)]">
             {getAdPlacementLabel(placementKey)}
           </h2>
         </div>
-        <p className="mt-3 text-sm leading-6 text-[#4d6b9e]">
+        <p className="mt-3 text-sm leading-6 text-[var(--tx-text-muted)]">
           Sponsor inventory is ready. Create an active placement in the advert
           manager to fill this slot.
         </p>
@@ -236,12 +236,12 @@ export function AdPlacementSlot({
         "tx-card tx-ad-surface transition hover:shadow-[0_20px_48px_rgba(7,36,91,0.14)]",
         isFeed ? "p-5" : "p-4",
         isBanner ? "p-5" : "",
-        variant === "spotlight" ? "border-[#063b86]/30" : "",
+        variant === "spotlight" ? "border-[var(--tx-accent)]/30" : "",
         className,
       )}
     >
       <Plane
-        className="absolute right-4 top-4 size-8 rotate-[-18deg] text-[#063b86]/85"
+        className="absolute right-4 top-4 size-8 rotate-[-18deg] text-[var(--tx-accent)]/85"
         aria-hidden="true"
       />
       <div
@@ -253,7 +253,7 @@ export function AdPlacementSlot({
         {image ? (
           <div
             className={cn(
-              "overflow-hidden rounded-lg bg-[#eef5ff]",
+              "overflow-hidden rounded-lg bg-[var(--tx-accent-soft)]",
               isBanner ? "md:w-56" : "",
             )}
           >
@@ -268,24 +268,24 @@ export function AdPlacementSlot({
 
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1 rounded-lg bg-[#ffe7ed] px-2 py-1 text-xs font-extrabold text-[#f52968]">
+            <span className="inline-flex items-center gap-1 rounded-lg bg-[#ffe7ed] px-2 py-1 text-xs font-extrabold text-[var(--tx-accent)]">
               <Sparkles className="size-3" aria-hidden="true" />
               {ad.creative.sponsor_label}
             </span>
-            <span className="text-xs font-bold text-[#4d6b9e]">
+            <span className="text-xs font-bold text-[var(--tx-text-muted)]">
               {ad.placement_label}
             </span>
           </div>
 
           <h2
             className={cn(
-              "mt-3 font-extrabold tracking-normal text-[#061b4f]",
+              "mt-3 font-extrabold tracking-normal text-[var(--tx-text)]",
               isBanner ? "text-xl" : "text-lg",
             )}
           >
             {ad.creative.title}
           </h2>
-          <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">
+          <p className="mt-2 text-sm leading-6 text-[var(--tx-text-muted)]">
             {ad.creative.body}
           </p>
 
@@ -467,7 +467,7 @@ export function FeaturedAdCarousel({
     return (
       <section
         className={cn(
-          "tx-engage-hero min-h-[280px] rounded-lg border border-[#b8cae8]/70 bg-white p-6 text-sm font-semibold text-[#4d6b9e]",
+          "tx-engage-hero min-h-[280px] rounded-lg border border-[var(--tx-border)]/70 bg-white p-6 text-sm font-semibold text-[var(--tx-text-muted)]",
           className,
         )}
       >
@@ -480,18 +480,18 @@ export function FeaturedAdCarousel({
     return (
       <section
         className={cn(
-          "tx-engage-hero min-h-[280px] overflow-hidden rounded-lg border border-[#b8cae8]/70 bg-white p-6",
+          "tx-engage-hero min-h-[280px] overflow-hidden rounded-lg border border-[var(--tx-border)]/70 bg-white p-6",
           className,
         )}
       >
         <div className="flex h-full min-h-[228px] flex-col justify-center">
-          <span className="w-fit rounded-lg bg-[#fff0f5] px-3 py-1 text-xs font-extrabold uppercase text-[#f52968]">
+          <span className="w-fit rounded-lg bg-[#fff0f5] px-3 py-1 text-xs font-extrabold uppercase text-[var(--tx-accent)]">
             Featured supplier space
           </span>
-          <h2 className="mt-4 max-w-2xl text-3xl font-extrabold text-[#061b4f]">
+          <h2 className="mt-4 max-w-2xl text-3xl font-extrabold text-[var(--tx-text)]">
             Premium supplier adverts will rotate here.
           </h2>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-[#4d6b9e]">
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--tx-text-muted)]">
             Create active adverts using the Homepage hero banner placement to
             fill this carousel.
           </p>
@@ -508,7 +508,7 @@ export function FeaturedAdCarousel({
   const imageUrl = activeAd.creative.image_url;
   const slideContent = (
     <article
-      className="relative min-h-[280px] overflow-hidden rounded-lg border border-[#b8cae8]/70 bg-white shadow-[0_18px_48px_rgba(7,36,91,0.12)] transition hover:shadow-[0_22px_60px_rgba(7,36,91,0.16)]"
+      className="relative min-h-[280px] overflow-hidden rounded-lg border border-[var(--tx-border)]/70 bg-white shadow-[0_18px_48px_rgba(7,36,91,0.12)] transition hover:shadow-[0_22px_60px_rgba(7,36,91,0.16)]"
       style={
         imageUrl
           ? {
@@ -520,20 +520,20 @@ export function FeaturedAdCarousel({
       }
     >
       <Plane
-        className="absolute right-6 top-6 size-10 rotate-[-18deg] text-[#063b86]/90"
+        className="absolute right-6 top-6 size-10 rotate-[-18deg] text-[var(--tx-accent)]/90"
         aria-hidden="true"
       />
       <div className="relative z-10 flex min-h-[280px] max-w-3xl flex-col justify-center p-6 sm:p-8">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="inline-flex items-center gap-1 rounded-lg bg-[#ffe7ed] px-3 py-1 text-xs font-extrabold uppercase text-[#f52968]">
+          <span className="inline-flex items-center gap-1 rounded-lg bg-[#ffe7ed] px-3 py-1 text-xs font-extrabold uppercase text-[var(--tx-accent)]">
             <Sparkles className="size-3.5" aria-hidden="true" />
             {activeAd.creative.sponsor_label}
           </span>
-          <span className="rounded-lg bg-[#eef5ff] px-3 py-1 text-xs font-bold text-[#063b86]">
+          <span className="rounded-lg bg-[var(--tx-accent-soft)] px-3 py-1 text-xs font-bold text-[var(--tx-accent)]">
             {activeAd.placement_label}
           </span>
         </div>
-        <h2 className="mt-5 max-w-2xl text-3xl font-extrabold leading-tight text-[#061b4f] sm:text-4xl">
+        <h2 className="mt-5 max-w-2xl text-3xl font-extrabold leading-tight text-[var(--tx-text)] sm:text-4xl">
           {activeAd.creative.title}
         </h2>
         <p className="mt-3 max-w-2xl text-sm leading-6 text-[#29456f] sm:text-base">
@@ -573,7 +573,7 @@ export function FeaturedAdCarousel({
         <>
           <button
             aria-label="Previous featured advert"
-            className="absolute left-3 top-1/2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-[#b8cae8] bg-white/90 text-[#061b4f] shadow-[0_10px_24px_rgba(7,36,91,0.18)] transition hover:bg-white"
+            className="absolute left-3 top-1/2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--tx-border)] bg-white/90 text-[var(--tx-text)] shadow-[0_10px_24px_rgba(7,36,91,0.18)] transition hover:bg-white"
             onClick={showPrevious}
             type="button"
           >
@@ -581,7 +581,7 @@ export function FeaturedAdCarousel({
           </button>
           <button
             aria-label="Next featured advert"
-            className="absolute right-3 top-1/2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-[#b8cae8] bg-white/90 text-[#061b4f] shadow-[0_10px_24px_rgba(7,36,91,0.18)] transition hover:bg-white"
+            className="absolute right-3 top-1/2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--tx-border)] bg-white/90 text-[var(--tx-text)] shadow-[0_10px_24px_rgba(7,36,91,0.18)] transition hover:bg-white"
             onClick={showNext}
             type="button"
           >
@@ -593,7 +593,7 @@ export function FeaturedAdCarousel({
                 aria-label={`Show featured advert ${index + 1}`}
                 className={cn(
                   "size-2.5 rounded-full transition",
-                  index === activeIndex ? "bg-[#f52968]" : "bg-[#b8cae8]",
+                  index === activeIndex ? "bg-[var(--tx-accent)]" : "bg-[var(--tx-border)]",
                 )}
                 key={ad.id}
                 onClick={() => setActiveIndex(index)}

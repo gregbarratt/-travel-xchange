@@ -50,9 +50,9 @@ const phase16SetupMessage =
 
 const metricToneClasses = {
   amber: "bg-amber-50 text-amber-800",
-  blue: "bg-[#eef5ff] text-[#063b86]",
+  blue: "bg-[var(--tx-accent-soft)] text-[var(--tx-accent)]",
   green: "bg-emerald-50 text-emerald-800",
-  pink: "bg-[#fff1f3] text-[#f52968]",
+  pink: "bg-[#fff1f3] text-[var(--tx-accent)]",
 };
 
 function formatNumber(value: number) {
@@ -363,7 +363,7 @@ function AdminAnalyticsContent({ userId }: { userId: string }) {
 
   if (isLoading) {
     return (
-      <div className="tx-card p-6 text-sm text-[#4d6b9e]">
+      <div className="tx-card p-6 text-sm text-[var(--tx-text-muted)]">
         Loading analytics...
       </div>
     );
@@ -393,14 +393,14 @@ function AdminAnalyticsContent({ userId }: { userId: string }) {
             <article className="tx-card p-5" key={metric.label}>
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <p className="text-xs font-extrabold uppercase tracking-wide text-[#4d6b9e]">
+                  <p className="text-xs font-extrabold uppercase tracking-wide text-[var(--tx-text-muted)]">
                     {metric.label}
                   </p>
-                  <p className="mt-2 text-3xl font-extrabold text-[#061b4f]">
+                  <p className="mt-2 text-3xl font-extrabold text-[var(--tx-text)]">
                     {metric.value}
                   </p>
                   {metric.change ? (
-                    <p className="mt-2 text-xs font-bold text-[#7288b8]">
+                    <p className="mt-2 text-xs font-bold text-[var(--tx-text-subtle)]">
                       {metric.change}
                     </p>
                   ) : null}
@@ -420,10 +420,10 @@ function AdminAnalyticsContent({ userId }: { userId: string }) {
         <section className="tx-card p-5">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <h2 className="text-lg font-extrabold text-[#061b4f]">
+              <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
                 Popular posts
               </h2>
-              <p className="mt-1 text-sm leading-6 text-[#4d6b9e]">
+              <p className="mt-1 text-sm leading-6 text-[var(--tx-text-muted)]">
                 Ranked with the likes and comments we already track.
               </p>
             </div>
@@ -437,9 +437,9 @@ function AdminAnalyticsContent({ userId }: { userId: string }) {
           ) : (
             <div className="mt-4 space-y-3">
               {popularPosts.map((post, index) => (
-                <div className="rounded-lg border border-[#d9e4f5] p-4" key={post.id}>
+                <div className="rounded-lg border border-[var(--tx-border)] p-4" key={post.id}>
                   <div className="flex flex-wrap items-center justify-between gap-3">
-                    <p className="text-xs font-extrabold uppercase tracking-wide text-[#f52968]">
+                    <p className="text-xs font-extrabold uppercase tracking-wide text-[var(--tx-accent)]">
                       #{index + 1}
                     </p>
                     <div className="flex gap-2">
@@ -451,7 +451,7 @@ function AdminAnalyticsContent({ userId }: { userId: string }) {
                       </AdminStatusBadge>
                     </div>
                   </div>
-                  <p className="mt-3 line-clamp-3 text-sm leading-6 text-[#203b70]">
+                  <p className="mt-3 line-clamp-3 text-sm leading-6 text-[var(--tx-text)]">
                     {post.content}
                   </p>
                 </div>
@@ -464,14 +464,14 @@ function AdminAnalyticsContent({ userId }: { userId: string }) {
           <section className="tx-card p-5">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <h2 className="text-lg font-extrabold text-[#061b4f]">
+                <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
                   Event tracking
                 </h2>
-                <p className="mt-1 text-sm leading-6 text-[#4d6b9e]">
+                <p className="mt-1 text-sm leading-6 text-[var(--tx-text-muted)]">
                   Record a safe test event to confirm analytics writes work.
                 </p>
               </div>
-              <span className="flex size-10 items-center justify-center rounded-lg bg-[#eef5ff] text-[#063b86]">
+              <span className="flex size-10 items-center justify-center rounded-lg bg-[var(--tx-accent-soft)] text-[var(--tx-accent)]">
                 <MousePointerClick className="size-5" aria-hidden="true" />
               </span>
             </div>
@@ -487,24 +487,24 @@ function AdminAnalyticsContent({ userId }: { userId: string }) {
 
           <section className="tx-card p-5">
             <div className="flex items-center gap-2">
-              <BarChart3 className="size-5 text-[#063b86]" aria-hidden="true" />
-              <h2 className="text-lg font-extrabold text-[#061b4f]">
+              <BarChart3 className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
+              <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
                 Placeholder metrics
               </h2>
             </div>
             <div className="mt-4 space-y-3">
               {dashboardMetrics.map((metric) => (
                 <div
-                  className="rounded-lg border border-[#d9e4f5] bg-white p-3"
+                  className="rounded-lg border border-[var(--tx-border)] bg-white p-3"
                   key={metric.id}
                 >
                   <div className="flex items-center justify-between gap-3">
-                    <p className="font-bold text-[#061b4f]">{metric.label}</p>
-                    <span className="text-sm font-extrabold text-[#f52968]">
+                    <p className="font-bold text-[var(--tx-text)]">{metric.label}</p>
+                    <span className="text-sm font-extrabold text-[var(--tx-accent)]">
                       {formatNumber(metric.value)}
                     </span>
                   </div>
-                  <p className="mt-1 text-xs font-medium capitalize text-[#7288b8]">
+                  <p className="mt-1 text-xs font-medium capitalize text-[var(--tx-text-subtle)]">
                     {metric.period.replaceAll("_", " ")}
                   </p>
                 </div>
@@ -515,7 +515,7 @@ function AdminAnalyticsContent({ userId }: { userId: string }) {
       </div>
 
       <section className="tx-card p-5">
-        <h2 className="text-lg font-extrabold text-[#061b4f]">
+        <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
           Latest analytics events
         </h2>
         {events.length === 0 ? (
@@ -523,20 +523,20 @@ function AdminAnalyticsContent({ userId }: { userId: string }) {
             Events will appear here as we add tracking to important workflows.
           </AdminEmptyState>
         ) : (
-          <div className="mt-4 overflow-hidden rounded-lg border border-[#d9e4f5]">
-            <div className="divide-y divide-[#d9e4f5]">
+          <div className="mt-4 overflow-hidden rounded-lg border border-[var(--tx-border)]">
+            <div className="divide-y divide-[var(--tx-border)]">
               {events.map((event) => (
                 <div
                   className="grid gap-2 bg-white p-4 sm:grid-cols-[minmax(0,1fr)_170px]"
                   key={event.id}
                 >
                   <div>
-                    <p className="font-bold text-[#061b4f]">{event.event_name}</p>
-                    <p className="mt-1 text-sm text-[#4d6b9e]">
+                    <p className="font-bold text-[var(--tx-text)]">{event.event_name}</p>
+                    <p className="mt-1 text-sm text-[var(--tx-text-muted)]">
                       {event.page_path ?? "No page path"}
                     </p>
                   </div>
-                  <p className="text-sm font-medium text-[#7288b8] sm:text-right">
+                  <p className="text-sm font-medium text-[var(--tx-text-subtle)] sm:text-right">
                     {formatDate(event.created_at)}
                   </p>
                 </div>

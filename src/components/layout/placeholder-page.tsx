@@ -20,11 +20,11 @@ export function PlaceholderPage({
 }: PlaceholderPageProps) {
   return (
     <PublicPageShell>
-      <main className="bg-[#f8fafc]">
+      <main className="bg-[var(--tx-surface-hover)]">
         <section className="px-4 py-16 sm:px-6 lg:px-8">
           <div className="mx-auto w-full max-w-5xl">
             <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm sm:p-10">
-              <p className="text-sm font-semibold uppercase text-[#0f766e]">
+              <p className="text-sm font-semibold uppercase text-[var(--tx-accent)]">
                 {eyebrow}
               </p>
               <h1 className="mt-4 text-4xl font-semibold tracking-normal text-slate-950 sm:text-5xl">

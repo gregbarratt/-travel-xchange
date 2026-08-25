@@ -53,18 +53,18 @@ export function GlobalSearchBox({
   return (
     <form
       className={cn(
-        "flex items-center gap-3 rounded-lg border border-[#b8cae8] bg-white/90 text-[#061b4f] shadow-[0_10px_24px_rgba(7,36,91,0.1)]",
-        size === "large" ? "px-4 py-3" : "px-3 py-2",
+        "flex items-center gap-2 rounded-[var(--tx-radius-sm)] border border-[var(--tx-border)] bg-[var(--tx-surface)] text-[var(--tx-text)]",
+        size === "large" ? "px-4 py-3" : "h-9 px-3",
         className,
       )}
       onSubmit={handleSubmit}
     >
-      <Search className="size-4 shrink-0 text-[#063b86]" aria-hidden="true" />
+      <Search className="size-4 shrink-0 text-[var(--tx-text-subtle)]" aria-hidden="true" />
       <label className="sr-only" htmlFor="global-search">
         Search Travel Xchange
       </label>
       <input
-        className="min-w-0 flex-1 bg-transparent text-sm font-medium outline-none placeholder:text-[#7288b8]"
+        className="min-w-0 flex-1 bg-transparent text-sm font-medium outline-none placeholder:text-[var(--tx-text-subtle)]"
         id="global-search"
         maxLength={80}
         onChange={(event) => setQuery(event.target.value)}
@@ -72,7 +72,7 @@ export function GlobalSearchBox({
         value={query}
       />
       <button
-        className="inline-flex size-8 items-center justify-center rounded-lg bg-[#063b86] text-white transition hover:bg-[#061b4f]"
+        className="inline-flex size-7 shrink-0 items-center justify-center rounded-[var(--tx-radius-sm)] bg-[var(--tx-accent)] text-white transition hover:bg-[var(--tx-accent-hover)]"
         title="Search"
         type="submit"
       >

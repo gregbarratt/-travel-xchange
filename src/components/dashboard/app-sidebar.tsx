@@ -107,10 +107,10 @@ export function AppSidebar({
         <div className="h-px bg-white/12" />
 
         <Link
-          className="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-3 py-2.5 text-sm font-extrabold text-[#061b4f] shadow-[0_14px_26px_rgba(2,17,48,0.18)] transition hover:bg-[#fff4f7]"
+          className="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-3 py-2.5 text-sm font-extrabold text-[var(--tx-text)] shadow-[0_14px_26px_rgba(2,17,48,0.18)] transition hover:bg-[#fff4f7]"
           href="#post-content"
         >
-          <PlusCircle className="size-4 text-[#f52968]" aria-hidden="true" />
+          <PlusCircle className="size-4 text-[var(--tx-accent)]" aria-hidden="true" />
           Start a conversation
         </Link>
 

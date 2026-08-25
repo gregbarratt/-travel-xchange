@@ -33,31 +33,31 @@ function DeploymentGuideContent() {
     <div className="space-y-5">
       <section className="grid gap-4 lg:grid-cols-3">
         <div className="tx-card p-5">
-          <Cloud className="size-6 text-[#063b86]" aria-hidden="true" />
-          <h2 className="mt-4 text-lg font-extrabold text-[#061b4f]">
+          <Cloud className="size-6 text-[var(--tx-accent)]" aria-hidden="true" />
+          <h2 className="mt-4 text-lg font-extrabold text-[var(--tx-text)]">
             Vercel first
           </h2>
-          <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">
+          <p className="mt-2 text-sm leading-6 text-[var(--tx-text-muted)]">
             Import the GitHub repo, add environment variables, and deploy a
             preview before using a custom domain.
           </p>
         </div>
         <div className="tx-card p-5">
-          <Database className="size-6 text-[#063b86]" aria-hidden="true" />
-          <h2 className="mt-4 text-lg font-extrabold text-[#061b4f]">
+          <Database className="size-6 text-[var(--tx-accent)]" aria-hidden="true" />
+          <h2 className="mt-4 text-lg font-extrabold text-[var(--tx-text)]">
             Supabase matched
           </h2>
-          <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">
+          <p className="mt-2 text-sm leading-6 text-[var(--tx-text-muted)]">
             Production auth redirects and database policies must point at the
             live website, not localhost.
           </p>
         </div>
         <div className="tx-card p-5">
-          <Globe2 className="size-6 text-[#063b86]" aria-hidden="true" />
-          <h2 className="mt-4 text-lg font-extrabold text-[#061b4f]">
+          <Globe2 className="size-6 text-[var(--tx-accent)]" aria-hidden="true" />
+          <h2 className="mt-4 text-lg font-extrabold text-[var(--tx-text)]">
             Domain last
           </h2>
-          <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">
+          <p className="mt-2 text-sm leading-6 text-[var(--tx-text-muted)]">
             Add the custom domain after the Vercel URL works, then update
             Supabase, Stripe, and NEXT_PUBLIC_APP_URL.
           </p>
@@ -70,10 +70,10 @@ function DeploymentGuideContent() {
             <CheckCircle2 className="size-5" aria-hidden="true" />
           </span>
           <div>
-            <h2 className="text-lg font-extrabold text-[#061b4f]">
+            <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
               Deployment order
             </h2>
-            <p className="mt-2 max-w-3xl text-sm leading-6 text-[#4d6b9e]">
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--tx-text-muted)]">
               Follow these sections in order. Each item is written as a manual
               action so it is clear what needs clicking or checking in Vercel,
               Supabase, Stripe, and the live site.
@@ -85,22 +85,22 @@ function DeploymentGuideContent() {
       <section className="grid gap-5 xl:grid-cols-2">
         {deploymentSections.map((section) => (
           <div className="tx-card p-5" key={section.title}>
-            <h2 className="text-lg font-extrabold text-[#061b4f]">
+            <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
               {section.title}
             </h2>
-            <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">
+            <p className="mt-2 text-sm leading-6 text-[var(--tx-text-muted)]">
               {section.description}
             </p>
             <div className="mt-4 space-y-3">
               {section.steps.map((step) => (
                 <div
-                  className="rounded-lg border border-[#d9e4f5] bg-white/75 p-4"
+                  className="rounded-lg border border-[var(--tx-border)] bg-white/75 p-4"
                   key={step.label}
                 >
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>
-                      <p className="font-bold text-[#061b4f]">{step.label}</p>
-                      <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">
+                      <p className="font-bold text-[var(--tx-text)]">{step.label}</p>
+                      <p className="mt-2 text-sm leading-6 text-[var(--tx-text-muted)]">
                         {step.detail}
                       </p>
                     </div>
@@ -119,13 +119,13 @@ function DeploymentGuideContent() {
       </section>
 
       <section className="tx-card p-5">
-        <h2 className="text-lg font-extrabold text-[#061b4f]">
+        <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
           Official references
         </h2>
         <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {deploymentReferenceLinks.map((link) => (
             <Link
-              className="inline-flex items-center justify-between gap-3 rounded-lg border border-[#d9e4f5] bg-white/75 px-4 py-3 text-sm font-bold text-[#063b86] hover:border-[#b8cae8] hover:bg-[#eef5ff]"
+              className="inline-flex items-center justify-between gap-3 rounded-lg border border-[var(--tx-border)] bg-white/75 px-4 py-3 text-sm font-bold text-[var(--tx-accent)] hover:border-[var(--tx-border)] hover:bg-[var(--tx-accent-soft)]"
               href={link.href}
               key={link.href}
               target="_blank"

@@ -185,7 +185,7 @@ function AdminLaunchSignupsContent({ userId }: { userId: string }) {
 
   if (isLoading) {
     return (
-      <div className="tx-card p-6 text-sm text-[#4d6b9e]">
+      <div className="tx-card p-6 text-sm text-[var(--tx-text-muted)]">
         Loading launch signups...
       </div>
     );
@@ -217,10 +217,10 @@ function AdminLaunchSignupsContent({ userId }: { userId: string }) {
       <section className="grid gap-3 md:grid-cols-5">
         {counts.map((item) => (
           <div className="tx-card p-4" key={item.value}>
-            <p className="text-xs font-extrabold uppercase tracking-wide text-[#7288b8]">
+            <p className="text-xs font-extrabold uppercase tracking-wide text-[var(--tx-text-subtle)]">
               {item.label}
             </p>
-            <p className="mt-2 text-2xl font-black text-[#061b4f]">
+            <p className="mt-2 text-2xl font-black text-[var(--tx-text)]">
               {item.count}
             </p>
           </div>
@@ -228,20 +228,20 @@ function AdminLaunchSignupsContent({ userId }: { userId: string }) {
       </section>
 
       <section className="tx-card overflow-hidden">
-        <div className="border-b border-[#d9e4f5] p-5">
+        <div className="border-b border-[var(--tx-border)] p-5">
           <div className="flex items-center gap-2">
-            <MailPlus className="size-5 text-[#063b86]" aria-hidden="true" />
-            <h2 className="text-lg font-extrabold text-[#061b4f]">
+            <MailPlus className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
+            <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
               Pre-launch interest list
             </h2>
           </div>
-          <p className="mt-1 text-sm leading-6 text-[#4d6b9e]">
+          <p className="mt-1 text-sm leading-6 text-[var(--tx-text-muted)]">
             Use this as your launch queue. A signup here is only interest, not
             access to the platform.
           </p>
         </div>
 
-        <div className="divide-y divide-[#d9e4f5]">
+        <div className="divide-y divide-[var(--tx-border)]">
           {signups.map((signup) => (
             <div
               className="grid gap-4 p-5 xl:grid-cols-[minmax(0,1fr)_220px_180px]"
@@ -249,7 +249,7 @@ function AdminLaunchSignupsContent({ userId }: { userId: string }) {
             >
               <div>
                 <div className="flex flex-wrap items-center gap-2">
-                  <h3 className="font-extrabold text-[#061b4f]">
+                  <h3 className="font-extrabold text-[var(--tx-text)]">
                     {signup.full_name || "Unnamed contact"}
                   </h3>
                   <AdminStatusBadge tone={getSignupStatusTone(signup.status)}>
@@ -258,33 +258,33 @@ function AdminLaunchSignupsContent({ userId }: { userId: string }) {
                 </div>
 
                 <a
-                  className="mt-1 block text-sm font-bold text-[#063b86] underline-offset-2 hover:underline"
+                  className="mt-1 block text-sm font-bold text-[var(--tx-accent)] underline-offset-2 hover:underline"
                   href={`mailto:${signup.email}`}
                 >
                   {signup.email}
                 </a>
 
-                <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">
+                <p className="mt-2 text-sm leading-6 text-[var(--tx-text-muted)]">
                   {roleInterestLabels[signup.role_interest]}
                   {signup.company_name ? ` at ${signup.company_name}` : ""}
                 </p>
 
                 {signup.message ? (
-                  <p className="mt-3 rounded-lg bg-[#f8fbff] p-3 text-sm leading-6 text-[#061b4f]">
+                  <p className="mt-3 rounded-lg bg-[var(--tx-surface-hover)] p-3 text-sm leading-6 text-[var(--tx-text)]">
                     {signup.message}
                   </p>
                 ) : null}
 
-                <p className="mt-2 text-xs font-medium text-[#7288b8]">
+                <p className="mt-2 text-xs font-medium text-[var(--tx-text-subtle)]">
                   Joined {formatDate(signup.created_at)}
                 </p>
               </div>
 
-              <div className="text-sm leading-6 text-[#4d6b9e]">
-                <p className="text-xs font-extrabold uppercase tracking-wide text-[#7288b8]">
+              <div className="text-sm leading-6 text-[var(--tx-text-muted)]">
+                <p className="text-xs font-extrabold uppercase tracking-wide text-[var(--tx-text-subtle)]">
                   Source
                 </p>
-                <p className="mt-2 font-semibold text-[#061b4f]">
+                <p className="mt-2 font-semibold text-[var(--tx-text)]">
                   {signup.source_page.replaceAll("_", " ")}
                 </p>
                 {signup.invited_at ? (

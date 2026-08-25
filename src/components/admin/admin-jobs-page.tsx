@@ -157,7 +157,7 @@ function AdminJobsContent({ userId }: { userId: string }) {
   }, [loadJobs]);
 
   if (isLoading) {
-    return <div className="tx-card p-6 text-sm text-[#4d6b9e]">Loading jobs...</div>;
+    return <div className="tx-card p-6 text-sm text-[var(--tx-text-muted)]">Loading jobs...</div>;
   }
 
   if (jobs.length === 0 && !error) {
@@ -188,7 +188,7 @@ function AdminJobsContent({ userId }: { userId: string }) {
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-2">
                 <Link
-                  className="font-extrabold text-[#061b4f] hover:text-[#f52968]"
+                  className="font-extrabold text-[var(--tx-text)] hover:text-[var(--tx-accent)]"
                   href={`/jobs/${job.id}`}
                 >
                   {job.title}
@@ -197,12 +197,12 @@ function AdminJobsContent({ userId }: { userId: string }) {
                   {job.status}
                 </AdminStatusBadge>
               </div>
-              <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">
+              <p className="mt-2 text-sm leading-6 text-[var(--tx-text-muted)]">
                 {job.company?.name ?? job.recruiter_name ?? "No company"} -{" "}
                 {getJobCategoryLabel(job.category)} -{" "}
                 {getJobPackageLabel(job.package_type)}
               </p>
-              <p className="mt-1 text-xs font-medium text-[#7288b8]">
+              <p className="mt-1 text-xs font-medium text-[var(--tx-text-subtle)]">
                 Posted {formatDate(job.posted_date ?? job.created_at)}
                 {job.expiry_date ? ` - Expires ${formatDate(job.expiry_date)}` : ""}
                 {job.application_type === "external" ? " - External apply" : ""}

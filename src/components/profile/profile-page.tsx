@@ -218,7 +218,7 @@ export function ProfilePage({ profileId }: ProfilePageProps) {
           <Link
             className={cn(
               buttonVariants({ size: "lg" }),
-              "hidden bg-[#0f766e] text-white hover:bg-[#115e59] sm:inline-flex",
+              "hidden bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)] sm:inline-flex",
             )}
             href="/profile/edit"
           >
@@ -254,7 +254,7 @@ export function ProfilePage({ profileId }: ProfilePageProps) {
           <section className="space-y-5">
             <article className="overflow-hidden rounded-md border border-slate-200 bg-white shadow-sm">
               <div
-                className="h-44 bg-[linear-gradient(120deg,#061b4f,#0f766e)] bg-cover bg-center"
+                className="h-44 bg-[linear-gradient(120deg,var(--tx-text),var(--tx-accent))] bg-cover bg-center"
                 style={
                   profile.cover_image_url
                     ? { backgroundImage: `url(${profile.cover_image_url})` }
@@ -264,7 +264,7 @@ export function ProfilePage({ profileId }: ProfilePageProps) {
               <div className="px-5 pb-5 sm:px-6 sm:pb-6">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
-                    <div className="-mt-14 flex size-28 shrink-0 items-center justify-center overflow-hidden rounded-md border-4 border-white bg-[#e0f2f1] text-2xl font-semibold text-[#0f766e] shadow-sm">
+                    <div className="-mt-14 flex size-28 shrink-0 items-center justify-center overflow-hidden rounded-md border-4 border-white bg-[var(--tx-accent-soft)] text-2xl font-semibold text-[var(--tx-accent)] shadow-sm">
                       {profile.avatar_url ? (
                         <img
                           alt=""
@@ -291,7 +291,7 @@ export function ProfilePage({ profileId }: ProfilePageProps) {
                   <div className="flex flex-wrap gap-2">
                     {!isOwnProfile ? (
                       <Button
-                        className="h-10 bg-[#0f766e] px-4 text-white hover:bg-[#115e59]"
+                        className="h-10 bg-[var(--tx-accent)] px-4 text-white hover:bg-[var(--tx-accent-hover)]"
                         disabled={isBusy}
                         onClick={handleFollowToggle}
                         type="button"
@@ -303,7 +303,7 @@ export function ProfilePage({ profileId }: ProfilePageProps) {
                       <Link
                         className={cn(
                           buttonVariants({ size: "lg" }),
-                          "bg-[#0f766e] text-white hover:bg-[#115e59] sm:hidden",
+                          "bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)] sm:hidden",
                         )}
                         href="/profile/edit"
                       >
@@ -363,7 +363,7 @@ export function ProfilePage({ profileId }: ProfilePageProps) {
 
                     return (
                       <div
-                        className="border-l-2 border-[#0f766e] pl-4"
+                        className="border-l-2 border-[var(--tx-accent)] pl-4"
                         key={item.id}
                       >
                         <h3 className="font-semibold text-slate-950">
@@ -403,7 +403,7 @@ export function ProfilePage({ profileId }: ProfilePageProps) {
                 <div className="mt-4 flex flex-wrap gap-2">
                   {specialisms.map((specialism) => (
                     <span
-                      className="rounded-md bg-[#e0f2f1] px-3 py-2 text-sm font-medium text-[#0f766e]"
+                      className="rounded-md bg-[var(--tx-accent-soft)] px-3 py-2 text-sm font-medium text-[var(--tx-accent)]"
                       key={specialism.id}
                     >
                       {specialism.name}
@@ -420,7 +420,7 @@ export function ProfilePage({ profileId }: ProfilePageProps) {
 
             <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
               <div className="flex items-center gap-2">
-                <Building2 className="size-5 text-[#0f766e]" aria-hidden="true" />
+                <Building2 className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
                 <h2 className="text-lg font-semibold text-slate-950">
                   Company
                 </h2>
@@ -457,7 +457,7 @@ export function ProfilePage({ profileId }: ProfilePageProps) {
 
             <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
               <div className="flex items-center gap-2">
-                <MapPin className="size-5 text-[#0f766e]" aria-hidden="true" />
+                <MapPin className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
                 <h2 className="text-lg font-semibold text-slate-950">
                   Verification
                 </h2>

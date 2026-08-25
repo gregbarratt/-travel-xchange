@@ -197,7 +197,7 @@ export function CompanyPage({ companyId, variant }: CompanyPageProps) {
           <Link
             className={cn(
               buttonVariants({ size: "lg" }),
-              "hidden bg-[#0f766e] text-white hover:bg-[#115e59] sm:inline-flex",
+              "hidden bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)] sm:inline-flex",
             )}
             href="/profile/edit"
           >
@@ -233,7 +233,7 @@ export function CompanyPage({ companyId, variant }: CompanyPageProps) {
           <section className="space-y-5">
             <article className="overflow-hidden rounded-md border border-slate-200 bg-white shadow-sm">
               <div
-                className="h-44 bg-[linear-gradient(120deg,#061b4f,#0f766e)] bg-center"
+                className="h-44 bg-[linear-gradient(120deg,var(--tx-text),var(--tx-accent))] bg-center"
                 style={
                   company.cover_image_url
                     ? {
@@ -249,7 +249,7 @@ export function CompanyPage({ companyId, variant }: CompanyPageProps) {
               <div className="px-5 pb-5 sm:px-6 sm:pb-6">
                 <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
-                    <div className="-mt-14 flex size-28 shrink-0 items-center justify-center overflow-hidden rounded-md border-4 border-white bg-[#e0f2f1] text-2xl font-semibold text-[#0f766e] shadow-sm">
+                    <div className="-mt-14 flex size-28 shrink-0 items-center justify-center overflow-hidden rounded-md border-4 border-white bg-[var(--tx-accent-soft)] text-2xl font-semibold text-[var(--tx-accent)] shadow-sm">
                       {company.logo_url ? (
                         <img
                           alt=""
@@ -277,7 +277,7 @@ export function CompanyPage({ companyId, variant }: CompanyPageProps) {
                     <Link
                       className={cn(
                         buttonVariants({ size: "lg" }),
-                        "bg-[#0f766e] text-white hover:bg-[#115e59] sm:hidden",
+                        "bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)] sm:hidden",
                       )}
                       href="/profile/edit"
                     >
@@ -286,7 +286,7 @@ export function CompanyPage({ companyId, variant }: CompanyPageProps) {
                     </Link>
                   ) : (
                     <Button
-                      className="h-10 bg-[#0f766e] px-4 text-white hover:bg-[#115e59]"
+                      className="h-10 bg-[var(--tx-accent)] px-4 text-white hover:bg-[var(--tx-accent-hover)]"
                       disabled={isBusy}
                       onClick={handleFollowToggle}
                       type="button"
@@ -334,7 +334,7 @@ export function CompanyPage({ companyId, variant }: CompanyPageProps) {
 
             <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
               <div className="flex items-center gap-2">
-                <Building2 className="size-5 text-[#0f766e]" aria-hidden="true" />
+                <Building2 className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
                 <h2 className="text-lg font-semibold text-slate-950">
                   About
                 </h2>
@@ -345,7 +345,7 @@ export function CompanyPage({ companyId, variant }: CompanyPageProps) {
               </p>
               {company.website_url ? (
                 <a
-                  className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#0f766e] hover:text-[#115e59]"
+                  className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[var(--tx-accent)] hover:text-[var(--tx-accent-hover)]"
                   href={company.website_url}
                   rel="noreferrer"
                   target="_blank"
@@ -396,7 +396,7 @@ export function CompanyPage({ companyId, variant }: CompanyPageProps) {
 
             <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
               <div className="flex items-center gap-2">
-                <Users className="size-5 text-[#0f766e]" aria-hidden="true" />
+                <Users className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
                 <h2 className="text-lg font-semibold text-slate-950">
                   People
                 </h2>

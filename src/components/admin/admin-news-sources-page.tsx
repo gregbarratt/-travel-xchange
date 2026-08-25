@@ -304,22 +304,22 @@ function NewsSourcesPanel() {
 
   return (
     <div className="space-y-5">
-      <section className="rounded-lg border border-[#d6e2f5] bg-white p-5 shadow-[0_10px_22px_rgba(7,36,91,0.06)]">
+      <section className="rounded-lg border border-[var(--tx-border)] bg-white p-5 shadow-[0_10px_22px_rgba(7,36,91,0.06)]">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <Rss className="size-5 text-[#063b86]" aria-hidden="true" />
-              <h2 className="text-lg font-extrabold text-[#061b4f]">
+              <Rss className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
+              <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
                 Automated trade news
               </h2>
             </div>
-            <p className="mt-2 max-w-3xl text-sm leading-6 text-[#3d4d6b]">
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--tx-text-muted)]">
               Ingestion runs on the platform scheduler every 15 minutes and polls only
               the sources that are enabled and due. A source cannot be enabled until a
               real feed endpoint has been tested here, so no publisher is contacted on
               a guessed URL.
             </p>
-            <p className="mt-2 text-sm font-semibold text-[#061b4f]">
+            <p className="mt-2 text-sm font-semibold text-[var(--tx-text)]">
               {enabledCount} of {sources.length} sources enabled
             </p>
           </div>
@@ -352,7 +352,7 @@ function NewsSourcesPanel() {
       ) : null}
 
       {isLoading ? (
-        <div className="flex items-center gap-2 rounded-lg border border-[#d6e2f5] bg-white p-6 text-sm font-semibold text-[#3d4d6b]">
+        <div className="flex items-center gap-2 rounded-lg border border-[var(--tx-border)] bg-white p-6 text-sm font-semibold text-[var(--tx-text-muted)]">
           <Loader2 className="size-4 animate-spin" aria-hidden="true" />
           Loading news sources...
         </div>
@@ -373,13 +373,13 @@ function NewsSourcesPanel() {
 
           return (
             <article
-              className="rounded-lg border border-[#d6e2f5] bg-white p-5 shadow-[0_10px_22px_rgba(7,36,91,0.06)]"
+              className="rounded-lg border border-[var(--tx-border)] bg-white p-5 shadow-[0_10px_22px_rgba(7,36,91,0.06)]"
               key={source.id}
             >
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
-                    <h3 className="text-base font-extrabold text-[#061b4f]">{source.name}</h3>
+                    <h3 className="text-base font-extrabold text-[var(--tx-text)]">{source.name}</h3>
                     <AdminStatusBadge tone={healthTone[source.health_status]}>
                       {healthLabel[source.health_status]}
                     </AdminStatusBadge>
@@ -390,10 +390,10 @@ function NewsSourcesPanel() {
                       {source.auto_publish ? "Auto-publish" : "Moderated"}
                     </AdminStatusBadge>
                   </div>
-                  <p className="mt-1 text-sm text-[#3d4d6b]">
+                  <p className="mt-1 text-sm text-[var(--tx-text-muted)]">
                     {source.publisher} &middot;{" "}
                     <a
-                      className="inline-flex items-center gap-1 font-semibold text-[#063b86] hover:underline"
+                      className="inline-flex items-center gap-1 font-semibold text-[var(--tx-accent)] hover:underline"
                       href={source.website_url}
                       rel="noopener noreferrer"
                       target="_blank"
@@ -402,7 +402,7 @@ function NewsSourcesPanel() {
                       <ExternalLink className="size-3" aria-hidden="true" />
                     </a>
                   </p>
-                  <p className="mt-1 text-xs font-semibold text-[#5b6b8a]">
+                  <p className="mt-1 text-xs font-semibold text-[var(--tx-text-subtle)]">
                     Last success: {formatDateTime(source.last_success_at)} &middot; Last attempt:{" "}
                     {formatDateTime(source.last_attempt_at)} &middot; {source.counts.published}{" "}
                     published, {source.counts.pending} awaiting review
@@ -439,7 +439,7 @@ function NewsSourcesPanel() {
               </div>
 
               {source.rights_notes ? (
-                <p className="mt-3 rounded-md border border-[#eef2f9] bg-[#f8fbff] p-3 text-xs leading-5 text-[#3d4d6b]">
+                <p className="mt-3 rounded-md border border-[var(--tx-border)] bg-[var(--tx-surface-hover)] p-3 text-xs leading-5 text-[var(--tx-text-muted)]">
                   {source.rights_notes}
                 </p>
               ) : null}
@@ -489,7 +489,7 @@ function NewsSourcesPanel() {
                       : "border-amber-200 bg-amber-50",
                   )}
                 >
-                  <p className="flex items-center gap-2 text-sm font-bold text-[#061b4f]">
+                  <p className="flex items-center gap-2 text-sm font-bold text-[var(--tx-text)]">
                     {test.ok ? (
                       <CheckCircle2 className="size-4 text-[#0b5b3f]" aria-hidden="true" />
                     ) : (
@@ -506,27 +506,27 @@ function NewsSourcesPanel() {
 
                   {test.preview && test.preview.length > 0 ? (
                     <>
-                      <p className="mt-3 text-xs font-bold uppercase tracking-wide text-[#5b6b8a]">
+                      <p className="mt-3 text-xs font-bold uppercase tracking-wide text-[var(--tx-text-subtle)]">
                         What Travel Xchange would publish
                       </p>
                       <ul className="mt-2 space-y-2">
                         {test.preview.map((item) => (
                           <li
-                            className="rounded-md border border-[#d6e2f5] bg-white p-3"
+                            className="rounded-md border border-[var(--tx-border)] bg-white p-3"
                             key={`${source.id}-${item.title}`}
                           >
-                            <p className="text-sm font-bold text-[#061b4f]">{item.title}</p>
+                            <p className="text-sm font-bold text-[var(--tx-text)]">{item.title}</p>
                             {item.summary ? (
-                              <p className="mt-1 text-xs leading-5 text-[#3d4d6b]">
+                              <p className="mt-1 text-xs leading-5 text-[var(--tx-text-muted)]">
                                 {item.summary}
                               </p>
                             ) : (
-                              <p className="mt-1 text-xs italic leading-5 text-[#5b6b8a]">
+                              <p className="mt-1 text-xs italic leading-5 text-[var(--tx-text-subtle)]">
                                 No usable description in the feed. The card would show the
                                 headline and source link only.
                               </p>
                             )}
-                            <p className="mt-1 text-xs font-semibold text-[#5b6b8a]">
+                            <p className="mt-1 text-xs font-semibold text-[var(--tx-text-subtle)]">
                               {item.topics.map((topic) => topic.slug).join(", ") ||
                                 "no topic matched"}
                               {item.sensitivity !== "routine"
@@ -542,7 +542,7 @@ function NewsSourcesPanel() {
               ) : null}
 
               {lastRun ? (
-                <p className="mt-3 text-xs font-semibold text-[#5b6b8a]">
+                <p className="mt-3 text-xs font-semibold text-[var(--tx-text-subtle)]">
                   Last run: {lastRun.status}
                   {lastRun.http_status ? ` (HTTP ${lastRun.http_status})` : ""} &middot;{" "}
                   {lastRun.discovered_count} discovered, {lastRun.new_item_count} new,{" "}
@@ -556,12 +556,12 @@ function NewsSourcesPanel() {
       </div>
 
       {recentRuns.length > 0 ? (
-        <section className="rounded-lg border border-[#d6e2f5] bg-white p-5 shadow-[0_10px_22px_rgba(7,36,91,0.06)]">
-          <h2 className="text-lg font-extrabold text-[#061b4f]">Recent ingestion runs</h2>
+        <section className="rounded-lg border border-[var(--tx-border)] bg-white p-5 shadow-[0_10px_22px_rgba(7,36,91,0.06)]">
+          <h2 className="text-lg font-extrabold text-[var(--tx-text)]">Recent ingestion runs</h2>
           <div className="mt-3 overflow-x-auto">
             <table className="w-full min-w-[640px] text-left text-sm">
               <thead>
-                <tr className="text-xs font-bold uppercase tracking-wide text-[#5b6b8a]">
+                <tr className="text-xs font-bold uppercase tracking-wide text-[var(--tx-text-subtle)]">
                   <th className="py-2 pr-3">Started</th>
                   <th className="py-2 pr-3">Trigger</th>
                   <th className="py-2 pr-3">Status</th>
@@ -574,10 +574,10 @@ function NewsSourcesPanel() {
               </thead>
               <tbody>
                 {recentRuns.map((run) => (
-                  <tr className="border-t border-[#eef2f9] text-[#3d4d6b]" key={run.id}>
+                  <tr className="border-t border-[var(--tx-border)] text-[var(--tx-text-muted)]" key={run.id}>
                     <td className="py-2 pr-3">{formatDateTime(run.started_at)}</td>
                     <td className="py-2 pr-3">{run.trigger}</td>
-                    <td className="py-2 pr-3 font-semibold text-[#061b4f]">{run.status}</td>
+                    <td className="py-2 pr-3 font-semibold text-[var(--tx-text)]">{run.status}</td>
                     <td className="py-2 pr-3">{run.source_count}</td>
                     <td className="py-2 pr-3">{run.new_item_count}</td>
                     <td className="py-2 pr-3">{run.published_count}</td>

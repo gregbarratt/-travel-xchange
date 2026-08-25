@@ -126,7 +126,7 @@ export function ManagedPagesPage() {
       ) : null}
 
       {isLoading ? (
-        <div className="tx-card flex items-center gap-2 p-6 text-sm text-[#4d6b9e]">
+        <div className="tx-card flex items-center gap-2 p-6 text-sm text-[var(--tx-text-muted)]">
           <Loader2 className="size-4 animate-spin" aria-hidden="true" />
           Loading managed pages...
         </div>
@@ -140,13 +140,13 @@ export function ManagedPagesPage() {
 
       {!isLoading && !error && pages.length === 0 ? (
         <section className="tx-card p-8 text-center">
-          <div className="mx-auto flex size-12 items-center justify-center rounded-lg bg-[#eef5ff] text-[#063b86]">
+          <div className="mx-auto flex size-12 items-center justify-center rounded-lg bg-[var(--tx-accent-soft)] text-[var(--tx-accent)]">
             <Building2 className="size-6" aria-hidden="true" />
           </div>
-          <h2 className="mt-4 text-xl font-extrabold text-[#061b4f]">
+          <h2 className="mt-4 text-xl font-extrabold text-[var(--tx-text)]">
             No managed pages yet
           </h2>
-          <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-[#4d6b9e]">
+          <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-[var(--tx-text-muted)]">
             Supplier and company pages will appear here when you own them, are
             assigned as page admin, or have platform admin/moderator access.
           </p>
@@ -161,7 +161,7 @@ export function ManagedPagesPage() {
               key={`${page.id}-${page.managementReason}`}
             >
               <div
-                className="h-24 bg-[linear-gradient(120deg,#061b4f,#0f766e)] bg-center"
+                className="h-24 bg-[linear-gradient(120deg,var(--tx-text),var(--tx-accent))] bg-center"
                 style={
                   page.cover_image_url
                     ? {
@@ -176,7 +176,7 @@ export function ManagedPagesPage() {
               />
               <div className="p-5">
                 <div className="-mt-12 flex items-end gap-3">
-                  <div className="flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-lg border-4 border-white bg-[#e0f2f1] text-lg font-extrabold text-[#0f766e] shadow-sm">
+                  <div className="flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-lg border-4 border-white bg-[var(--tx-accent-soft)] text-lg font-extrabold text-[var(--tx-accent)] shadow-sm">
                     {page.logo_url ? (
                       <span
                         aria-label={`${page.name} logo`}
@@ -189,10 +189,10 @@ export function ManagedPagesPage() {
                     )}
                   </div>
                   <div className="translate-y-3">
-                    <h2 className="text-lg font-extrabold text-[#061b4f]">
+                    <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
                       {page.name}
                     </h2>
-                    <p className="mt-1 text-sm text-[#4d6b9e]">
+                    <p className="mt-1 text-sm text-[var(--tx-text-muted)]">
                       {getCompanyTypeLabel(page.company_type)}
                     </p>
                   </div>
@@ -215,7 +215,7 @@ export function ManagedPagesPage() {
                 <div className="mt-5 flex flex-wrap gap-2">
                   <Link href={page.href}>
                     <Button
-                      className="bg-[#061b4f] text-white hover:bg-[#123b7a]"
+                      className="bg-[var(--tx-text)] text-white hover:bg-[#123b7a]"
                       type="button"
                     >
                       <ShieldCheck className="size-4" aria-hidden="true" />
@@ -223,7 +223,7 @@ export function ManagedPagesPage() {
                     </Button>
                   </Link>
                   <Link
-                    className="inline-flex h-10 items-center gap-2 rounded-lg border border-[#b8cae8] bg-white px-3 text-sm font-bold text-[#061b4f] hover:bg-[#eef5ff]"
+                    className="inline-flex h-10 items-center gap-2 rounded-lg border border-[var(--tx-border)] bg-white px-3 text-sm font-bold text-[var(--tx-text)] hover:bg-[var(--tx-accent-soft)]"
                     href="/admin/supplier-access"
                   >
                     Access

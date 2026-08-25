@@ -279,7 +279,7 @@ export function LessonPage({ courseId, lessonId }: LessonPageProps) {
         <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_320px]">
           <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
             <div className="flex flex-wrap gap-2">
-              <span className="inline-flex items-center gap-1 rounded-md bg-[#e0f2f1] px-2 py-1 text-xs font-semibold text-[#0f766e]">
+              <span className="inline-flex items-center gap-1 rounded-md bg-[var(--tx-accent-soft)] px-2 py-1 text-xs font-semibold text-[var(--tx-accent)]">
                 <BookOpenIcon />
                 {course.title}
               </span>
@@ -309,7 +309,7 @@ export function LessonPage({ courseId, lessonId }: LessonPageProps) {
               <a
                 className={cn(
                   buttonVariants({ size: "lg" }),
-                  "mt-5 bg-[#082f49] text-white hover:bg-[#0c4a6e]",
+                  "mt-5 bg-[var(--tx-text)] text-white hover:bg-[#0c4a6e]",
                 )}
                 href={lesson.video_url}
                 rel="noreferrer"
@@ -348,7 +348,7 @@ export function LessonPage({ courseId, lessonId }: LessonPageProps) {
                 ) : null}
               </div>
               <Button
-                className="h-10 bg-[#0f766e] px-4 text-white hover:bg-[#115e59]"
+                className="h-10 bg-[var(--tx-accent)] px-4 text-white hover:bg-[var(--tx-accent-hover)]"
                 disabled={isSaving || isComplete}
                 onClick={handleMarkComplete}
                 type="button"
@@ -382,7 +382,7 @@ export function LessonPage({ courseId, lessonId }: LessonPageProps) {
                       className={cn(
                         "flex items-center justify-between gap-3 rounded-md border px-3 py-2 text-sm hover:bg-slate-50",
                         active
-                          ? "border-[#0f766e] bg-[#e0f2f1] text-[#0f766e]"
+                          ? "border-[var(--tx-accent)] bg-[var(--tx-accent-soft)] text-[var(--tx-accent)]"
                           : "border-slate-200 text-slate-700",
                       )}
                       href={`/training/${course.id}/lesson/${courseLesson.id}`}
@@ -390,7 +390,7 @@ export function LessonPage({ courseId, lessonId }: LessonPageProps) {
                     >
                       <span>{courseLesson.display_order}. {courseLesson.title}</span>
                       {lessonProgress?.status === "completed" ? (
-                        <CheckCircle2 className="size-4 text-[#0f766e]" aria-hidden="true" />
+                        <CheckCircle2 className="size-4 text-[var(--tx-accent)]" aria-hidden="true" />
                       ) : null}
                     </Link>
                   );

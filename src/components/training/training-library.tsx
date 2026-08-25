@@ -258,7 +258,7 @@ export function TrainingLibrary() {
       <section className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <p className="text-sm font-semibold uppercase text-[#0f766e]">
+            <p className="text-sm font-semibold uppercase text-[var(--tx-accent)]">
               Phase 9 training academy
             </p>
             <h2 className="mt-2 text-2xl font-semibold tracking-normal text-slate-950">
@@ -273,7 +273,7 @@ export function TrainingLibrary() {
           <Link
             className={cn(
               buttonVariants({ size: "lg" }),
-              "bg-[#0f766e] text-white hover:bg-[#115e59]",
+              "bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)]",
             )}
             href="/training"
           >
@@ -291,7 +291,7 @@ export function TrainingLibrary() {
                 Search training
               </span>
               <input
-                className="mt-2 h-10 w-full rounded-md border border-slate-300 px-3 text-sm outline-none focus:border-[#0f766e] focus:ring-3 focus:ring-[#0f766e]/15"
+                className="mt-2 h-10 w-full rounded-md border border-slate-300 px-3 text-sm outline-none focus:border-[var(--tx-accent)] focus:ring-3 focus:ring-[var(--tx-accent)]/15"
                 onChange={(event) => setSearchTerm(event.target.value)}
                 placeholder="Cruise, compliance, technology..."
                 value={searchTerm}
@@ -304,7 +304,7 @@ export function TrainingLibrary() {
                   className={cn(
                     "rounded-md border px-3 py-2 text-sm font-medium transition",
                     activeCategory === option.value
-                      ? "border-[#0f766e] bg-[#e0f2f1] text-[#0f766e]"
+                      ? "border-[var(--tx-accent)] bg-[var(--tx-accent-soft)] text-[var(--tx-accent)]"
                       : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50",
                   )}
                   key={option.value}
@@ -322,7 +322,7 @@ export function TrainingLibrary() {
                   className={cn(
                     "rounded-md border px-3 py-2 text-sm font-medium transition",
                     activeLevel === option.value
-                      ? "border-[#082f49] bg-slate-100 text-[#082f49]"
+                      ? "border-[var(--tx-text)] bg-slate-100 text-[var(--tx-text)]"
                       : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50",
                   )}
                   key={option.value}
@@ -349,7 +349,7 @@ export function TrainingLibrary() {
 
           {!isLoading && filteredCourses.length === 0 && !error ? (
             <div className="rounded-md border border-slate-200 bg-white p-8 text-center shadow-sm">
-              <BookOpen className="mx-auto size-8 text-[#0f766e]" aria-hidden="true" />
+              <BookOpen className="mx-auto size-8 text-[var(--tx-accent)]" aria-hidden="true" />
               <h2 className="mt-4 text-lg font-semibold text-slate-950">
                 No courses match this view
               </h2>
@@ -370,7 +370,7 @@ export function TrainingLibrary() {
         <aside className="space-y-5">
           <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
             <div className="flex items-center gap-2">
-              <BookOpen className="size-5 text-[#0f766e]" aria-hidden="true" />
+              <BookOpen className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
               <h2 className="text-lg font-semibold text-slate-950">
                 Your learning
               </h2>
@@ -399,7 +399,7 @@ export function TrainingLibrary() {
 
           <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
             <div className="flex items-center gap-2">
-              <Sparkles className="size-5 text-[#0f766e]" aria-hidden="true" />
+              <Sparkles className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
               <h2 className="text-lg font-semibold text-slate-950">
                 Supplier modules
               </h2>
@@ -413,7 +413,7 @@ export function TrainingLibrary() {
 
           <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
             <div className="flex items-center gap-2">
-              <Award className="size-5 text-[#0f766e]" aria-hidden="true" />
+              <Award className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
               <h2 className="text-lg font-semibold text-slate-950">
                 Certificates
               </h2>

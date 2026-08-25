@@ -436,7 +436,7 @@ export function ProfileEditForm() {
 
         <section className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
           <div className="flex items-center gap-2">
-            <ImagePlus className="size-5 text-[#0f766e]" aria-hidden="true" />
+            <ImagePlus className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
             <h2 className="text-lg font-semibold text-slate-950">
               Profile images
             </h2>
@@ -448,7 +448,7 @@ export function ProfileEditForm() {
 
           <div className="mt-5 grid gap-4 lg:grid-cols-[220px_minmax(0,1fr)]">
             <div>
-              <div className="flex size-28 items-center justify-center overflow-hidden rounded-md border-4 border-white bg-[#e0f2f1] text-2xl font-semibold text-[#0f766e] shadow-sm ring-1 ring-slate-200">
+              <div className="flex size-28 items-center justify-center overflow-hidden rounded-md border-4 border-white bg-[var(--tx-accent-soft)] text-2xl font-semibold text-[var(--tx-accent)] shadow-sm ring-1 ring-slate-200">
                 {avatarUrl ? (
                   <img alt="" className="size-full object-cover" src={avatarUrl} />
                 ) : (
@@ -482,7 +482,7 @@ export function ProfileEditForm() {
 
             <div>
               <div
-                className="h-36 rounded-md border border-slate-200 bg-[linear-gradient(120deg,#061b4f,#0f766e)] bg-cover bg-center"
+                className="h-36 rounded-md border border-slate-200 bg-[linear-gradient(120deg,var(--tx-text),var(--tx-accent))] bg-cover bg-center"
                 style={
                   coverImageUrl
                     ? { backgroundImage: `url(${coverImageUrl})` }
@@ -514,8 +514,8 @@ export function ProfileEditForm() {
             </div>
           ) : null}
 
-          <div className="mt-4 rounded-md border border-[#dbe7f7] bg-[#f7faff] p-4 text-sm leading-6 text-slate-700">
-            <p className="font-semibold text-[#061b4f]">
+          <div className="mt-4 rounded-md border border-[var(--tx-border)] bg-[var(--tx-surface-hover)] p-4 text-sm leading-6 text-slate-700">
+            <p className="font-semibold text-[var(--tx-text)]">
               Image guidance
             </p>
             <p className="mt-1">
@@ -656,7 +656,7 @@ export function ProfileEditForm() {
             <label className="flex items-center gap-3 rounded-md border border-slate-200 bg-slate-50 px-3 py-3 text-sm font-medium text-slate-700 md:col-span-2">
               <input
                 checked={experienceCurrent}
-                className="size-4 accent-[#0f766e]"
+                className="size-4 accent-[var(--tx-accent)]"
                 onChange={(event) => setExperienceCurrent(event.target.checked)}
                 type="checkbox"
               />
@@ -686,7 +686,7 @@ export function ProfileEditForm() {
             </Link>
           ) : null}
           <Button
-            className="h-11 bg-[#0f766e] px-5 text-white hover:bg-[#115e59]"
+            className="h-11 bg-[var(--tx-accent)] px-5 text-white hover:bg-[var(--tx-accent-hover)]"
             disabled={isSaving}
             type="submit"
           >

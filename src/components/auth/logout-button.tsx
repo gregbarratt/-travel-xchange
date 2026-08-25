@@ -33,13 +33,18 @@ export function LogoutButton() {
 
   return (
     <Button
-      className="bg-[#062050] px-4 text-white shadow-[0_10px_22px_rgba(7,36,91,0.16)] hover:bg-[#093a83]"
+      className="tx-rail-button h-9 w-auto shrink-0 gap-2 bg-transparent px-2 text-[var(--tx-shell-text-muted)] shadow-none hover:bg-[var(--tx-shell-hover)] hover:text-[var(--tx-shell-text)] sm:px-3"
       disabled={isSigningOut}
       onClick={handleLogout}
       type="button"
     >
       <LogOut className="size-4" aria-hidden="true" />
-      {isSigningOut ? "Signing out" : "Log out"}
+      <span className="hidden sm:inline">
+        {isSigningOut ? "Signing out" : "Log out"}
+      </span>
+      <span className="sr-only sm:hidden">
+        {isSigningOut ? "Signing out" : "Log out"}
+      </span>
     </Button>
   );
 }

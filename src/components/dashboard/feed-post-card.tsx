@@ -55,24 +55,24 @@ export function FeedPostCard({
             <div className="flex flex-wrap items-center gap-2">
               {post.author?.id ? (
                 <Link
-                  className="text-base font-extrabold text-[#061b4f] hover:text-[#f52968]"
+                  className="text-base font-extrabold text-[var(--tx-text)] hover:text-[var(--tx-accent)]"
                   href={`/profile/${post.author.id}`}
                 >
                   {authorName}
                 </Link>
               ) : (
-                <h2 className="text-base font-extrabold text-[#061b4f]">
+                <h2 className="text-base font-extrabold text-[var(--tx-text)]">
                   {authorName}
                 </h2>
               )}
               {post.author?.verification_tier !== "unverified" ? (
-                <span className="inline-flex items-center gap-1 rounded bg-[#eef5ff] px-2 py-0.5 text-xs font-bold text-[#063b86]">
+                <span className="inline-flex items-center gap-1 rounded bg-[var(--tx-accent-soft)] px-2 py-0.5 text-xs font-bold text-[var(--tx-accent)]">
                   <ShieldCheck className="size-3" aria-hidden="true" />
                   Verified
                 </span>
               ) : null}
             </div>
-            <p className="mt-1 text-xs leading-5 text-[#4d6b9e]">
+            <p className="mt-1 text-xs leading-5 text-[var(--tx-text-muted)]">
               {post.author?.headline
                 ? post.author.headline
                 : post.author?.role
@@ -81,17 +81,17 @@ export function FeedPostCard({
               - {formatDate(post.created_at)}
             </p>
           </div>
-          <span className="rounded bg-[#eef5ff] px-3 py-1 text-xs font-bold text-[#063b86]">
+          <span className="rounded bg-[var(--tx-accent-soft)] px-3 py-1 text-xs font-bold text-[var(--tx-accent)]">
             {getTopicLabel(post.topic)}
           </span>
         </div>
 
-        <p className="mt-4 whitespace-pre-wrap text-sm leading-6 text-[#203b70]">
+        <p className="mt-4 whitespace-pre-wrap text-sm leading-6 text-[var(--tx-text)]">
           {post.content}
         </p>
       </div>
 
-      <div className="flex items-center justify-between border-y border-[#d9e4f5] px-5 py-2 text-xs font-medium text-[#4d6b9e]">
+      <div className="flex items-center justify-between border-y border-[var(--tx-border)] px-5 py-2 text-xs font-medium text-[var(--tx-text-muted)]">
         <span>{post.like_count} likes</span>
         <span>{post.comment_count} comments</span>
       </div>
@@ -99,8 +99,8 @@ export function FeedPostCard({
       <div className="grid grid-cols-2 gap-2 px-5 py-2">
         <Button
           className={cn(
-            "h-10 bg-transparent text-[#061b4f] hover:bg-[#eef5ff]",
-            post.is_liked_by_current_user && "text-[#f52968]",
+            "h-10 bg-transparent text-[var(--tx-text)] hover:bg-[var(--tx-accent-soft)]",
+            post.is_liked_by_current_user && "text-[var(--tx-accent)]",
           )}
           disabled={isBusy}
           onClick={onLikeToggle}
@@ -117,7 +117,7 @@ export function FeedPostCard({
           {post.is_liked_by_current_user ? "Liked" : "Like"}
         </Button>
         <Button
-          className="h-10 bg-transparent text-[#061b4f] hover:bg-[#eef5ff]"
+          className="h-10 bg-transparent text-[var(--tx-text)] hover:bg-[var(--tx-accent-soft)]"
           type="button"
           variant="ghost"
         >
@@ -126,18 +126,18 @@ export function FeedPostCard({
         </Button>
       </div>
 
-      <div className="space-y-3 border-t border-[#d9e4f5] bg-[#f6f9ff]/80 p-5">
+      <div className="space-y-3 border-t border-[var(--tx-border)] bg-[var(--tx-surface-hover)]/80 p-5">
         {comments.length > 0 ? (
           <div className="space-y-2">
             {comments.slice(-3).map((comment) => (
               <div
-                className="rounded-lg border border-[#d9e4f5] bg-white px-3 py-2 text-sm shadow-sm"
+                className="rounded-lg border border-[var(--tx-border)] bg-white px-3 py-2 text-sm shadow-sm"
                 key={comment.id}
               >
-                <p className="font-bold text-[#061b4f]">
+                <p className="font-bold text-[var(--tx-text)]">
                   {comment.author?.full_name ?? "Member"}
                 </p>
-                <p className="mt-1 leading-5 text-[#203b70]">
+                <p className="mt-1 leading-5 text-[var(--tx-text)]">
                   {comment.content}
                 </p>
               </div>
@@ -150,7 +150,7 @@ export function FeedPostCard({
             Add a comment
           </label>
           <input
-            className="h-10 min-w-0 flex-1 rounded-lg border border-[#b8cae8] bg-white px-3 text-sm text-[#061b4f] outline-none placeholder:text-[#7288b8] focus:border-[#063b86] focus:ring-3 focus:ring-[#063b86]/15"
+            className="h-10 min-w-0 flex-1 rounded-lg border border-[var(--tx-border)] bg-white px-3 text-sm text-[var(--tx-text)] outline-none placeholder:text-[var(--tx-text-subtle)] focus:border-[var(--tx-accent)] focus:ring-3 focus:ring-[var(--tx-accent)]/15"
             id={`comment-${post.id}`}
             maxLength={1000}
             onChange={(event) => onCommentChange(event.target.value)}

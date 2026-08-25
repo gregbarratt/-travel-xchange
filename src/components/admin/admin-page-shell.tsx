@@ -130,12 +130,12 @@ export function AdminPageShell({
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <div className="flex items-center gap-2">
-                <ShieldCheck className="size-5 text-[#063b86]" aria-hidden="true" />
-                <p className="text-xs font-extrabold uppercase tracking-wide text-[#063b86]">
+                <ShieldCheck className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
+                <p className="text-xs font-extrabold uppercase tracking-wide text-[var(--tx-accent)]">
                   Owner controls
                 </p>
               </div>
-              <p className="mt-2 max-w-3xl text-sm leading-6 text-[#4d6b9e]">
+              <p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--tx-text-muted)]">
                 {description}
               </p>
             </div>
@@ -148,8 +148,8 @@ export function AdminPageShell({
                 className={cn(
                   "min-w-max rounded-lg border px-3 py-2 text-sm font-bold transition",
                   activeHref === item.href
-                    ? "border-[#f52968] bg-white text-[#f52968] shadow-sm"
-                    : "border-[#d9e4f5] bg-white/70 text-[#061b4f] hover:border-[#b8cae8] hover:bg-[#eef5ff]",
+                    ? "border-[var(--tx-accent)] bg-white text-[var(--tx-accent)] shadow-sm"
+                    : "border-[var(--tx-border)] bg-white/70 text-[var(--tx-text)] hover:border-[var(--tx-border)] hover:bg-[var(--tx-accent-soft)]",
                 )}
                 href={item.href}
                 key={item.href}
@@ -174,11 +174,11 @@ function AdminAccessStatus({
   title: string;
 }) {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[#f6f9fd] px-5 text-[#061b4f]">
-      <section className="w-full max-w-md rounded-xl border border-[#d9e4f5] bg-white p-6 text-center shadow-[0_18px_55px_rgba(6,27,79,0.1)]">
-        <ShieldCheck className="mx-auto size-8 text-[#063b86]" aria-hidden="true" />
+    <main className="flex min-h-screen items-center justify-center bg-[#f6f9fd] px-5 text-[var(--tx-text)]">
+      <section className="w-full max-w-md rounded-xl border border-[var(--tx-border)] bg-white p-6 text-center shadow-[0_18px_55px_rgba(6,27,79,0.1)]">
+        <ShieldCheck className="mx-auto size-8 text-[var(--tx-accent)]" aria-hidden="true" />
         <h1 className="mt-4 text-xl font-extrabold">{title}</h1>
-        <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">{message}</p>
+        <p className="mt-2 text-sm leading-6 text-[var(--tx-text-muted)]">{message}</p>
       </section>
     </main>
   );

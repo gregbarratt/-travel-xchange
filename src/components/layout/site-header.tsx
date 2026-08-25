@@ -14,7 +14,7 @@ export function SiteHeader() {
         </Link>
 
         <Link
-          className="rounded-lg border border-[#f52968]/20 bg-[#fff1f6] px-3 py-2 text-sm font-extrabold text-[#f52968] hover:bg-[#ffe3ee]"
+          className="rounded-lg border border-[var(--tx-accent)]/20 bg-[#fff1f6] px-3 py-2 text-sm font-extrabold text-[var(--tx-accent)] hover:bg-[#ffe3ee]"
           href="/login"
         >
           Log in

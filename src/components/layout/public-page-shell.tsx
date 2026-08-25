@@ -8,7 +8,7 @@ type PublicPageShellProps = {
 
 export function PublicPageShell({ children }: PublicPageShellProps) {
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-slate-950">
+    <div className="min-h-screen bg-[var(--tx-surface-hover)] text-slate-950">
       <SiteHeader />
       {children}
     </div>

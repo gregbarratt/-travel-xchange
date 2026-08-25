@@ -50,27 +50,27 @@ const overviewItems = [
 export default function LoginPage() {
   return (
     <PublicPageShell>
-      <main className="bg-[#f8fafc] px-4 py-10 sm:px-6 lg:px-8">
+      <main className="bg-[var(--tx-surface-hover)] px-4 py-10 sm:px-6 lg:px-8">
         <section className="mx-auto grid w-full max-w-6xl gap-8 lg:grid-cols-[minmax(360px,0.82fr)_minmax(0,1.18fr)] lg:items-start">
-          <div className="rounded-lg border border-[#d9e4f5] bg-white p-6 shadow-sm sm:p-8">
+          <div className="rounded-lg border border-[var(--tx-border)] bg-white p-6 shadow-sm sm:p-8">
             <TravelXchangeLogo
               markClassName="h-9 w-10"
               textClassName="[&>span:first-child]:text-xl [&>span:last-child]:text-[0.62rem]"
             />
-            <h1 className="mt-8 text-3xl font-semibold tracking-normal text-[#061b4f]">
+            <h1 className="mt-8 text-3xl font-semibold tracking-normal text-[var(--tx-text)]">
               Log in
             </h1>
-            <p className="mt-3 text-sm leading-6 text-[#4d6b9e]">
+            <p className="mt-3 text-sm leading-6 text-[var(--tx-text-muted)]">
               Access the Travel Xchange platform with an approved account.
               Public registration is paused while we prepare private beta.
             </p>
 
             <div className="mt-8">
               <AuthForm mode="login" redirectPath="/dashboard" />
-              <div className="mt-4 rounded-lg border border-[#d9e4f5] bg-[#f8fafc] p-4 text-sm leading-6 text-[#4d6b9e]">
+              <div className="mt-4 rounded-lg border border-[var(--tx-border)] bg-[var(--tx-surface-hover)] p-4 text-sm leading-6 text-[var(--tx-text-muted)]">
                 Need access?{" "}
                 <Link
-                  className="font-extrabold text-[#0f766e] hover:text-[#115e59]"
+                  className="font-extrabold text-[var(--tx-accent)] hover:text-[var(--tx-accent-hover)]"
                   href="/register"
                 >
                   View the registration notice
@@ -81,8 +81,8 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <aside className="overflow-hidden rounded-lg border border-[#d9e4f5] bg-white shadow-sm">
-            <div className="relative isolate bg-[#061b4f] px-6 py-8 text-white sm:px-8">
+          <aside className="overflow-hidden rounded-lg border border-[var(--tx-border)] bg-white shadow-sm">
+            <div className="relative isolate bg-[var(--tx-text)] px-6 py-8 text-white sm:px-8">
               <div
                 className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(245,41,104,0.45),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(255,122,47,0.35),transparent_32%)]"
                 aria-hidden="true"
@@ -106,16 +106,16 @@ export default function LoginPage() {
 
                 return (
                   <div
-                    className="rounded-lg border border-[#d9e4f5] bg-[#f8fafc] p-4"
+                    className="rounded-lg border border-[var(--tx-border)] bg-[var(--tx-surface-hover)] p-4"
                     key={item.title}
                   >
-                    <span className="flex size-10 items-center justify-center rounded-lg bg-[#fff1f6] text-[#f52968]">
+                    <span className="flex size-10 items-center justify-center rounded-lg bg-[#fff1f6] text-[var(--tx-accent)]">
                       <Icon className="size-5" aria-hidden="true" />
                     </span>
-                    <h3 className="mt-4 text-base font-extrabold text-[#061b4f]">
+                    <h3 className="mt-4 text-base font-extrabold text-[var(--tx-text)]">
                       {item.title}
                     </h3>
-                    <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">
+                    <p className="mt-2 text-sm leading-6 text-[var(--tx-text-muted)]">
                       {item.text}
                     </p>
                   </div>
@@ -123,17 +123,17 @@ export default function LoginPage() {
               })}
             </div>
 
-            <div className="border-t border-[#d9e4f5] bg-[#f8fafc] px-6 py-5 sm:px-8">
+            <div className="border-t border-[var(--tx-border)] bg-[var(--tx-surface-hover)] px-6 py-5 sm:px-8">
               <div className="flex gap-3">
                 <CheckCircle2
-                  className="mt-0.5 size-5 shrink-0 text-[#0f766e]"
+                  className="mt-0.5 size-5 shrink-0 text-[var(--tx-accent)]"
                   aria-hidden="true"
                 />
-                <p className="text-sm leading-6 text-[#4d6b9e]">
+                <p className="text-sm leading-6 text-[var(--tx-text-muted)]">
                   Travel Xchange is free to access for approved travel
                   professionals and industry partners.{" "}
                   <Link
-                    className="font-extrabold text-[#0f766e] hover:text-[#115e59]"
+                    className="font-extrabold text-[var(--tx-accent)] hover:text-[var(--tx-accent-hover)]"
                     href="/register"
                   >
                     View the access notice
@@ -142,14 +142,14 @@ export default function LoginPage() {
                 </p>
               </div>
               <Link
-                className="mt-5 inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#f52968] to-[#ff7a2f] px-5 py-3 text-sm font-extrabold text-white shadow-[0_14px_30px_rgba(245,41,104,0.22)] hover:opacity-95"
+                className="mt-5 inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[var(--tx-accent)] to-[var(--tx-accent)] px-5 py-3 text-sm font-extrabold text-white shadow-[0_14px_30px_rgba(245,41,104,0.22)] hover:opacity-95"
                 href="/register"
               >
                 View access notice
                 <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
-              <div className="mt-4 flex items-center gap-2 text-sm font-extrabold text-[#061b4f]">
-                <GraduationCap className="size-5 text-[#f52968]" aria-hidden="true" />
+              <div className="mt-4 flex items-center gap-2 text-sm font-extrabold text-[var(--tx-text)]">
+                <GraduationCap className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
                 News, supplier updates, events, training, jobs, and community
                 tools in one professional platform.
               </div>

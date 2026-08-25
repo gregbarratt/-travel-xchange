@@ -497,7 +497,7 @@ export function MessagesCentre() {
       <section className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <p className="text-sm font-semibold uppercase text-[#0f766e]">
+            <p className="text-sm font-semibold uppercase text-[var(--tx-accent)]">
               Phase 11 messaging
             </p>
             <h2 className="mt-2 text-2xl font-semibold tracking-normal text-slate-950">
@@ -548,7 +548,7 @@ export function MessagesCentre() {
             onSubmit={handleCreateConversation}
           >
             <div className="flex items-center gap-2">
-              <Plus className="size-5 text-[#0f766e]" aria-hidden="true" />
+              <Plus className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
               <h2 className="text-lg font-semibold text-slate-950">
                 New conversation
               </h2>
@@ -571,7 +571,7 @@ export function MessagesCentre() {
                 value={newConversationText}
               />
               <Button
-                className="w-full bg-[#0f766e] text-white hover:bg-[#115e59]"
+                className="w-full bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)]"
                 disabled={
                   !configured ||
                   isLoading ||
@@ -597,7 +597,7 @@ export function MessagesCentre() {
                   aria-hidden="true"
                 />
                 <input
-                  className="h-10 w-full rounded-md border border-slate-300 pl-9 pr-3 text-sm outline-none focus:border-[#0f766e] focus:ring-3 focus:ring-[#0f766e]/15"
+                  className="h-10 w-full rounded-md border border-slate-300 pl-9 pr-3 text-sm outline-none focus:border-[var(--tx-accent)] focus:ring-3 focus:ring-[var(--tx-accent)]/15"
                   onChange={(event) => setSearchTerm(event.target.value)}
                   placeholder="Search by member or message..."
                   value={searchTerm}
@@ -615,7 +615,7 @@ export function MessagesCentre() {
               {!isLoading && filteredConversations.length === 0 ? (
                 <div className="rounded-md border border-slate-200 p-5 text-center">
                   <Users
-                    className="mx-auto size-7 text-[#0f766e]"
+                    className="mx-auto size-7 text-[var(--tx-accent)]"
                     aria-hidden="true"
                   />
                   <p className="mt-3 text-sm leading-6 text-slate-600">
@@ -630,7 +630,7 @@ export function MessagesCentre() {
                   className={cn(
                     "w-full rounded-md border p-3 text-left transition",
                     selectedConversationId === conversation.id
-                      ? "border-[#0f766e] bg-[#e0f2f1]"
+                      ? "border-[var(--tx-accent)] bg-[var(--tx-accent-soft)]"
                       : "border-slate-200 bg-white hover:bg-slate-50",
                   )}
                   key={conversation.id}
@@ -651,7 +651,7 @@ export function MessagesCentre() {
                       </p>
                     </div>
                     {conversation.unread_count > 0 ? (
-                      <span className="rounded-full bg-[#0f766e] px-2 py-0.5 text-xs font-semibold text-white">
+                      <span className="rounded-full bg-[var(--tx-accent)] px-2 py-0.5 text-xs font-semibold text-white">
                         {conversation.unread_count}
                       </span>
                     ) : null}
@@ -673,7 +673,7 @@ export function MessagesCentre() {
             <>
               <div className="border-b border-slate-200 p-5">
                 <div className="flex items-center gap-3">
-                  <span className="flex size-11 items-center justify-center rounded-md bg-[#082f49] text-sm font-semibold text-white">
+                  <span className="flex size-11 items-center justify-center rounded-md bg-[var(--tx-text)] text-sm font-semibold text-white">
                     {initials(selectedConversation.display_title)}
                   </span>
                   <div className="min-w-0">
@@ -710,7 +710,7 @@ export function MessagesCentre() {
                         className={cn(
                           "max-w-2xl rounded-md px-4 py-3 text-sm leading-6",
                           isOwnMessage
-                            ? "bg-[#0f766e] text-white"
+                            ? "bg-[var(--tx-accent)] text-white"
                             : "border border-slate-200 bg-slate-50 text-slate-700",
                         )}
                       >
@@ -744,7 +744,7 @@ export function MessagesCentre() {
                 />
                 <div className="mt-4 flex justify-end">
                   <Button
-                    className="bg-[#0f766e] text-white hover:bg-[#115e59]"
+                    className="bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)]"
                     disabled={isSending}
                     size="lg"
                     type="submit"
@@ -759,7 +759,7 @@ export function MessagesCentre() {
             <div className="flex min-h-[480px] items-center justify-center p-8 text-center">
               <div>
                 <MessageCircle
-                  className="mx-auto size-9 text-[#0f766e]"
+                  className="mx-auto size-9 text-[var(--tx-accent)]"
                   aria-hidden="true"
                 />
                 <h2 className="mt-4 text-lg font-semibold text-slate-950">

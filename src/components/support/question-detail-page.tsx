@@ -430,7 +430,7 @@ export function QuestionDetailPage({ questionId }: QuestionDetailPageProps) {
           <main className="space-y-5">
             <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
               <div className="flex flex-wrap gap-2">
-                <span className="inline-flex items-center gap-1 rounded-md bg-[#e0f2f1] px-2 py-1 text-xs font-semibold text-[#0f766e]">
+                <span className="inline-flex items-center gap-1 rounded-md bg-[var(--tx-accent-soft)] px-2 py-1 text-xs font-semibold text-[var(--tx-accent)]">
                   <HelpCircle className="size-3" aria-hidden="true" />
                   {getQuestionCategoryLabel(question.category)}
                 </span>
@@ -462,7 +462,7 @@ export function QuestionDetailPage({ questionId }: QuestionDetailPageProps) {
                   className={cn(
                     "border-slate-200 bg-white text-slate-700 hover:bg-slate-50",
                     hasQuestionUpvote
-                      ? "border-[#0f766e] bg-[#e0f2f1] text-[#0f766e]"
+                      ? "border-[var(--tx-accent)] bg-[var(--tx-accent-soft)] text-[var(--tx-accent)]"
                       : "",
                   )}
                   disabled={isVotingQuestion}
@@ -504,7 +504,7 @@ export function QuestionDetailPage({ questionId }: QuestionDetailPageProps) {
               />
               <div className="mt-4 flex justify-end">
                 <Button
-                  className="bg-[#0f766e] text-white hover:bg-[#115e59]"
+                  className="bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)]"
                   disabled={isSavingAnswer}
                   size="lg"
                   type="submit"
@@ -570,7 +570,7 @@ export function QuestionDetailPage({ questionId }: QuestionDetailPageProps) {
                       className={cn(
                         "border-slate-200 bg-white text-slate-700 hover:bg-slate-50",
                         answer.is_voted_by_current_user
-                          ? "border-[#0f766e] bg-[#e0f2f1] text-[#0f766e]"
+                          ? "border-[var(--tx-accent)] bg-[var(--tx-accent-soft)] text-[var(--tx-accent)]"
                           : "",
                       )}
                       disabled={busyAnswerId === answer.id}
@@ -623,7 +623,7 @@ export function QuestionDetailPage({ questionId }: QuestionDetailPageProps) {
 
             <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="size-5 text-[#0f766e]" aria-hidden="true" />
+                <CheckCircle2 className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
                 <h2 className="text-lg font-semibold text-slate-950">
                   Best answer
                 </h2>
@@ -637,7 +637,7 @@ export function QuestionDetailPage({ questionId }: QuestionDetailPageProps) {
             <Link
               className={cn(
                 buttonVariants({ size: "lg" }),
-                "w-full bg-[#0f766e] text-white hover:bg-[#115e59]",
+                "w-full bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)]",
               )}
               href="/support/ask"
             >

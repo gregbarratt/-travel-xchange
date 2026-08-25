@@ -88,11 +88,11 @@ export function RegistrationRequestForm() {
 
   return (
     <form className="space-y-8" onSubmit={handleSubmit}>
-      <div className="rounded-lg border border-[#d9e4f5] bg-white p-5 shadow-sm">
-        <h2 className="text-lg font-extrabold text-[#061b4f]">
+      <div className="rounded-lg border border-[var(--tx-border)] bg-white p-5 shadow-sm">
+        <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
           Your account
         </h2>
-        <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">
+        <p className="mt-2 text-sm leading-6 text-[var(--tx-text-muted)]">
           Create your free login first. We then use the trade details below to
           route your approval request. All fields are required.
         </p>
@@ -138,11 +138,11 @@ export function RegistrationRequestForm() {
         </div>
       </div>
 
-      <div className="rounded-lg border border-[#d9e4f5] bg-white p-5 shadow-sm">
-        <h2 className="text-lg font-extrabold text-[#061b4f]">
+      <div className="rounded-lg border border-[var(--tx-border)] bg-white p-5 shadow-sm">
+        <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
           Supplier, agency, or business
         </h2>
-        <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">
+        <p className="mt-2 text-sm leading-6 text-[var(--tx-text-muted)]">
           If this business already exists on Travel Xchange, the request goes to
           that company admin. If not, Travel Xchange admin will review it.
         </p>
@@ -169,11 +169,11 @@ export function RegistrationRequestForm() {
         </div>
       </div>
 
-      <div className="rounded-lg border border-[#d9e4f5] bg-white p-5 shadow-sm">
-        <h2 className="text-lg font-extrabold text-[#061b4f]">
+      <div className="rounded-lg border border-[var(--tx-border)] bg-white p-5 shadow-sm">
+        <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
           Travel trade identifiers
         </h2>
-        <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">
+        <p className="mt-2 text-sm leading-6 text-[var(--tx-text-muted)]">
           Add any relevant numbers you use in the trade. These are optional,
           but they help admins verify who you are.
         </p>
@@ -201,7 +201,7 @@ export function RegistrationRequestForm() {
         </div>
       </div>
 
-      <div className="rounded-lg border border-[#d9e4f5] bg-white p-5 shadow-sm">
+      <div className="rounded-lg border border-[var(--tx-border)] bg-white p-5 shadow-sm">
         <TextareaField
           hint="For example: your role, branch, manager, or why you need supplier access."
           label="Anything the approver should know?"
@@ -229,7 +229,7 @@ export function RegistrationRequestForm() {
                   : "Because your business was not already active, Travel Xchange admin will review the business and your profile."}
               </p>
               <Link
-                className="mt-3 inline-flex font-extrabold text-[#0f766e] hover:text-[#115e59]"
+                className="mt-3 inline-flex font-extrabold text-[var(--tx-accent)] hover:text-[var(--tx-accent-hover)]"
                 href="/login"
               >
                 Go to login
@@ -240,7 +240,7 @@ export function RegistrationRequestForm() {
       ) : null}
 
       <Button
-        className="h-12 w-full bg-gradient-to-r from-[#f52968] to-[#ff7a2f] text-base font-extrabold hover:opacity-95 md:w-auto"
+        className="h-12 w-full bg-gradient-to-r from-[var(--tx-accent)] to-[var(--tx-accent)] text-base font-extrabold hover:opacity-95 md:w-auto"
         disabled={isSubmitting}
         type="submit"
       >

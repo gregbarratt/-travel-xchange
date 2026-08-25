@@ -17,7 +17,7 @@ export function QuestionCard({ question }: QuestionCardProps) {
   return (
     <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
       <div className="flex flex-wrap gap-2">
-        <span className="inline-flex items-center gap-1 rounded-md bg-[#e0f2f1] px-2 py-1 text-xs font-semibold text-[#0f766e]">
+        <span className="inline-flex items-center gap-1 rounded-md bg-[var(--tx-accent-soft)] px-2 py-1 text-xs font-semibold text-[var(--tx-accent)]">
           <HelpCircle className="size-3" aria-hidden="true" />
           {getQuestionCategoryLabel(question.category)}
         </span>

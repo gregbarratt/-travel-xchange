@@ -247,7 +247,7 @@ function AdminReportsContent({ userId }: { userId: string }) {
   }, [loadReports]);
 
   if (isLoading) {
-    return <div className="tx-card p-6 text-sm text-[#4d6b9e]">Loading reports...</div>;
+    return <div className="tx-card p-6 text-sm text-[var(--tx-text-muted)]">Loading reports...</div>;
   }
 
   return (
@@ -277,14 +277,14 @@ function AdminReportsContent({ userId }: { userId: string }) {
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
                 <div className="flex flex-wrap items-center gap-2">
-                  <h2 className="font-extrabold capitalize text-[#061b4f]">
+                  <h2 className="font-extrabold capitalize text-[var(--tx-text)]">
                     {report.content_type} report
                   </h2>
                   <AdminStatusBadge tone={getStatusTone(report.status)}>
                     {report.status}
                   </AdminStatusBadge>
                 </div>
-                <p className="mt-1 text-xs font-medium text-[#7288b8]">
+                <p className="mt-1 text-xs font-medium text-[var(--tx-text-subtle)]">
                   Created {formatDate(report.created_at)}
                 </p>
               </div>
@@ -306,24 +306,24 @@ function AdminReportsContent({ userId }: { userId: string }) {
               </div>
             </div>
 
-            <p className="mt-4 text-sm font-bold text-[#061b4f]">
+            <p className="mt-4 text-sm font-bold text-[var(--tx-text)]">
               {report.reason}
             </p>
             {report.details ? (
-              <p className="mt-2 whitespace-pre-wrap text-sm leading-6 text-[#4d6b9e]">
+              <p className="mt-2 whitespace-pre-wrap text-sm leading-6 text-[var(--tx-text-muted)]">
                 {report.details}
               </p>
             ) : null}
-            <div className="mt-4 grid gap-2 text-sm text-[#4d6b9e] sm:grid-cols-2">
+            <div className="mt-4 grid gap-2 text-sm text-[var(--tx-text-muted)] sm:grid-cols-2">
               <p>
                 Reporter:{" "}
-                <span className="font-bold text-[#061b4f]">
+                <span className="font-bold text-[var(--tx-text)]">
                   {report.reporter?.full_name ?? "Unknown"}
                 </span>
               </p>
               <p>
                 Reported member:{" "}
-                <span className="font-bold text-[#061b4f]">
+                <span className="font-bold text-[var(--tx-text)]">
                   {report.reportedUser?.full_name ?? "Not linked"}
                 </span>
               </p>
@@ -333,10 +333,10 @@ function AdminReportsContent({ userId }: { userId: string }) {
       </section>
 
       <aside className="tx-card h-max p-5">
-        <h2 className="text-lg font-extrabold text-[#061b4f]">
+        <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
           Create test report
         </h2>
-        <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">
+        <p className="mt-2 text-sm leading-6 text-[var(--tx-text-muted)]">
           This lets you test the queue before we add member-facing report buttons
           across every page.
         </p>

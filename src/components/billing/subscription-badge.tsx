@@ -12,7 +12,7 @@ export function SubscriptionBadge({
   }
 
   return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-[#ffe7ed] px-3 py-1 text-xs font-extrabold text-[#f52968]">
+    <span className="inline-flex items-center gap-1 rounded-full bg-[#ffe7ed] px-3 py-1 text-xs font-extrabold text-[var(--tx-accent)]">
       <Crown className="size-3.5" aria-hidden="true" />
       Premium member
     </span>

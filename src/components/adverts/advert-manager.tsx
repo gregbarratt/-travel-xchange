@@ -428,7 +428,7 @@ export function AdvertManager() {
       <section className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <p className="text-sm font-semibold uppercase text-[#0f766e]">
+            <p className="text-sm font-semibold uppercase text-[var(--tx-accent)]">
               Phase 12 revenue system
             </p>
             <h2 className="mt-2 text-2xl font-semibold tracking-normal text-slate-950">
@@ -443,7 +443,7 @@ export function AdvertManager() {
           <Link
             className={cn(
               buttonVariants({ size: "lg" }),
-              "bg-[#0f766e] text-white hover:bg-[#115e59]",
+              "bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)]",
             )}
             href="/dashboard"
           >
@@ -480,7 +480,7 @@ export function AdvertManager() {
             <section className="space-y-4">
               <div className="flex items-center gap-2">
                 <BriefcaseBusiness
-                  className="size-5 text-[#0f766e]"
+                  className="size-5 text-[var(--tx-accent)]"
                   aria-hidden="true"
                 />
                 <h2 className="text-lg font-semibold text-slate-950">
@@ -546,7 +546,7 @@ export function AdvertManager() {
 
             <section className="space-y-4 border-t border-slate-100 pt-5">
               <div className="flex items-center gap-2">
-                <Sparkles className="size-5 text-[#0f766e]" aria-hidden="true" />
+                <Sparkles className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
                 <h2 className="text-lg font-semibold text-slate-950">
                   Creative
                 </h2>
@@ -594,7 +594,7 @@ export function AdvertManager() {
 
             <div className="flex justify-end border-t border-slate-100 pt-5">
               <Button
-                className="h-11 bg-[#0f766e] px-5 text-white hover:bg-[#115e59]"
+                className="h-11 bg-[var(--tx-accent)] px-5 text-white hover:bg-[var(--tx-accent-hover)]"
                 disabled={!configured || isSaving}
                 type="submit"
               >
@@ -606,7 +606,7 @@ export function AdvertManager() {
 
           <section className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
             <div className="flex items-center gap-2">
-              <Megaphone className="size-5 text-[#0f766e]" aria-hidden="true" />
+              <Megaphone className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
               <h2 className="text-lg font-semibold text-slate-950">
                 Active placements
               </h2>
@@ -630,7 +630,7 @@ export function AdvertManager() {
                             {getAdPlacementLabel(placement.placement_key)}
                           </p>
                         </div>
-                        <span className="rounded-md bg-[#e0f2f1] px-2 py-1 text-xs font-semibold text-[#0f766e]">
+                        <span className="rounded-md bg-[var(--tx-accent-soft)] px-2 py-1 text-xs font-semibold text-[var(--tx-accent)]">
                           Active
                         </span>
                       </div>
@@ -650,7 +650,7 @@ export function AdvertManager() {
         <aside className="space-y-5">
           <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
             <div className="flex items-center gap-2">
-              <BarChart3 className="size-5 text-[#0f766e]" aria-hidden="true" />
+              <BarChart3 className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
               <h2 className="text-lg font-semibold text-slate-950">
                 Advertising summary
               </h2>
@@ -731,11 +731,11 @@ function AdvertAccessStatus({
   title: string;
 }) {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[#f6f9fd] px-5 text-[#061b4f]">
-      <section className="w-full max-w-md rounded-xl border border-[#d9e4f5] bg-white p-6 text-center shadow-[0_18px_55px_rgba(6,27,79,0.1)]">
-        <Megaphone className="mx-auto size-8 text-[#063b86]" aria-hidden="true" />
+    <main className="flex min-h-screen items-center justify-center bg-[#f6f9fd] px-5 text-[var(--tx-text)]">
+      <section className="w-full max-w-md rounded-xl border border-[var(--tx-border)] bg-white p-6 text-center shadow-[0_18px_55px_rgba(6,27,79,0.1)]">
+        <Megaphone className="mx-auto size-8 text-[var(--tx-accent)]" aria-hidden="true" />
         <h1 className="mt-4 text-xl font-extrabold">{title}</h1>
-        <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">{message}</p>
+        <p className="mt-2 text-sm leading-6 text-[var(--tx-text-muted)]">{message}</p>
       </section>
     </main>
   );

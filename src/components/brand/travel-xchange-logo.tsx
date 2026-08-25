@@ -29,7 +29,7 @@ export function TravelXchangeLogo({
             y1="8"
             y2="56"
           >
-            <stop stopColor="#f52968" />
+            <stop stopColor="var(--tx-accent)" />
             <stop offset="0.52" stopColor="#ff4f42" />
             <stop offset="1" stopColor="#ffb000" />
           </linearGradient>
@@ -56,7 +56,7 @@ export function TravelXchangeLogo({
 
       <span
         className={cn(
-          "grid leading-none text-[#061b4f]",
+          "grid leading-none text-[var(--tx-text)]",
           textClassName,
         )}
       >

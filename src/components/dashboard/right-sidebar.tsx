@@ -69,20 +69,20 @@ export function RightSidebar({
 
       <section className="tx-card-soft p-5">
         <div className="flex items-center gap-2">
-          <UsersRound className="size-4 text-[#063b86]" aria-hidden="true" />
-          <h2 className="text-base font-extrabold text-[#061b4f]">
+          <UsersRound className="size-4 text-[var(--tx-accent)]" aria-hidden="true" />
+          <h2 className="text-base font-extrabold text-[var(--tx-text)]">
             Featured communities
           </h2>
         </div>
         <div className="mt-3 space-y-2">
           {featuredCommunities.map((community) => (
             <Link
-              className="flex items-center justify-between rounded-lg bg-[#f2f6fd] px-3 py-2 text-sm font-bold text-[#061b4f] transition hover:bg-[#fff0f5] hover:text-[#f52968]"
+              className="flex items-center justify-between rounded-lg bg-[var(--tx-surface-hover)] px-3 py-2 text-sm font-bold text-[var(--tx-text)] transition hover:bg-[#fff0f5] hover:text-[var(--tx-accent)]"
               href="/groups"
               key={community}
             >
               <span className="flex items-center gap-2">
-                <Sparkles className="size-3.5 text-[#ff7a2f]" aria-hidden="true" />
+                <Sparkles className="size-3.5 text-[var(--tx-accent)]" aria-hidden="true" />
                 {community}
               </span>
               <span className="text-xs text-[#6f86b5]">Join</span>
@@ -93,15 +93,15 @@ export function RightSidebar({
 
       <section className="tx-card-soft p-5">
         <div className="flex items-center gap-2">
-          <TrendingUp className="size-4 text-[#063b86]" aria-hidden="true" />
-          <h2 className="text-base font-extrabold text-[#061b4f]">
+          <TrendingUp className="size-4 text-[var(--tx-accent)]" aria-hidden="true" />
+          <h2 className="text-base font-extrabold text-[var(--tx-text)]">
             Trending conversations
           </h2>
         </div>
         <div className="mt-3 space-y-2">
           {trendingTopics.map((topic) => (
             <p
-              className="rounded-lg bg-[#f2f6fd] px-3 py-2 text-sm font-bold text-[#061b4f]"
+              className="rounded-lg bg-[var(--tx-surface-hover)] px-3 py-2 text-sm font-bold text-[var(--tx-text)]"
               key={topic}
             >
               #{topic}
@@ -112,14 +112,14 @@ export function RightSidebar({
 
       <section className="tx-card-soft p-5">
         <div className="flex items-center gap-2">
-          <CalendarDays className="size-4 text-[#063b86]" aria-hidden="true" />
-          <h2 className="text-base font-extrabold text-[#061b4f]">
+          <CalendarDays className="size-4 text-[var(--tx-accent)]" aria-hidden="true" />
+          <h2 className="text-base font-extrabold text-[var(--tx-text)]">
             Coming up
           </h2>
         </div>
         <div className="mt-3 space-y-2">
           {upcomingMoments.map((moment) => (
-            <p className="text-sm font-medium text-[#203b70]" key={moment}>
+            <p className="text-sm font-medium text-[var(--tx-text)]" key={moment}>
               {moment}
             </p>
           ))}
@@ -128,14 +128,14 @@ export function RightSidebar({
 
       <section className="tx-card-soft p-5">
         <div className="flex items-center gap-2">
-          <BriefcaseBusiness className="size-4 text-[#063b86]" aria-hidden="true" />
-          <h2 className="text-base font-extrabold text-[#061b4f]">
+          <BriefcaseBusiness className="size-4 text-[var(--tx-accent)]" aria-hidden="true" />
+          <h2 className="text-base font-extrabold text-[var(--tx-text)]">
             Trade opportunities
           </h2>
         </div>
         <div className="mt-3 space-y-2">
           {jobHighlights.map((job) => (
-            <p className="text-sm font-medium text-[#203b70]" key={job}>
+            <p className="text-sm font-medium text-[var(--tx-text)]" key={job}>
               {job}
             </p>
           ))}
@@ -144,8 +144,8 @@ export function RightSidebar({
 
       <section className="tx-card-soft p-5">
         <div className="flex items-center gap-2">
-          <UserPlus className="size-4 text-[#063b86]" aria-hidden="true" />
-          <h2 className="text-base font-extrabold text-[#061b4f]">
+          <UserPlus className="size-4 text-[var(--tx-accent)]" aria-hidden="true" />
+          <h2 className="text-base font-extrabold text-[var(--tx-text)]">
             People to follow
           </h2>
         </div>
@@ -157,10 +157,10 @@ export function RightSidebar({
                 key={profile.id}
               >
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-bold text-[#061b4f]">
+                  <p className="truncate text-sm font-bold text-[var(--tx-text)]">
                     {profile.full_name ?? "Travel member"}
                   </p>
-                  <p className="truncate text-xs text-[#4d6b9e]">
+                  <p className="truncate text-xs text-[var(--tx-text-muted)]">
                     {getRoleLabel(profile.role)}
                   </p>
                 </div>
@@ -175,7 +175,7 @@ export function RightSidebar({
               </div>
             ))
           ) : (
-            <p className="text-sm leading-6 text-[#4d6b9e]">
+            <p className="text-sm leading-6 text-[var(--tx-text-muted)]">
               Member suggestions will appear as the community grows.
             </p>
           )}
@@ -184,12 +184,12 @@ export function RightSidebar({
 
       <section className="tx-card-soft p-5">
         <div className="flex items-center gap-2">
-          <Megaphone className="size-4 text-[#063b86]" aria-hidden="true" />
-          <h2 className="text-base font-extrabold text-[#061b4f]">
+          <Megaphone className="size-4 text-[var(--tx-accent)]" aria-hidden="true" />
+          <h2 className="text-base font-extrabold text-[var(--tx-text)]">
             Supplier noticeboard
           </h2>
         </div>
-        <p className="mt-3 text-sm leading-6 text-[#4d6b9e]">
+        <p className="mt-3 text-sm leading-6 text-[var(--tx-text-muted)]">
           Supplier launches, incentives, and trade announcements will surface
           here as the network grows.
         </p>

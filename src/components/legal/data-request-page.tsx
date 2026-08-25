@@ -52,10 +52,10 @@ export function DataRequestPage() {
         <section className="border-b border-slate-200 bg-white">
           <div className="mx-auto grid w-full max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[minmax(0,1fr)_22rem] lg:px-8">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-wide text-[#0f766e]">
+              <p className="text-sm font-semibold uppercase tracking-wide text-[var(--tx-accent)]">
                 Privacy rights
               </p>
-              <h1 className="mt-3 max-w-3xl text-4xl font-bold text-[#082f49] sm:text-5xl">
+              <h1 className="mt-3 max-w-3xl text-4xl font-bold text-[var(--tx-text)] sm:text-5xl">
                 Data Deletion and Privacy Request
               </h1>
               <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
@@ -66,11 +66,11 @@ export function DataRequestPage() {
 
             <div className="rounded-lg border border-slate-200 bg-slate-50 p-5">
               <div className="flex items-start gap-3">
-                <span className="rounded-lg bg-[#082f49] p-2 text-white">
+                <span className="rounded-lg bg-[var(--tx-text)] p-2 text-white">
                   <ShieldCheck className="size-5" aria-hidden="true" />
                 </span>
                 <div>
-                  <h2 className="font-semibold text-[#082f49]">
+                  <h2 className="font-semibold text-[var(--tx-text)]">
                     MVP request flow
                   </h2>
                   <p className="mt-2 text-sm leading-6 text-slate-600">
@@ -97,7 +97,7 @@ export function DataRequestPage() {
                   <Link
                     className={`flex items-center justify-between rounded-lg px-3 py-2 text-sm font-medium transition ${
                       isActive
-                        ? "bg-[#e0f2f1] text-[#0f766e]"
+                        ? "bg-[var(--tx-accent-soft)] text-[var(--tx-accent)]"
                         : "text-slate-600 hover:bg-slate-50 hover:text-slate-950"
                     }`}
                     href={item.href}
@@ -119,11 +119,11 @@ export function DataRequestPage() {
               onSubmit={handleSubmit}
             >
               <div className="flex items-start gap-3">
-                <span className="rounded-lg bg-[#e0f2f1] p-2 text-[#0f766e]">
+                <span className="rounded-lg bg-[var(--tx-accent-soft)] p-2 text-[var(--tx-accent)]">
                   <Database className="size-5" aria-hidden="true" />
                 </span>
                 <div>
-                  <h2 className="text-xl font-semibold text-[#082f49]">
+                  <h2 className="text-xl font-semibold text-[var(--tx-text)]">
                     Prepare your request
                   </h2>
                   <p className="mt-2 text-sm leading-6 text-slate-600">
@@ -137,7 +137,7 @@ export function DataRequestPage() {
                 <label className="grid gap-2 text-sm font-semibold text-slate-900">
                   Request type
                   <select
-                    className="rounded-lg border border-slate-300 bg-white px-3 py-3 text-sm font-normal text-slate-900 outline-none focus:border-[#0f766e] focus:ring-2 focus:ring-[#0f766e]/20"
+                    className="rounded-lg border border-slate-300 bg-white px-3 py-3 text-sm font-normal text-slate-900 outline-none focus:border-[var(--tx-accent)] focus:ring-2 focus:ring-[var(--tx-accent)]/20"
                     value={requestType}
                     onChange={(event) => setRequestType(event.target.value)}
                   >
@@ -150,7 +150,7 @@ export function DataRequestPage() {
                 <label className="grid gap-2 text-sm font-semibold text-slate-900">
                   Account email
                   <input
-                    className="rounded-lg border border-slate-300 px-3 py-3 text-sm font-normal text-slate-900 outline-none focus:border-[#0f766e] focus:ring-2 focus:ring-[#0f766e]/20"
+                    className="rounded-lg border border-slate-300 px-3 py-3 text-sm font-normal text-slate-900 outline-none focus:border-[var(--tx-accent)] focus:ring-2 focus:ring-[var(--tx-accent)]/20"
                     placeholder="name@example.com"
                     type="email"
                     value={email}
@@ -162,7 +162,7 @@ export function DataRequestPage() {
                 <label className="grid gap-2 text-sm font-semibold text-slate-900">
                   Details
                   <textarea
-                    className="min-h-36 rounded-lg border border-slate-300 px-3 py-3 text-sm font-normal text-slate-900 outline-none focus:border-[#0f766e] focus:ring-2 focus:ring-[#0f766e]/20"
+                    className="min-h-36 rounded-lg border border-slate-300 px-3 py-3 text-sm font-normal text-slate-900 outline-none focus:border-[var(--tx-accent)] focus:ring-2 focus:ring-[var(--tx-accent)]/20"
                     placeholder="Tell us what you need help with."
                     value={details}
                     onChange={(event) => setDetails(event.target.value)}
@@ -173,7 +173,7 @@ export function DataRequestPage() {
 
               <div className="mt-6 flex flex-wrap items-center gap-3">
                 <button
-                  className="inline-flex items-center gap-2 rounded-lg bg-[#0f766e] px-5 py-3 text-sm font-semibold text-white hover:bg-[#115e59]"
+                  className="inline-flex items-center gap-2 rounded-lg bg-[var(--tx-accent)] px-5 py-3 text-sm font-semibold text-white hover:bg-[var(--tx-accent-hover)]"
                   type="submit"
                 >
                   Prepare email
@@ -182,7 +182,7 @@ export function DataRequestPage() {
 
                 {showMailLink ? (
                   <a
-                    className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-[#082f49] hover:bg-slate-50"
+                    className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-[var(--tx-text)] hover:bg-slate-50"
                     href={mailtoHref}
                   >
                     Open email request
@@ -193,7 +193,7 @@ export function DataRequestPage() {
             </form>
 
             <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
-              <h2 className="text-lg font-semibold text-[#082f49]">
+              <h2 className="text-lg font-semibold text-[var(--tx-text)]">
                 What happens next
               </h2>
               <div className="mt-4 space-y-4 text-sm leading-6 text-slate-600">

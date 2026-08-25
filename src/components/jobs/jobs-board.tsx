@@ -263,7 +263,7 @@ export function JobsBoard() {
         <Link
           className={cn(
             buttonVariants({ size: "lg" }),
-            "hidden bg-[#0f766e] text-white hover:bg-[#115e59] sm:inline-flex",
+            "hidden bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)] sm:inline-flex",
           )}
           href="/jobs/post"
         >
@@ -296,7 +296,7 @@ export function JobsBoard() {
           <Link
             className={cn(
               buttonVariants({ size: "lg" }),
-              "bg-[#0f766e] text-white hover:bg-[#115e59] sm:hidden",
+              "bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)] sm:hidden",
             )}
             href="/jobs/post"
           >
@@ -315,7 +315,7 @@ export function JobsBoard() {
                   Location
                 </span>
                 <input
-                  className="mt-2 h-10 w-full rounded-md border border-slate-300 px-3 text-sm outline-none focus:border-[#0f766e] focus:ring-3 focus:ring-[#0f766e]/15"
+                  className="mt-2 h-10 w-full rounded-md border border-slate-300 px-3 text-sm outline-none focus:border-[var(--tx-accent)] focus:ring-3 focus:ring-[var(--tx-accent)]/15"
                   onChange={(event) => setLocationFilter(event.target.value)}
                   placeholder="Manchester, Remote, London..."
                   value={locationFilter}
@@ -324,14 +324,14 @@ export function JobsBoard() {
               <label className="flex h-10 items-center gap-3 rounded-md border border-slate-200 bg-slate-50 px-3 text-sm font-medium text-slate-700 lg:mt-7">
                 <input
                   checked={remoteOnly}
-                  className="size-4 accent-[#0f766e]"
+                  className="size-4 accent-[var(--tx-accent)]"
                   onChange={(event) => setRemoteOnly(event.target.checked)}
                   type="checkbox"
                 />
                 Remote only
               </label>
               <Button
-                className="h-10 bg-[#082f49] px-4 text-white hover:bg-[#0c4a6e]"
+                className="h-10 bg-[var(--tx-text)] px-4 text-white hover:bg-[#0c4a6e]"
                 onClick={() => {
                   setActiveCategory("all");
                   setLocationFilter("");
@@ -350,7 +350,7 @@ export function JobsBoard() {
                 className={cn(
                   "min-w-max rounded-md border px-3 py-2 text-sm font-medium transition",
                   activeCategory === category.value
-                    ? "border-[#0f766e] bg-[#e0f2f1] text-[#0f766e]"
+                    ? "border-[var(--tx-accent)] bg-[var(--tx-accent-soft)] text-[var(--tx-accent)]"
                     : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50",
                 )}
                 key={category.value}
@@ -377,7 +377,7 @@ export function JobsBoard() {
           {!isLoading && filteredJobs.length === 0 && !error ? (
             <div className="rounded-md border border-slate-200 bg-white p-8 text-center shadow-sm">
               <BriefcaseBusiness
-                className="mx-auto size-8 text-[#0f766e]"
+                className="mx-auto size-8 text-[var(--tx-accent)]"
                 aria-hidden="true"
               />
               <h2 className="mt-4 text-lg font-semibold text-slate-950">
@@ -394,14 +394,14 @@ export function JobsBoard() {
               <article
                 className={cn(
                   "rounded-md border bg-white p-5 shadow-sm",
-                  job.is_featured ? "border-[#0f766e]" : "border-slate-200",
+                  job.is_featured ? "border-[var(--tx-accent)]" : "border-slate-200",
                 )}
                 key={job.id}
               >
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                   <div className="min-w-0">
                     <div className="flex flex-wrap gap-2">
-                      <span className="rounded-md bg-[#e0f2f1] px-2 py-1 text-xs font-semibold text-[#0f766e]">
+                      <span className="rounded-md bg-[var(--tx-accent-soft)] px-2 py-1 text-xs font-semibold text-[var(--tx-accent)]">
                         {getJobCategoryLabel(job.category)}
                       </span>
                       {job.is_featured ? (
@@ -437,7 +437,7 @@ export function JobsBoard() {
                     className={cn(
                       "h-10 px-4",
                       job.is_bookmarked_by_current_user
-                        ? "bg-[#082f49] hover:bg-[#0c4a6e]"
+                        ? "bg-[var(--tx-text)] hover:bg-[#0c4a6e]"
                         : "bg-slate-100 text-slate-700 hover:bg-slate-200",
                     )}
                     disabled={busyJobId === job.id}
@@ -485,7 +485,7 @@ export function JobsBoard() {
                   <Link
                     className={cn(
                       buttonVariants({ size: "lg" }),
-                      "bg-[#0f766e] text-white hover:bg-[#115e59]",
+                      "bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)]",
                     )}
                     href={`/jobs/${job.id}`}
                   >
@@ -544,7 +544,7 @@ export function JobsBoard() {
 
           <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
             <div className="flex items-center gap-2">
-              <MapPin className="size-5 text-[#0f766e]" aria-hidden="true" />
+              <MapPin className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
               <h2 className="text-lg font-semibold text-slate-950">
                 Hiring signal
               </h2>

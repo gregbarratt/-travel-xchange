@@ -51,14 +51,14 @@ export function TradeNewsCard({ post, onOpen }: TradeNewsCardProps) {
   const published = formatPublished(post.published_at);
 
   return (
-    <article className="flex h-full flex-col rounded-lg border border-[#d6e2f5] bg-white p-4 shadow-[0_10px_22px_rgba(7,36,91,0.06)] transition hover:border-[#b8cae8]">
+    <article className="flex h-full flex-col rounded-lg border border-[var(--tx-border)] bg-white p-4 shadow-[0_10px_22px_rgba(7,36,91,0.06)] transition hover:border-[var(--tx-border)]">
       <div className="flex flex-wrap items-center gap-2">
-        <span className="inline-flex items-center gap-1.5 rounded-md bg-[#eef4ff] px-2 py-1 text-xs font-bold text-[#063b86]">
+        <span className="inline-flex items-center gap-1.5 rounded-md bg-[var(--tx-accent-soft)] px-2 py-1 text-xs font-bold text-[var(--tx-accent)]">
           <ExternalLink className="size-3" aria-hidden="true" />
           {publisher}
         </span>
         {published ? (
-          <time className="text-xs font-semibold text-[#5b6b8a]" dateTime={post.published_at}>
+          <time className="text-xs font-semibold text-[var(--tx-text-subtle)]" dateTime={post.published_at}>
             {published}
           </time>
         ) : null}
@@ -76,7 +76,7 @@ export function TradeNewsCard({ post, onOpen }: TradeNewsCardProps) {
         ) : null}
       </div>
 
-      <h3 className="mt-3 text-base font-extrabold leading-6 text-[#061b4f]">
+      <h3 className="mt-3 text-base font-extrabold leading-6 text-[var(--tx-text)]">
         <a
           className="hover:underline"
           href={post.canonical_url}
@@ -89,9 +89,9 @@ export function TradeNewsCard({ post, onOpen }: TradeNewsCardProps) {
       </h3>
 
       {post.summary ? (
-        <p className="mt-2 text-sm leading-6 text-[#3d4d6b]">{post.summary}</p>
+        <p className="mt-2 text-sm leading-6 text-[var(--tx-text-muted)]">{post.summary}</p>
       ) : (
-        <p className="mt-2 text-sm leading-6 text-[#5b6b8a]">
+        <p className="mt-2 text-sm leading-6 text-[var(--tx-text-subtle)]">
           Open the original story on {publisher} for the full details.
         </p>
       )}
@@ -100,7 +100,7 @@ export function TradeNewsCard({ post, onOpen }: TradeNewsCardProps) {
         <ul className="mt-3 flex flex-wrap gap-1.5">
           {post.topics.map((topic) => (
             <li
-              className="rounded-md border border-[#d6e2f5] px-2 py-0.5 text-xs font-semibold text-[#3d4d6b]"
+              className="rounded-md border border-[var(--tx-border)] px-2 py-0.5 text-xs font-semibold text-[var(--tx-text-muted)]"
               key={topic.id}
             >
               {topic.name}
@@ -111,7 +111,7 @@ export function TradeNewsCard({ post, onOpen }: TradeNewsCardProps) {
 
       <div className="mt-auto pt-4">
         <a
-          className="inline-flex items-center gap-1.5 text-sm font-bold text-[#063b86] hover:text-[#04275c]"
+          className="inline-flex items-center gap-1.5 text-sm font-bold text-[var(--tx-accent)] hover:text-[var(--tx-accent-hover)]"
           href={post.canonical_url}
           onClick={() => onOpen?.(post)}
           rel="noopener noreferrer nofollow"

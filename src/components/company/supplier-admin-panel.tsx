@@ -103,7 +103,7 @@ export function SupplierAdminPanel({
       <section className="rounded-md border border-[#c8d7ee] bg-white p-5 shadow-sm">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-start gap-3">
-            <div className="flex size-10 items-center justify-center rounded-md bg-[#061b4f] text-white">
+            <div className="flex size-10 items-center justify-center rounded-md bg-[var(--tx-text)] text-white">
               <ShieldCheck className="size-5" aria-hidden="true" />
             </div>
             <div>
@@ -115,7 +115,7 @@ export function SupplierAdminPanel({
                 agent view.
               </p>
               {pendingCount > 0 ? (
-                <p className="mt-2 text-sm font-semibold text-[#f52968]">
+                <p className="mt-2 text-sm font-semibold text-[var(--tx-accent)]">
                   {pendingCount} access request{pendingCount === 1 ? "" : "s"} to
                   review.
                 </p>
@@ -127,7 +127,7 @@ export function SupplierAdminPanel({
           </div>
 
           <Button
-            className="w-fit bg-[#061b4f] text-white hover:bg-[#123b7a]"
+            className="w-fit bg-[var(--tx-text)] text-white hover:bg-[#123b7a]"
             disabled={isLoading}
             onClick={() => setIsOpen((current) => !current)}
             type="button"

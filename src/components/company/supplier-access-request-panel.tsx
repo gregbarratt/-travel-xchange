@@ -232,7 +232,7 @@ export function SupplierAccessRequestPanel({
   return (
     <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
       <div className="flex items-start gap-3">
-        <div className="flex size-10 items-center justify-center rounded-md bg-[#e0f2f1] text-[#0f766e]">
+        <div className="flex size-10 items-center justify-center rounded-md bg-[var(--tx-accent-soft)] text-[var(--tx-accent)]">
           {canManage ? (
             <ShieldCheck className="size-5" aria-hidden="true" />
           ) : (
@@ -302,7 +302,7 @@ export function SupplierAccessRequestPanel({
                     ) : null}
                     <div className="mt-3 flex flex-wrap gap-2">
                       <Button
-                        className="bg-[#0f766e] text-white hover:bg-[#115e59]"
+                        className="bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)]"
                         disabled={isSaving}
                         onClick={() =>
                           void handleReviewRequest(accessRequest.id, "approved")
@@ -347,7 +347,7 @@ export function SupplierAccessRequestPanel({
                     key={agent.memberId}
                   >
                     <UserCheck
-                      className="size-4 text-[#0f766e]"
+                      className="size-4 text-[var(--tx-accent)]"
                       aria-hidden="true"
                     />
                     <div>
@@ -384,14 +384,14 @@ export function SupplierAccessRequestPanel({
                 </p>
               ) : null}
               <textarea
-                className="min-h-24 rounded-md border border-slate-300 px-3 py-3 text-sm text-slate-950 outline-none focus:border-[#0f766e] focus:ring-3 focus:ring-[#0f766e]/15"
+                className="min-h-24 rounded-md border border-slate-300 px-3 py-3 text-sm text-slate-950 outline-none focus:border-[var(--tx-accent)] focus:ring-3 focus:ring-[var(--tx-accent)]/15"
                 maxLength={500}
                 onChange={(event) => setMessageText(event.target.value)}
                 placeholder="Optional: tell the supplier why you need access."
                 value={messageText}
               />
               <Button
-                className="w-fit bg-[#0f766e] text-white hover:bg-[#115e59]"
+                className="w-fit bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)]"
                 disabled={isSaving}
                 type="submit"
               >

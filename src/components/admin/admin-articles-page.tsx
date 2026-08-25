@@ -196,7 +196,7 @@ function AdminArticlesContent({ userId }: { userId: string }) {
 
   if (isLoading) {
     return (
-      <div className="tx-card p-6 text-sm text-[#4d6b9e]">
+      <div className="tx-card p-6 text-sm text-[var(--tx-text-muted)]">
         Loading articles...
       </div>
     );
@@ -231,7 +231,7 @@ function AdminArticlesContent({ userId }: { userId: string }) {
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-2">
                 <Link
-                  className="font-extrabold text-[#061b4f] hover:text-[#f52968]"
+                  className="font-extrabold text-[var(--tx-text)] hover:text-[var(--tx-accent)]"
                   href={`/news/${article.slug}`}
                 >
                   {article.title}
@@ -240,12 +240,12 @@ function AdminArticlesContent({ userId }: { userId: string }) {
                   {article.status}
                 </AdminStatusBadge>
               </div>
-              <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">
+              <p className="mt-2 text-sm leading-6 text-[var(--tx-text-muted)]">
                 {getArticleTypeLabel(article.article_type)} -{" "}
                 {article.category?.name ?? "No category"} -{" "}
                 {article.company?.name ?? "No company"}
               </p>
-              <p className="mt-1 text-xs font-medium text-[#7288b8]">
+              <p className="mt-1 text-xs font-medium text-[var(--tx-text-subtle)]">
                 Created {formatArticleDate(article.created_at)}
               </p>
             </div>

@@ -110,14 +110,14 @@ export function LaunchSignupForm() {
 
   return (
     <form
-      className="mt-8 rounded-lg border border-[#d9e4f5] bg-white/92 p-5 shadow-[0_18px_50px_rgba(6,27,79,0.10)]"
+      className="mt-8 rounded-lg border border-[var(--tx-border)] bg-white/92 p-5 shadow-[0_18px_50px_rgba(6,27,79,0.10)]"
       onSubmit={handleSubmit}
     >
       <div>
-        <h2 className="text-xl font-black text-[#061b4f]">
+        <h2 className="text-xl font-black text-[var(--tx-text)]">
           Follow for launch updates
         </h2>
-        <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">
+        <p className="mt-2 text-sm leading-6 text-[var(--tx-text-muted)]">
           Join the early access list. This saves your interest only and does not
           create a live member account yet.
         </p>
@@ -193,7 +193,7 @@ export function LaunchSignupForm() {
       ) : null}
 
       <button
-        className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#061b4f] px-6 py-3 text-sm font-extrabold uppercase tracking-wide text-white shadow-[0_16px_34px_rgba(6,27,79,0.18)] transition hover:bg-[#082f6f] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+        className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--tx-text)] px-6 py-3 text-sm font-extrabold uppercase tracking-wide text-white shadow-[0_16px_34px_rgba(6,27,79,0.18)] transition hover:bg-[#082f6f] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
         disabled={isSubmitting}
         type="submit"
       >

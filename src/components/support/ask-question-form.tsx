@@ -180,7 +180,7 @@ export function AskQuestionForm() {
 
         <section className="space-y-4">
           <div className="flex items-center gap-2">
-            <HelpCircle className="size-5 text-[#0f766e]" aria-hidden="true" />
+            <HelpCircle className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
             <h2 className="text-lg font-semibold text-slate-950">
               Question details
             </h2>
@@ -219,7 +219,7 @@ export function AskQuestionForm() {
             Back to support
           </Link>
           <Button
-            className="bg-[#0f766e] text-white hover:bg-[#115e59]"
+            className="bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)]"
             disabled={!configured || isLoading || isSaving}
             size="lg"
             type="submit"

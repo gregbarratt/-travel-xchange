@@ -62,11 +62,11 @@ export function ForgotPasswordForm() {
 
   return (
     <form
-      className="mt-6 rounded-lg border border-slate-200 bg-[#f8fafc] p-4"
+      className="mt-6 rounded-lg border border-slate-200 bg-[var(--tx-surface-hover)] p-4"
       id="forgot-password"
       onSubmit={handleSubmit}
     >
-      <h2 className="text-sm font-extrabold uppercase tracking-wide text-[#061b4f]">
+      <h2 className="text-sm font-extrabold uppercase tracking-wide text-[var(--tx-text)]">
         Forgotten password
       </h2>
       <p className="mt-2 text-sm leading-6 text-slate-600">
@@ -99,7 +99,7 @@ export function ForgotPasswordForm() {
         ) : null}
 
         <Button
-          className="h-11 w-full bg-[#061b4f] text-white hover:bg-[#063b86]"
+          className="h-11 w-full bg-[var(--tx-text)] text-white hover:bg-[var(--tx-accent)]"
           disabled={isSubmitting}
           type="submit"
         >

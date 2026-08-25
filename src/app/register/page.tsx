@@ -18,48 +18,48 @@ export const metadata: Metadata = {
 export default function RegisterPage() {
   return (
     <PublicPageShell>
-      <main className="bg-[#f8fafc] px-4 py-10 sm:px-6 lg:px-8">
+      <main className="bg-[var(--tx-surface-hover)] px-4 py-10 sm:px-6 lg:px-8">
         <section className="mx-auto w-full max-w-3xl">
-          <div className="rounded-lg border border-[#d9e4f5] bg-white p-6 shadow-sm sm:p-8">
+          <div className="rounded-lg border border-[var(--tx-border)] bg-white p-6 shadow-sm sm:p-8">
             <TravelXchangeLogo
               markClassName="h-9 w-10"
               textClassName="[&>span:first-child]:text-xl [&>span:last-child]:text-[0.62rem]"
             />
-            <p className="mt-8 inline-flex rounded-lg border border-[#f52968]/20 bg-[#fff1f6] px-3 py-2 text-sm font-extrabold uppercase tracking-wide text-[#f52968]">
+            <p className="mt-8 inline-flex rounded-lg border border-[var(--tx-accent)]/20 bg-[#fff1f6] px-3 py-2 text-sm font-extrabold uppercase tracking-wide text-[var(--tx-accent)]">
               Registration paused
             </p>
-            <h1 className="mt-5 text-4xl font-black leading-tight tracking-normal text-[#061b4f]">
+            <h1 className="mt-5 text-4xl font-black leading-tight tracking-normal text-[var(--tx-text)]">
               Travel Xchange access is currently invitation-only.
             </h1>
-            <p className="mt-4 text-base leading-7 text-[#4d6b9e]">
+            <p className="mt-4 text-base leading-7 text-[var(--tx-text-muted)]">
               Public registration is temporarily closed while we prepare private
               beta access. Existing owners, admins, and invited testers can log
               in from the secure login page.
             </p>
 
             <div className="mt-8 grid gap-4 sm:grid-cols-3">
-              <div className="rounded-lg border border-[#d9e4f5] bg-[#f8fafc] p-4">
-                <LockKeyhole className="size-5 text-[#061b4f]" aria-hidden="true" />
-                <p className="mt-3 text-sm font-extrabold text-[#061b4f]">
+              <div className="rounded-lg border border-[var(--tx-border)] bg-[var(--tx-surface-hover)] p-4">
+                <LockKeyhole className="size-5 text-[var(--tx-text)]" aria-hidden="true" />
+                <p className="mt-3 text-sm font-extrabold text-[var(--tx-text)]">
                   New account creation is blocked.
                 </p>
               </div>
-              <div className="rounded-lg border border-[#d9e4f5] bg-[#f8fafc] p-4">
-                <ShieldCheck className="size-5 text-[#f52968]" aria-hidden="true" />
-                <p className="mt-3 text-sm font-extrabold text-[#061b4f]">
+              <div className="rounded-lg border border-[var(--tx-border)] bg-[var(--tx-surface-hover)] p-4">
+                <ShieldCheck className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
+                <p className="mt-3 text-sm font-extrabold text-[var(--tx-text)]">
                   Access is reviewed before beta.
                 </p>
               </div>
-              <div className="rounded-lg border border-[#d9e4f5] bg-[#f8fafc] p-4">
-                <CheckCircle2 className="size-5 text-[#0f766e]" aria-hidden="true" />
-                <p className="mt-3 text-sm font-extrabold text-[#061b4f]">
+              <div className="rounded-lg border border-[var(--tx-border)] bg-[var(--tx-surface-hover)] p-4">
+                <CheckCircle2 className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
+                <p className="mt-3 text-sm font-extrabold text-[var(--tx-text)]">
                   Travel Xchange remains free to access.
                 </p>
               </div>
             </div>
 
             <Link
-              className="mt-8 inline-flex items-center justify-center gap-2 rounded-lg bg-[#0f766e] px-5 py-3 text-sm font-extrabold text-white hover:bg-[#115e59]"
+              className="mt-8 inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--tx-accent)] px-5 py-3 text-sm font-extrabold text-white hover:bg-[var(--tx-accent-hover)]"
               href="/login"
             >
               Go to login

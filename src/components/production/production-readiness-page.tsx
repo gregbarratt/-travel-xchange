@@ -49,10 +49,10 @@ function ProductionReadinessContent({
         <div className="tx-card p-5">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-xs font-extrabold uppercase tracking-wide text-[#4d6b9e]">
+              <p className="text-xs font-extrabold uppercase tracking-wide text-[var(--tx-text-muted)]">
                 Required environment
               </p>
-              <p className="mt-2 text-3xl font-extrabold text-[#061b4f]">
+              <p className="mt-2 text-3xl font-extrabold text-[var(--tx-text)]">
                 {summary.configuredRequiredCount}/{summary.requiredCount}
               </p>
             </div>
@@ -76,14 +76,14 @@ function ProductionReadinessContent({
         <div className="tx-card p-5">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-xs font-extrabold uppercase tracking-wide text-[#4d6b9e]">
+              <p className="text-xs font-extrabold uppercase tracking-wide text-[var(--tx-text-muted)]">
                 Recommended missing
               </p>
-              <p className="mt-2 text-3xl font-extrabold text-[#061b4f]">
+              <p className="mt-2 text-3xl font-extrabold text-[var(--tx-text)]">
                 {summary.missingRecommendedCount}
               </p>
             </div>
-            <span className="flex size-11 items-center justify-center rounded-lg bg-[#eef5ff] text-[#063b86]">
+            <span className="flex size-11 items-center justify-center rounded-lg bg-[var(--tx-accent-soft)] text-[var(--tx-accent)]">
               <CircleDashed className="size-5" aria-hidden="true" />
             </span>
           </div>
@@ -92,14 +92,14 @@ function ProductionReadinessContent({
         <div className="tx-card p-5">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-xs font-extrabold uppercase tracking-wide text-[#4d6b9e]">
+              <p className="text-xs font-extrabold uppercase tracking-wide text-[var(--tx-text-muted)]">
                 Launch status
               </p>
-              <p className="mt-2 text-xl font-extrabold text-[#061b4f]">
+              <p className="mt-2 text-xl font-extrabold text-[var(--tx-text)]">
                 {requiredReady ? "Ready for preview" : "Needs setup"}
               </p>
             </div>
-            <span className="flex size-11 items-center justify-center rounded-lg bg-[#eef5ff] text-[#063b86]">
+            <span className="flex size-11 items-center justify-center rounded-lg bg-[var(--tx-accent-soft)] text-[var(--tx-accent)]">
               <Rocket className="size-5" aria-hidden="true" />
             </span>
           </div>
@@ -108,14 +108,14 @@ function ProductionReadinessContent({
 
       <section className="tx-card p-5">
         <div className="flex items-start gap-3">
-          <span className="rounded-lg bg-[#eef5ff] p-2 text-[#063b86]">
+          <span className="rounded-lg bg-[var(--tx-accent-soft)] p-2 text-[var(--tx-accent)]">
             <ShieldCheck className="size-5" aria-hidden="true" />
           </span>
           <div>
-            <h2 className="text-lg font-extrabold text-[#061b4f]">
+            <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
               Environment variable review
             </h2>
-            <p className="mt-2 max-w-3xl text-sm leading-6 text-[#4d6b9e]">
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--tx-text-muted)]">
               This checks whether each launch setting exists. It never displays
               secret values, so Stripe and Supabase keys stay private.
             </p>
@@ -125,13 +125,13 @@ function ProductionReadinessContent({
         <div className="mt-5 grid gap-3">
           {summary.environmentItems.map((item) => (
             <div
-              className="rounded-lg border border-[#d9e4f5] bg-white/70 p-4"
+              className="rounded-lg border border-[var(--tx-border)] bg-white/70 p-4"
               key={item.key}
             >
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
-                  <p className="font-bold text-[#061b4f]">{item.key}</p>
-                  <p className="mt-1 text-sm leading-6 text-[#4d6b9e]">
+                  <p className="font-bold text-[var(--tx-text)]">{item.key}</p>
+                  <p className="mt-1 text-sm leading-6 text-[var(--tx-text-muted)]">
                     {item.description}
                   </p>
                 </div>
@@ -157,24 +157,24 @@ function ProductionReadinessContent({
       <section className="grid gap-5 xl:grid-cols-2">
         {productionChecklistSections.map((section) => (
           <div className="tx-card p-5" key={section.title}>
-            <h2 className="text-lg font-extrabold text-[#061b4f]">
+            <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
               {section.title}
             </h2>
             <div className="mt-4 space-y-3">
               {section.items.map((item) => (
                 <div
-                  className="rounded-lg border border-[#d9e4f5] bg-white/70 p-4"
+                  className="rounded-lg border border-[var(--tx-border)] bg-white/70 p-4"
                   key={item.label}
                 >
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <p className="font-bold text-[#061b4f]">{item.label}</p>
+                    <p className="font-bold text-[var(--tx-text)]">{item.label}</p>
                     <AdminStatusBadge
                       tone={item.level === "required" ? "amber" : "blue"}
                     >
                       {levelLabels[item.level]}
                     </AdminStatusBadge>
                   </div>
-                  <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">
+                  <p className="mt-2 text-sm leading-6 text-[var(--tx-text-muted)]">
                     {item.detail}
                   </p>
                 </div>

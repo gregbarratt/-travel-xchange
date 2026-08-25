@@ -250,7 +250,7 @@ export function JobPostForm() {
               placeholder="Manchester, UK"
             />
             <label className="flex h-11 items-center gap-3 rounded-lg border border-slate-200 bg-slate-50 px-3 text-sm font-medium text-slate-700 md:mt-7">
-              <input className="size-4 accent-[#0f766e]" name="is_remote" type="checkbox" />
+              <input className="size-4 accent-[var(--tx-accent)]" name="is_remote" type="checkbox" />
               Remote or homeworking available
             </label>
           </div>
@@ -334,7 +334,7 @@ export function JobPostForm() {
             Back to jobs
           </Link>
           <Button
-            className="h-11 bg-[#0f766e] px-5 text-white hover:bg-[#115e59]"
+            className="h-11 bg-[var(--tx-accent)] px-5 text-white hover:bg-[var(--tx-accent-hover)]"
             disabled={isSaving}
             type="submit"
           >

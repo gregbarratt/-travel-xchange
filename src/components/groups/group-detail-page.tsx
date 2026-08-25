@@ -262,7 +262,7 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
         <Link
           className={cn(
             buttonVariants({ variant: "outline", size: "lg" }),
-            "hidden border-[#b8cae8] bg-white text-[#061b4f] hover:bg-[#f4f8ff] sm:inline-flex",
+            "hidden border-[var(--tx-border)] bg-white text-[var(--tx-text)] hover:bg-[#f4f8ff] sm:inline-flex",
           )}
           href="/groups"
         >
@@ -281,7 +281,7 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
       ) : null}
 
       {isLoading ? (
-        <div className="tx-card p-6 text-sm text-[#4d6b9e]">
+        <div className="tx-card p-6 text-sm text-[var(--tx-text-muted)]">
           Loading group...
         </div>
       ) : null}
@@ -296,7 +296,7 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
         <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_320px]">
           <section className="space-y-5">
             <article className="tx-card overflow-hidden">
-              <div className="h-36 bg-[linear-gradient(120deg,#061b4f_0%,#063b86_54%,#f52968_100%)]" />
+              <div className="h-36 bg-[linear-gradient(120deg,var(--tx-text)_0%,var(--tx-accent)_54%,var(--tx-accent)_100%)]" />
               <div className="p-5 sm:p-6">
                 <div className="-mt-16 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                   <div className="flex items-end gap-4">
@@ -304,10 +304,10 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
                       {initials(group.name)}
                     </div>
                     <div className="pb-1">
-                      <span className="rounded-lg bg-[#fff0f5] px-2 py-1 text-xs font-extrabold text-[#f52968]">
+                      <span className="rounded-lg bg-[#fff0f5] px-2 py-1 text-xs font-extrabold text-[var(--tx-accent)]">
                         {getGroupCategoryLabel(group.category)}
                       </span>
-                      <h2 className="mt-3 text-2xl font-extrabold text-[#061b4f]">
+                      <h2 className="mt-3 text-2xl font-extrabold text-[var(--tx-text)]">
                         {group.name}
                       </h2>
                     </div>
@@ -316,7 +316,7 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
                     className={cn(
                       "h-10 px-4",
                       isMember
-                        ? "bg-[#061b4f] hover:bg-[#063b86]"
+                        ? "bg-[var(--tx-text)] hover:bg-[var(--tx-accent)]"
                         : "tx-action",
                     )}
                     disabled={isJoining}
@@ -327,7 +327,7 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
                     {isMember ? "Joined" : "Join group"}
                   </Button>
                 </div>
-                <p className="mt-6 text-sm leading-6 text-[#4d6b9e]">
+                <p className="mt-6 text-sm leading-6 text-[var(--tx-text-muted)]">
                   {group.description}
                 </p>
               </div>
@@ -336,15 +336,15 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
             <article className="tx-card p-5">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <p className="inline-flex items-center gap-2 text-xs font-extrabold uppercase text-[#063b86]">
+                  <p className="inline-flex items-center gap-2 text-xs font-extrabold uppercase text-[var(--tx-accent)]">
                     <MessageCircle className="size-4" aria-hidden="true" />
                     Group discussion
                   </p>
-                  <h2 className="mt-1 text-lg font-extrabold text-[#061b4f]">
+                  <h2 className="mt-1 text-lg font-extrabold text-[var(--tx-text)]">
                     Share with this community
                   </h2>
                 </div>
-                <span className="rounded-lg bg-[#eef5ff] px-3 py-1 text-xs font-bold text-[#063b86]">
+                <span className="rounded-lg bg-[var(--tx-accent-soft)] px-3 py-1 text-xs font-bold text-[var(--tx-accent)]">
                   {isMember ? "You are a member" : "Join to post"}
                 </span>
               </div>
@@ -355,7 +355,7 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
                     Write a group post
                   </label>
                   <textarea
-                    className="min-h-28 w-full resize-y rounded-lg border border-[#b8cae8] bg-white/82 px-4 py-3 text-sm leading-6 text-[#061b4f] outline-none transition placeholder:text-[#7288b8] focus:border-[#063b86] focus:ring-3 focus:ring-[#063b86]/15"
+                    className="min-h-28 w-full resize-y rounded-lg border border-[var(--tx-border)] bg-white/82 px-4 py-3 text-sm leading-6 text-[var(--tx-text)] outline-none transition placeholder:text-[var(--tx-text-subtle)] focus:border-[var(--tx-accent)] focus:ring-3 focus:ring-[var(--tx-accent)]/15"
                     id="group-post"
                     maxLength={2000}
                     onChange={(event) => setPostDraft(event.target.value)}
@@ -377,7 +377,7 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
                   </Button>
                 </form>
               ) : (
-                <div className="mt-4 rounded-lg border border-[#d9e4f5] bg-[#f6f9ff]/80 p-4 text-sm leading-6 text-[#4d6b9e]">
+                <div className="mt-4 rounded-lg border border-[var(--tx-border)] bg-[var(--tx-surface-hover)]/80 p-4 text-sm leading-6 text-[var(--tx-text-muted)]">
                   Join this group to post in the discussion.
                 </div>
               )}
@@ -397,17 +397,17 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
                       <div className="min-w-0">
                         {post.author?.id ? (
                           <Link
-                            className="font-extrabold text-[#061b4f] hover:text-[#f52968]"
+                            className="font-extrabold text-[var(--tx-text)] hover:text-[var(--tx-accent)]"
                             href={`/profile/${post.author.id}`}
                           >
                             {post.author.full_name ?? "Travel Xchange member"}
                           </Link>
                         ) : (
-                          <p className="font-extrabold text-[#061b4f]">
+                          <p className="font-extrabold text-[var(--tx-text)]">
                             Travel Xchange member
                           </p>
                         )}
-                        <p className="mt-1 text-xs leading-5 text-[#4d6b9e]">
+                        <p className="mt-1 text-xs leading-5 text-[var(--tx-text-muted)]">
                           {post.author?.headline ??
                             (post.author?.role
                               ? getRoleLabel(post.author.role)
@@ -416,7 +416,7 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
                         </p>
                       </div>
                     </div>
-                    <p className="mt-4 whitespace-pre-wrap text-sm leading-6 text-[#203b70]">
+                    <p className="mt-4 whitespace-pre-wrap text-sm leading-6 text-[var(--tx-text)]">
                       {post.content}
                     </p>
                   </article>
@@ -424,13 +424,13 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
               ) : (
                 <div className="tx-card p-8 text-center">
                   <MessageCircle
-                    className="mx-auto size-8 text-[#f52968]"
+                    className="mx-auto size-8 text-[var(--tx-accent)]"
                     aria-hidden="true"
                   />
-                  <h2 className="mt-4 text-lg font-extrabold text-[#061b4f]">
+                  <h2 className="mt-4 text-lg font-extrabold text-[var(--tx-text)]">
                     No posts yet
                   </h2>
-                  <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-[#4d6b9e]">
+                  <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-[var(--tx-text-muted)]">
                     Start the first discussion in this group.
                   </p>
                 </div>
@@ -441,27 +441,27 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
           <aside className="space-y-5">
             <article className="tx-card-soft p-5">
               <div className="flex items-center gap-2">
-                <Info className="size-4 text-[#063b86]" aria-hidden="true" />
-                <h2 className="text-lg font-extrabold text-[#061b4f]">
+                <Info className="size-4 text-[var(--tx-accent)]" aria-hidden="true" />
+                <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
                   Group details
                 </h2>
               </div>
               <div className="mt-4 space-y-3 text-sm">
                 <div className="flex items-center justify-between gap-3">
-                  <span className="text-[#4d6b9e]">Members</span>
-                  <span className="font-extrabold text-[#061b4f]">
+                  <span className="text-[var(--tx-text-muted)]">Members</span>
+                  <span className="font-extrabold text-[var(--tx-text)]">
                     {memberCount}
                   </span>
                 </div>
                 <div className="flex items-center justify-between gap-3">
-                  <span className="text-[#4d6b9e]">Posts</span>
-                  <span className="font-extrabold text-[#061b4f]">
+                  <span className="text-[var(--tx-text-muted)]">Posts</span>
+                  <span className="font-extrabold text-[var(--tx-text)]">
                     {posts.length}
                   </span>
                 </div>
                 <div className="flex items-center justify-between gap-3">
-                  <span className="text-[#4d6b9e]">Visibility</span>
-                  <span className="font-extrabold capitalize text-[#061b4f]">
+                  <span className="text-[var(--tx-text-muted)]">Visibility</span>
+                  <span className="font-extrabold capitalize text-[var(--tx-text)]">
                     {group.visibility}
                   </span>
                 </div>
@@ -470,12 +470,12 @@ export function GroupDetailPage({ groupId }: GroupDetailPageProps) {
 
             <article className="tx-card-soft p-5">
               <div className="flex items-center gap-2">
-                <Sparkles className="size-4 text-[#ff7a2f]" aria-hidden="true" />
-                <h2 className="text-lg font-extrabold text-[#061b4f]">
+                <Sparkles className="size-4 text-[var(--tx-accent)]" aria-hidden="true" />
+                <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
                   Coming later
                 </h2>
               </div>
-              <div className="mt-4 space-y-3 text-sm leading-6 text-[#4d6b9e]">
+              <div className="mt-4 space-y-3 text-sm leading-6 text-[var(--tx-text-muted)]">
                 <p>Group sponsor slots arrive in Phase 12.</p>
                 <p>Moderation tools arrive in Phase 14.</p>
                 <p>Group search arrives in Phase 15.</p>

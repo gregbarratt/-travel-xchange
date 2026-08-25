@@ -1,27 +1,19 @@
 "use client";
 
 import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
-  Bell,
-  Compass,
   MessageSquareText,
-  PlusCircle,
-  UserRound,
 } from "lucide-react";
 
-import { LogoutButton } from "@/components/auth/logout-button";
 import {
   AdPlacementSlot,
   FeaturedAdCarousel,
 } from "@/components/adverts/ad-placement";
-import { buttonVariants } from "@/components/ui/button";
-import { AppSidebar } from "@/components/dashboard/app-sidebar";
+import { MemberPageShell } from "@/components/member/member-page-shell";
 import { FeedComposer } from "@/components/dashboard/feed-composer";
 import { FeedPostCard } from "@/components/dashboard/feed-post-card";
 import { RightSidebar } from "@/components/dashboard/right-sidebar";
-import { GlobalSearchBox } from "@/components/search/global-search-box";
 import { feedTopics } from "@/config/navigation";
 import {
   createSupabaseBrowserClient,
@@ -410,64 +402,12 @@ export function DashboardPanel() {
   const memberName = profile?.full_name ?? "Travel Xchange member";
 
   return (
-    <div className="tx-dashboard-bg min-h-screen text-[#061b4f]">
-      <div className="grid min-h-screen lg:grid-cols-[280px_minmax(0,1fr)]">
-        <AppSidebar profile={profile} />
-
-        <div className="min-w-0">
-          <header className="tx-topline sticky top-0 z-20 backdrop-blur">
-            <div className="flex flex-col gap-4 px-5 py-4 sm:px-8 xl:flex-row xl:items-center xl:justify-between">
-              <div className="min-w-0">
-                <p className="inline-flex items-center gap-2 text-xs font-extrabold uppercase text-[#063b86]">
-                  <Compass className="size-4" aria-hidden="true" />
-                  Community Home
-                </p>
-                <h1 className="mt-1 truncate text-2xl font-extrabold text-[#061b4f]">
-                  Good to see you, {memberName}
-                </h1>
-              </div>
-              <div className="flex min-w-0 flex-1 flex-col gap-3 sm:flex-row sm:items-center xl:max-w-3xl">
-                <GlobalSearchBox
-                  className="min-w-0 flex-1"
-                  placeholder="Search conversations, people, jobs, groups..."
-                  size="compact"
-                />
-                <Link
-                  className={cn(
-                    buttonVariants({ size: "lg" }),
-                    "tx-action shrink-0 px-4",
-                  )}
-                  href="#post-content"
-                >
-                  <PlusCircle className="size-4" aria-hidden="true" />
-                  Create
-                </Link>
-                {profile?.id ? (
-                  <Link
-                    className={cn(
-                      buttonVariants({ variant: "outline", size: "lg" }),
-                      "shrink-0 border-[#b8cae8] bg-white/90 px-4 text-[#061b4f] shadow-[0_10px_22px_rgba(7,36,91,0.08)] hover:bg-white",
-                    )}
-                    href={`/profile/${profile.id}`}
-                  >
-                    <UserRound className="size-4" aria-hidden="true" />
-                    Profile
-                  </Link>
-                ) : null}
-                <Link
-                  className="inline-flex size-10 shrink-0 items-center justify-center rounded-lg text-[#061b4f] hover:bg-white/80"
-                  href="/notifications"
-                  title="Notifications"
-                >
-                  <Bell className="size-4" aria-hidden="true" />
-                  <span className="sr-only">Notifications</span>
-                </Link>
-                <LogoutButton />
-              </div>
-            </div>
-          </header>
-
-          <main className="mx-auto grid w-full max-w-[1520px] gap-6 px-5 py-6 sm:px-8 xl:grid-cols-[minmax(0,1fr)_340px]">
+    <MemberPageShell
+      eyebrow="Community home"
+      title={`Good to see you, ${memberName}`}
+      viewerProfile={profile}
+    >
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px] xl:items-start">
             <section className="min-w-0 space-y-4">
               {!configured ? (
                 <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
@@ -502,8 +442,8 @@ export function DashboardPanel() {
                     className={cn(
                       "min-w-max rounded-lg border px-4 py-2 text-sm font-bold transition",
                       activeTopic === topic.value
-                        ? "border-[#ff3d61] bg-white text-[#f52968] shadow-[0_10px_22px_rgba(245,41,104,0.12)]"
-                        : "border-[#c8d8ef] bg-white/86 text-[#061b4f] hover:border-[#ff7a2f] hover:text-[#f52968]",
+                        ? "border-[#ff3d61] bg-white text-[var(--tx-accent)] shadow-[0_10px_22px_rgba(245,41,104,0.12)]"
+                        : "border-[#c8d8ef] bg-white/86 text-[var(--tx-text)] hover:border-[var(--tx-accent)] hover:text-[var(--tx-accent)]",
                     )}
                     key={topic.value}
                     onClick={() => setActiveTopic(topic.value as TopicFilter)}
@@ -521,17 +461,17 @@ export function DashboardPanel() {
               ) : null}
 
               {isLoading || isFeedLoading ? (
-                <div className="tx-card p-6 text-sm text-[#4d6b9e]">
+                <div className="tx-card p-6 text-sm text-[var(--tx-text-muted)]">
                   Loading the Xchange Feed...
                 </div>
               ) : null}
 
               {!isFeedLoading && posts.length === 0 && !feedError ? (
                 <div className="tx-card p-8 text-center">
-                  <h2 className="text-lg font-bold text-[#061b4f]">
+                  <h2 className="text-lg font-bold text-[var(--tx-text)]">
                     Start the first conversation
                   </h2>
-                  <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-[#4d6b9e]">
+                  <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-[var(--tx-text-muted)]">
                     Post a supplier update, ask a trade question, or share a
                     useful note for other travel professionals.
                   </p>
@@ -561,14 +501,12 @@ export function DashboardPanel() {
               </div>
             </section>
 
-            <RightSidebar
-              isFollowing={isFollowing}
-              onFollow={handleFollow}
-              suggestions={suggestions}
-            />
-          </main>
-        </div>
+        <RightSidebar
+          isFollowing={isFollowing}
+          onFollow={handleFollow}
+          suggestions={suggestions}
+        />
       </div>
-    </div>
+    </MemberPageShell>
   );
 }

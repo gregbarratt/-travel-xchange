@@ -15,10 +15,10 @@ export function LegalPage({ document }: LegalPageProps) {
         <section className="border-b border-slate-200 bg-white">
           <div className="mx-auto grid w-full max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[minmax(0,1fr)_22rem] lg:px-8">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-wide text-[#0f766e]">
+              <p className="text-sm font-semibold uppercase tracking-wide text-[var(--tx-accent)]">
                 Legal and compliance
               </p>
-              <h1 className="mt-3 max-w-3xl text-4xl font-bold text-[#082f49] sm:text-5xl">
+              <h1 className="mt-3 max-w-3xl text-4xl font-bold text-[var(--tx-text)] sm:text-5xl">
                 {document.title}
               </h1>
               <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
@@ -26,7 +26,7 @@ export function LegalPage({ document }: LegalPageProps) {
               </p>
               <div className="mt-6 flex flex-wrap gap-3 text-sm text-slate-600">
                 <span className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2">
-                  <FileText className="size-4 text-[#0f766e]" aria-hidden="true" />
+                  <FileText className="size-4 text-[var(--tx-accent)]" aria-hidden="true" />
                   Last updated: {document.lastUpdated}
                 </span>
                 <span className="inline-flex items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-amber-900">
@@ -38,11 +38,11 @@ export function LegalPage({ document }: LegalPageProps) {
 
             <div className="rounded-lg border border-slate-200 bg-slate-50 p-5">
               <div className="flex items-start gap-3">
-                <span className="rounded-lg bg-[#082f49] p-2 text-white">
+                <span className="rounded-lg bg-[var(--tx-text)] p-2 text-white">
                   <ShieldCheck className="size-5" aria-hidden="true" />
                 </span>
                 <div>
-                  <h2 className="font-semibold text-[#082f49]">
+                  <h2 className="font-semibold text-[var(--tx-text)]">
                     Built for trust from the start
                   </h2>
                   <p className="mt-2 text-sm leading-6 text-slate-600">
@@ -69,7 +69,7 @@ export function LegalPage({ document }: LegalPageProps) {
                   <Link
                     className={`flex items-center justify-between rounded-lg px-3 py-2 text-sm font-medium transition ${
                       isActive
-                        ? "bg-[#e0f2f1] text-[#0f766e]"
+                        ? "bg-[var(--tx-accent-soft)] text-[var(--tx-accent)]"
                         : "text-slate-600 hover:bg-slate-50 hover:text-slate-950"
                     }`}
                     href={item.href}
@@ -91,7 +91,7 @@ export function LegalPage({ document }: LegalPageProps) {
                 className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm"
                 key={section.heading}
               >
-                <h2 className="text-xl font-semibold text-[#082f49]">
+                <h2 className="text-xl font-semibold text-[var(--tx-text)]">
                   {section.heading}
                 </h2>
                 <div className="mt-4 space-y-4 text-base leading-7 text-slate-700">
@@ -103,7 +103,7 @@ export function LegalPage({ document }: LegalPageProps) {
                       {section.items.map((item) => (
                         <li className="flex gap-3" key={item}>
                           <span
-                            className="mt-2 size-2 rounded-full bg-[#0f766e]"
+                            className="mt-2 size-2 rounded-full bg-[var(--tx-accent)]"
                             aria-hidden="true"
                           />
                           <span>{item}</span>

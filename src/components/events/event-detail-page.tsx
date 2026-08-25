@@ -274,7 +274,7 @@ export function EventDetailPage({ eventId }: EventDetailPageProps) {
           <section className="space-y-5">
             <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
               <div className="flex flex-wrap gap-2">
-                <span className="inline-flex items-center gap-1 rounded-md bg-[#e0f2f1] px-2 py-1 text-xs font-semibold text-[#0f766e]">
+                <span className="inline-flex items-center gap-1 rounded-md bg-[var(--tx-accent-soft)] px-2 py-1 text-xs font-semibold text-[var(--tx-accent)]">
                   <CalendarDays className="size-3" aria-hidden="true" />
                   {getEventTypeLabel(event.event_type)}
                 </span>
@@ -321,7 +321,7 @@ export function EventDetailPage({ eventId }: EventDetailPageProps) {
           <aside className="space-y-5">
             <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
               <div className="flex items-center gap-2">
-                <CalendarDays className="size-5 text-[#0f766e]" aria-hidden="true" />
+                <CalendarDays className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
                 <h2 className="text-lg font-semibold text-slate-950">
                   When and where
                 </h2>
@@ -367,7 +367,7 @@ export function EventDetailPage({ eventId }: EventDetailPageProps) {
 
             <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
               <div className="flex items-center gap-2">
-                <Users className="size-5 text-[#0f766e]" aria-hidden="true" />
+                <Users className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
                 <h2 className="text-lg font-semibold text-slate-950">
                   Registration
                 </h2>
@@ -403,7 +403,7 @@ export function EventDetailPage({ eventId }: EventDetailPageProps) {
                       Note for organiser
                     </span>
                     <textarea
-                      className="mt-2 min-h-24 w-full rounded-md border border-slate-300 px-3 py-3 text-sm leading-6 text-slate-950 outline-none focus:border-[#0f766e] focus:ring-3 focus:ring-[#0f766e]/15"
+                      className="mt-2 min-h-24 w-full rounded-md border border-slate-300 px-3 py-3 text-sm leading-6 text-slate-950 outline-none focus:border-[var(--tx-accent)] focus:ring-3 focus:ring-[var(--tx-accent)]/15"
                       onChange={(eventChange) => setNote(eventChange.target.value)}
                       placeholder="Optional note."
                       value={note}
@@ -415,7 +415,7 @@ export function EventDetailPage({ eventId }: EventDetailPageProps) {
                     </p>
                   ) : null}
                   <Button
-                    className="h-10 w-full bg-[#0f766e] text-white hover:bg-[#115e59]"
+                    className="h-10 w-full bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)]"
                     disabled={isSaving}
                     type="submit"
                   >
@@ -429,7 +429,7 @@ export function EventDetailPage({ eventId }: EventDetailPageProps) {
                 <a
                   className={cn(
                     buttonVariants({ size: "lg" }),
-                    "mt-4 w-full bg-[#082f49] text-white hover:bg-[#0c4a6e]",
+                    "mt-4 w-full bg-[var(--tx-text)] text-white hover:bg-[#0c4a6e]",
                   )}
                   href={event.registration_url}
                   rel="noreferrer"
@@ -443,7 +443,7 @@ export function EventDetailPage({ eventId }: EventDetailPageProps) {
 
             <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
               <div className="flex items-center gap-2">
-                <Building2 className="size-5 text-[#0f766e]" aria-hidden="true" />
+                <Building2 className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
                 <h2 className="text-lg font-semibold text-slate-950">
                   Organiser
                 </h2>

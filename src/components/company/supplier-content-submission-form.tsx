@@ -93,7 +93,7 @@ export function SupplierContentSubmissionForm({
   return (
     <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
       <div className="flex items-center gap-2">
-        <Sparkles className="size-5 text-[#0f766e]" aria-hidden="true" />
+        <Sparkles className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
         <h2 className="text-lg font-semibold text-slate-950">
           Suggest supplier content
         </h2>
@@ -119,7 +119,7 @@ export function SupplierContentSubmissionForm({
         <label className="grid gap-2 text-sm font-semibold text-slate-950">
           Section
           <select
-            className="h-11 rounded-md border border-slate-300 bg-white px-3 text-sm font-normal text-slate-950 outline-none focus:border-[#0f766e] focus:ring-3 focus:ring-[#0f766e]/15"
+            className="h-11 rounded-md border border-slate-300 bg-white px-3 text-sm font-normal text-slate-950 outline-none focus:border-[var(--tx-accent)] focus:ring-3 focus:ring-[var(--tx-accent)]/15"
             onChange={(event) =>
               setSectionKey(event.target.value as SupplierPageSectionKey)
             }
@@ -136,7 +136,7 @@ export function SupplierContentSubmissionForm({
         <label className="grid gap-2 text-sm font-semibold text-slate-950">
           Title
           <input
-            className="h-11 rounded-md border border-slate-300 px-3 text-sm font-normal text-slate-950 outline-none focus:border-[#0f766e] focus:ring-3 focus:ring-[#0f766e]/15"
+            className="h-11 rounded-md border border-slate-300 px-3 text-sm font-normal text-slate-950 outline-none focus:border-[var(--tx-accent)] focus:ring-3 focus:ring-[var(--tx-accent)]/15"
             onChange={(event) => setTitle(event.target.value)}
             placeholder="Example: New cruise training idea"
             required
@@ -147,7 +147,7 @@ export function SupplierContentSubmissionForm({
         <label className="grid gap-2 text-sm font-semibold text-slate-950">
           Content
           <textarea
-            className="min-h-28 rounded-md border border-slate-300 px-3 py-3 text-sm font-normal text-slate-950 outline-none focus:border-[#0f766e] focus:ring-3 focus:ring-[#0f766e]/15"
+            className="min-h-28 rounded-md border border-slate-300 px-3 py-3 text-sm font-normal text-slate-950 outline-none focus:border-[var(--tx-accent)] focus:ring-3 focus:ring-[var(--tx-accent)]/15"
             onChange={(event) => setContent(event.target.value)}
             placeholder="Add the details the supplier team should review."
             required
@@ -156,7 +156,7 @@ export function SupplierContentSubmissionForm({
         </label>
 
         <Button
-          className="w-fit bg-[#0f766e] text-white hover:bg-[#115e59]"
+          className="w-fit bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)]"
           disabled={isSubmitting}
           type="submit"
         >

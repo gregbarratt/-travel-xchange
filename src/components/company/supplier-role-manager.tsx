@@ -390,14 +390,14 @@ export function SupplierRoleManager({ companyId }: SupplierRoleManagerProps) {
   return (
     <article className="rounded-xl border border-[#c8d7ee] bg-white/95 p-5 shadow-[0_14px_45px_rgba(6,27,79,0.08)]">
       <div className="flex items-start gap-3">
-        <div className="flex size-10 items-center justify-center rounded-lg bg-[#061b4f] text-white">
+        <div className="flex size-10 items-center justify-center rounded-lg bg-[var(--tx-text)] text-white">
           <ShieldCheck className="size-5" aria-hidden="true" />
         </div>
         <div>
-          <h2 className="text-lg font-bold text-[#061b4f]">
+          <h2 className="text-lg font-bold text-[var(--tx-text)]">
             Supplier role controls
           </h2>
-          <p className="mt-1 text-sm leading-6 text-[#4d6b9e]">
+          <p className="mt-1 text-sm leading-6 text-[var(--tx-text-muted)]">
             Create custom roles and decide which page sections each role can
             manage.
           </p>
@@ -405,7 +405,7 @@ export function SupplierRoleManager({ companyId }: SupplierRoleManagerProps) {
       </div>
 
       {isLoading ? (
-        <div className="mt-4 flex items-center gap-2 rounded-lg border border-[#dbe7f7] bg-[#f7faff] p-3 text-sm text-[#4d6b9e]">
+        <div className="mt-4 flex items-center gap-2 rounded-lg border border-[var(--tx-border)] bg-[var(--tx-surface-hover)] p-3 text-sm text-[var(--tx-text-muted)]">
           <Loader2 className="size-4 animate-spin" aria-hidden="true" />
           Loading supplier role controls...
         </div>
@@ -424,26 +424,26 @@ export function SupplierRoleManager({ companyId }: SupplierRoleManagerProps) {
       ) : null}
 
       <form
-        className="mt-5 rounded-lg border border-[#dbe7f7] bg-[#f7faff] p-4"
+        className="mt-5 rounded-lg border border-[var(--tx-border)] bg-[var(--tx-surface-hover)] p-4"
         onSubmit={handleCreateRole}
       >
-        <h3 className="font-bold text-[#061b4f]">Create custom role</h3>
+        <h3 className="font-bold text-[var(--tx-text)]">Create custom role</h3>
         <div className="mt-3 grid gap-3">
           <input
-            className="h-11 rounded-lg border border-[#b8cae8] px-3 text-sm text-[#061b4f] outline-none focus:border-[#063b86] focus:ring-3 focus:ring-[#063b86]/15"
+            className="h-11 rounded-lg border border-[var(--tx-border)] px-3 text-sm text-[var(--tx-text)] outline-none focus:border-[var(--tx-accent)] focus:ring-3 focus:ring-[var(--tx-accent)]/15"
             onChange={(event) => setNewRoleName(event.target.value)}
             placeholder="Example: Cruise campaign manager"
             required
             value={newRoleName}
           />
           <textarea
-            className="min-h-20 rounded-lg border border-[#b8cae8] px-3 py-3 text-sm text-[#061b4f] outline-none focus:border-[#063b86] focus:ring-3 focus:ring-[#063b86]/15"
+            className="min-h-20 rounded-lg border border-[var(--tx-border)] px-3 py-3 text-sm text-[var(--tx-text)] outline-none focus:border-[var(--tx-accent)] focus:ring-3 focus:ring-[var(--tx-accent)]/15"
             onChange={(event) => setNewRoleDescription(event.target.value)}
             placeholder="Optional short description"
             value={newRoleDescription}
           />
           <Button
-            className="w-fit bg-[#061b4f] text-white hover:bg-[#123b7a]"
+            className="w-fit bg-[var(--tx-text)] text-white hover:bg-[#123b7a]"
             disabled={isSaving}
             type="submit"
           >
@@ -453,17 +453,17 @@ export function SupplierRoleManager({ companyId }: SupplierRoleManagerProps) {
         </div>
       </form>
 
-      <section className="mt-5 rounded-lg border border-[#dbe7f7] bg-white p-4">
+      <section className="mt-5 rounded-lg border border-[var(--tx-border)] bg-white p-4">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h3 className="font-bold text-[#061b4f]">Section visibility</h3>
-            <p className="mt-1 text-sm leading-5 text-[#4d6b9e]">
+            <h3 className="font-bold text-[var(--tx-text)]">Section visibility</h3>
+            <p className="mt-1 text-sm leading-5 text-[var(--tx-text-muted)]">
               Choose which supplier sections agents can see before they are
               approved or joined.
             </p>
           </div>
           <Button
-            className="w-fit bg-[#061b4f] text-white hover:bg-[#123b7a]"
+            className="w-fit bg-[var(--tx-text)] text-white hover:bg-[#123b7a]"
             disabled={isSaving || sections.length === 0}
             onClick={() => void handleSaveSections()}
             type="button"
@@ -482,19 +482,19 @@ export function SupplierRoleManager({ companyId }: SupplierRoleManagerProps) {
 
             return (
               <label
-                className="rounded-lg border border-[#edf3fb] bg-[#f8fbff] p-3 text-sm"
+                className="rounded-lg border border-[#edf3fb] bg-[var(--tx-surface-hover)] p-3 text-sm"
                 key={section.key}
               >
-                <span className="flex items-center gap-2 font-bold text-[#061b4f]">
+                <span className="flex items-center gap-2 font-bold text-[var(--tx-text)]">
                   {visibility === "public" ? (
-                    <Eye className="size-4 text-[#0f766e]" aria-hidden="true" />
+                    <Eye className="size-4 text-[var(--tx-accent)]" aria-hidden="true" />
                   ) : (
                     <Lock className="size-4 text-[#f72f6b]" aria-hidden="true" />
                   )}
                   {section.label}
                 </span>
                 <select
-                  className="mt-3 h-10 w-full rounded-lg border border-[#b8cae8] bg-white px-3 text-sm text-[#061b4f] outline-none focus:border-[#063b86] focus:ring-3 focus:ring-[#063b86]/15"
+                  className="mt-3 h-10 w-full rounded-lg border border-[var(--tx-border)] bg-white px-3 text-sm text-[var(--tx-text)] outline-none focus:border-[var(--tx-accent)] focus:ring-3 focus:ring-[var(--tx-accent)]/15"
                   onChange={(event) =>
                     updateSectionVisibility(
                       section.key,
@@ -512,46 +512,46 @@ export function SupplierRoleManager({ companyId }: SupplierRoleManagerProps) {
         </div>
       </section>
 
-      <section className="mt-5 rounded-lg border border-[#dbe7f7] bg-white p-4">
+      <section className="mt-5 rounded-lg border border-[var(--tx-border)] bg-white p-4">
         <div className="flex items-start gap-3">
           <MessageSquareWarning
             className="mt-1 size-5 text-[#f72f6b]"
             aria-hidden="true"
           />
           <div>
-            <h3 className="font-bold text-[#061b4f]">Approval queue</h3>
-            <p className="mt-1 text-sm leading-5 text-[#4d6b9e]">
+            <h3 className="font-bold text-[var(--tx-text)]">Approval queue</h3>
+            <p className="mt-1 text-sm leading-5 text-[var(--tx-text-muted)]">
               Agent-created supplier content stays hidden here until approved.
             </p>
           </div>
         </div>
 
         {submissions.length === 0 ? (
-          <p className="mt-4 rounded-lg border border-[#edf3fb] bg-[#f8fbff] p-3 text-sm text-[#4d6b9e]">
+          <p className="mt-4 rounded-lg border border-[#edf3fb] bg-[var(--tx-surface-hover)] p-3 text-sm text-[var(--tx-text-muted)]">
             No supplier content is waiting for review.
           </p>
         ) : (
           <div className="mt-4 space-y-3">
             {submissions.map((submission) => (
               <div
-                className="rounded-lg border border-[#edf3fb] bg-[#f8fbff] p-3"
+                className="rounded-lg border border-[#edf3fb] bg-[var(--tx-surface-hover)] p-3"
                 key={submission.id}
               >
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div>
-                    <p className="text-xs font-bold uppercase text-[#4d6b9e]">
+                    <p className="text-xs font-bold uppercase text-[var(--tx-text-muted)]">
                       {getSectionLabel(submission.section_key)}
                     </p>
-                    <h4 className="mt-1 font-bold text-[#061b4f]">
+                    <h4 className="mt-1 font-bold text-[var(--tx-text)]">
                       {submission.title}
                     </h4>
-                    <p className="mt-2 text-sm leading-5 text-[#4d6b9e]">
+                    <p className="mt-2 text-sm leading-5 text-[var(--tx-text-muted)]">
                       {submission.content}
                     </p>
                   </div>
                   <div className="flex shrink-0 gap-2">
                     <Button
-                      className="bg-[#0f766e] text-white hover:bg-[#115e59]"
+                      className="bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)]"
                       disabled={isSaving}
                       onClick={() =>
                         void handleReviewSubmission(submission.id, "approved")
@@ -588,25 +588,25 @@ export function SupplierRoleManager({ companyId }: SupplierRoleManagerProps) {
 
           return (
             <section
-              className="rounded-lg border border-[#dbe7f7] bg-white p-4"
+              className="rounded-lg border border-[var(--tx-border)] bg-white p-4"
               key={role.id}
             >
               <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div className="min-w-0 flex-1">
                   {isCustom ? (
                     <input
-                      className="h-10 w-full rounded-lg border border-[#b8cae8] px-3 text-sm font-bold text-[#061b4f] outline-none focus:border-[#063b86] focus:ring-3 focus:ring-[#063b86]/15"
+                      className="h-10 w-full rounded-lg border border-[var(--tx-border)] px-3 text-sm font-bold text-[var(--tx-text)] outline-none focus:border-[var(--tx-accent)] focus:ring-3 focus:ring-[var(--tx-accent)]/15"
                       onChange={(event) =>
                         updateRole(role.id, { name: event.target.value })
                       }
                       value={role.name}
                     />
                   ) : (
-                    <h3 className="font-bold text-[#061b4f]">{role.name}</h3>
+                    <h3 className="font-bold text-[var(--tx-text)]">{role.name}</h3>
                   )}
                   {isCustom ? (
                     <textarea
-                      className="mt-2 min-h-16 w-full rounded-lg border border-[#b8cae8] px-3 py-2 text-sm text-[#061b4f] outline-none focus:border-[#063b86] focus:ring-3 focus:ring-[#063b86]/15"
+                      className="mt-2 min-h-16 w-full rounded-lg border border-[var(--tx-border)] px-3 py-2 text-sm text-[var(--tx-text)] outline-none focus:border-[var(--tx-accent)] focus:ring-3 focus:ring-[var(--tx-accent)]/15"
                       onChange={(event) =>
                         updateRole(role.id, {
                           description: event.target.value,
@@ -616,7 +616,7 @@ export function SupplierRoleManager({ companyId }: SupplierRoleManagerProps) {
                       value={role.description ?? ""}
                     />
                   ) : (
-                    <p className="mt-1 text-sm text-[#4d6b9e]">
+                    <p className="mt-1 text-sm text-[var(--tx-text-muted)]">
                       {isPageAdmin
                         ? "Full control. This cannot be reduced."
                         : "Baseline role. The page admin can choose its permissions."}
@@ -626,7 +626,7 @@ export function SupplierRoleManager({ companyId }: SupplierRoleManagerProps) {
                 <div className="flex gap-2">
                   {!isPageAdmin ? (
                     <Button
-                      className="bg-[#061b4f] text-white hover:bg-[#123b7a]"
+                      className="bg-[var(--tx-text)] text-white hover:bg-[#123b7a]"
                       disabled={isSaving}
                       onClick={() => void handleSaveRole(role)}
                       type="button"
@@ -653,7 +653,7 @@ export function SupplierRoleManager({ companyId }: SupplierRoleManagerProps) {
               <div className="mt-4 grid gap-2 sm:grid-cols-2">
                 {editablePermissions.map((permission) => (
                   <label
-                    className="flex items-start gap-3 rounded-lg border border-[#edf3fb] bg-[#f8fbff] p-3 text-sm"
+                    className="flex items-start gap-3 rounded-lg border border-[#edf3fb] bg-[var(--tx-surface-hover)] p-3 text-sm"
                     key={permission.key}
                   >
                     <input
@@ -672,10 +672,10 @@ export function SupplierRoleManager({ companyId }: SupplierRoleManagerProps) {
                       type="checkbox"
                     />
                     <span>
-                      <span className="block font-bold text-[#061b4f]">
+                      <span className="block font-bold text-[var(--tx-text)]">
                         {permission.label}
                       </span>
-                      <span className="mt-1 block leading-5 text-[#4d6b9e]">
+                      <span className="mt-1 block leading-5 text-[var(--tx-text-muted)]">
                         {permission.description}
                       </span>
                     </span>

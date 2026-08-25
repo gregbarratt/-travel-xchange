@@ -216,22 +216,22 @@ export function GroupsDirectory() {
         </div>
       ) : null}
 
-      <section className="tx-engage-hero overflow-hidden rounded-lg border border-[#b8cae8]/70 bg-white">
+      <section className="tx-engage-hero overflow-hidden rounded-lg border border-[var(--tx-border)]/70 bg-white">
         <div className="grid gap-5 p-5 lg:grid-cols-[minmax(0,1fr)_280px] lg:p-6">
           <div>
             <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-2 rounded-lg bg-[#fff0f5] px-3 py-1 text-xs font-extrabold uppercase text-[#f52968]">
+              <span className="inline-flex items-center gap-2 rounded-lg bg-[#fff0f5] px-3 py-1 text-xs font-extrabold uppercase text-[var(--tx-accent)]">
                 <Users className="size-3.5" aria-hidden="true" />
                 Communities
               </span>
-              <span className="rounded-lg bg-[#eef5ff] px-3 py-1 text-xs font-bold text-[#063b86]">
+              <span className="rounded-lg bg-[var(--tx-accent-soft)] px-3 py-1 text-xs font-bold text-[var(--tx-accent)]">
                 Travel trade spaces
               </span>
             </div>
-            <h2 className="mt-4 text-2xl font-extrabold text-[#061b4f]">
+            <h2 className="mt-4 text-2xl font-extrabold text-[var(--tx-text)]">
               Find the right room for every trade conversation.
             </h2>
-            <p className="mt-2 max-w-3xl text-sm leading-6 text-[#4d6b9e]">
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--tx-text-muted)]">
               Join focused spaces for cruise, luxury, compliance, supplier
               updates, homeworkers, marketing, and more.
             </p>
@@ -239,7 +239,7 @@ export function GroupsDirectory() {
               {["Cruise", "Luxury", "Supplier Updates", "Homeworkers"].map(
                 (topic) => (
                   <span
-                    className="rounded-lg border border-[#c8d8ef] bg-white/86 px-3 py-2 text-xs font-bold text-[#061b4f]"
+                    className="rounded-lg border border-[#c8d8ef] bg-white/86 px-3 py-2 text-xs font-bold text-[var(--tx-text)]"
                     key={topic}
                   >
                     {topic}
@@ -248,16 +248,16 @@ export function GroupsDirectory() {
               )}
             </div>
           </div>
-          <div className="rounded-lg border border-[#d9e4f5] bg-white/88 p-4 shadow-[0_14px_30px_rgba(7,36,91,0.08)]">
+          <div className="rounded-lg border border-[var(--tx-border)] bg-white/88 p-4 shadow-[0_14px_30px_rgba(7,36,91,0.08)]">
             <div className="flex items-center gap-3">
               <div className="tx-navy-avatar flex size-12 items-center justify-center rounded-lg text-white">
                 <Sparkles className="size-5" aria-hidden="true" />
               </div>
               <div>
-                <p className="text-sm font-extrabold text-[#061b4f]">
+                <p className="text-sm font-extrabold text-[var(--tx-text)]">
                   Build useful communities
                 </p>
-                <p className="text-xs font-semibold text-[#4d6b9e]">
+                <p className="text-xs font-semibold text-[var(--tx-text-muted)]">
                   Groups power niche discussion.
                 </p>
               </div>
@@ -286,8 +286,8 @@ export function GroupsDirectory() {
             className={cn(
               "min-w-max rounded-lg border px-4 py-2 text-sm font-bold transition",
               activeCategory === category.value
-                ? "border-[#ff3d61] bg-white text-[#f52968] shadow-[0_10px_22px_rgba(245,41,104,0.12)]"
-                : "border-[#c8d8ef] bg-white/86 text-[#061b4f] hover:border-[#ff7a2f] hover:text-[#f52968]",
+                ? "border-[#ff3d61] bg-white text-[var(--tx-accent)] shadow-[0_10px_22px_rgba(245,41,104,0.12)]"
+                : "border-[#c8d8ef] bg-white/86 text-[var(--tx-text)] hover:border-[var(--tx-accent)] hover:text-[var(--tx-accent)]",
             )}
             key={category.value}
             onClick={() => setActiveCategory(category.value)}
@@ -305,17 +305,17 @@ export function GroupsDirectory() {
       ) : null}
 
       {isLoading ? (
-        <div className="tx-card mt-5 p-6 text-sm text-[#4d6b9e]">
+        <div className="tx-card mt-5 p-6 text-sm text-[var(--tx-text-muted)]">
           Loading groups...
         </div>
       ) : null}
 
       {!isLoading && filteredGroups.length === 0 && !error ? (
         <div className="tx-card mt-5 p-8 text-center">
-          <h2 className="text-lg font-extrabold text-[#061b4f]">
+          <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
             No groups yet
           </h2>
-          <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-[#4d6b9e]">
+          <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-[var(--tx-text-muted)]">
             Create the first group for this category.
           </p>
         </div>
@@ -329,10 +329,10 @@ export function GroupsDirectory() {
           >
             <div className="flex items-start justify-between gap-3">
               <div>
-                <span className="rounded-lg bg-[#fff0f5] px-2 py-1 text-xs font-extrabold text-[#f52968]">
+                <span className="rounded-lg bg-[#fff0f5] px-2 py-1 text-xs font-extrabold text-[var(--tx-accent)]">
                   {getGroupCategoryLabel(group.category)}
                 </span>
-                <h2 className="mt-4 text-lg font-extrabold text-[#061b4f]">
+                <h2 className="mt-4 text-lg font-extrabold text-[var(--tx-text)]">
                   {group.name}
                 </h2>
               </div>
@@ -340,15 +340,15 @@ export function GroupsDirectory() {
                 <Users className="size-5" aria-hidden="true" />
               </div>
             </div>
-            <p className="mt-3 flex-1 text-sm leading-6 text-[#4d6b9e]">
+            <p className="mt-3 flex-1 text-sm leading-6 text-[var(--tx-text-muted)]">
               {group.description}
             </p>
-            <div className="mt-5 grid grid-cols-2 gap-3 border-t border-[#d9e4f5] pt-4 text-sm">
+            <div className="mt-5 grid grid-cols-2 gap-3 border-t border-[var(--tx-border)] pt-4 text-sm">
               <div>
                 <p className="text-xs font-extrabold uppercase text-[#6f86b5]">
                   Members
                 </p>
-                <p className="mt-1 font-extrabold text-[#061b4f]">
+                <p className="mt-1 font-extrabold text-[var(--tx-text)]">
                   {group.member_count}
                 </p>
               </div>
@@ -356,7 +356,7 @@ export function GroupsDirectory() {
                 <p className="text-xs font-extrabold uppercase text-[#6f86b5]">
                   Posts
                 </p>
-                <p className="mt-1 font-extrabold text-[#061b4f]">
+                <p className="mt-1 font-extrabold text-[var(--tx-text)]">
                   {group.post_count}
                 </p>
               </div>
@@ -365,7 +365,7 @@ export function GroupsDirectory() {
               <Link
                 className={cn(
                   buttonVariants({ variant: "outline", size: "lg" }),
-                  "justify-center border-[#b8cae8] bg-white text-[#061b4f] hover:bg-[#f4f8ff]",
+                  "justify-center border-[var(--tx-border)] bg-white text-[var(--tx-text)] hover:bg-[#f4f8ff]",
                 )}
                 href={`/groups/${group.id}`}
               >
@@ -376,7 +376,7 @@ export function GroupsDirectory() {
                 className={cn(
                   "h-10",
                   group.is_joined_by_current_user
-                    ? "bg-[#061b4f] hover:bg-[#063b86]"
+                    ? "bg-[var(--tx-text)] hover:bg-[var(--tx-accent)]"
                     : "tx-action",
                 )}
                 disabled={busyGroupId === group.id}

@@ -12,8 +12,8 @@ export default function GlobalError({
         <main
           style={{
             alignItems: "center",
-            background: "#f8fafc",
-            color: "#082f49",
+            background: "var(--tx-surface-hover)",
+            color: "var(--tx-text)",
             display: "flex",
             fontFamily: "Segoe UI, Arial, sans-serif",
             justifyContent: "center",
@@ -45,7 +45,7 @@ export default function GlobalError({
             <button
               onClick={reset}
               style={{
-                background: "#0f766e",
+                background: "var(--tx-accent)",
                 border: "0",
                 borderRadius: "8px",
                 color: "#ffffff",

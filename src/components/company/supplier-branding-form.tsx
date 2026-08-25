@@ -233,12 +233,12 @@ export function SupplierBrandingForm({
   return (
     <article className="rounded-xl border border-[#c8d7ee] bg-white/95 p-5 shadow-[0_14px_45px_rgba(6,27,79,0.08)]">
       <div className="flex items-start gap-3">
-        <div className="flex size-10 items-center justify-center rounded-lg bg-[#061b4f] text-white">
+        <div className="flex size-10 items-center justify-center rounded-lg bg-[var(--tx-text)] text-white">
           <ImagePlus className="size-5" aria-hidden="true" />
         </div>
         <div>
-          <h2 className="text-lg font-bold text-[#061b4f]">Brand images</h2>
-          <p className="mt-1 text-sm leading-6 text-[#4d6b9e]">
+          <h2 className="text-lg font-bold text-[var(--tx-text)]">Brand images</h2>
+          <p className="mt-1 text-sm leading-6 text-[var(--tx-text-muted)]">
             Upload a supplier logo and cover banner. You can still paste image
             links if the image is already hosted elsewhere.
           </p>
@@ -246,7 +246,7 @@ export function SupplierBrandingForm({
       </div>
 
       {isLoading ? (
-        <div className="mt-4 flex items-center gap-2 rounded-lg border border-[#dbe7f7] bg-[#f7faff] p-3 text-sm text-[#4d6b9e]">
+        <div className="mt-4 flex items-center gap-2 rounded-lg border border-[var(--tx-border)] bg-[var(--tx-surface-hover)] p-3 text-sm text-[var(--tx-text-muted)]">
           <Loader2 className="size-4 animate-spin" aria-hidden="true" />
           Loading brand images...
         </div>
@@ -267,7 +267,7 @@ export function SupplierBrandingForm({
       <form className="mt-5 grid gap-4" onSubmit={handleSave}>
         <div className="grid gap-4 lg:grid-cols-[180px_minmax(0,1fr)]">
           <div>
-            <div className="flex size-28 items-center justify-center overflow-hidden rounded-lg border border-[#c8d7ee] bg-[#e0f2f1] text-2xl font-bold text-[#0f766e]">
+            <div className="flex size-28 items-center justify-center overflow-hidden rounded-lg border border-[#c8d7ee] bg-[var(--tx-accent-soft)] text-2xl font-bold text-[var(--tx-accent)]">
               {logoUrl ? (
                 <img alt="" className="size-full object-cover" src={logoUrl} />
               ) : (
@@ -276,15 +276,15 @@ export function SupplierBrandingForm({
             </div>
             <label
               aria-disabled={uploadsDisabled}
-              className={`mt-3 flex cursor-pointer flex-col gap-2 rounded-lg border-2 border-dashed border-[#f52968]/55 bg-[#fff5f8] p-4 text-sm text-[#061b4f] transition hover:border-[#f52968] hover:bg-[#fff0f5] ${
+              className={`mt-3 flex cursor-pointer flex-col gap-2 rounded-lg border-2 border-dashed border-[var(--tx-accent)]/55 bg-[#fff5f8] p-4 text-sm text-[var(--tx-text)] transition hover:border-[var(--tx-accent)] hover:bg-[#fff0f5] ${
                 uploadsDisabled ? "pointer-events-none opacity-60" : ""
               }`}
             >
               <span className="flex items-center gap-2 font-extrabold">
-                <UploadCloud className="size-4 text-[#f52968]" aria-hidden="true" />
+                <UploadCloud className="size-4 text-[var(--tx-accent)]" aria-hidden="true" />
                 Select logo image
               </span>
-              <span className="text-xs leading-5 text-[#4d6b9e]">
+              <span className="text-xs leading-5 text-[var(--tx-text-muted)]">
                 Square image, ideally 800 x 800 px.
               </span>
               <input
@@ -301,7 +301,7 @@ export function SupplierBrandingForm({
 
           <div>
             <div
-              className="h-36 rounded-lg border border-[#c8d7ee] bg-[linear-gradient(120deg,#061b4f,#0f766e)] bg-center"
+              className="h-36 rounded-lg border border-[#c8d7ee] bg-[linear-gradient(120deg,var(--tx-text),var(--tx-accent))] bg-center"
               style={
                 coverImageUrl
                   ? {
@@ -315,15 +315,15 @@ export function SupplierBrandingForm({
             />
             <label
               aria-disabled={uploadsDisabled}
-              className={`mt-3 flex cursor-pointer flex-col gap-2 rounded-lg border-2 border-dashed border-[#f52968]/55 bg-[#fff5f8] p-4 text-sm text-[#061b4f] transition hover:border-[#f52968] hover:bg-[#fff0f5] ${
+              className={`mt-3 flex cursor-pointer flex-col gap-2 rounded-lg border-2 border-dashed border-[var(--tx-accent)]/55 bg-[#fff5f8] p-4 text-sm text-[var(--tx-text)] transition hover:border-[var(--tx-accent)] hover:bg-[#fff0f5] ${
                 uploadsDisabled ? "pointer-events-none opacity-60" : ""
               }`}
             >
               <span className="flex items-center gap-2 font-extrabold">
-                <UploadCloud className="size-4 text-[#f52968]" aria-hidden="true" />
+                <UploadCloud className="size-4 text-[var(--tx-accent)]" aria-hidden="true" />
                 Select cover banner
               </span>
-              <span className="text-xs leading-5 text-[#4d6b9e]">
+              <span className="text-xs leading-5 text-[var(--tx-text-muted)]">
                 Wide image, ideally 1600 x 400 px.
               </span>
               <input
@@ -339,7 +339,7 @@ export function SupplierBrandingForm({
           </div>
         </div>
 
-        <div className="grid gap-4 rounded-lg border border-[#dbe7f7] bg-[#f7faff] p-4 lg:grid-cols-[220px_minmax(0,1fr)_minmax(0,1fr)]">
+        <div className="grid gap-4 rounded-lg border border-[var(--tx-border)] bg-[var(--tx-surface-hover)] p-4 lg:grid-cols-[220px_minmax(0,1fr)_minmax(0,1fr)]">
           <SelectField
             hint="Fill crops the image to fit. Fit shows the full image."
             label="Cover display"
@@ -357,49 +357,49 @@ export function SupplierBrandingForm({
           />
 
           <label className="block">
-            <span className="text-sm font-bold text-[#061b4f]">
+            <span className="text-sm font-bold text-[var(--tx-text)]">
               Move image left / right
             </span>
             <input
-              className="mt-4 w-full accent-[#f52968]"
+              className="mt-4 w-full accent-[var(--tx-accent)]"
               max={100}
               min={0}
               onChange={(event) => setCoverPositionX(Number(event.target.value))}
               type="range"
               value={coverPositionX}
             />
-            <span className="mt-2 block text-xs text-[#4d6b9e]">
+            <span className="mt-2 block text-xs text-[var(--tx-text-muted)]">
               Position: {coverPositionX}%
             </span>
           </label>
 
           <label className="block">
-            <span className="text-sm font-bold text-[#061b4f]">
+            <span className="text-sm font-bold text-[var(--tx-text)]">
               Move image up / down
             </span>
             <input
-              className="mt-4 w-full accent-[#f52968]"
+              className="mt-4 w-full accent-[var(--tx-accent)]"
               max={100}
               min={0}
               onChange={(event) => setCoverPositionY(Number(event.target.value))}
               type="range"
               value={coverPositionY}
             />
-            <span className="mt-2 block text-xs text-[#4d6b9e]">
+            <span className="mt-2 block text-xs text-[var(--tx-text-muted)]">
               Position: {coverPositionY}%
             </span>
           </label>
         </div>
 
         {uploadingImage ? (
-          <div className="flex items-center gap-2 rounded-lg border border-[#dbe7f7] bg-[#f7faff] p-3 text-sm text-[#4d6b9e]">
+          <div className="flex items-center gap-2 rounded-lg border border-[var(--tx-border)] bg-[var(--tx-surface-hover)] p-3 text-sm text-[var(--tx-text-muted)]">
             <Loader2 className="size-4 animate-spin" aria-hidden="true" />
             Uploading {uploadingImage === "logo" ? "logo" : "cover banner"}...
           </div>
         ) : null}
 
-        <div className="rounded-lg border border-[#dbe7f7] bg-[#f7faff] p-4 text-sm leading-6 text-[#29456f]">
-          <p className="font-semibold text-[#061b4f]">Image guidance</p>
+        <div className="rounded-lg border border-[var(--tx-border)] bg-[var(--tx-surface-hover)] p-4 text-sm leading-6 text-[#29456f]">
+          <p className="font-semibold text-[var(--tx-text)]">Image guidance</p>
           <p className="mt-1">
             Supplier logo: use a square image, ideally 800 x 800 px.
           </p>
@@ -412,12 +412,12 @@ export function SupplierBrandingForm({
           <p>Maximum file size: 5MB.</p>
         </div>
 
-        <details className="rounded-lg border border-[#dbe7f7] bg-white p-4">
-          <summary className="cursor-pointer text-sm font-extrabold text-[#061b4f]">
+        <details className="rounded-lg border border-[var(--tx-border)] bg-white p-4">
+          <summary className="cursor-pointer text-sm font-extrabold text-[var(--tx-text)]">
             Advanced image URLs
           </summary>
           <div className="mt-4 grid gap-4">
-            <p className="text-sm leading-6 text-[#4d6b9e]">
+            <p className="text-sm leading-6 text-[var(--tx-text-muted)]">
               Only use these if the image is already hosted somewhere else. Most
               suppliers should use the select image boxes above.
             </p>
@@ -442,7 +442,7 @@ export function SupplierBrandingForm({
           </div>
         </details>
         <Button
-          className="w-fit bg-[#061b4f] text-white hover:bg-[#123b7a]"
+          className="w-fit bg-[var(--tx-text)] text-white hover:bg-[#123b7a]"
           disabled={isSaving}
           type="submit"
         >

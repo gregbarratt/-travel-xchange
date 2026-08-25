@@ -529,15 +529,15 @@ export function SearchPage({ initialCategory, initialQuery }: SearchPageProps) {
           <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_280px]">
             <div>
               <div className="flex items-center gap-2">
-                <Sparkles className="size-5 text-[#f52968]" aria-hidden="true" />
-                <p className="text-xs font-extrabold uppercase tracking-wide text-[#063b86]">
+                <Sparkles className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
+                <p className="text-xs font-extrabold uppercase tracking-wide text-[var(--tx-accent)]">
                   Global search
                 </p>
               </div>
-              <h2 className="mt-2 text-2xl font-extrabold tracking-normal text-[#061b4f]">
+              <h2 className="mt-2 text-2xl font-extrabold tracking-normal text-[var(--tx-text)]">
                 Find the right travel trade connection
               </h2>
-              <p className="mt-2 max-w-3xl text-sm leading-6 text-[#4d6b9e]">
+              <p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--tx-text-muted)]">
                 Search across the MVP areas we have already built. Algolia can
                 be added later when the platform needs faster hosted search.
               </p>
@@ -570,8 +570,8 @@ export function SearchPage({ initialCategory, initialQuery }: SearchPageProps) {
                 className={cn(
                   "min-w-max rounded-lg border px-3 py-2 text-sm font-bold transition",
                   activeCategory === option.value
-                    ? "border-[#f52968] bg-white text-[#f52968] shadow-sm"
-                    : "border-[#d9e4f5] bg-white/80 text-[#061b4f] hover:border-[#b8cae8] hover:bg-white",
+                    ? "border-[var(--tx-accent)] bg-white text-[var(--tx-accent)] shadow-sm"
+                    : "border-[var(--tx-border)] bg-white/80 text-[var(--tx-text)] hover:border-[var(--tx-border)] hover:bg-white",
                 )}
                 href={`/search${params.toString() ? `?${params.toString()}` : ""}`}
                 key={option.value}
@@ -589,7 +589,7 @@ export function SearchPage({ initialCategory, initialQuery }: SearchPageProps) {
         ) : null}
 
         {isLoading || isSearching ? (
-          <div className="tx-card p-6 text-sm text-[#4d6b9e]">
+          <div className="tx-card p-6 text-sm text-[var(--tx-text-muted)]">
             Searching Travel Xchange...
           </div>
         ) : null}
@@ -631,21 +631,21 @@ function SearchStarter() {
   return (
     <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_360px]">
       <section className="tx-card p-5">
-        <h2 className="text-lg font-extrabold text-[#061b4f]">
+        <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
           Recommended discovery
         </h2>
         <div className="mt-4 grid gap-3 md:grid-cols-2">
           {discoveryCards.map((card) => (
             <Link
-              className="rounded-lg border border-[#d9e4f5] bg-white p-4 transition hover:border-[#b8cae8] hover:bg-[#f6f9ff]"
+              className="rounded-lg border border-[var(--tx-border)] bg-white p-4 transition hover:border-[var(--tx-border)] hover:bg-[var(--tx-surface-hover)]"
               href={card.href}
               key={card.label}
             >
               <div className="flex items-center justify-between gap-3">
-                <h3 className="font-extrabold text-[#061b4f]">{card.label}</h3>
-                <ArrowRight className="size-4 text-[#f52968]" aria-hidden="true" />
+                <h3 className="font-extrabold text-[var(--tx-text)]">{card.label}</h3>
+                <ArrowRight className="size-4 text-[var(--tx-accent)]" aria-hidden="true" />
               </div>
-              <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">
+              <p className="mt-2 text-sm leading-6 text-[var(--tx-text-muted)]">
                 {card.description}
               </p>
             </Link>
@@ -654,13 +654,13 @@ function SearchStarter() {
       </section>
 
       <aside className="tx-card h-max p-5">
-        <h2 className="text-lg font-extrabold text-[#061b4f]">
+        <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
           Trending topics
         </h2>
         <div className="mt-4 flex flex-wrap gap-2">
           {trendingSearchTopics.map((topic) => (
             <Link
-              className="rounded-lg bg-[#eef5ff] px-3 py-2 text-sm font-bold text-[#063b86] transition hover:bg-[#d9e4f5]"
+              className="rounded-lg bg-[var(--tx-accent-soft)] px-3 py-2 text-sm font-bold text-[var(--tx-accent)] transition hover:bg-[var(--tx-border)]"
               href={`/search?q=${encodeURIComponent(topic)}`}
               key={topic}
             >
@@ -677,10 +677,10 @@ function SearchResults({ results }: { results: SearchResult[] }) {
   if (results.length === 0) {
     return (
       <div className="tx-card p-8 text-center">
-        <h2 className="text-lg font-extrabold text-[#061b4f]">
+        <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
           No matches yet
         </h2>
-        <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-[#4d6b9e]">
+        <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-[var(--tx-text-muted)]">
           Try a broader word such as cruise, supplier, marketing, Manchester, or
           training. More advanced filters will come later.
         </p>
@@ -691,7 +691,7 @@ function SearchResults({ results }: { results: SearchResult[] }) {
   return (
     <section className="space-y-3">
       <div className="flex items-center justify-between gap-3">
-        <h2 className="text-lg font-extrabold text-[#061b4f]">
+        <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
           {results.length} result{results.length === 1 ? "" : "s"}
         </h2>
       </div>
@@ -706,26 +706,26 @@ function SearchResults({ results }: { results: SearchResult[] }) {
             key={result.id}
           >
             <div className="flex gap-4">
-              <span className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-[#eef5ff] text-[#063b86]">
+              <span className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-[var(--tx-accent-soft)] text-[var(--tx-accent)]">
                 <Icon className="size-5" aria-hidden="true" />
               </span>
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="rounded bg-[#fff1f3] px-2 py-1 text-xs font-extrabold uppercase tracking-wide text-[#f52968]">
+                  <span className="rounded bg-[#fff1f3] px-2 py-1 text-xs font-extrabold uppercase tracking-wide text-[var(--tx-accent)]">
                     {getSearchCategoryLabel(result.category)}
                   </span>
-                  <span className="text-xs font-bold text-[#7288b8]">
+                  <span className="text-xs font-bold text-[var(--tx-text-subtle)]">
                     {result.meta}
                   </span>
                 </div>
-                <h3 className="mt-2 text-lg font-extrabold text-[#061b4f]">
+                <h3 className="mt-2 text-lg font-extrabold text-[var(--tx-text)]">
                   {result.title}
                 </h3>
-                <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">
+                <p className="mt-2 text-sm leading-6 text-[var(--tx-text-muted)]">
                   {result.description}
                 </p>
               </div>
-              <ArrowRight className="mt-1 size-5 shrink-0 text-[#f52968]" aria-hidden="true" />
+              <ArrowRight className="mt-1 size-5 shrink-0 text-[var(--tx-accent)]" aria-hidden="true" />
             </div>
           </Link>
         );

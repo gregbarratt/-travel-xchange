@@ -248,7 +248,7 @@ export function OnboardingForm() {
       ) : null}
 
       <Button
-        className="h-11 w-full bg-[#0f766e] hover:bg-[#115e59] sm:w-auto"
+        className="h-11 w-full bg-[var(--tx-accent)] hover:bg-[var(--tx-accent-hover)] sm:w-auto"
         disabled={isSubmitting || isCheckingSession}
         type="submit"
       >

@@ -237,7 +237,7 @@ export function NotificationsCentre() {
       <section className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <p className="text-sm font-semibold uppercase text-[#0f766e]">
+            <p className="text-sm font-semibold uppercase text-[var(--tx-accent)]">
               Phase 11 notifications
             </p>
             <h2 className="mt-2 text-2xl font-semibold tracking-normal text-slate-950">
@@ -249,7 +249,7 @@ export function NotificationsCentre() {
             </p>
           </div>
           <Button
-            className="bg-[#0f766e] text-white hover:bg-[#115e59]"
+            className="bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)]"
             disabled={isUpdating || unreadCount === 0}
             onClick={markAllRead}
             type="button"
@@ -279,7 +279,7 @@ export function NotificationsCentre() {
                   className={cn(
                     "rounded-md border px-3 py-2 text-sm font-medium transition",
                     filter === option.value
-                      ? "border-[#0f766e] bg-[#e0f2f1] text-[#0f766e]"
+                      ? "border-[var(--tx-accent)] bg-[var(--tx-accent-soft)] text-[var(--tx-accent)]"
                       : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50",
                   )}
                   key={option.value}
@@ -301,7 +301,7 @@ export function NotificationsCentre() {
           {!isLoading && filteredNotifications.length === 0 ? (
             <div className="rounded-md border border-slate-200 bg-white p-8 text-center shadow-sm">
               <Bell
-                className="mx-auto size-8 text-[#0f766e]"
+                className="mx-auto size-8 text-[var(--tx-accent)]"
                 aria-hidden="true"
               />
               <h2 className="mt-4 text-lg font-semibold text-slate-950">
@@ -320,7 +320,7 @@ export function NotificationsCentre() {
                 "rounded-md border bg-white p-5 shadow-sm",
                 notification.is_read
                   ? "border-slate-200"
-                  : "border-[#0f766e] ring-2 ring-[#0f766e]/10",
+                  : "border-[var(--tx-accent)] ring-2 ring-[var(--tx-accent)]/10",
               )}
               key={notification.id}
             >
@@ -329,7 +329,7 @@ export function NotificationsCentre() {
                   <div className="flex flex-wrap items-center gap-2">
                     {!notification.is_read ? (
                       <Circle
-                        className="size-3 fill-[#0f766e] text-[#0f766e]"
+                        className="size-3 fill-[var(--tx-accent)] text-[var(--tx-accent)]"
                         aria-hidden="true"
                       />
                     ) : null}
@@ -408,7 +408,7 @@ export function NotificationsCentre() {
 
           <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
             <div className="flex items-center gap-2">
-              <Bell className="size-5 text-[#0f766e]" aria-hidden="true" />
+              <Bell className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
               <h2 className="text-lg font-semibold text-slate-950">
                 Later upgrades
               </h2>

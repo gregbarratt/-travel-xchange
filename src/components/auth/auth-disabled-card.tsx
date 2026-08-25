@@ -29,30 +29,30 @@ const copy = {
 export function AuthDisabledCard({ mode }: AuthDisabledCardProps) {
   return (
     <PublicPageShell>
-      <main className="flex min-h-[70svh] items-center bg-[#f8fbff] px-4 py-12 sm:px-6 lg:px-8">
-        <section className="mx-auto w-full max-w-xl rounded-lg border border-[#d9e4f5] bg-white p-8 text-center shadow-[0_18px_42px_rgba(7,36,91,0.08)]">
-          <span className="mx-auto flex size-12 items-center justify-center rounded-lg bg-[#fff1f6] text-[#f52968]">
+      <main className="flex min-h-[70svh] items-center bg-[var(--tx-surface-hover)] px-4 py-12 sm:px-6 lg:px-8">
+        <section className="mx-auto w-full max-w-xl rounded-lg border border-[var(--tx-border)] bg-white p-8 text-center shadow-[0_18px_42px_rgba(7,36,91,0.08)]">
+          <span className="mx-auto flex size-12 items-center justify-center rounded-lg bg-[#fff1f6] text-[var(--tx-accent)]">
             <Clock className="size-6" aria-hidden="true" />
           </span>
-          <p className="mt-6 text-sm font-extrabold uppercase tracking-wide text-[#f52968]">
+          <p className="mt-6 text-sm font-extrabold uppercase tracking-wide text-[var(--tx-accent)]">
             {launchConfig.status}
           </p>
-          <h1 className="mt-3 text-3xl font-black text-[#061b4f]">
+          <h1 className="mt-3 text-3xl font-black text-[var(--tx-text)]">
             {copy[mode].title}
           </h1>
-          <p className="mt-4 text-sm leading-6 text-[#4d6b9e]">
+          <p className="mt-4 text-sm leading-6 text-[var(--tx-text-muted)]">
             {copy[mode].description}
           </p>
           <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
             <Link
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#061b4f] px-5 py-3 text-sm font-bold text-white hover:bg-[#082f6f]"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--tx-text)] px-5 py-3 text-sm font-bold text-white hover:bg-[#082f6f]"
               href="/login"
             >
               <ArrowLeft className="size-4" aria-hidden="true" />
               Back to login
             </Link>
             <Link
-              className="inline-flex items-center justify-center gap-2 rounded-lg border border-[#d9e4f5] bg-white px-5 py-3 text-sm font-bold text-[#061b4f] hover:bg-[#eef5ff]"
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-[var(--tx-border)] bg-white px-5 py-3 text-sm font-bold text-[var(--tx-text)] hover:bg-[var(--tx-accent-soft)]"
               href={`mailto:${launchConfig.email}?subject=Travel Xchange launch access`}
             >
               <Mail className="size-4" aria-hidden="true" />

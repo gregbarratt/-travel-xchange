@@ -194,7 +194,7 @@ function AdminDashboardContent({ userId }: { userId: string }) {
 
   if (isLoading) {
     return (
-      <div className="tx-card p-6 text-sm text-[#4d6b9e]">
+      <div className="tx-card p-6 text-sm text-[var(--tx-text-muted)]">
         Loading admin dashboard...
       </div>
     );
@@ -218,14 +218,14 @@ function AdminDashboardContent({ userId }: { userId: string }) {
             <Link className="tx-card p-5 transition hover:-translate-y-0.5" href={card.href} key={card.table}>
               <div className="flex items-center justify-between gap-4">
                 <div>
-                  <p className="text-xs font-extrabold uppercase tracking-wide text-[#4d6b9e]">
+                  <p className="text-xs font-extrabold uppercase tracking-wide text-[var(--tx-text-muted)]">
                     {card.label}
                   </p>
-                  <p className="mt-2 text-3xl font-extrabold text-[#061b4f]">
+                  <p className="mt-2 text-3xl font-extrabold text-[var(--tx-text)]">
                     {card.value}
                   </p>
                 </div>
-                <span className="flex size-11 items-center justify-center rounded-lg bg-[#eef5ff] text-[#063b86]">
+                <span className="flex size-11 items-center justify-center rounded-lg bg-[var(--tx-accent-soft)] text-[var(--tx-accent)]">
                   <Icon className="size-5" aria-hidden="true" />
                 </span>
               </div>
@@ -237,10 +237,10 @@ function AdminDashboardContent({ userId }: { userId: string }) {
       <div className="grid gap-5 xl:grid-cols-2">
         <section className="tx-card p-5">
           <div className="flex items-center justify-between gap-3">
-            <h2 className="text-lg font-extrabold text-[#061b4f]">
+            <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
               Latest reports
             </h2>
-            <Link className="text-sm font-bold text-[#f52968]" href="/admin/reports">
+            <Link className="text-sm font-bold text-[var(--tx-accent)]" href="/admin/reports">
               View all
             </Link>
           </div>
@@ -253,16 +253,16 @@ function AdminDashboardContent({ userId }: { userId: string }) {
           ) : (
             <div className="mt-4 space-y-3">
               {reports.map((report) => (
-                <div className="rounded-lg border border-[#d9e4f5] p-4" key={report.id}>
+                <div className="rounded-lg border border-[var(--tx-border)] p-4" key={report.id}>
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <p className="font-bold capitalize text-[#061b4f]">
+                    <p className="font-bold capitalize text-[var(--tx-text)]">
                       {report.content_type} report
                     </p>
                     <AdminStatusBadge tone={getStatusTone(report.status)}>
                       {report.status.replaceAll("_", " ")}
                     </AdminStatusBadge>
                   </div>
-                  <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">
+                  <p className="mt-2 text-sm leading-6 text-[var(--tx-text-muted)]">
                     {report.reason}
                   </p>
                 </div>
@@ -273,7 +273,7 @@ function AdminDashboardContent({ userId }: { userId: string }) {
 
         <section className="tx-card p-5">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <h2 className="text-lg font-extrabold text-[#061b4f]">
+            <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
               Audit trail
             </h2>
             <Button className="tx-action" onClick={handleCreateAuditCheck} type="button">
@@ -289,14 +289,14 @@ function AdminDashboardContent({ userId }: { userId: string }) {
           ) : (
             <div className="mt-4 space-y-3">
               {auditLogs.map((log) => (
-                <div className="rounded-lg border border-[#d9e4f5] p-4" key={log.id}>
+                <div className="rounded-lg border border-[var(--tx-border)] p-4" key={log.id}>
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <p className="font-bold text-[#061b4f]">{log.summary}</p>
-                    <span className="text-xs font-medium text-[#4d6b9e]">
+                    <p className="font-bold text-[var(--tx-text)]">{log.summary}</p>
+                    <span className="text-xs font-medium text-[var(--tx-text-muted)]">
                       {formatDate(log.created_at)}
                     </span>
                   </div>
-                  <p className="mt-2 text-xs font-bold uppercase tracking-wide text-[#4d6b9e]">
+                  <p className="mt-2 text-xs font-bold uppercase tracking-wide text-[var(--tx-text-muted)]">
                     {log.action}
                   </p>
                 </div>

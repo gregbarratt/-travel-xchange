@@ -247,7 +247,7 @@ function AdminVerificationContent({ userId }: { userId: string }) {
 
   if (isLoading) {
     return (
-      <div className="tx-card p-6 text-sm text-[#4d6b9e]">
+      <div className="tx-card p-6 text-sm text-[var(--tx-text-muted)]">
         Loading verification requests...
       </div>
     );
@@ -280,17 +280,17 @@ function AdminVerificationContent({ userId }: { userId: string }) {
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
                 <div className="flex flex-wrap items-center gap-2">
-                  <h2 className="font-extrabold text-[#061b4f]">
+                  <h2 className="font-extrabold text-[var(--tx-text)]">
                     {request.profile?.full_name ?? "Unknown member"}
                   </h2>
                   <AdminStatusBadge tone={getStatusTone(request.status)}>
                     {request.status.replaceAll("_", " ")}
                   </AdminStatusBadge>
                 </div>
-                <p className="mt-1 text-sm leading-6 text-[#4d6b9e]">
+                <p className="mt-1 text-sm leading-6 text-[var(--tx-text-muted)]">
                   Requested {getVerificationTierLabel(request.requested_tier)}
                 </p>
-                <p className="mt-1 text-xs font-medium text-[#7288b8]">
+                <p className="mt-1 text-xs font-medium text-[var(--tx-text-subtle)]">
                   Created {formatDate(request.created_at)}
                 </p>
               </div>
@@ -313,15 +313,15 @@ function AdminVerificationContent({ userId }: { userId: string }) {
             </div>
 
             {request.company ? (
-              <p className="mt-4 text-sm text-[#4d6b9e]">
+              <p className="mt-4 text-sm text-[var(--tx-text-muted)]">
                 Company:{" "}
-                <span className="font-bold text-[#061b4f]">
+                <span className="font-bold text-[var(--tx-text)]">
                   {request.company.name}
                 </span>
               </p>
             ) : null}
             {request.notes ? (
-              <p className="mt-3 whitespace-pre-wrap text-sm leading-6 text-[#203b70]">
+              <p className="mt-3 whitespace-pre-wrap text-sm leading-6 text-[var(--tx-text)]">
                 {request.notes}
               </p>
             ) : null}
@@ -330,10 +330,10 @@ function AdminVerificationContent({ userId }: { userId: string }) {
       </section>
 
       <aside className="tx-card h-max p-5">
-        <h2 className="text-lg font-extrabold text-[#061b4f]">
+        <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
           Create test request
         </h2>
-        <p className="mt-2 text-sm leading-6 text-[#4d6b9e]">
+        <p className="mt-2 text-sm leading-6 text-[var(--tx-text-muted)]">
           This gives us a safe way to test approval before we add public
           verification forms.
         </p>

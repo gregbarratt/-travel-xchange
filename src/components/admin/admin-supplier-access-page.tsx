@@ -321,7 +321,7 @@ function AdminSupplierAccessContent() {
 
   if (isLoading) {
     return (
-      <div className="tx-card p-6 text-sm text-[#4d6b9e]">
+      <div className="tx-card p-6 text-sm text-[var(--tx-text-muted)]">
         Loading supplier access controls...
       </div>
     );
@@ -369,21 +369,21 @@ function AdminSupplierAccessContent() {
             value={selectedCompanyId}
           />
 
-          <div className="rounded-lg border border-[#d9e4f5] bg-[#f7faff] p-4">
+          <div className="rounded-lg border border-[var(--tx-border)] bg-[var(--tx-surface-hover)] p-4">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
-                <p className="text-sm font-extrabold text-[#061b4f]">
+                <p className="text-sm font-extrabold text-[var(--tx-text)]">
                   {selectedSupplier?.name ?? "Choose a supplier"}
                 </p>
                 {selectedSupplier ? (
-                  <p className="mt-1 text-xs font-medium text-[#4d6b9e]">
+                  <p className="mt-1 text-xs font-medium text-[var(--tx-text-muted)]">
                     {getCompanyTypeLabel(selectedSupplier.company_type)}
                   </p>
                 ) : null}
               </div>
               {selectedSupplier ? (
                 <Link
-                  className="inline-flex items-center gap-2 text-sm font-bold text-[#063b86] hover:text-[#f52968]"
+                  className="inline-flex items-center gap-2 text-sm font-bold text-[var(--tx-accent)] hover:text-[var(--tx-accent)]"
                   href={`/suppliers/${selectedSupplier.id}`}
                 >
                   Open supplier page
@@ -397,14 +397,14 @@ function AdminSupplierAccessContent() {
 
       <section className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_420px]">
         <article className="tx-card overflow-hidden">
-          <div className="border-b border-[#d9e4f5] p-5">
+          <div className="border-b border-[var(--tx-border)] p-5">
             <div className="flex items-center gap-2">
-              <UserPlus className="size-5 text-[#063b86]" aria-hidden="true" />
-              <h2 className="text-lg font-extrabold text-[#061b4f]">
+              <UserPlus className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
+              <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
                 Add an agent manually
               </h2>
             </div>
-            <p className="mt-1 text-sm leading-6 text-[#4d6b9e]">
+            <p className="mt-1 text-sm leading-6 text-[var(--tx-text-muted)]">
               Use this when you want to grant supplier page access without
               waiting for the agent to request it.
             </p>
@@ -419,13 +419,13 @@ function AdminSupplierAccessContent() {
               value={searchTerm}
             />
 
-            <div className="max-h-[420px] overflow-y-auto rounded-lg border border-[#d9e4f5]">
+            <div className="max-h-[420px] overflow-y-auto rounded-lg border border-[var(--tx-border)]">
               {filteredAgents.length === 0 ? (
-                <div className="p-5 text-sm text-[#4d6b9e]">
+                <div className="p-5 text-sm text-[var(--tx-text-muted)]">
                   No matching members found.
                 </div>
               ) : (
-                <div className="divide-y divide-[#d9e4f5]">
+                <div className="divide-y divide-[var(--tx-border)]">
                   {filteredAgents.map((agent) => {
                     const isSelected = selectedUserId === agent.id;
                     const isApproved = approvedAgents.some(
@@ -436,15 +436,15 @@ function AdminSupplierAccessContent() {
                       <button
                         className={`block w-full p-4 text-left transition ${
                           isSelected
-                            ? "bg-[#eef5ff]"
-                            : "bg-white hover:bg-[#f7faff]"
+                            ? "bg-[var(--tx-accent-soft)]"
+                            : "bg-white hover:bg-[var(--tx-surface-hover)]"
                         }`}
                         key={agent.id}
                         onClick={() => setSelectedUserId(agent.id)}
                         type="button"
                       >
                         <div className="flex flex-wrap items-center gap-2">
-                          <p className="font-extrabold text-[#061b4f]">
+                          <p className="font-extrabold text-[var(--tx-text)]">
                             {agent.full_name ?? "Unnamed member"}
                           </p>
                           <AdminStatusBadge
@@ -453,7 +453,7 @@ function AdminSupplierAccessContent() {
                             {isApproved ? "Approved" : getRoleLabel(agent.role)}
                           </AdminStatusBadge>
                         </div>
-                        <p className="mt-1 text-sm leading-5 text-[#4d6b9e]">
+                        <p className="mt-1 text-sm leading-5 text-[var(--tx-text-muted)]">
                           {agent.headline ?? "No headline yet"}
                         </p>
                       </button>
@@ -463,15 +463,15 @@ function AdminSupplierAccessContent() {
               )}
             </div>
 
-            <div className="rounded-lg border border-[#d9e4f5] bg-[#f7faff] p-4">
-              <p className="text-sm font-bold text-[#061b4f]">
+            <div className="rounded-lg border border-[var(--tx-border)] bg-[var(--tx-surface-hover)] p-4">
+              <p className="text-sm font-bold text-[var(--tx-text)]">
                 Selected agent
               </p>
-              <p className="mt-1 text-sm text-[#4d6b9e]">
+              <p className="mt-1 text-sm text-[var(--tx-text-muted)]">
                 {selectedAgent?.full_name ?? "Choose a member from the list."}
               </p>
               <Button
-                className="mt-4 bg-[#061b4f] text-white hover:bg-[#123b7a]"
+                className="mt-4 bg-[var(--tx-text)] text-white hover:bg-[#123b7a]"
                 disabled={!selectedCompanyId || !selectedUserId || Boolean(busyId)}
                 onClick={() =>
                   void sendAdminAccessAction(
@@ -495,46 +495,46 @@ function AdminSupplierAccessContent() {
 
         <aside className="space-y-5">
           <article className="tx-card overflow-hidden">
-            <div className="border-b border-[#d9e4f5] p-5">
+            <div className="border-b border-[var(--tx-border)] p-5">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="size-5 text-[#063b86]" aria-hidden="true" />
-                <h2 className="text-lg font-extrabold text-[#061b4f]">
+                <ShieldCheck className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
+                <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
                   Pending requests
                 </h2>
               </div>
             </div>
 
             {isAccessLoading ? (
-              <div className="flex items-center gap-2 p-5 text-sm text-[#4d6b9e]">
+              <div className="flex items-center gap-2 p-5 text-sm text-[var(--tx-text-muted)]">
                 <Loader2 className="size-4 animate-spin" aria-hidden="true" />
                 Loading requests...
               </div>
             ) : pendingRequests.length === 0 ? (
-              <p className="p-5 text-sm leading-6 text-[#4d6b9e]">
+              <p className="p-5 text-sm leading-6 text-[var(--tx-text-muted)]">
                 No agents are waiting for this supplier page.
               </p>
             ) : (
-              <div className="divide-y divide-[#d9e4f5]">
+              <div className="divide-y divide-[var(--tx-border)]">
                 {pendingRequests.map((request) => (
                   <div className="space-y-3 p-5" key={request.id}>
                     <div>
-                      <p className="font-extrabold text-[#061b4f]">
+                      <p className="font-extrabold text-[var(--tx-text)]">
                         {request.profile?.full_name ?? "Travel Xchange member"}
                       </p>
-                      <p className="mt-1 text-xs text-[#4d6b9e]">
+                      <p className="mt-1 text-xs text-[var(--tx-text-muted)]">
                         {request.profile
                           ? getRoleLabel(request.profile.role)
                           : "No profile details"}
                       </p>
                     </div>
                     {request.message ? (
-                      <p className="rounded-lg bg-[#f7faff] p-3 text-sm leading-5 text-[#4d6b9e]">
+                      <p className="rounded-lg bg-[var(--tx-surface-hover)] p-3 text-sm leading-5 text-[var(--tx-text-muted)]">
                         {request.message}
                       </p>
                     ) : null}
                     <div className="flex flex-wrap gap-2">
                       <Button
-                        className="bg-[#0f766e] text-white hover:bg-[#115e59]"
+                        className="bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)]"
                         disabled={Boolean(busyId)}
                         onClick={() =>
                           void reviewPendingRequest(request.id, "approved")
@@ -564,31 +564,31 @@ function AdminSupplierAccessContent() {
           </article>
 
           <article className="tx-card overflow-hidden">
-            <div className="border-b border-[#d9e4f5] p-5">
+            <div className="border-b border-[var(--tx-border)] p-5">
               <div className="flex items-center gap-2">
-                <Search className="size-5 text-[#063b86]" aria-hidden="true" />
-                <h2 className="text-lg font-extrabold text-[#061b4f]">
+                <Search className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
+                <h2 className="text-lg font-extrabold text-[var(--tx-text)]">
                   Approved agents
                 </h2>
               </div>
             </div>
 
             {approvedAgents.length === 0 ? (
-              <p className="p-5 text-sm leading-6 text-[#4d6b9e]">
+              <p className="p-5 text-sm leading-6 text-[var(--tx-text-muted)]">
                 Approved agents will appear here.
               </p>
             ) : (
-              <div className="divide-y divide-[#d9e4f5]">
+              <div className="divide-y divide-[var(--tx-border)]">
                 {approvedAgents.map((agent) => (
                   <div
                     className="flex items-start justify-between gap-3 p-5"
                     key={agent.memberId}
                   >
                     <div>
-                      <p className="font-extrabold text-[#061b4f]">
+                      <p className="font-extrabold text-[var(--tx-text)]">
                         {agent.profile?.full_name ?? "Travel Xchange member"}
                       </p>
-                      <p className="mt-1 text-sm leading-5 text-[#4d6b9e]">
+                      <p className="mt-1 text-sm leading-5 text-[var(--tx-text-muted)]">
                         {agent.profile?.headline ?? "Approved private access"}
                       </p>
                     </div>

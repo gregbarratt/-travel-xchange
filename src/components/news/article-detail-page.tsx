@@ -213,7 +213,7 @@ export function ArticleDetailPage({ articleSlug }: ArticleDetailPageProps) {
         <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_320px]">
           <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
             <div className="flex flex-wrap gap-2">
-              <span className="inline-flex items-center gap-1 rounded-md bg-[#e0f2f1] px-2 py-1 text-xs font-semibold text-[#0f766e]">
+              <span className="inline-flex items-center gap-1 rounded-md bg-[var(--tx-accent-soft)] px-2 py-1 text-xs font-semibold text-[var(--tx-accent)]">
                 <Newspaper className="size-3" aria-hidden="true" />
                 {getArticleTypeLabel(article.article_type)}
               </span>
@@ -274,7 +274,7 @@ export function ArticleDetailPage({ articleSlug }: ArticleDetailPageProps) {
           <aside className="space-y-5">
             <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
               <div className="flex items-center gap-2">
-                <CalendarDays className="size-5 text-[#0f766e]" aria-hidden="true" />
+                <CalendarDays className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
                 <h2 className="text-lg font-semibold text-slate-950">
                   Article details
                 </h2>
@@ -309,7 +309,7 @@ export function ArticleDetailPage({ articleSlug }: ArticleDetailPageProps) {
 
             <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
               <div className="flex items-center gap-2">
-                <Building2 className="size-5 text-[#0f766e]" aria-hidden="true" />
+                <Building2 className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
                 <h2 className="text-lg font-semibold text-slate-950">
                   Source
                 </h2>
@@ -334,7 +334,7 @@ export function ArticleDetailPage({ articleSlug }: ArticleDetailPageProps) {
                     <a
                       className={cn(
                         buttonVariants({ size: "lg" }),
-                        "w-full bg-[#082f49] text-white hover:bg-[#0c4a6e]",
+                        "w-full bg-[var(--tx-text)] text-white hover:bg-[#0c4a6e]",
                       )}
                       href={company.website_url}
                       rel="noreferrer"

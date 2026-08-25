@@ -23,7 +23,7 @@ export function AuthCard({
 }: AuthCardProps) {
   return (
     <PublicPageShell>
-      <main className="bg-[#f8fafc] px-4 py-12 sm:px-6 lg:px-8">
+      <main className="bg-[var(--tx-surface-hover)] px-4 py-12 sm:px-6 lg:px-8">
         <section className="mx-auto w-full max-w-md">
           <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
             <TravelXchangeLogo
@@ -41,7 +41,7 @@ export function AuthCard({
           <p className="mt-6 text-center text-sm text-slate-600">
             {footerText}{" "}
             <Link
-              className="font-semibold text-[#0f766e] hover:text-[#115e59]"
+              className="font-semibold text-[var(--tx-accent)] hover:text-[var(--tx-accent-hover)]"
               href={footerHref}
             >
               {footerLinkText}

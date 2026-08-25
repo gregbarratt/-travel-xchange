@@ -300,7 +300,7 @@ export function JobDetailPage({ jobId }: JobDetailPageProps) {
               <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 <div>
                   <div className="flex flex-wrap gap-2">
-                    <span className="rounded-md bg-[#e0f2f1] px-2 py-1 text-xs font-semibold text-[#0f766e]">
+                    <span className="rounded-md bg-[var(--tx-accent-soft)] px-2 py-1 text-xs font-semibold text-[var(--tx-accent)]">
                       {getJobCategoryLabel(job.category)}
                     </span>
                     {job.is_featured ? (
@@ -334,7 +334,7 @@ export function JobDetailPage({ jobId }: JobDetailPageProps) {
                   className={cn(
                     "h-10 px-4",
                     bookmark
-                      ? "bg-[#082f49] hover:bg-[#0c4a6e]"
+                      ? "bg-[var(--tx-text)] hover:bg-[#0c4a6e]"
                       : "bg-slate-100 text-slate-700 hover:bg-slate-200",
                   )}
                   disabled={isBookmarking}
@@ -422,7 +422,7 @@ export function JobDetailPage({ jobId }: JobDetailPageProps) {
                 <div className="mt-4 flex flex-wrap gap-2">
                   {job.key_skills.map((skill) => (
                     <span
-                      className="rounded-md bg-[#e0f2f1] px-2 py-1 text-xs font-semibold text-[#0f766e]"
+                      className="rounded-md bg-[var(--tx-accent-soft)] px-2 py-1 text-xs font-semibold text-[var(--tx-accent)]"
                       key={skill}
                     >
                       {skill}
@@ -449,7 +449,7 @@ export function JobDetailPage({ jobId }: JobDetailPageProps) {
                     <a
                       className={cn(
                         buttonVariants({ size: "lg" }),
-                        "w-full bg-[#082f49] text-white hover:bg-[#0c4a6e]",
+                        "w-full bg-[var(--tx-text)] text-white hover:bg-[#0c4a6e]",
                       )}
                       href={externalApplyUrl}
                       rel="noreferrer"
@@ -476,7 +476,7 @@ export function JobDetailPage({ jobId }: JobDetailPageProps) {
                       Note to employer
                     </span>
                     <textarea
-                      className="mt-2 min-h-28 w-full rounded-md border border-slate-300 px-3 py-3 text-sm leading-6 text-slate-950 outline-none focus:border-[#0f766e] focus:ring-3 focus:ring-[#0f766e]/15"
+                      className="mt-2 min-h-28 w-full rounded-md border border-slate-300 px-3 py-3 text-sm leading-6 text-slate-950 outline-none focus:border-[var(--tx-accent)] focus:ring-3 focus:ring-[var(--tx-accent)]/15"
                       onChange={(event) => setCoverNote(event.target.value)}
                       placeholder="Briefly say why you are interested."
                       value={coverNote}
@@ -488,7 +488,7 @@ export function JobDetailPage({ jobId }: JobDetailPageProps) {
                     </p>
                   ) : null}
                   <Button
-                    className="h-10 w-full bg-[#0f766e] text-white hover:bg-[#115e59]"
+                    className="h-10 w-full bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)]"
                     disabled={isRegisteringInterest}
                     type="submit"
                   >
@@ -501,7 +501,7 @@ export function JobDetailPage({ jobId }: JobDetailPageProps) {
 
             <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
               <div className="flex items-center gap-2">
-                <Building2 className="size-5 text-[#0f766e]" aria-hidden="true" />
+                <Building2 className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
                 <h2 className="text-lg font-semibold text-slate-950">
                   Employer
                 </h2>
@@ -544,7 +544,7 @@ export function JobDetailPage({ jobId }: JobDetailPageProps) {
                   <a
                     className={cn(
                       buttonVariants({ size: "lg" }),
-                      "w-full bg-[#082f49] text-white hover:bg-[#0c4a6e]",
+                      "w-full bg-[var(--tx-text)] text-white hover:bg-[#0c4a6e]",
                     )}
                     href={externalApplyUrl}
                     rel="noreferrer"

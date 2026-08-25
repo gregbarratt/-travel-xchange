@@ -243,7 +243,7 @@ export function EventCreateForm() {
 
         <section className="space-y-4">
           <div className="flex items-center gap-2">
-            <CalendarPlus className="size-5 text-[#0f766e]" aria-hidden="true" />
+            <CalendarPlus className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
             <h2 className="text-lg font-semibold text-slate-950">
               Event details
             </h2>
@@ -355,7 +355,7 @@ export function EventCreateForm() {
           </div>
           <label className="flex items-start gap-3 rounded-md border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">
             <input
-              className="mt-1 size-4 accent-[#0f766e]"
+              className="mt-1 size-4 accent-[var(--tx-accent)]"
               name="is_featured"
               type="checkbox"
             />
@@ -381,7 +381,7 @@ export function EventCreateForm() {
             Back to events
           </Link>
           <Button
-            className="h-11 bg-[#0f766e] px-5 text-white hover:bg-[#115e59]"
+            className="h-11 bg-[var(--tx-accent)] px-5 text-white hover:bg-[var(--tx-accent-hover)]"
             disabled={isSaving}
             type="submit"
           >

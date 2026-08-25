@@ -135,7 +135,7 @@ export function AuthForm({ mode, redirectPath = "/dashboard" }: AuthFormProps) {
 
       {mode === "login" ? (
         <Link
-          className="inline-flex text-sm font-semibold text-[#0f766e] hover:text-[#115e59]"
+          className="inline-flex text-sm font-semibold text-[var(--tx-accent)] hover:text-[var(--tx-accent-hover)]"
           href="/login#forgot-password"
         >
           Forgot password?
@@ -154,7 +154,7 @@ export function AuthForm({ mode, redirectPath = "/dashboard" }: AuthFormProps) {
       ) : null}
 
       <Button
-        className="h-11 w-full bg-[#0f766e] hover:bg-[#115e59]"
+        className="h-11 w-full bg-[var(--tx-accent)] hover:bg-[var(--tx-accent-hover)]"
         disabled={isSubmitting}
         type="submit"
       >

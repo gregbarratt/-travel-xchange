@@ -234,8 +234,8 @@ export function SupplierUpdatesPage() {
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <Megaphone className="size-5 text-[#0f766e]" aria-hidden="true" />
-              <p className="text-sm font-semibold uppercase text-[#0f766e]">
+              <Megaphone className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
+              <p className="text-sm font-semibold uppercase text-[var(--tx-accent)]">
                 Supplier media
               </p>
             </div>
@@ -251,7 +251,7 @@ export function SupplierUpdatesPage() {
           <Link
             className={cn(
               buttonVariants({ size: "lg" }),
-              "bg-[#0f766e] text-white hover:bg-[#115e59]",
+              "bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)]",
             )}
             href="/news/create"
           >
@@ -278,7 +278,7 @@ export function SupplierUpdatesPage() {
           {!isLoading && articles.length === 0 && !error ? (
             <div className="rounded-md border border-slate-200 bg-white p-8 text-center shadow-sm">
               <Building2
-                className="mx-auto size-8 text-[#0f766e]"
+                className="mx-auto size-8 text-[var(--tx-accent)]"
                 aria-hidden="true"
               />
               <h2 className="mt-4 text-lg font-semibold text-slate-950">

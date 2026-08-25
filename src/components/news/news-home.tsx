@@ -253,7 +253,7 @@ export function NewsHome() {
         <Link
           className={cn(
             buttonVariants({ size: "lg" }),
-            "hidden bg-[#0f766e] text-white hover:bg-[#115e59] sm:inline-flex",
+            "hidden bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)] sm:inline-flex",
           )}
           href="/news/create"
         >
@@ -274,7 +274,7 @@ export function NewsHome() {
       <section className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <p className="text-sm font-semibold uppercase text-[#0f766e]">
+            <p className="text-sm font-semibold uppercase text-[var(--tx-accent)]">
               Phase 7 media area
             </p>
             <h2 className="mt-2 text-2xl font-semibold tracking-normal text-slate-950">
@@ -289,7 +289,7 @@ export function NewsHome() {
           <Link
             className={cn(
               buttonVariants({ size: "lg" }),
-              "bg-[#0f766e] text-white hover:bg-[#115e59] sm:hidden",
+              "bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)] sm:hidden",
             )}
             href="/news/create"
           >
@@ -300,11 +300,11 @@ export function NewsHome() {
       </section>
 
       {featuredArticle ? (
-        <section className="mt-5 rounded-md border border-[#0f766e] bg-[#f0fdfa] p-5 shadow-sm">
+        <section className="mt-5 rounded-md border border-[var(--tx-accent)] bg-[var(--tx-accent-soft)] p-5 shadow-sm">
           <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-center">
             <div>
               <div className="flex flex-wrap gap-2">
-                <span className="inline-flex items-center gap-1 rounded-md bg-white px-2 py-1 text-xs font-semibold text-[#0f766e]">
+                <span className="inline-flex items-center gap-1 rounded-md bg-white px-2 py-1 text-xs font-semibold text-[var(--tx-accent)]">
                   <Star className="size-3" aria-hidden="true" />
                   Featured story
                 </span>
@@ -322,7 +322,7 @@ export function NewsHome() {
                   "Open this article to read the full travel trade update."}
               </p>
             </div>
-            <div className="rounded-md border border-[#99f6e4] bg-white p-4">
+            <div className="rounded-md border border-[var(--tx-accent-border)] bg-white p-4">
               <p className="text-xs font-semibold uppercase text-slate-500">
                 Published
               </p>
@@ -351,7 +351,7 @@ export function NewsHome() {
                   className={cn(
                     "rounded-md border px-3 py-2 text-sm font-medium transition",
                     activeType === option.value
-                      ? "border-[#0f766e] bg-[#e0f2f1] text-[#0f766e]"
+                      ? "border-[var(--tx-accent)] bg-[var(--tx-accent-soft)] text-[var(--tx-accent)]"
                       : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50",
                   )}
                   key={option.value}
@@ -368,7 +368,7 @@ export function NewsHome() {
                 className={cn(
                   "rounded-md border px-3 py-2 text-sm font-medium transition",
                   activeCategory === "all"
-                    ? "border-[#082f49] bg-slate-100 text-[#082f49]"
+                    ? "border-[var(--tx-text)] bg-slate-100 text-[var(--tx-text)]"
                     : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50",
                 )}
                 onClick={() => setActiveCategory("all")}
@@ -381,7 +381,7 @@ export function NewsHome() {
                   className={cn(
                     "rounded-md border px-3 py-2 text-sm font-medium transition",
                     activeCategory === category.id
-                      ? "border-[#082f49] bg-slate-100 text-[#082f49]"
+                      ? "border-[var(--tx-text)] bg-slate-100 text-[var(--tx-text)]"
                       : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50",
                   )}
                   key={category.id}
@@ -409,7 +409,7 @@ export function NewsHome() {
           {!isLoading && filteredArticles.length === 0 && !error ? (
             <div className="rounded-md border border-slate-200 bg-white p-8 text-center shadow-sm">
               <Newspaper
-                className="mx-auto size-8 text-[#0f766e]"
+                className="mx-auto size-8 text-[var(--tx-accent)]"
                 aria-hidden="true"
               />
               <h2 className="mt-4 text-lg font-semibold text-slate-950">
@@ -422,7 +422,7 @@ export function NewsHome() {
               <Link
                 className={cn(
                   buttonVariants({ size: "lg" }),
-                  "mt-5 bg-[#0f766e] text-white hover:bg-[#115e59]",
+                  "mt-5 bg-[var(--tx-accent)] text-white hover:bg-[var(--tx-accent-hover)]",
                 )}
                 href="/news/create"
               >
@@ -444,7 +444,7 @@ export function NewsHome() {
 
           <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
             <div className="flex items-center gap-2">
-              <Megaphone className="size-5 text-[#0f766e]" aria-hidden="true" />
+              <Megaphone className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
               <h2 className="text-lg font-semibold text-slate-950">
                 Supplier updates
               </h2>
@@ -466,7 +466,7 @@ export function NewsHome() {
                   </Link>
                 ))}
                 <Link
-                  className="inline-flex text-sm font-semibold text-[#0f766e] hover:text-[#115e59]"
+                  className="inline-flex text-sm font-semibold text-[var(--tx-accent)] hover:text-[var(--tx-accent-hover)]"
                   href="/supplier-updates"
                 >
                   View supplier updates
@@ -482,7 +482,7 @@ export function NewsHome() {
 
           <article className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
             <div className="flex items-center gap-2">
-              <Tags className="size-5 text-[#0f766e]" aria-hidden="true" />
+              <Tags className="size-5 text-[var(--tx-accent)]" aria-hidden="true" />
               <h2 className="text-lg font-semibold text-slate-950">
                 Trending tags
               </h2>

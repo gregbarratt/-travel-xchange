@@ -26,15 +26,15 @@ type SelectFieldProps = BaseFieldProps &
 export function TextField({ label, hint, className, ...props }: TextFieldProps) {
   return (
     <label className="block">
-      <span className="text-sm font-bold text-[#061b4f]">{label}</span>
+      <span className="text-sm font-bold text-[var(--tx-text)]">{label}</span>
       <input
         className={cn(
-          "mt-2 h-11 w-full rounded-lg border border-[#b8cae8] bg-white px-3 text-sm text-[#061b4f] outline-none transition placeholder:text-[#7288b8] focus:border-[#063b86] focus:ring-3 focus:ring-[#063b86]/15",
+          "mt-2 h-11 w-full rounded-lg border border-[var(--tx-border)] bg-white px-3 text-sm text-[var(--tx-text)] outline-none transition placeholder:text-[var(--tx-text-subtle)] focus:border-[var(--tx-accent)] focus:ring-3 focus:ring-[var(--tx-accent)]/15",
           className,
         )}
         {...props}
       />
-      {hint ? <span className="mt-2 block text-xs text-[#4d6b9e]">{hint}</span> : null}
+      {hint ? <span className="mt-2 block text-xs text-[var(--tx-text-muted)]">{hint}</span> : null}
     </label>
   );
 }
@@ -47,15 +47,15 @@ export function TextareaField({
 }: TextareaFieldProps) {
   return (
     <label className="block">
-      <span className="text-sm font-bold text-[#061b4f]">{label}</span>
+      <span className="text-sm font-bold text-[var(--tx-text)]">{label}</span>
       <textarea
         className={cn(
-          "mt-2 min-h-28 w-full rounded-lg border border-[#b8cae8] bg-white px-3 py-3 text-sm text-[#061b4f] outline-none transition placeholder:text-[#7288b8] focus:border-[#063b86] focus:ring-3 focus:ring-[#063b86]/15",
+          "mt-2 min-h-28 w-full rounded-lg border border-[var(--tx-border)] bg-white px-3 py-3 text-sm text-[var(--tx-text)] outline-none transition placeholder:text-[var(--tx-text-subtle)] focus:border-[var(--tx-accent)] focus:ring-3 focus:ring-[var(--tx-accent)]/15",
           className,
         )}
         {...props}
       />
-      {hint ? <span className="mt-2 block text-xs text-[#4d6b9e]">{hint}</span> : null}
+      {hint ? <span className="mt-2 block text-xs text-[var(--tx-text-muted)]">{hint}</span> : null}
     </label>
   );
 }
@@ -69,10 +69,10 @@ export function SelectField({
 }: SelectFieldProps) {
   return (
     <label className="block">
-      <span className="text-sm font-bold text-[#061b4f]">{label}</span>
+      <span className="text-sm font-bold text-[var(--tx-text)]">{label}</span>
       <select
         className={cn(
-          "mt-2 h-11 w-full rounded-lg border border-[#b8cae8] bg-white px-3 text-sm text-[#061b4f] outline-none transition focus:border-[#063b86] focus:ring-3 focus:ring-[#063b86]/15",
+          "mt-2 h-11 w-full rounded-lg border border-[var(--tx-border)] bg-white px-3 text-sm text-[var(--tx-text)] outline-none transition focus:border-[var(--tx-accent)] focus:ring-3 focus:ring-[var(--tx-accent)]/15",
           className,
         )}
         {...props}
@@ -83,7 +83,7 @@ export function SelectField({
           </option>
         ))}
       </select>
-      {hint ? <span className="mt-2 block text-xs text-[#4d6b9e]">{hint}</span> : null}
+      {hint ? <span className="mt-2 block text-xs text-[var(--tx-text-muted)]">{hint}</span> : null}
     </label>
   );
 }

@@ -163,7 +163,7 @@ function AdminPostsContent({ userId }: { userId: string }) {
   }, [loadPosts]);
 
   if (isLoading) {
-    return <div className="tx-card p-6 text-sm text-[#4d6b9e]">Loading posts...</div>;
+    return <div className="tx-card p-6 text-sm text-[var(--tx-text-muted)]">Loading posts...</div>;
   }
 
   if (posts.length === 0 && !error) {
@@ -195,20 +195,20 @@ function AdminPostsContent({ userId }: { userId: string }) {
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2">
-                  <h2 className="font-extrabold text-[#061b4f]">
+                  <h2 className="font-extrabold text-[var(--tx-text)]">
                     {post.author?.full_name ?? "Unknown member"}
                   </h2>
                   <AdminStatusBadge tone={getStatusTone(post.status)}>
                     {post.status}
                   </AdminStatusBadge>
-                  <span className="rounded bg-[#eef5ff] px-2 py-1 text-xs font-bold text-[#063b86]">
+                  <span className="rounded bg-[var(--tx-accent-soft)] px-2 py-1 text-xs font-bold text-[var(--tx-accent)]">
                     {getTopicLabel(post.topic)}
                   </span>
                 </div>
-                <p className="mt-1 text-xs font-medium text-[#7288b8]">
+                <p className="mt-1 text-xs font-medium text-[var(--tx-text-subtle)]">
                   {formatDate(post.created_at)}
                 </p>
-                <p className="mt-3 line-clamp-4 whitespace-pre-wrap text-sm leading-6 text-[#203b70]">
+                <p className="mt-3 line-clamp-4 whitespace-pre-wrap text-sm leading-6 text-[var(--tx-text)]">
                   {post.content}
                 </p>
               </div>
