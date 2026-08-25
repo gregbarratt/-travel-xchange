@@ -129,152 +129,256 @@
   }
 }
 
+/* ---------------------------------------------------------------------------
+   Travel Xchange design tokens
+   ---------------------------------------------------------------------------
+   One system, used by the workspace shell and every surface inside it.
+
+   The palette is a neutral blue-grey with a single accent. Colour carries
+   meaning here - accent means "this is the action", status colours mean
+   status - so decoration never spends it. The shell band is deep slate and is
+   the only dark surface; everything else sits on a flat canvas.
+
+   Layout constants come from the wireframe atlas: a 64px icon rail, a 60px
+   top bar, a pane that caps at 1120px and body copy that caps at 70ch, and a
+   296px context lane.
+--------------------------------------------------------------------------- */
+
+:root {
+  /* Canvas and surfaces */
+  --tx-canvas: #f4f6f9;
+  --tx-surface: #ffffff;
+  --tx-surface-sunken: #eef2f7;
+  --tx-surface-hover: #f7f9fc;
+
+  /* Lines */
+  --tx-border: #dde4ed;
+  --tx-border-strong: #c4d0de;
+
+  /* Text */
+  --tx-text: #16202c;
+  --tx-text-muted: #56677a;
+  --tx-text-subtle: #7b8a9b;
+  --tx-text-inverse: #eef3f8;
+
+  /* The shell band - the only dark surface in the product */
+  --tx-shell: #101b27;
+  --tx-shell-raised: #1a2836;
+  --tx-shell-hover: #24384a;
+  --tx-shell-border: rgba(255, 255, 255, 0.1);
+  --tx-shell-text: #e7eef5;
+  --tx-shell-text-muted: #9bacbe;
+
+  /* One accent. Used for the action, the active state and focus. */
+  --tx-accent: #1f5fa8;
+  --tx-accent-hover: #184a83;
+  --tx-accent-soft: #e9f1fa;
+  --tx-accent-border: #b9d2ea;
+  --tx-accent-ring: rgba(31, 95, 168, 0.4);
+  --tx-accent-on-shell: #7db4ee;
+
+  /* Status */
+  --tx-positive: #14634a;
+  --tx-positive-soft: #e6f4ef;
+  --tx-positive-border: #b5ded0;
+  --tx-warning: #7d5310;
+  --tx-warning-soft: #fdf3e3;
+  --tx-warning-border: #eed7ac;
+  --tx-critical: #9c2b26;
+  --tx-critical-soft: #fbecea;
+  --tx-critical-border: #eec4c0;
+
+  /* Radius - one scale, used everywhere */
+  --tx-radius-sm: 6px;
+  --tx-radius: 10px;
+  --tx-radius-lg: 14px;
+
+  /* Elevation - restrained; borders do most of the separating */
+  --tx-shadow-sm: 0 1px 2px rgba(16, 27, 39, 0.06);
+  --tx-shadow: 0 1px 3px rgba(16, 27, 39, 0.08), 0 10px 24px -14px rgba(16, 27, 39, 0.22);
+  --tx-shadow-lg: 0 16px 40px -12px rgba(16, 27, 39, 0.28);
+
+  /* Layout */
+  --tx-rail-width: 64px;
+  --tx-topbar-height: 60px;
+  --tx-pane-max: 1120px;
+  --tx-lane-width: 296px;
+  --tx-measure: 70ch;
+}
+
 @layer components {
+  /* -------------------------------------------------------------------------
+     Workspace shell
+     ------------------------------------------------------------------------- */
+
+  .tx-shell-band {
+    background: var(--tx-shell);
+    color: var(--tx-shell-text);
+  }
+
+  .tx-rail {
+    width: var(--tx-rail-width);
+    background: var(--tx-shell);
+    border-right: 1px solid var(--tx-shell-border);
+  }
+
+  .tx-rail-button {
+    display: flex;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--tx-radius);
+    color: var(--tx-shell-text-muted);
+    transition: background-color 120ms ease, color 120ms ease;
+  }
+
+  .tx-rail-button:hover {
+    background: var(--tx-shell-hover);
+    color: var(--tx-shell-text);
+  }
+
+  .tx-rail-button[data-active="true"] {
+    background: var(--tx-shell-raised);
+    color: var(--tx-shell-text);
+    box-shadow: inset 2px 0 0 var(--tx-accent-on-shell);
+  }
+
+  .tx-flyout {
+    border: 1px solid var(--tx-border);
+    border-radius: var(--tx-radius-lg);
+    background: var(--tx-surface);
+    box-shadow: var(--tx-shadow-lg);
+  }
+
+  /* -------------------------------------------------------------------------
+     Surfaces
+     ------------------------------------------------------------------------- */
+
   .tx-dashboard-bg {
-    background:
-      radial-gradient(circle at 92% 0%, rgba(245, 41, 104, 0.08), transparent 28rem),
-      radial-gradient(circle at 0% 100%, rgba(255, 122, 47, 0.1), transparent 28rem),
-      linear-gradient(118deg, rgba(255, 255, 255, 0.97) 0%, rgba(246, 250, 255, 0.95) 45%, rgba(228, 240, 255, 0.9) 100%),
-      repeating-radial-gradient(circle at 79% 0%, rgba(21, 62, 131, 0.12) 0 1px, transparent 1px 8px);
+    background: var(--tx-canvas);
   }
 
   .tx-topline {
-    border-bottom: 1px solid rgba(112, 145, 197, 0.22);
-    background:
-      linear-gradient(90deg, rgba(255, 255, 255, 0.9), rgba(241, 248, 255, 0.68)),
-      repeating-radial-gradient(circle at 70% 0%, rgba(22, 76, 145, 0.13) 0 1px, transparent 1px 9px);
-    box-shadow: 0 12px 30px rgba(7, 36, 91, 0.06);
+    border-bottom: 1px solid var(--tx-border);
+    background: var(--tx-surface);
   }
 
   .tx-card {
-    border: 1px solid rgba(112, 145, 197, 0.32);
-    border-radius: 0.5rem;
-    background: rgba(255, 255, 255, 0.91);
-    box-shadow: 0 18px 42px rgba(7, 36, 91, 0.08), 0 1px 3px rgba(7, 36, 91, 0.08);
+    border: 1px solid var(--tx-border);
+    border-radius: var(--tx-radius);
+    background: var(--tx-surface);
+    box-shadow: var(--tx-shadow-sm);
   }
 
   .tx-card-soft {
-    border: 1px solid rgba(112, 145, 197, 0.24);
-    border-radius: 0.5rem;
-    background: rgba(255, 255, 255, 0.86);
-    box-shadow: 0 12px 28px rgba(7, 36, 91, 0.07);
+    border: 1px solid var(--tx-border);
+    border-radius: var(--tx-radius);
+    background: var(--tx-surface);
+    box-shadow: none;
   }
 
   .tx-engage-hero {
     position: relative;
-    box-shadow: 0 20px 48px rgba(7, 36, 91, 0.09), 0 1px 3px rgba(7, 36, 91, 0.08);
+    border: 1px solid var(--tx-border);
+    border-radius: var(--tx-radius-lg);
+    background: var(--tx-surface);
+    box-shadow: var(--tx-shadow-sm);
   }
 
-  .tx-engage-hero::before {
-    position: absolute;
-    inset: 0;
-    content: "";
-    background:
-      linear-gradient(105deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.86) 54%, rgba(232, 242, 255, 0.78) 100%),
-      url("/travel-identity-sidebar.svg");
-    background-position: center, right bottom;
-    background-repeat: no-repeat;
-    background-size: auto, min(42rem, 70%) auto;
-    opacity: 0.98;
-  }
-
-  .tx-engage-hero > * {
+  .tx-ad-surface {
     position: relative;
-    z-index: 1;
+    overflow: hidden;
+    background: var(--tx-surface-sunken);
   }
+
+  /* -------------------------------------------------------------------------
+     Actions
+     ------------------------------------------------------------------------- */
 
   .tx-action {
-    background: linear-gradient(135deg, #f52968 0%, #ff7a2f 100%);
+    background: var(--tx-accent);
     color: #ffffff;
-    box-shadow: 0 12px 26px rgba(245, 41, 104, 0.24);
+    box-shadow: var(--tx-shadow-sm);
   }
 
   .tx-action:hover {
-    background: linear-gradient(135deg, #e7195b 0%, #f26826 100%);
+    background: var(--tx-accent-hover);
     color: #ffffff;
   }
 
+  /* Legacy sidebar surface, retained while pages migrate to the rail. */
   .tx-sidebar-bg {
     position: relative;
-    overflow: hidden;
-    background:
-      linear-gradient(165deg, rgba(6, 32, 80, 0.98) 0%, rgba(3, 24, 61, 0.98) 52%, rgba(4, 54, 111, 0.98) 100%),
-      linear-gradient(45deg, rgba(255, 121, 47, 0.52), transparent 32%);
-  }
-
-  .tx-sidebar-bg::before {
-    position: absolute;
-    top: -8%;
-    left: -24%;
-    width: 92%;
-    height: 36%;
-    content: "";
-    background: radial-gradient(ellipse at top, rgba(61, 132, 229, 0.24), rgba(61, 132, 229, 0));
-  }
-
-  .tx-sidebar-bg::after {
-    position: absolute;
-    right: -20%;
-    top: 18%;
-    width: 78%;
-    height: 42%;
-    content: "";
-    background: radial-gradient(ellipse at center, rgba(255, 122, 47, 0.16), rgba(255, 255, 255, 0));
-    opacity: 0.72;
+    background: var(--tx-shell);
   }
 
   .tx-sidebar-identity {
-    min-height: 18rem;
-    margin-right: -1.25rem;
-    margin-bottom: -1.25rem;
-    margin-left: -1.25rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
-    background-image: url("/travel-identity-sidebar.svg");
-    background-position: center bottom;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    box-shadow: inset 0 18px 34px rgba(3, 24, 61, 0.08);
+    display: none;
   }
+
+  .tx-navy-avatar {
+    background: var(--tx-shell-raised);
+    color: var(--tx-shell-text);
+  }
+
+  /* -------------------------------------------------------------------------
+     Brand mark
+     ------------------------------------------------------------------------- */
 
   .tx-brand-x {
     position: relative;
     display: inline-flex;
-    width: 3.25rem;
-    height: 3.25rem;
+    width: 2rem;
+    height: 2rem;
     flex: 0 0 auto;
   }
 
   .tx-brand-x::before,
   .tx-brand-x::after {
     position: absolute;
-    top: 1.18rem;
-    left: 0.08rem;
-    width: 3.1rem;
-    height: 0.82rem;
+    top: 0.72rem;
+    left: 0.05rem;
+    width: 1.9rem;
+    height: 0.34rem;
     border-radius: 999px;
+    background: var(--tx-accent-on-shell);
     content: "";
   }
 
   .tx-brand-x::before {
-    background: linear-gradient(90deg, #f32367, #ff7a2f);
     transform: rotate(43deg);
   }
 
   .tx-brand-x::after {
-    background: linear-gradient(90deg, #ff7a2f, #f32367);
     transform: rotate(-43deg);
   }
 
-  .tx-navy-avatar {
-    background: linear-gradient(145deg, #082f6f, #03183d);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 20px rgba(6, 32, 80, 0.18);
+  /* -------------------------------------------------------------------------
+     Reading measure
+     ------------------------------------------------------------------------- */
+
+  .tx-measure {
+    max-width: var(--tx-measure);
+  }
+}
+
+@layer base {
+  /* A visible, consistent focus ring is part of the design system, not an
+     afterthought. */
+  :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline: 2px solid var(--tx-accent);
+    outline-offset: 2px;
+    border-radius: var(--tx-radius-sm);
   }
 
-  .tx-ad-surface {
-    position: relative;
-    overflow: hidden;
-    background:
-      linear-gradient(140deg, rgba(255, 255, 255, 0.96) 0%, rgba(250, 252, 255, 0.92) 48%, rgba(230, 241, 255, 0.88) 100%),
-      linear-gradient(135deg, rgba(255, 45, 104, 0.1), rgba(255, 122, 47, 0.12));
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
