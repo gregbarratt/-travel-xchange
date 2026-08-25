@@ -1008,6 +1008,217 @@ export type FeedComment = Comment & {
   author: Pick<Profile, "id" | "full_name"> | null;
 };
 
+export type NewsFeedType = "rss" | "atom" | "json";
+
+export type NewsSourceType = "trade_media" | "official_body" | "supplier" | "platform";
+
+export type NewsTrustLevel = "low" | "standard" | "high";
+
+export type NewsSourceHealth =
+  | "unverified"
+  | "healthy"
+  | "warning"
+  | "failing"
+  | "disabled";
+
+export type NewsTopicGroup = "sector" | "destination" | "discipline" | "platform";
+
+export type NewsItemProcessingStatus =
+  | "pending"
+  | "processed"
+  | "duplicate"
+  | "rejected"
+  | "failed";
+
+export type NewsPostStatus = "pending_review" | "published" | "rejected" | "unpublished";
+
+export type NewsSensitivity = "routine" | "sensitive" | "high_risk";
+
+export type NewsModerationAction =
+  | "reviewed"
+  | "approved"
+  | "rejected"
+  | "edited"
+  | "auto_published"
+  | "unpublished";
+
+export type NewsIngestionTrigger = "cron" | "manual" | "test";
+
+export type NewsIngestionRunStatus =
+  | "running"
+  | "succeeded"
+  | "partial"
+  | "failed"
+  | "timed_out";
+
+export type NewsIngestionSourceRunStatus =
+  | "succeeded"
+  | "not_modified"
+  | "skipped"
+  | "failed";
+
+export type NewsTopic = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  name: string;
+  slug: string;
+  description: string | null;
+  topic_group: NewsTopicGroup;
+  is_default: boolean;
+  sort_order: number;
+  status: "active" | "hidden";
+};
+
+export type NewsSource = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  name: string;
+  slug: string;
+  publisher: string;
+  website_url: string;
+  feed_url: string | null;
+  feed_type: NewsFeedType;
+  source_type: NewsSourceType;
+  enabled: boolean;
+  auto_publish: boolean;
+  polling_interval_minutes: number;
+  trust_level: NewsTrustLevel;
+  rights_notes: string | null;
+  default_topic_slugs: string[];
+  request_etag: string | null;
+  request_last_modified: string | null;
+  last_attempt_at: string | null;
+  last_success_at: string | null;
+  last_error: string | null;
+  consecutive_failures: number;
+  health_status: NewsSourceHealth;
+};
+
+export type NewsItem = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  source_id: string;
+  external_guid: string | null;
+  canonical_url: string;
+  canonical_url_hash: string;
+  source_url: string;
+  title: string;
+  title_fingerprint: string;
+  original_description: string | null;
+  author: string | null;
+  image_url: string | null;
+  published_at: string | null;
+  retrieved_at: string;
+  duplicate_of_item_id: string | null;
+  processing_status: NewsItemProcessingStatus;
+  processing_error: string | null;
+};
+
+export type NewsPost = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  news_item_id: string;
+  source_id: string;
+  title: string;
+  summary: string | null;
+  canonical_url: string;
+  publisher: string;
+  image_url: string | null;
+  published_at: string;
+  status: NewsPostStatus;
+  classification_confidence: number;
+  requires_moderation: boolean;
+  sensitivity: NewsSensitivity;
+  auto_published: boolean;
+  is_featured: boolean;
+  visibility: "public" | "members";
+  published_to_feed_at: string | null;
+};
+
+export type NewsPostTopic = {
+  id: string;
+  created_at: string;
+  news_post_id: string;
+  topic_id: string;
+  confidence: number;
+  assigned_by: "rules" | "source_default" | "manual";
+};
+
+export type UserTopicFollow = {
+  id: string;
+  created_at: string;
+  user_id: string;
+  topic_id: string;
+};
+
+export type UserSourceFollow = {
+  id: string;
+  created_at: string;
+  user_id: string;
+  source_id: string;
+};
+
+export type NewsModerationEvent = {
+  id: string;
+  created_at: string;
+  news_post_id: string;
+  actor_id: string | null;
+  action: NewsModerationAction;
+  note: string | null;
+};
+
+export type NewsClickEvent = {
+  id: string;
+  created_at: string;
+  news_post_id: string;
+  user_id: string | null;
+  surface: "news" | "feed" | "search" | "digest";
+};
+
+export type NewsIngestionRun = {
+  id: string;
+  created_at: string;
+  started_at: string;
+  completed_at: string | null;
+  trigger: NewsIngestionTrigger;
+  status: NewsIngestionRunStatus;
+  source_count: number;
+  fetched_count: number;
+  not_modified_count: number;
+  new_item_count: number;
+  duplicate_count: number;
+  published_count: number;
+  moderation_count: number;
+  failure_count: number;
+  duration_ms: number | null;
+};
+
+export type NewsIngestionSourceRun = {
+  id: string;
+  created_at: string;
+  run_id: string;
+  source_id: string;
+  status: NewsIngestionSourceRunStatus;
+  http_status: number | null;
+  discovered_count: number;
+  new_item_count: number;
+  duplicate_count: number;
+  published_count: number;
+  moderation_count: number;
+  duration_ms: number | null;
+  error_message: string | null;
+};
+
+/** A published news post with everything the card needs to render. */
+export type NewsPostWithMeta = NewsPost & {
+  source: Pick<NewsSource, "id" | "name" | "publisher" | "slug" | "website_url"> | null;
+  topics: Array<Pick<NewsTopic, "id" | "name" | "slug">>;
+};
+
 export type Database = {
   public: {
     Tables: {
@@ -1534,6 +1745,98 @@ export type Database = {
         Update: Partial<LaunchSignup>;
         Relationships: [];
       };
+      news_topics: {
+        Row: NewsTopic;
+        Insert: Partial<NewsTopic> & { name: string; slug: string };
+        Update: Partial<NewsTopic>;
+        Relationships: [];
+      };
+      news_sources: {
+        Row: NewsSource;
+        Insert: Partial<NewsSource> & {
+          name: string;
+          slug: string;
+          publisher: string;
+          website_url: string;
+        };
+        Update: Partial<NewsSource>;
+        Relationships: [];
+      };
+      news_items: {
+        Row: NewsItem;
+        Insert: Partial<NewsItem> & {
+          source_id: string;
+          canonical_url: string;
+          canonical_url_hash: string;
+          source_url: string;
+          title: string;
+          title_fingerprint: string;
+        };
+        Update: Partial<NewsItem>;
+        Relationships: [];
+      };
+      news_posts: {
+        Row: NewsPost;
+        Insert: Partial<NewsPost> & {
+          news_item_id: string;
+          source_id: string;
+          title: string;
+          canonical_url: string;
+          publisher: string;
+          published_at: string;
+        };
+        Update: Partial<NewsPost>;
+        Relationships: [];
+      };
+      news_post_topics: {
+        Row: NewsPostTopic;
+        Insert: Partial<NewsPostTopic> & { news_post_id: string; topic_id: string };
+        Update: Partial<NewsPostTopic>;
+        Relationships: [];
+      };
+      user_topic_follows: {
+        Row: UserTopicFollow;
+        Insert: Partial<UserTopicFollow> & { user_id: string; topic_id: string };
+        Update: Partial<UserTopicFollow>;
+        Relationships: [];
+      };
+      user_source_follows: {
+        Row: UserSourceFollow;
+        Insert: Partial<UserSourceFollow> & { user_id: string; source_id: string };
+        Update: Partial<UserSourceFollow>;
+        Relationships: [];
+      };
+      news_moderation_events: {
+        Row: NewsModerationEvent;
+        Insert: Partial<NewsModerationEvent> & {
+          news_post_id: string;
+          action: NewsModerationAction;
+        };
+        Update: Partial<NewsModerationEvent>;
+        Relationships: [];
+      };
+      news_click_events: {
+        Row: NewsClickEvent;
+        Insert: Partial<NewsClickEvent> & { news_post_id: string };
+        Update: Partial<NewsClickEvent>;
+        Relationships: [];
+      };
+      news_ingestion_runs: {
+        Row: NewsIngestionRun;
+        Insert: Partial<NewsIngestionRun>;
+        Update: Partial<NewsIngestionRun>;
+        Relationships: [];
+      };
+      news_ingestion_source_runs: {
+        Row: NewsIngestionSourceRun;
+        Insert: Partial<NewsIngestionSourceRun> & {
+          run_id: string;
+          source_id: string;
+          status: NewsIngestionSourceRunStatus;
+        };
+        Update: Partial<NewsIngestionSourceRun>;
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: {
@@ -1543,6 +1846,10 @@ export type Database = {
           first_message: string;
         };
         Returns: string;
+      };
+      is_news_source_admin: {
+        Args: Record<string, never>;
+        Returns: boolean;
       };
     };
     Enums: {
