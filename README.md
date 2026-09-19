@@ -525,7 +525,17 @@ Built in this phase:
 
 ## Local setup
 
-Install dependencies:
+Setting up a new computer? Follow [`LOCAL-SETUP.md`](LOCAL-SETUP.md). It covers
+installing Node.js, adding service keys, and fixing common problems.
+
+The short version. Set up everything with one command:
+
+```bash
+npm run setup
+```
+
+That checks your Node version, creates `.env.local`, and installs dependencies.
+To install dependencies only:
 
 ```bash
 npm install

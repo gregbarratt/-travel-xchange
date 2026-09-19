@@ -47,3 +47,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# stray dev server logs
+dev-server.out.log
+dev-server.err.log
